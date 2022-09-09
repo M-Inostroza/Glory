@@ -7,9 +7,7 @@ using TMPro;
 public class BattleHUD : MonoBehaviour
 {
     public Slider hpSlider;
-
-    public GameObject[] bricks;
-    public Player playerUnit;
+    public GameObject [] bricks;
 
     public void setHP(int hp)
     {
@@ -18,19 +16,14 @@ public class BattleHUD : MonoBehaviour
 
     private void Start()
     {
-        updateBricks();
-    }
-
-    void updateBricks()
-    {
         foreach(GameObject brick in bricks)
         {
             brick.SetActive(true);
         }
     }
 
-    public void takeBricks()
+    public void updateBricks(int stamina)
     {
-        bricks[playerUnit.currentStamina].SetActive(false);
+        bricks[stamina].SetActive(false);
     }
 }

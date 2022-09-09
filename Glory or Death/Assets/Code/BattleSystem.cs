@@ -116,8 +116,10 @@ public class BattleSystem : MonoBehaviour
         {
             bool isDead = enemyUnit.TakeDamage(playerUnit.native_damage);
             enemyHUD.setHP(enemyUnit.currentHP);
-            playerUnit.currentStamina -= 2;
-            playerHUD.takeBricks();
+            playerUnit.currentStamina --;
+
+            playerHUD.updateBricks(playerUnit.currentStamina);
+
             canDefend = true;
 
             //Show dmg on enemy

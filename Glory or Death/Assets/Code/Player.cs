@@ -30,8 +30,6 @@ public class Player : MonoBehaviour
 
     public bool TakeDamage(int dmg)
     { 
-        
-
         int hit = Random.Range(1, 11);
         //Check Agility
         if (hit > currentAgility)

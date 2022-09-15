@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 77829057}
   - component: {fileID: 77829056}
   m_Layer: 5
-  m_Name: 2
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,7 +564,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpSlider: {fileID: 1595289820}
   bricks: []
-  playerUnit: {fileID: 569652437241797295}
 --- !u!1 &442879074
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +576,7 @@ GameObject:
   - component: {fileID: 442879078}
   - component: {fileID: 442879077}
   m_Layer: 5
-  m_Name: 1
+  m_Name: 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -948,7 +947,7 @@ GameObject:
   - component: {fileID: 765882338}
   - component: {fileID: 765882337}
   m_Layer: 5
-  m_Name: 5
+  m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1047,7 +1046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -28.7, y: -18.8}
+  m_AnchoredPosition: {x: -28.699951, y: -18.799988}
   m_SizeDelta: {x: 230, y: 230}
   m_Pivot: {x: 1, y: 1}
 --- !u!223 &820887445
@@ -1770,7 +1769,7 @@ GameObject:
   - component: {fileID: 1192456343}
   - component: {fileID: 1192456342}
   m_Layer: 5
-  m_Name: 4
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1981,7 +1980,7 @@ GameObject:
   - component: {fileID: 1279165919}
   - component: {fileID: 1279165918}
   m_Layer: 5
-  m_Name: 3
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3769,7 +3768,6 @@ MonoBehaviour:
   - {fileID: 1517688122}
   - {fileID: 1486067390}
   - {fileID: 903028801}
-  playerUnit: {fileID: 569652437241797295}
 --- !u!1 &2046171238
 GameObject:
   m_ObjectHideFlags: 0
@@ -3886,7 +3884,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 569652437241797294}
   enemyPrefab: {fileID: 281877455}
   playerHUD: {fileID: 2026091789}
-  enemyHUD: {fileID: 0}
+  enemyHUD: {fileID: 400060442}
   debugPLAYER_HP: {fileID: 991580069}
   debugPLAYER_Shield: {fileID: 203412710}
   debugPLAYER_Stamina: {fileID: 1829783275}
@@ -4151,17 +4149,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4011759536047731845, guid: 8ab4d6263c1a7ac47871b11abe91b414, type: 3}
   m_PrefabInstance: {fileID: 3479995900436327979}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &569652437241797295 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3479995898984791446, guid: 8ab4d6263c1a7ac47871b11abe91b414, type: 3}
-  m_PrefabInstance: {fileID: 3479995900436327979}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 569652437241797294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f32a64f02912e0a43aaf92724b0369d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3479995900436327979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4243,11 +4230,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3479995898984791446, guid: 8ab4d6263c1a7ac47871b11abe91b414, type: 3}
       propertyPath: maxHP
-      value: 150
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3479995898984791446, guid: 8ab4d6263c1a7ac47871b11abe91b414, type: 3}
       propertyPath: maxAgility
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3479995898984791446, guid: 8ab4d6263c1a7ac47871b11abe91b414, type: 3}
       propertyPath: maxStamina

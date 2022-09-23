@@ -17,6 +17,9 @@ public class BattleSystem : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
 
+    //Anims
+    private Animator playerAnimator;
+
     //Gets the UI for both
     public BattleHUD playerHUD;
     public BattleHUD enemyHUD;
@@ -71,6 +74,9 @@ public class BattleSystem : MonoBehaviour
         playerUnit = playerPrefab.GetComponent<Player>();
         enemyUnit = enemyPrefab.GetComponent<Enemy>();
 
+        //Get Animator
+        playerAnimator = playerPrefab.GetComponent<Animator>();
+
         //Set HP to max
         playerUnit.currentHP = playerUnit.maxHP;
         playerHUD.setHP(playerUnit.maxHP);
@@ -114,17 +120,23 @@ public class BattleSystem : MonoBehaviour
         //Check stamina
         if (playerUnit.currentStamina >= 1)
         {
+            //Play Animation
+            playerAnimator.SetBool("ATK1", true);
+            StartCoroutine(stopAttack());
+
+            //Enemy takes damage
             bool isDead = enemyUnit.TakeDamage(playerUnit.native_damage);
             enemyHUD.setHP(enemyUnit.currentHP);
-            playerUnit.currentStamina --;
 
+            //Reduce Stamina
+            playerUnit.currentStamina --;
             playerHUD.updateBricks(playerUnit.currentStamina);
 
+            //Resets defend counter
             canDefend = true;
 
             //Show dmg on enemy
             GameObject hitNotif = Instantiate(hitText, originalEnemyPos, Quaternion.identity);
-
             hitNotif.transform.SetParent(enemyHUD.transform);
 
             if (enemyUnit.currentShield > 0)
@@ -155,7 +167,6 @@ public class BattleSystem : MonoBehaviour
             playerUnit.currentShield++;
             state = BattleState.ENEMYTURN;
             canDefend = false;
-            Debug.Log(playerUnit.currentShield);
             StartCoroutine(EnemyTurn());
         } 
     }
@@ -166,12 +177,16 @@ public class BattleSystem : MonoBehaviour
         if (enemyUnit.currentStamina >= 1)
         {
             //Delay
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(4f);
 
             //Does damage to Player
             bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
             playerHUD.setHP(playerUnit.currentHP);
             enemyUnit.currentStamina -= 2;
+
+            //Animate Shield
+            playerAnimator.SetBool("DF", true);
+            StartCoroutine(stopDefend());
 
             //HITS!!
             if (!playerUnit.missed)
@@ -235,6 +250,20 @@ public class BattleSystem : MonoBehaviour
 
         missNotif.GetComponent<TMP_Text>().DOFade(0, 1f);
         missNotif.transform.DOLocalMove(missPositionEnd, 1f).OnComplete(() => Destroy(missNotif));
+    }
+
+    IEnumerator stopAttack()
+    {
+        //Delay
+        yield return new WaitForSeconds(2f);
+        playerAnimator.SetBool("ATK1", false);
+    }
+
+    IEnumerator stopDefend()
+    {
+        //Delay
+        yield return new WaitForSeconds(1.1f);
+        playerAnimator.SetBool("DF", false);
     }
 }
 

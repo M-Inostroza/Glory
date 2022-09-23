@@ -129,8 +129,9 @@ public class BattleSystem : MonoBehaviour
             enemyHUD.setHP(enemyUnit.currentHP);
 
             //Reduce Stamina
-            playerUnit.currentStamina --;
+            playerUnit.currentStamina -= 2;
             playerHUD.updateBricks(playerUnit.currentStamina);
+            playerHUD.updateBricks(playerUnit.currentStamina + 1);
 
             //Resets defend counter
             canDefend = true;

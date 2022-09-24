@@ -5,17 +5,17 @@ using DG.Tweening;
 
 public class Target : MonoBehaviour
 {
-    public Transform timer;
+    public GameObject timer;
+
+    private Tween scale;
 
     private void OnEnable()
     {
-        timer = transform.Find("timer");
-        timer.DOScale(1, 2);
-        Invoke("kill", 2f);
-    }
-    void kill()
-    {
-        gameObject.SetActive(false);
+        scale = timer.transform.DOScale(1, 1).OnComplete(() => gameObject.SetActive(false));
     }
 
+    private void OnDisable()
+    {
+        scale.Rewind();
+    }
 }

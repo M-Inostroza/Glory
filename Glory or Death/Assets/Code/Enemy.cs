@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
                 currentShield = 0;
         } else
         {
-            Debug.Log("Enemy not damaged");
+            Debug.Log("Miss!");
         }
 
         if (currentHP <= 0)

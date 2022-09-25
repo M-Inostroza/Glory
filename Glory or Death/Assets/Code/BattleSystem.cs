@@ -13,6 +13,9 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private bool canDefend = true;
 
+    //Scores
+    public int targetHit;
+
     //Get player and enemy GO
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
@@ -125,38 +128,14 @@ public class BattleSystem : MonoBehaviour
             StartCoroutine(stopAttack());
 
             //Enemy takes damage
-            bool isDead = enemyUnit.TakeDamage(playerUnit.native_damage);
-            enemyHUD.setHP(enemyUnit.currentHP);
+            StartCoroutine(waitForDamage(3.2f));
 
             //Reduce Stamina
-            playerUnit.currentStamina -= 2;
+            playerUnit.currentStamina -= 1;
             playerHUD.updateBricks(playerUnit.currentStamina);
-            playerHUD.updateBricks(playerUnit.currentStamina + 1);
 
             //Resets defend counter
             canDefend = true;
-
-            //Show dmg on enemy
-            GameObject hitNotif = Instantiate(hitText, originalEnemyPos, Quaternion.identity);
-            hitNotif.transform.SetParent(enemyHUD.transform);
-
-            if (enemyUnit.currentShield > 0)
-                hitNotif.GetComponent<TMP_Text>().text = "- " + (playerUnit.native_damage - 2);
-            else
-                hitNotif.GetComponent<TMP_Text>().text = "- " + playerUnit.native_damage;
-            hitNotif.GetComponent<TMP_Text>().DOFade(0, 1f);
-            hitNotif.transform.DOLocalMove(jumpEnemyPos, 1f).OnComplete(() => Destroy(hitNotif));
-
-            if (isDead)
-            {
-                state = BattleState.WON;
-                EndBattle();
-            }
-            else
-            {
-                state = BattleState.ENEMYTURN;
-                StartCoroutine(EnemyTurn());
-            }
         }
             
     }
@@ -178,7 +157,7 @@ public class BattleSystem : MonoBehaviour
         if (enemyUnit.currentStamina >= 1)
         {
             //Delay
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(3.5f);
 
             //Does damage to Player
             bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
@@ -256,15 +235,47 @@ public class BattleSystem : MonoBehaviour
     IEnumerator stopAttack()
     {
         //Delay
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
         playerAnimator.SetBool("ATK1", false);
     }
 
     IEnumerator stopDefend()
     {
         //Delay
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(0.5f);
         playerAnimator.SetBool("DF", false);
+    }
+
+    IEnumerator waitForDamage(float delay)
+    {
+        //Delay
+        yield return new WaitForSeconds(delay);
+
+        //Do DMG
+        bool isDead = enemyUnit.TakeDamage(playerUnit.native_damage + targetHit);
+        enemyHUD.setHP(enemyUnit.currentHP);
+
+        //Show dmg on enemy
+        GameObject hitNotif = Instantiate(hitText, originalEnemyPos, Quaternion.identity);
+        hitNotif.transform.SetParent(enemyHUD.transform);
+
+        if (enemyUnit.currentShield > 0)
+            hitNotif.GetComponent<TMP_Text>().text = "- " + (playerUnit.native_damage - 2);
+        else
+            hitNotif.GetComponent<TMP_Text>().text = "- " + (playerUnit.native_damage + targetHit);
+
+        hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f).OnComplete(() => Destroy(hitNotif));
+
+        if (isDead)
+        {
+            state = BattleState.WON;
+            EndBattle();
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+        }
     }
 }
 

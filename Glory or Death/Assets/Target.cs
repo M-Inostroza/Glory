@@ -7,15 +7,34 @@ public class Target : MonoBehaviour
 {
     public GameObject timer;
 
-    private Tween scale;
+    //Parameters
+    private float minSize;
+    public float speed;
+
+    //Anim
+    Tween timerAnim;
+
+    //Effect
+    public GameObject hitEffect;
+
+    //BattleSystem
+    public BattleSystem BS;
 
     private void OnEnable()
     {
-        scale = timer.transform.DOScale(1, 1).OnComplete(() => gameObject.SetActive(false));
+        minSize = 0.25f;
+        timerAnim = timer.transform.DOScale(minSize, speed).OnComplete(() => gameObject.SetActive(false));
+    }
+
+    private void OnMouseDown()
+    {
+        Instantiate<GameObject>(hitEffect, transform.position, transform.rotation);
+        BS.targetHit++;
+        gameObject.SetActive(false);
     }
 
     private void OnDisable()
     {
-        scale.Rewind();
+        timerAnim.Rewind();
     }
 }

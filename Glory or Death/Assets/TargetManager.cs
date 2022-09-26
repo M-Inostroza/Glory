@@ -33,13 +33,13 @@ public class TargetManager : MonoBehaviour
 
         //Deactivate myself
         yield return new WaitForSeconds(2);
+        MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), .5f);
+        MainCamera.DOFieldOfView(50, 0.5f);
         gameObject.SetActive(false);
     }
 
     private void OnDisable()
     {
         BS.targetHit = 0;
-        MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 1);
-        MainCamera.DOFieldOfView(50, 0.5f);
     }
 }

@@ -2682,23 +2682,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2014319663475287498, guid: d233e9246cdec344eb9c37423865e7c2, type: 3}
   m_PrefabInstance: {fileID: 5265119168551190463}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &1267436739
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267436735}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.43131435
---- !u!95 &1267436743
+--- !u!95 &1267436740
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -5519,9 +5503,13 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9c6ce2b358f3e964b8fd234badc2b570, type: 3}
+    - target: {fileID: 1967413007885984140, guid: d233e9246cdec344eb9c37423865e7c2, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2014319663475287498, guid: d233e9246cdec344eb9c37423865e7c2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2033487974850265141, guid: d233e9246cdec344eb9c37423865e7c2, type: 3}
       propertyPath: m_IsActive
@@ -5737,7 +5725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6893981139567263169, guid: d233e9246cdec344eb9c37423865e7c2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6912709804678472994, guid: d233e9246cdec344eb9c37423865e7c2, type: 3}
       propertyPath: BS

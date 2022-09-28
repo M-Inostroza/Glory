@@ -12,6 +12,7 @@ public class BattleSystem : MonoBehaviour
     //Cooldown Commands
     [SerializeField]
     private bool canDefend = true;
+    public bool canEvade = false;
 
     //Scores
     public int targetHit;
@@ -69,6 +70,9 @@ public class BattleSystem : MonoBehaviour
     private void Update()
     {
         debugScreen();
+        PlayerEvade();
+
+        
     }
 
     void SetupBattle()
@@ -98,6 +102,8 @@ public class BattleSystem : MonoBehaviour
         //Set Agility to max
         playerUnit.currentAgility = playerUnit.maxAgility;
         enemyUnit.currentAgility = enemyUnit.maxAgility;
+
+        
 
         state = BattleState.PLAYERTURN;
     }
@@ -151,13 +157,42 @@ public class BattleSystem : MonoBehaviour
         } 
     }
 
+    // Evade bools
+    bool canRight = true;
+    bool canLeft = true;
+
+    void PlayerEvade()
+    {
+        playerUnit.evade -= playerUnit.evade * Time.deltaTime * 0.5f;
+        playerHUD.evadeSlider.value = playerUnit.evade;
+
+        if (Input.GetKeyDown("left") && canLeft)
+        {
+            canLeft = false;
+            canRight = true;
+            playerUnit.evade++;
+        } 
+        else if (Input.GetKeyDown("right") && canRight) 
+        {
+            canRight = false;
+            canLeft = true;
+            playerUnit.evade++;
+        }
+
+        if (playerUnit.evade >= 20)
+        {
+            canEvade = true;
+            Debug.Log("Miss");
+        }
+    }
+
     IEnumerator EnemyTurn()
     {
         //Check stamina
         if (enemyUnit.currentStamina >= 1)
         {
             //Delay
-            yield return new WaitForSeconds(3.5f);
+            yield return new WaitForSeconds(3f);
 
             //Does damage to Player
             bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);

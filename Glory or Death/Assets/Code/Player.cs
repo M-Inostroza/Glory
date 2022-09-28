@@ -31,11 +31,13 @@ public class Player : MonoBehaviour
     public int currentAgility;
     public bool missed = false;
 
+    public float evade;
+
     public bool TakeDamage(int dmg)
     { 
         int hit = Random.Range(1, 11);
         //Check Agility
-        if (hit > currentAgility)
+        if (hit > currentAgility || !BattleSystem.Instance.canEvade)
         {
             missed = false;
             transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);

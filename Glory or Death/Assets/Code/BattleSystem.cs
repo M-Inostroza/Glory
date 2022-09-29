@@ -71,8 +71,6 @@ public class BattleSystem : MonoBehaviour
     {
         debugScreen();
         PlayerEvade();
-
-        
     }
 
     void SetupBattle()
@@ -124,6 +122,14 @@ public class BattleSystem : MonoBehaviour
         PlayerDefend();
     }
 
+    public void OnEvadeButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+        isOnEvade = true;
+        PlayerEvade();
+    }
+
     void PlayerAttack()
     {
         //Check stamina
@@ -151,41 +157,48 @@ public class BattleSystem : MonoBehaviour
         if (canDefend)
         {
             playerUnit.currentShield++;
-            state = BattleState.ENEMYTURN;
             canDefend = false;
-            StartCoroutine(EnemyTurn());
+            switchToEnemy();
         } 
     }
 
     // Evade bools
     bool canRight = true;
     bool canLeft = true;
+    bool isOnEvade = false;
 
     void PlayerEvade()
     {
-        playerUnit.evade -= playerUnit.evade * Time.deltaTime * 0.5f;
-        playerHUD.evadeSlider.value = playerUnit.evade;
+        if (isOnEvade)
+        {
+            playerUnit.evade -= playerUnit.evade * Time.deltaTime * 0.5f;
+            playerHUD.evadeSlider.value = playerUnit.evade;
 
-        if (Input.GetKeyDown("left") && canLeft)
-        {
-            canLeft = false;
-            canRight = true;
-            playerUnit.evade++;
-        } 
-        else if (Input.GetKeyDown("right") && canRight) 
-        {
-            canRight = false;
-            canLeft = true;
-            playerUnit.evade++;
-        }
+            if (Input.GetKeyDown("left") && canLeft)
+            {
+                canLeft = false;
+                canRight = true;
+                playerUnit.evade++;
+            }
+            else if (Input.GetKeyDown("right") && canRight)
+            {
+                canRight = false;
+                canLeft = true;
+                playerUnit.evade++;
+            }
 
-        if (playerUnit.evade >= 20)
-        {
-            canEvade = true;
-            Debug.Log("Miss");
-        }
+            if (playerUnit.evade >= 20)
+            {
+                isOnEvade = false;
+                playerUnit.missed = true;
+
+                switchToEnemy();
+                Debug.Log("evade");
+            }
+        }    
     }
 
+    // Enemy
     IEnumerator EnemyTurn()
     {
         //Check stamina
@@ -267,6 +280,12 @@ public class BattleSystem : MonoBehaviour
         missNotif.transform.DOLocalMove(missPositionEnd, 1f).OnComplete(() => Destroy(missNotif));
     }
 
+    public void switchToEnemy()
+    {
+        state = BattleState.ENEMYTURN;
+        StartCoroutine(EnemyTurn());
+    }
+
     IEnumerator stopAttack()
     {
         //Delay
@@ -308,8 +327,7 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyTurn());
+            switchToEnemy();
         }
     }
 }

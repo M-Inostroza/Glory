@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     { 
         int hit = Random.Range(1, 11);
         //Check Agility
-        if (hit > currentAgility || !BattleSystem.Instance.canEvade)
+        if (hit > currentAgility && !missed)
         {
             missed = false;
             transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);

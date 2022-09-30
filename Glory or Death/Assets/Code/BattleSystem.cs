@@ -13,6 +13,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private bool canDefend = true;
     public bool canEvade = false;
+    private float evadeTimer;
 
     //Scores
     public int targetHit;
@@ -62,6 +63,7 @@ public class BattleSystem : MonoBehaviour
 
     private void Start()
     {
+        evadeTimer = 5f;
         Instance = this;
         state = BattleState.START;
         SetupBattle();
@@ -171,6 +173,14 @@ public class BattleSystem : MonoBehaviour
     {
         if (isOnEvade)
         {
+            playerHUD.evadeSlider.gameObject.SetActive(true);
+            evadeTimer -= Time.deltaTime;
+            if (evadeTimer <= 0)
+            {
+                evadeTimer = 0;
+            }
+            Debug.Log(evadeTimer);
+
             playerUnit.evade -= playerUnit.evade * Time.deltaTime * 0.5f;
             playerHUD.evadeSlider.value = playerUnit.evade;
 
@@ -187,14 +197,16 @@ public class BattleSystem : MonoBehaviour
                 playerUnit.evade++;
             }
 
-            if (playerUnit.evade >= 20)
+            if (playerUnit.evade >= 20 )
             {
-                isOnEvade = false;
                 playerUnit.missed = true;
-
-                switchToEnemy();
-                Debug.Log("evade");
+                resetEvades();
             }
+            else if (evadeTimer == 0)
+            {
+                playerUnit.missed = false;
+                resetEvades();
+            }               
         }    
     }
 
@@ -284,6 +296,15 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.ENEMYTURN;
         StartCoroutine(EnemyTurn());
+    }
+
+    private void resetEvades()
+    {
+        isOnEvade = false;
+        playerHUD.evadeSlider.gameObject.SetActive(false);
+        evadeTimer = 5f;
+        playerUnit.evade = 0;
+        switchToEnemy();
     }
 
     IEnumerator stopAttack()

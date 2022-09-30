@@ -24,12 +24,15 @@ public class TargetManager : MonoBehaviour
     {
         //Activate Targets
         targets[0].SetActive(true);
+        targets[0].transform.localPosition = new Vector3(0, Random.Range(0.3f, 0.7f), 0);
         yield return new WaitForSeconds(wait_time);
 
         targets[1].SetActive(true);
+        targets[1].transform.localPosition = new Vector3(Random.Range(-0.1f, -0.6f), 0, 0);
         yield return new WaitForSeconds(wait_time);
 
         targets[2].SetActive(true);
+        targets[2].transform.localPosition = new Vector3(Random.Range(0.3f, -0.2f), Random.Range(-0.3f, -0.7f), 0);
 
         //Deactivate myself
         yield return new WaitForSeconds(2);

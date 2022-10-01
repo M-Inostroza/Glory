@@ -73,6 +73,7 @@ public class BattleSystem : MonoBehaviour
     {
         debugScreen();
         PlayerEvade();
+        updateUI();
     }
 
     void SetupBattle()
@@ -86,11 +87,8 @@ public class BattleSystem : MonoBehaviour
 
         //Set HP to max
         playerUnit.currentHP = playerUnit.maxHP;
-        playerHUD.setHP(playerUnit.maxHP);
-
         enemyUnit.currentHP = enemyUnit.maxHP;
-        enemyHUD.setHP(enemyUnit.maxHP);
-
+        
         //Set shield to max
         playerUnit.currentShield = playerUnit.maxShield;
         enemyUnit.currentShield = enemyUnit.maxShield;
@@ -102,8 +100,6 @@ public class BattleSystem : MonoBehaviour
         //Set Agility to max
         playerUnit.currentAgility = playerUnit.maxAgility;
         enemyUnit.currentAgility = enemyUnit.maxAgility;
-
-        
 
         state = BattleState.PLAYERTURN;
     }
@@ -139,7 +135,6 @@ public class BattleSystem : MonoBehaviour
         {
             //Play Animation
             playerAnimator.SetBool("ATK1", true);
-            StartCoroutine(stopAttack());
 
             //Enemy takes damage
             StartCoroutine(waitForDamage(3.2f));
@@ -307,12 +302,12 @@ public class BattleSystem : MonoBehaviour
         switchToEnemy();
     }
 
-    IEnumerator stopAttack()
+    public void updateUI()
     {
-        //Delay
-        yield return new WaitForSeconds(4f);
-        playerAnimator.SetBool("ATK1", false);
+        enemyHUD.setHP(enemyUnit.currentHP);
+        playerHUD.setHP(playerUnit.currentHP);
     }
+    
 
     IEnumerator stopDefend()
     {

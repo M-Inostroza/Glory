@@ -69,4 +69,9 @@ public class Player : MonoBehaviour
     {
         target_manager.SetActive(true);
     }
+
+    public void stopAttack()
+    {
+        gameObject.GetComponent<Animator>().SetBool("ATK1", false);
+    }
 }

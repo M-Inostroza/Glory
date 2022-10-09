@@ -214,10 +214,9 @@ public class BattleSystem : MonoBehaviour
             //Delay
             yield return new WaitForSeconds(3f);
 
-            //Does damage to Player
+            //Deals damage to Player
             bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
-            playerHUD.setHP(playerUnit.currentHP);
-            enemyUnit.currentStamina -= 2;
+            enemyUnit.currentStamina -= 1;
 
             //Animate Shield
             playerAnimator.SetBool("DF", true);

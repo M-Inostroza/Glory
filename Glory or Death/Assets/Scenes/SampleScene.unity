@@ -3146,12 +3146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d43a26981052845a91c2cc9240b938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrows:
+  arrowPrefabs:
   - {fileID: 336973306574801666, guid: c12eeb522fee9f7478acadb372c06715, type: 3}
   - {fileID: 336973306574801666, guid: 9cced7d0d569c04428a44257d4b9a33d, type: 3}
   - {fileID: 336973306574801666, guid: 6916d5cd1137d32498527422696d1759, type: 3}
   - {fileID: 336973306574801666, guid: 53b895ad3c5e029419a18fa5899ff99d, type: 3}
-  rotationValues: 000000005a000000a6ffffffb4000000
+  randomArrow: {fileID: 0}
+  arrow: {fileID: 0}
 --- !u!1 &1319414352
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,24 +29,15 @@ public class BattleSystem : MonoBehaviour
     public BattleHUD playerHUD;
     public BattleHUD enemyHUD;
 
+    //Miss & Hit text Player
+    public GameObject missText;
+    public GameObject hitText;
+
     //Debug UI player
     public TMP_Text debugPLAYER_HP;
     public TMP_Text debugPLAYER_Shield;
     public TMP_Text debugPLAYER_Stamina;
     public TMP_Text debugPLAYER_Agility;
-
-    //Miss text Player
-    public GameObject missText;
-    public Vector3 missPositionInit;
-    public Vector3 missPositionEnd;
-    //Hit text Player
-    public GameObject hitText;
-    public Vector3 jumpPlayerPos;
-    public Vector3 originalPlayerPos;
-
-
-    public Vector3 jumpEnemyPos;
-    public Vector3 originalEnemyPos;
 
     //Debug UI enemy
     public TMP_Text debugENEMY_HP;
@@ -54,6 +45,8 @@ public class BattleSystem : MonoBehaviour
     public TMP_Text debugENEMY_Stamina;
     public TMP_Text debugENEMY_Agility;
 
+    //Info Hud
+    public GameObject infoHud;
    
     //Gets the scripts for both
     Player playerUnit;
@@ -266,8 +259,8 @@ public class BattleSystem : MonoBehaviour
     public void hits()
     {
         //Show dmg
-        GameObject hitNotif = Instantiate(hitText, originalPlayerPos, Quaternion.identity);
-        hitNotif.transform.SetParent(playerHUD.transform);
+        GameObject hitNotif = Instantiate(hitText, infoHud.transform.position, Quaternion.identity);
+        hitNotif.transform.SetParent(infoHud.transform);
 
         if (playerUnit.currentShield > 0)
             hitNotif.GetComponent<TMP_Text>().text = "- " + (enemyUnit.native_damage - 2);
@@ -275,15 +268,15 @@ public class BattleSystem : MonoBehaviour
             hitNotif.GetComponent<TMP_Text>().text = "- " + enemyUnit.native_damage;
 
         hitNotif.GetComponent<TMP_Text>().DOFade(0, 1f);
-        hitNotif.transform.DOLocalMove(jumpPlayerPos, 1f).OnComplete(() => Destroy(hitNotif));
+        hitNotif.transform.DOJump(new Vector2(infoHud.transform.position.x +40, infoHud.transform.position.y + 50), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
     }
     public void missHit()
     {
-        GameObject missNotif = Instantiate(missText, missPositionInit, Quaternion.identity);
-        missNotif.transform.SetParent(playerHUD.transform);
+        GameObject missNotif = Instantiate(missText, infoHud.transform.localPosition, Quaternion.identity);
+        missNotif.transform.SetParent(infoHud.transform);
 
         missNotif.GetComponent<TMP_Text>().DOFade(0, 1f);
-        missNotif.transform.DOLocalMove(missPositionEnd, 1f).OnComplete(() => Destroy(missNotif));
+        missNotif.transform.DOJump(new Vector2(infoHud.transform.position.x, infoHud.transform.position.y), 1, 1, 1f).OnComplete(() => Destroy(missNotif));
     }
 
     public void switchToEnemy()
@@ -325,7 +318,7 @@ public class BattleSystem : MonoBehaviour
         enemyHUD.setHP(enemyUnit.currentHP);
 
         //Show dmg on enemy
-        GameObject hitNotif = Instantiate(hitText, originalEnemyPos, Quaternion.identity);
+        GameObject hitNotif = Instantiate(hitText, enemyHUD.transform.localPosition, Quaternion.identity);
         hitNotif.transform.SetParent(enemyHUD.transform);
 
         if (enemyUnit.currentShield > 0)

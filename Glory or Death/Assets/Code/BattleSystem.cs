@@ -47,6 +47,7 @@ public class BattleSystem : MonoBehaviour
 
     //Info Hud
     public GameObject infoHud;
+    public GameObject infoHud_EN;
    
     //Gets the scripts for both
     Player playerUnit;
@@ -130,7 +131,7 @@ public class BattleSystem : MonoBehaviour
             playerAnimator.SetBool("ATK1", true);
 
             //Enemy takes damage
-            StartCoroutine(waitForDamage(3.2f));
+            StartCoroutine(waitForDamage(3.6f));
 
             //Reduce Stamina
             playerUnit.currentStamina -= 1;
@@ -272,11 +273,11 @@ public class BattleSystem : MonoBehaviour
     }
     public void missHit()
     {
-        GameObject missNotif = Instantiate(missText, infoHud.transform.localPosition, Quaternion.identity);
+        GameObject missNotif = Instantiate(missText, infoHud.transform.position, Quaternion.identity);
         missNotif.transform.SetParent(infoHud.transform);
 
         missNotif.GetComponent<TMP_Text>().DOFade(0, 1f);
-        missNotif.transform.DOJump(new Vector2(infoHud.transform.position.x, infoHud.transform.position.y), 1, 1, 1f).OnComplete(() => Destroy(missNotif));
+        missNotif.transform.DOJump(new Vector2(infoHud.transform.position.x + 40, infoHud.transform.position.y + 50), 1, 1, 1f).OnComplete(() => Destroy(missNotif));
     }
 
     public void switchToEnemy()
@@ -318,15 +319,18 @@ public class BattleSystem : MonoBehaviour
         enemyHUD.setHP(enemyUnit.currentHP);
 
         //Show dmg on enemy
-        GameObject hitNotif = Instantiate(hitText, enemyHUD.transform.localPosition, Quaternion.identity);
-        hitNotif.transform.SetParent(enemyHUD.transform);
+        GameObject hitNotif = Instantiate(hitText, infoHud_EN.transform.position, Quaternion.identity);
+        hitNotif.transform.SetParent(infoHud_EN.transform);
 
+        //Check defense
         if (enemyUnit.currentShield > 0)
             hitNotif.GetComponent<TMP_Text>().text = "- " + (playerUnit.native_damage - 2);
         else
             hitNotif.GetComponent<TMP_Text>().text = "- " + (playerUnit.native_damage + targetHit);
 
+        //Eliminate
         hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f).OnComplete(() => Destroy(hitNotif));
+        hitNotif.transform.DOJump(new Vector2(infoHud_EN.transform.position.x + 40, infoHud_EN.transform.position.y + 50), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
 
         if (isDead)
         {

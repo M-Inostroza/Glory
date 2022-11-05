@@ -7,10 +7,9 @@ public class Target : MonoBehaviour
 {
     //Anim
     Animator anim;
-    public GameObject timer;
 
     //BattleSystem
-    public BattleSystem BS;
+    public BattleSystem BattleSystem;
 
     private void Start()
     {
@@ -20,12 +19,12 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
         anim.SetBool("hit", true);
-        timer.SetActive(false);
-        BS.targetHit++;
+        BattleSystem.targetHit++;
     }
 
     void killTarget()
     {
+        anim.Rebind();
         gameObject.SetActive(false);
     }
 }

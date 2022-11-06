@@ -15,6 +15,9 @@ public class BattleSystem : MonoBehaviour
     public bool canEvade = false;
     private float evadeTimer;
 
+    // Defend system
+    public GameObject defendManager;
+
     //Scores
     public int targetHit;
 
@@ -205,14 +208,18 @@ public class BattleSystem : MonoBehaviour
         //Check stamina
         if (enemyUnit.currentStamina >= 1)
         {
+            // Starts defend system
+            yield return new WaitForSeconds(1f);
+            defendManager.SetActive(true);
+
             //Delay
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2.5f);
 
             //Deals damage to Player
             bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
             enemyUnit.currentStamina -= 1;
 
-            //Animate Shield
+            //Animate Defend
             playerAnimator.SetBool("DF", true);
             StartCoroutine(stopDefend());
 

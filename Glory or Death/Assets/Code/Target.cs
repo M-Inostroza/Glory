@@ -7,6 +7,7 @@ public class Target : MonoBehaviour
 {
     //Anim
     Animator anim;
+    CircleCollider2D colider;
 
     //BattleSystem
     public BattleSystem BattleSystem;
@@ -14,10 +15,12 @@ public class Target : MonoBehaviour
     private void Start()
     {
         anim = gameObject.GetComponent<Animator>();
+        colider = gameObject.GetComponent<CircleCollider2D>();
     }
 
     private void OnMouseDown()
     {
+        colider.enabled = false;
         anim.SetBool("hit", true);
         BattleSystem.targetHit++;
     }
@@ -25,6 +28,7 @@ public class Target : MonoBehaviour
     void killTarget()
     {
         anim.Rebind();
+        colider.enabled = true;
         gameObject.SetActive(false);
     }
 }

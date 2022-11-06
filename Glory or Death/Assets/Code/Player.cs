@@ -74,4 +74,9 @@ public class Player : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);
     }
+
+    public void stopEvadeAnim()
+    {
+        gameObject.GetComponent<Animator>().SetBool("Evade", false);
+    }
 }

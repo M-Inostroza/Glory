@@ -10,13 +10,20 @@ public class DefendManager : MonoBehaviour
     float intPos;
     float timer;
 
+    Animator playerAnimator;
+
     int extraAgility;
 
     List<GameObject> instantArrows = new List<GameObject>();
-   
+
+    private void Start()
+    {
+        playerAnimator = playerUnit.GetComponent<Animator>();
+    }
+
     private void OnEnable()
     {
-        timer = 1.5f;
+        timer = 2f;
 
         // Resets player's agility after buff
         playerUnit.currentAgility -= extraAgility;
@@ -39,6 +46,7 @@ public class DefendManager : MonoBehaviour
     private void Update()
     {
         pressCommands();
+        evade();
     }
 
     private void OnDisable()
@@ -114,6 +122,10 @@ public class DefendManager : MonoBehaviour
     void failArrow(GameObject arrow)
     {
         extraAgility--;
+        if (playerUnit.currentAgility == 0)
+        {
+            playerUnit.currentAgility = 0;
+        }
         instantArrows.RemoveAt(0);
         arrow.transform.DOShakePosition(0.3f, 4, 20).OnComplete(() => Destroy(arrow.gameObject));
     }
@@ -129,5 +141,14 @@ public class DefendManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         gameObject.SetActive(false);
+    }
+
+    void evade()
+    {
+        if (extraAgility == 4)
+        {
+            playerUnit.missed = true;
+            playerAnimator.SetBool("Evade", true);
+        }
     }
 }

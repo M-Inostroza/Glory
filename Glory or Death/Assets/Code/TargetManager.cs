@@ -46,9 +46,9 @@ public class TargetManager : MonoBehaviour
         targets[2].transform.localPosition = new Vector3(Random.Range(0.3f, -0.2f), Random.Range(-0.3f, -0.7f), 0);
         targets[2].transform.DOScale(0.3f, 0.3f);
 
-        //Deactivate myself
+        // Deactivates the targets after timer
         yield return new WaitForSeconds(2);
-
+        
         foreach (var target in targets)
         {
             target.transform.DOScale(0, 0.3f).OnComplete(() => target.SetActive(false));   

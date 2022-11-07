@@ -14,7 +14,7 @@ public class BattleSystem : MonoBehaviour
     private bool canDefend = true;
     public bool canEvade = false;
     private float evadeTimer;
-
+     
     // Defend system
     public GameObject defendManager;
 
@@ -75,7 +75,7 @@ public class BattleSystem : MonoBehaviour
 
     void SetupBattle()
     {
-        //Get scripts
+        //Get scripts for every unit
         playerUnit = playerPrefab.GetComponent<Player>();
         enemyUnit = enemyPrefab.GetComponent<Enemy>();
 
@@ -156,6 +156,7 @@ public class BattleSystem : MonoBehaviour
         } 
     }
 
+
     // Evade bools
     bool canRight = true;
     bool canLeft = true;
@@ -163,8 +164,10 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerEvade()
     {
+        // Checks if is on evade mode
         if (isOnEvade)
         {
+            // Sets evade mechanic and timer (default 5f)
             playerHUD.evadeSlider.gameObject.SetActive(true);
             evadeTimer -= Time.deltaTime;
             if (evadeTimer <= 0)
@@ -173,9 +176,11 @@ public class BattleSystem : MonoBehaviour
             }
             Debug.Log(evadeTimer);
 
+            // Fill bar resistance & UI update
             playerUnit.evade -= playerUnit.evade * Time.deltaTime * 0.5f;
             playerHUD.evadeSlider.value = playerUnit.evade;
 
+            // Direction arrows mechanic & evade buff
             if (Input.GetKeyDown("left") && canLeft)
             {
                 canLeft = false;
@@ -189,9 +194,13 @@ public class BattleSystem : MonoBehaviour
                 playerUnit.evade++;
             }
 
+            // Triggers miss and evade anim
             if (playerUnit.evade >= 20 )
             {
                 playerUnit.missed = true;
+                playerAnimator.SetBool("Evade", true);
+
+                // Deactivates evade mode, deactivates evade manager, resets timer, resets challenge, changes to enemy turn.
                 resetEvades();
             }
             else if (evadeTimer == 0)
@@ -202,7 +211,7 @@ public class BattleSystem : MonoBehaviour
         }    
     }
 
-    // Enemy
+    // Enemy turn
     IEnumerator EnemyTurn()
     {
         //Check stamina
@@ -213,15 +222,11 @@ public class BattleSystem : MonoBehaviour
             defendManager.SetActive(true);
 
             //Delay
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(3f);
 
             //Deals damage to Player
             bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
             enemyUnit.currentStamina -= 1;
-
-            //Animate Defend
-            playerAnimator.SetBool("DF", true);
-            StartCoroutine(stopDefend());
 
             //HITS!!
             if (!playerUnit.missed)
@@ -293,6 +298,7 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(EnemyTurn());
     }
 
+    // Deactivates evade mode, deactivates evade manager, resets timer, resets challenge, changes to enemy turn.
     private void resetEvades()
     {
         isOnEvade = false;
@@ -306,14 +312,6 @@ public class BattleSystem : MonoBehaviour
     {
         enemyHUD.setHP(enemyUnit.currentHP);
         playerHUD.setHP(playerUnit.currentHP);
-    }
-    
-
-    IEnumerator stopDefend()
-    {
-        //Delay
-        yield return new WaitForSeconds(0.5f);
-        playerAnimator.SetBool("DF", false);
     }
 
     IEnumerator waitForDamage(float delay)

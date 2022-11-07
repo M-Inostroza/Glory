@@ -75,8 +75,13 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);
     }
 
-    public void stopEvadeAnim()
+    public void stopEvade()
     {
         gameObject.GetComponent<Animator>().SetBool("Evade", false);
+    }
+
+    public void stopDefend()
+    {
+        gameObject.GetComponent<Animator>().SetBool("DF", false);
     }
 }

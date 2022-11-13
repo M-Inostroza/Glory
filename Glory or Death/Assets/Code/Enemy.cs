@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
 
     public bool hasHit = false;
 
+
     public bool TakeDamage(int dmg)
     {
         transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);
@@ -50,5 +51,26 @@ public class Enemy : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void StopAttack()
+    {
+        GetComponent<Animator>().SetBool("ATK1", false);
+    }
+
+    public void stopEnemyDefense()
+    {
+        GetComponent<Animator>().SetBool("Hurt", false);
+    }
+
+
+    public void playJump()
+    {
+        FindObjectOfType<AudioMAnager>().Play("jumpWosh");
+    }
+
+    public void playStab()
+    {
+        FindObjectOfType<AudioMAnager>().Play("stab");
     }
 }

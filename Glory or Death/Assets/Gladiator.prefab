@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 1518267720119957935}
   - component: {fileID: 8298585668644715618}
   - component: {fileID: 6449946771866299580}
+  - component: {fileID: 6436199862609921064}
   m_Layer: 0
   m_Name: Gladiator
   m_TagString: Untagged
@@ -358,6 +359,27 @@ MonoBehaviour:
   currentAgility: 0
   missed: 0
   evade: 0
+  enemy_unit: {fileID: 0}
+--- !u!95 &6436199862609921064
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421616144680116684}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7c0af438c5e5b3740acd3e971e882a74, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &436800161269720017
 GameObject:
   m_ObjectHideFlags: 0

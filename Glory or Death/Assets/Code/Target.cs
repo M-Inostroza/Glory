@@ -20,6 +20,7 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
+        FindObjectOfType<AudioMAnager>().Play("targetHit");
         colider.enabled = false;
         anim.SetBool("hit", true);
         BattleSystem.targetHit++;

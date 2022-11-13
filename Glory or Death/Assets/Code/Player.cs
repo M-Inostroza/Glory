@@ -33,6 +33,10 @@ public class Player : MonoBehaviour
 
     public float evade;
 
+
+    // Current Enemy
+    public GameObject enemy_unit;
+
     public bool TakeDamage(int dmg)
     { 
         int hit = Random.Range(1, 11);
@@ -40,7 +44,6 @@ public class Player : MonoBehaviour
         if (hit > currentAgility && !missed)
         {
             missed = false;
-            transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);
             currentShield--;
             
             if (currentShield > 0)
@@ -83,5 +86,25 @@ public class Player : MonoBehaviour
     public void stopDefend()
     {
         gameObject.GetComponent<Animator>().SetBool("DF", false);
+    }
+
+    public void startEnemyDefense()
+    {
+        enemy_unit.GetComponent<Animator>().SetBool("Hurt", true);
+    }
+
+    public void shakeHit()
+    {
+        transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);
+    }
+
+    public void playJump()
+    {
+        FindObjectOfType<AudioMAnager>().Play("jumpWosh");
+    }
+
+    public void playStab()
+    {
+        FindObjectOfType<AudioMAnager>().Play("stab");
     }
 }

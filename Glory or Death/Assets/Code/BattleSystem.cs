@@ -75,6 +75,7 @@ public class BattleSystem : MonoBehaviour
 
     void SetupBattle()
     {
+
         //Get scripts for every unit
         playerUnit = playerPrefab.GetComponent<Player>();
         enemyUnit = enemyPrefab.GetComponent<Enemy>();
@@ -220,6 +221,8 @@ public class BattleSystem : MonoBehaviour
             // Starts defend system
             yield return new WaitForSeconds(1f);
             defendManager.SetActive(true);
+
+            enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
 
             //Delay
             yield return new WaitForSeconds(3f);

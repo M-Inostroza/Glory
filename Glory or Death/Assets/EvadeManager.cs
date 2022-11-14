@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class DefendManager : MonoBehaviour
+public class EvadeManager : MonoBehaviour
 {
     public Player playerUnit;
     public GameObject[] arrowPrefabs;

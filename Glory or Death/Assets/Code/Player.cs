@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     //Shield
     public int maxShield;
     public int currentShield;
+    public Shield_Manager shield_manager;
 
     //Stamina
     public int maxStamina;
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
         {
             missed = false;
             currentShield--;
+            shield_manager.destroyShield();
             
             if (currentShield > 0)
                 dmg -= 2;

@@ -225,26 +225,26 @@ public class BattleSystem : MonoBehaviour
             enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
 
             //Delay
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(3.4f);
 
-            //Deals damage to Player
-            bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
-            enemyUnit.currentStamina -= 1;
-
+            
             //HITS!!
             if (!playerUnit.missed)
             {
+                //Deals damage to Player
+                bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
+                enemyUnit.currentStamina -= 1;
                 hits();
+
+                if (isDead)
+                    state = BattleState.LOST;
+                else
+                    state = BattleState.PLAYERTURN;
             } else
             {
                 missHit();
-            }
-            
-   
-            if (isDead)
-                state = BattleState.LOST;
-            else
                 state = BattleState.PLAYERTURN;
+            }
         }
     }
 

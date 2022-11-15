@@ -12,15 +12,19 @@ public class Target : MonoBehaviour
     //BattleSystem
     public BattleSystem BattleSystem;
 
+    //Audio
+    AudioMAnager audioManager;
+
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioMAnager>();
         anim = gameObject.GetComponent<Animator>();
         colider = gameObject.GetComponent<CircleCollider2D>();
     }
 
     private void OnMouseDown()
     {
-        FindObjectOfType<AudioMAnager>().Play("targetHit");
+        audioManager.Play("targetHit");
         colider.enabled = false;
         anim.SetBool("hit", true);
         BattleSystem.targetHit++;

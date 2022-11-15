@@ -19,9 +19,13 @@ public class EvadeManager : MonoBehaviour
     // Instantiated arrows
     List<GameObject> instantArrows = new List<GameObject>();
 
+    //Audio
+    AudioMAnager audioManager;
+
     private void Start()
     {
         playerAnimator = playerUnit.GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioMAnager>();
     }
 
     private void OnEnable()
@@ -110,6 +114,7 @@ public class EvadeManager : MonoBehaviour
     // Improves agility, animates the arrow and removes it from the list
     void killArrow(GameObject arrow)
     {
+        audioManager.Play("arrowEvadeWosh");
         extraAgility++;
         instantArrows.RemoveAt(0);
         arrow.transform.DOLocalJump(new Vector2(arrow.transform.localPosition.x, arrow.transform.localPosition.y + 10), 6, 1, 0.3f).OnComplete(() => Destroy(arrow.gameObject));
@@ -118,6 +123,7 @@ public class EvadeManager : MonoBehaviour
     // Reduces agility, animates and removes it from the list 
     void failArrow(GameObject arrow)
     {
+        audioManager.Play("arrowFail");
         extraAgility--;
         instantArrows.RemoveAt(0);
         arrow.transform.DOShakePosition(0.3f, 4, 20).OnComplete(() => Destroy(arrow.gameObject));

@@ -29,6 +29,13 @@ public class Enemy : MonoBehaviour
 
     public bool hasHit = false;
 
+    AudioMAnager audioManager;
+
+    private void Start()
+    {
+        audioManager = FindObjectOfType<AudioMAnager>();
+    }
+
 
     public bool TakeDamage(int dmg)
     {
@@ -66,11 +73,18 @@ public class Enemy : MonoBehaviour
 
     public void playJump()
     {
-        FindObjectOfType<AudioMAnager>().Play("jumpWosh");
+        audioManager.Play("jumpWosh");
     }
 
-    public void playStab()
+    public void playAction()
     {
-        FindObjectOfType<AudioMAnager>().Play("stab");
+        if (FindObjectOfType<Player>().missed)
+        {
+            audioManager.Play("evadeWosh");
+        }
+        else
+        {
+            audioManager.Play("stab");
+        }
     }
 }

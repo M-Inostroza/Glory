@@ -34,27 +34,38 @@ public class Player : MonoBehaviour
 
     public float evade;
 
+    AudioMAnager audioManager;
+
 
     // Current Enemy
     public GameObject enemy_unit;
 
+    private void Start()
+    {
+        audioManager = FindObjectOfType<AudioMAnager>();
+    }
+
     public bool TakeDamage(int dmg)
     { 
-        int hit = Random.Range(1, 11);
         //Check Agility
-        if (hit > currentAgility && !missed)
+        if (!missed)
         {
             missed = false;
             currentShield--;
-            shield_manager.destroyShield();
             
-            if (currentShield > 0)
+            
+            if (currentShield >= 0)
+            {
                 dmg -= 2;
-            currentHP -= dmg;
-
-            if (currentShield <= 0)
+                currentHP -= dmg;
+                shield_manager.destroyShield();
+            } else if (currentShield < 0)
+            {
                 currentShield = 0;
-        } else
+                currentHP -= dmg;
+            }   
+        } 
+        else
         {
             missed = true;
         }
@@ -102,11 +113,16 @@ public class Player : MonoBehaviour
 
     public void playJump()
     {
-        FindObjectOfType<AudioMAnager>().Play("jumpWosh");
+        audioManager.Play("jumpWosh");
     }
 
     public void playStab()
     {
-        FindObjectOfType<AudioMAnager>().Play("stab");
+        audioManager.Play("stab");
+    }
+
+    public void playEvadeAttack()
+    {
+        audioManager.Play("evadeAttack");
     }
 }

@@ -8,7 +8,9 @@ public class BattleHUD : MonoBehaviour
 {
     public Slider hpSlider;
     public Slider evadeSlider;
+    public Slider adrenalineSlider;
     public GameObject [] bricks;
+
 
     public void setHP(int hp)
     {

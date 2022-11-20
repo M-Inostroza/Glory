@@ -29,6 +29,11 @@ public class Enemy : MonoBehaviour
 
     public bool hasHit = false;
 
+    // Effects
+    public ParticleSystem sandEffect;
+    public ParticleSystem hitEffect;
+    public ParticleSystem bloodEffect;
+
     AudioMAnager audioManager;
 
     private void Start()
@@ -74,6 +79,7 @@ public class Enemy : MonoBehaviour
     public void playJump()
     {
         audioManager.Play("jumpWosh");
+        sandEffect.Play();
     }
 
     public void playAction()
@@ -81,10 +87,13 @@ public class Enemy : MonoBehaviour
         if (FindObjectOfType<Player>().missed)
         {
             audioManager.Play("evadeWosh");
+            
         }
         else
         {
             audioManager.Play("stab");
+            hitEffect.Play();
+            bloodEffect.Play();
         }
     }
 }

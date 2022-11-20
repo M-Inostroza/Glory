@@ -110,6 +110,14 @@ public class BattleSystem : MonoBehaviour
         PlayerAttack();
     }
 
+    public void OnSuperAttackButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        PlayerSuperAttack();
+    }
+
     public void OnDefendButton()
     {
         if (state != BattleState.PLAYERTURN)
@@ -145,6 +153,26 @@ public class BattleSystem : MonoBehaviour
             canDefend = true;
         }
             
+    }
+
+    void PlayerSuperAttack()
+    {
+        //Check stamina
+        if (playerUnit.currentStamina >= 1)
+        {
+            //Play Animation
+            playerAnimator.SetBool("ATK2", true);
+
+            //Enemy takes damage
+            StartCoroutine(waitForDamage(3.6f));
+
+            //Reduce Stamina
+            playerUnit.currentStamina -= 1;
+            playerHUD.updateBricks(playerUnit.currentStamina);
+
+            //Resets defend counter
+            canDefend = true;
+        }
     }
 
     void PlayerDefend()
@@ -315,6 +343,11 @@ public class BattleSystem : MonoBehaviour
     {
         enemyHUD.setHP(enemyUnit.currentHP);
         playerHUD.setHP(playerUnit.currentHP);
+        playerHUD.adrenalineSlider.value = playerUnit.adrenaline;
+        if (playerUnit.adrenaline >= 20)
+        {
+            playerUnit.adrenaline = 20;
+        }
     }
 
     IEnumerator waitForDamage(float delay)

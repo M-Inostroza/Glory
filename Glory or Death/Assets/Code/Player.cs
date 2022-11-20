@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     public int maxHP;
     public int currentHP;
 
+    //Adrenaline
+    public int adrenaline;
+
     //Shield
     public int maxShield;
     public int currentShield;
@@ -33,6 +36,13 @@ public class Player : MonoBehaviour
     public bool missed = false;
 
     public float evade;
+
+    // Effects
+    public ParticleSystem hitEffect;
+    public ParticleSystem bloodEffect;
+    public ParticleSystem sandEffect;
+    public ParticleSystem groundHitEffect;
+    public ParticleSystem groundJumpEffect;
 
     AudioMAnager audioManager;
 
@@ -64,7 +74,7 @@ public class Player : MonoBehaviour
                 currentShield = 0;
                 currentHP -= dmg;
             }   
-        } 
+        }
         else
         {
             missed = true;
@@ -90,6 +100,10 @@ public class Player : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);
     }
+    public void stopSuperAttack()
+    {
+        gameObject.GetComponent<Animator>().SetBool("ATK2", false);
+    }
 
     public void stopEvade()
     {
@@ -114,15 +128,25 @@ public class Player : MonoBehaviour
     public void playJump()
     {
         audioManager.Play("jumpWosh");
+        sandEffect.Play();
+    }
+
+    public void playLand()
+    {
+        audioManager.Play("fall");
+        groundHitEffect.Play();
     }
 
     public void playStab()
     {
         audioManager.Play("stab");
+        hitEffect.Play();
+        bloodEffect.Play();
     }
 
     public void playEvadeAttack()
     {
         audioManager.Play("evadeAttack");
+        groundJumpEffect.Play();
     }
 }

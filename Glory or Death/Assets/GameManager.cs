@@ -33,6 +33,14 @@ public class GameManager : MonoBehaviour
         animateUI();
     }
 
+    private void Update()
+    {
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+    }
+
     void animateUI()
     {
         title.transform.DOLocalMoveY(140, 1f).SetEase(Ease.InOutSine);

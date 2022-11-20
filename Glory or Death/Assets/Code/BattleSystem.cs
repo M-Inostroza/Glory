@@ -164,7 +164,7 @@ public class BattleSystem : MonoBehaviour
             playerAnimator.SetBool("ATK2", true);
 
             //Enemy takes damage
-            StartCoroutine(waitForDamage(3.6f));
+            StartCoroutine(waitForDamage(4f));
 
             //Reduce Stamina
             playerUnit.currentStamina -= 1;

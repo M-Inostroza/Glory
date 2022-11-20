@@ -37,12 +37,18 @@ public class Player : MonoBehaviour
 
     public float evade;
 
+    // Attack mode
+    public bool isStrong;
+
     // Effects
     public ParticleSystem hitEffect;
     public ParticleSystem bloodEffect;
     public ParticleSystem sandEffect;
     public ParticleSystem groundHitEffect;
     public ParticleSystem groundJumpEffect;
+
+    public ParticleSystem superHitEffect;
+    public ParticleSystem superBloodEffect;
 
     AudioMAnager audioManager;
 
@@ -53,6 +59,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         audioManager = FindObjectOfType<AudioMAnager>();
+    }
+
+    private void Update()
+    {
+        if (adrenaline >= 20)
+        {
+            isStrong = true;
+        }
     }
 
     public bool TakeDamage(int dmg)
@@ -103,6 +117,7 @@ public class Player : MonoBehaviour
     public void stopSuperAttack()
     {
         gameObject.GetComponent<Animator>().SetBool("ATK2", false);
+        adrenaline = 0;
     }
 
     public void stopEvade()
@@ -131,6 +146,12 @@ public class Player : MonoBehaviour
         sandEffect.Play();
     }
 
+    public void playSuperJump()
+    {
+        audioManager.Play("superJumpWosh");
+        sandEffect.Play();
+    }
+
     public void playLand()
     {
         audioManager.Play("fall");
@@ -142,6 +163,13 @@ public class Player : MonoBehaviour
         audioManager.Play("stab");
         hitEffect.Play();
         bloodEffect.Play();
+    }
+
+    public void playSuperStab()
+    {
+        audioManager.Play("superStab");
+        superHitEffect.Play();
+        superBloodEffect.Play();
     }
 
     public void playEvadeAttack()

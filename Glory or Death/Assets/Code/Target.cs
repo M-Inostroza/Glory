@@ -28,7 +28,7 @@ public class Target : MonoBehaviour
         colider.enabled = false;
         anim.SetBool("hit", true);
         BattleSystem.targetHit++;
-        FindObjectOfType<Player>().adrenaline += 3;
+        FindObjectOfType<Player>().adrenaline += 10;
     }
 
     void killTarget()

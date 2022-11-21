@@ -48,6 +48,10 @@ public class BattleSystem : MonoBehaviour
     public TMP_Text debugENEMY_Stamina;
     public TMP_Text debugENEMY_Agility;
 
+    //Endgame 
+    public GameObject victoryText;
+    public GameObject defeatText;
+
     //Info Hud
     public GameObject infoHud;
     public GameObject infoHud_EN;
@@ -75,7 +79,6 @@ public class BattleSystem : MonoBehaviour
 
     void SetupBattle()
     {
-
         //Get scripts for every unit
         playerUnit = playerPrefab.GetComponent<Player>();
         enemyUnit = enemyPrefab.GetComponent<Enemy>();
@@ -281,9 +284,13 @@ public class BattleSystem : MonoBehaviour
         if(state == BattleState.WON)
         {
             Debug.Log("You won!");
+            playerAnimator.SetBool("WIN", true);
+            victoryText.transform.DOLocalJump(new Vector2(0, 0), 10f, 1, .5f);
+            enemyUnit.GetComponent<Animator>().SetBool("Defeat", true);
         } else if (state == BattleState.LOST)
         {
             Debug.Log("you lost");
+            defeatText.transform.DOLocalJump(new Vector2(0, 0), 10f, 1, .5f);
         }
     }
 

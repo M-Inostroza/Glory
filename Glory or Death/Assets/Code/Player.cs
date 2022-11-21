@@ -37,9 +37,6 @@ public class Player : MonoBehaviour
 
     public float evade;
 
-    // Attack mode
-    public bool isStrong;
-
     // Effects
     public ParticleSystem hitEffect;
     public ParticleSystem bloodEffect;
@@ -59,14 +56,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         audioManager = FindObjectOfType<AudioMAnager>();
-    }
-
-    private void Update()
-    {
-        if (adrenaline >= 20)
-        {
-            isStrong = true;
-        }
     }
 
     public bool TakeDamage(int dmg)
@@ -117,7 +106,6 @@ public class Player : MonoBehaviour
     public void stopSuperAttack()
     {
         gameObject.GetComponent<Animator>().SetBool("ATK2", false);
-        adrenaline = 0;
     }
 
     public void stopEvade()

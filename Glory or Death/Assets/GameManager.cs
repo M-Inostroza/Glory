@@ -21,8 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject img_1;
     public GameObject img_2;
 
-    //Debug
-    public float move;
+    
 
     // Audio
     public AudioMAnager audioManager;
@@ -59,8 +58,8 @@ public class GameManager : MonoBehaviour
         button.transform.DOLocalMoveY(-500, 1f).SetEase(Ease.InOutSine);
         title.transform.DOLocalMoveY(500, 1.1f).SetEase(Ease.InOutSine);
 
-        faceOff_1.transform.DOLocalMoveX(-305, 0.5f).SetDelay(1f).OnComplete(() => shakeTheFaceOff());
-        faceOff_2.transform.DOLocalMoveX(305, 0.5f).SetDelay(1f).OnComplete(() => BG.SetActive(false));
+        faceOff_1.transform.DOLocalMoveX(-310, 0.5f).SetDelay(.8f).OnComplete(() => shakeTheFaceOff());
+        faceOff_2.transform.DOLocalMoveX(310, 0.5f).SetDelay(.8f).OnComplete(() => BG.SetActive(false));
 
         faceOff_1.transform.DOLocalMoveX(-900, 0.5f).SetDelay(4f).OnComplete(() => combatUI.SetActive(true));
         faceOff_2.transform.DOLocalMoveX(900, 0.5f).SetDelay(4f).OnComplete(()=>dissapearUI());

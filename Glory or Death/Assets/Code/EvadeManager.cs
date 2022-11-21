@@ -35,14 +35,14 @@ public class EvadeManager : MonoBehaviour
         extraAgility = 0;
         
         // Spawn arrows
-        intPos = -70;
+        intPos = -120;
         for (int i = 0; i < 4; i++)
         {
             GameObject randomArrow = arrowPrefabs[Random.Range(0, 4)];
             instantArrows.Add(Instantiate(randomArrow, new Vector2(gameObject.transform.position.x + intPos, gameObject.transform.position.y), randomArrow.transform.rotation));
             instantArrows[i].transform.SetParent(gameObject.transform);
             instantArrows[i].transform.localScale = new Vector3(1, 1, 1);
-            intPos += 45f;
+            intPos += 100f;
         }
 
         // Sets timer to deactivate defend manager

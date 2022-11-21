@@ -22,7 +22,7 @@ public class TargetManager : MonoBehaviour
         // Courtain
         courtain.DOColor(new Color(0, 0, 0, .5f), 1f);
 
-        if (playerScript.isStrong)
+        if (playerScript.adrenaline >= 20)
         {
             attackHard();
         } else
@@ -150,6 +150,7 @@ public class TargetManager : MonoBehaviour
 
         // Kill target manager
         yield return new WaitForSeconds(1);
+        playerScript.adrenaline = 0;
         gameObject.SetActive(false);
     }
 }

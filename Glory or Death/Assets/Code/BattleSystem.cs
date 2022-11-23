@@ -264,6 +264,7 @@ public class BattleSystem : MonoBehaviour
             {
                 //Deals damage to Player
                 bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
+                enemyUnit.adrenaline += 2;
                 enemyUnit.currentStamina -= 1;
                 hits();
 
@@ -274,6 +275,7 @@ public class BattleSystem : MonoBehaviour
             } else
             {
                 missHit();
+                enemyUnit.adrenaline++;
                 state = BattleState.PLAYERTURN;
             }
         }
@@ -354,6 +356,12 @@ public class BattleSystem : MonoBehaviour
         if (playerUnit.adrenaline >= 20)
         {
             playerUnit.adrenaline = 20;
+        }
+
+        enemyHUD.adrenalineSlider.value = enemyUnit.adrenaline;
+        if (enemyUnit.adrenaline >= 20)
+        {
+            enemyUnit.adrenaline = 20;
         }
     }
 

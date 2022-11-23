@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
     public int maxStamina;
     public int currentStamina;
 
+    public int adrenaline;
+
     //Agility (Dodging)
     public int maxAgility;
     public int currentAgility;

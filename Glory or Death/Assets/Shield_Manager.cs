@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Shield_Manager : MonoBehaviour
 {
@@ -35,6 +36,6 @@ public class Shield_Manager : MonoBehaviour
 
     public void destroyShield()
     {
-        shieldPrefabs[playerUnit.currentShield].SetActive(false);
+        shieldPrefabs[playerUnit.currentShield].transform.DOShakePosition(.5f, 8, 20).OnComplete(() => shieldPrefabs[playerUnit.currentShield].SetActive(false));
     }
 }

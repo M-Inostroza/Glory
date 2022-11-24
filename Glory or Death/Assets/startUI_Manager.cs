@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class GameManager : MonoBehaviour
+public class startUI_Manager : MonoBehaviour
 {
     // UI Elements
     public GameObject startUI;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     void animateUI()
     {
-        title.transform.DOLocalMoveY(140, 1f).SetEase(Ease.InOutSine);
+        title.transform.DOLocalMoveY(120, 1f).SetEase(Ease.InOutSine);
         CS50.transform.DOLocalMoveX(-280, 1f).SetEase(Ease.InOutSine).SetDelay(1f);
         myName.transform.DOLocalMoveX(340, 1f).SetEase(Ease.InOutSine).SetDelay(1f);
         button.transform.DOLocalMoveY(-100, 1f).SetEase(Ease.InOutSine).SetDelay(1.5f);

@@ -7,7 +7,6 @@ public class startUI_Manager : MonoBehaviour
 {
     // UI Elements
     public GameObject startUI;
-    public GameObject title;
     public GameObject button;
     public GameObject myName;
     public GameObject CS50;
@@ -20,6 +19,15 @@ public class startUI_Manager : MonoBehaviour
 
     public GameObject img_1;
     public GameObject img_2;
+
+    // Title
+    public GameObject title_parent;
+    public GameObject glory_img;
+    public GameObject death_img;
+    public GameObject or_img;
+
+    public GameObject rayo_img;
+    public ParticleSystem rayo_effect;
 
     
 
@@ -42,10 +50,16 @@ public class startUI_Manager : MonoBehaviour
 
     void animateUI()
     {
-        title.transform.DOLocalMoveY(120, 1f).SetEase(Ease.InOutSine);
-        CS50.transform.DOLocalMoveX(-280, 1f).SetEase(Ease.InOutSine).SetDelay(1f);
-        myName.transform.DOLocalMoveX(340, 1f).SetEase(Ease.InOutSine).SetDelay(1f);
-        button.transform.DOLocalMoveY(-100, 1f).SetEase(Ease.InOutSine).SetDelay(1.5f);
+        glory_img.transform.DOLocalMoveY(145, .7f).SetEase(Ease.InOutSine).SetDelay(1.2f).OnComplete(()=>audioManager.Play("clash_glory"));
+        death_img.transform.DOLocalMoveY(67, .7f).SetEase(Ease.InOutSine).SetDelay(1.2f);
+
+        or_img.transform.DOScale(0.3f, .3f).SetDelay(2.5f);
+        rayo_img.transform.DOLocalMove(new Vector2(0, 105), .4f).SetEase(Ease.InOutSine).SetDelay(2f).OnComplete(() => thunderIntro());
+
+
+        CS50.transform.DOLocalMoveX(-280, 1f).SetEase(Ease.InOutSine).SetDelay(2f);
+        myName.transform.DOLocalMoveX(340, 1f).SetEase(Ease.InOutSine).SetDelay(2f);
+        button.transform.DOLocalMoveY(-100, 1f).SetEase(Ease.InOutSine).SetDelay(2.5f);
     }
 
     
@@ -56,7 +70,7 @@ public class startUI_Manager : MonoBehaviour
         CS50.transform.DOLocalMoveX(-600, 1f).SetEase(Ease.InOutSine);
         myName.transform.DOLocalMoveX(600, 1f).SetEase(Ease.InOutSine);
         button.transform.DOLocalMoveY(-500, 1f).SetEase(Ease.InOutSine);
-        title.transform.DOLocalMoveY(500, 1.1f).SetEase(Ease.InOutSine);
+        title_parent.transform.DOLocalMoveY(500, 1.1f).SetEase(Ease.InOutSine);
 
         faceOff_1.transform.DOLocalMoveX(-310, 0.5f).SetDelay(.8f).OnComplete(() => shakeTheFaceOff());
         faceOff_2.transform.DOLocalMoveX(310, 0.5f).SetDelay(.8f).OnComplete(() => BG.SetActive(false));
@@ -78,6 +92,12 @@ public class startUI_Manager : MonoBehaviour
         img_2.transform.DOShakePosition(1f, 3f, 30);
         thunder.SetActive(true);
         audioManager.Play("thunder");
+    }
+
+    void thunderIntro()
+    {
+        rayo_effect.Play();
+        audioManager.Play("thunder_title");
     }
 
 }

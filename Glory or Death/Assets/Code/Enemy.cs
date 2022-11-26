@@ -36,6 +36,8 @@ public class Enemy : MonoBehaviour
     public ParticleSystem hitEffect;
     public ParticleSystem bloodEffect;
 
+    public ParticleSystem hitStrong;
+
     AudioMAnager audioManager;
 
     private void Start()
@@ -97,5 +99,14 @@ public class Enemy : MonoBehaviour
             hitEffect.Play();
             bloodEffect.Play();
         }
+    }
+
+    public void attackStrong()
+    {
+        hitStrong.Play();
+    }
+    public void stopAttackStrong()
+    {
+        GetComponent<Animator>().SetBool("ATK2", false);
     }
 }

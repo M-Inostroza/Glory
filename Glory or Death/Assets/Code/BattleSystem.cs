@@ -253,7 +253,7 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(1f);
             defendManager.SetActive(true);
 
-            enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
+            enemyUnit.GetComponent<Animator>().SetBool("ATK2", true);
 
             //Delay
             yield return new WaitForSeconds(3.4f);

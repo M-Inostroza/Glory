@@ -6,7 +6,6 @@ using DG.Tweening;
 public class startUI_Manager : MonoBehaviour
 {
     // UI Elements
-    public GameObject startUI;
     public GameObject button;
     public GameObject myName;
     public GameObject CS50;
@@ -81,7 +80,7 @@ public class startUI_Manager : MonoBehaviour
 
     void dissapearUI()
     {
-        startUI.SetActive(false);
+        gameObject.SetActive(false);
         audioManager.Stop("MainTheme");
         audioManager.Play("Combat");
     }

@@ -8,7 +8,7 @@ public class Shield_Manager : MonoBehaviour
     public GameObject shield;
     public Player playerUnit;
 
-    int originalPos = -180;
+    public float originalPos;
 
     bool defenseAtive = false;
     List<GameObject> shieldPrefabs = new List<GameObject>();
@@ -23,14 +23,14 @@ public class Shield_Manager : MonoBehaviour
     {
         if (!defenseAtive)
         {
+            originalPos = -12.5f;
             for (int i = 0; i < playerUnit.currentShield; i++)
             {
-                shieldPrefabs.Add(Instantiate(shield, new Vector2(gameObject.transform.position.x + originalPos, gameObject.transform.position.y), Quaternion.identity));
+                shieldPrefabs.Add(Instantiate(shield, new Vector2(originalPos, 2.8f), Quaternion.identity));
                 shieldPrefabs[i].transform.SetParent(gameObject.transform);
-                originalPos += 45;
+                originalPos += .4f;
             }
             defenseAtive = true;
-            originalPos = 200;
         }
     }
 

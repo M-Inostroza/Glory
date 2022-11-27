@@ -27,7 +27,14 @@ public class BattleHUD : MonoBehaviour
 
     public void updateBricks(int stamina)
     {
-
         bricks[stamina].SetActive(false);
+    }
+
+    public void restoreBricks()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            bricks[i].SetActive(true);
+        }
     }
 }

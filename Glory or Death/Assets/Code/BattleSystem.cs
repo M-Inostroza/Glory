@@ -52,6 +52,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject victoryText;
     public GameObject defeatText;
 
+    public GameObject thankYou;
+
     //Info Hud
     public GameObject infoHud;
     public GameObject infoHud_EN;
@@ -121,6 +123,14 @@ public class BattleSystem : MonoBehaviour
         PlayerSuperAttack();
     }
 
+    public void OnRestButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        PlayerRest();
+    }
+
     public void OnDefendButton()
     {
         if (state != BattleState.PLAYERTURN)
@@ -176,6 +186,13 @@ public class BattleSystem : MonoBehaviour
             //Resets defend counter
             canDefend = true;
         }
+    }
+
+    void PlayerRest()
+    {
+        playerAnimator.SetBool("Resting", true);
+        playerUnit.currentStamina = 5;
+        playerHUD.restoreBricks();
     }
 
     void PlayerDefend()
@@ -249,34 +266,89 @@ public class BattleSystem : MonoBehaviour
         //Check stamina
         if (enemyUnit.currentStamina >= 1)
         {
-            // Starts defend system
-            yield return new WaitForSeconds(1f);
-            defendManager.SetActive(true);
-
-            enemyUnit.GetComponent<Animator>().SetBool("ATK2", true);
-
-            //Delay
-            yield return new WaitForSeconds(3.4f);
-
-            
-            //HITS!!
-            if (!playerUnit.missed)
+            // Attack Strong
+            if (enemyUnit.adrenaline == 12)
             {
+                int totalDMG = enemyUnit.native_damage + 3;
+                enemyUnit.GetComponent<Animator>().SetBool("ATK2", true);
+                playerAnimator.SetBool("DF2", true);
+
+                //Delay
+                yield return new WaitForSeconds(2.8f);
                 //Deals damage to Player
-                bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
-                enemyUnit.adrenaline += 2;
-                enemyUnit.currentStamina -= 1;
-                hits();
-
-                if (isDead)
-                    state = BattleState.LOST;
-                else
-                    state = BattleState.PLAYERTURN;
-            } else
+                if (playerUnit.currentShield > 0)
+                {
+                    bool isDead = playerUnit.TakeDamage(totalDMG - 2);
+                    showHit(totalDMG - 2);
+                    if (isDead)
+                    {
+                        state = BattleState.LOST;
+                        EndBattle();
+                    } 
+                    else
+                        state = BattleState.PLAYERTURN;
+                } else
+                {
+                    bool isDead = playerUnit.TakeDamage(totalDMG);
+                    showHit(totalDMG);
+                    if (isDead)
+                    {
+                        state = BattleState.LOST;
+                        EndBattle();
+                    }
+                    else
+                        state = BattleState.PLAYERTURN;
+                }
+            } 
+            else
             {
-                missHit();
-                enemyUnit.adrenaline++;
-                state = BattleState.PLAYERTURN;
+                // Attack weak
+
+                // Starts evade system
+                yield return new WaitForSeconds(1f);
+                defendManager.SetActive(true);
+
+                enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
+
+                //Delay
+                yield return new WaitForSeconds(3.4f);
+
+                //HITS!!
+                if (!playerUnit.missed)
+                {
+                    enemyUnit.adrenaline += 2;
+                    if (playerUnit.currentShield > 0)
+                    {
+                        bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage - 2);
+                        showHit(enemyUnit.native_damage - 2);
+
+                        if (isDead)
+                        {
+                            state = BattleState.LOST;
+                            EndBattle();
+                        }
+                        else
+                            state = BattleState.PLAYERTURN;
+                    }
+                    else 
+                    {
+                        bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
+                        showHit(enemyUnit.native_damage);
+                        if (isDead)
+                        {
+                            state = BattleState.LOST;
+                            EndBattle();
+                        }
+                        else
+                            state = BattleState.PLAYERTURN;
+                    }
+                }
+                else
+                {
+                    missHit();
+                    enemyUnit.adrenaline++;
+                    state = BattleState.PLAYERTURN;
+                }
             }
         }
     }
@@ -292,8 +364,12 @@ public class BattleSystem : MonoBehaviour
         } else if (state == BattleState.LOST)
         {
             Debug.Log("you lost");
+            playerAnimator.SetBool("DEFEAT", true);
+            enemyUnit.GetComponent<Animator>().SetBool("WIN", true);
             defeatText.transform.DOLocalJump(new Vector2(0, 0), 10f, 1, .5f);
         }
+
+        thankYou.transform.DOLocalMoveY(-110, 1f);
     }
 
     void debugScreen()
@@ -309,20 +385,19 @@ public class BattleSystem : MonoBehaviour
         debugENEMY_Agility.text = "Agility: " + enemyUnit.currentAgility;
     }
 
-    public void hits()
+    public void showHit(int dmg)
     {
         //Show dmg
         GameObject hitNotif = Instantiate(hitText, infoHud.transform.position, Quaternion.identity);
         hitNotif.transform.SetParent(infoHud.transform);
 
-        if (playerUnit.currentShield > 0)
-            hitNotif.GetComponent<TMP_Text>().text = "- " + (enemyUnit.native_damage - 2);
-        else if (playerUnit.currentShield == 0)
-            hitNotif.GetComponent<TMP_Text>().text = "- " + enemyUnit.native_damage;
+        //check shield
+        hitNotif.GetComponent<TMP_Text>().text = "- " + (dmg);
 
         hitNotif.GetComponent<TMP_Text>().DOFade(0, 1f);
         hitNotif.transform.DOJump(new Vector2(infoHud.transform.position.x +40, infoHud.transform.position.y + 50), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
     }
+    
     public void missHit()
     {
         GameObject missNotif = Instantiate(missText, infoHud.transform.position, Quaternion.identity);

@@ -46,7 +46,7 @@ public class EvadeManager : MonoBehaviour
         }
 
         // Sets timer to deactivate defend manager
-        StartCoroutine(commandTimer(2f));
+        StartCoroutine(commandTimer(1.5f));
     }
 
     private void Update()

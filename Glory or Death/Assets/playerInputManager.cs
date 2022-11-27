@@ -8,6 +8,8 @@ public class playerInputManager : MonoBehaviour
     public GameObject button_ATK_1;
     public GameObject button_ATK_2;
 
+    public GameObject button_REST;
+
     private void Start()
     {
         playerUnit = FindObjectOfType<Player>();
@@ -20,14 +22,26 @@ public class playerInputManager : MonoBehaviour
 
     void manageButtons()
     {
-        if (playerUnit.adrenaline == 20)
+        if (playerUnit.currentStamina > 0)
         {
-            button_ATK_1.SetActive(false);
-            button_ATK_2.SetActive(true);
+            button_REST.SetActive(false);
+
+            if (playerUnit.adrenaline == 20)
+            {
+                button_ATK_1.SetActive(false);
+                button_ATK_2.SetActive(true);
+            }
+            else
+            {
+                button_ATK_1.SetActive(true);
+                button_ATK_2.SetActive(false);
+            }
         } else
         {
-            button_ATK_1.SetActive(true);
+            button_ATK_1.SetActive(false);
             button_ATK_2.SetActive(false);
+
+            button_REST.SetActive(true);
         }
     }
 }

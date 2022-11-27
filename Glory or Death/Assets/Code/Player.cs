@@ -65,17 +65,14 @@ public class Player : MonoBehaviour
         {
             missed = false;
             currentShield--;
-            
+            currentHP -= dmg;
             
             if (currentShield >= 0)
             {
-                dmg -= 2;
-                currentHP -= dmg;
                 shield_manager.destroyShield();
             } else if (currentShield < 0)
             {
                 currentShield = 0;
-                currentHP -= dmg;
             }   
         }
         else
@@ -108,6 +105,12 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("ATK2", false);
     }
 
+    public void stopRest()
+    {
+        gameObject.GetComponent<Animator>().SetBool("Resting", false);
+        FindObjectOfType<BattleSystem>().switchToEnemy();
+    }
+
     public void stopEvade()
     {
         gameObject.GetComponent<Animator>().SetBool("Evade", false);
@@ -116,6 +119,10 @@ public class Player : MonoBehaviour
     public void stopDefend()
     {
         gameObject.GetComponent<Animator>().SetBool("DF", false);
+    }
+    public void stopSuperDefend()
+    {
+        gameObject.GetComponent<Animator>().SetBool("DF2", false);
     }
 
     public void startEnemyDefense()

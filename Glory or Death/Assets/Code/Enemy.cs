@@ -34,7 +34,12 @@ public class Enemy : MonoBehaviour
     // Effects
     public ParticleSystem sandEffect;
     public ParticleSystem hitEffect;
+
+    public ParticleSystem hitShieldEffect;
+    public ParticleSystem bloodShieldEffect;
+
     public ParticleSystem bloodEffect;
+    public ParticleSystem superBloodEffect;
 
     public ParticleSystem hitStrong;
 
@@ -91,7 +96,6 @@ public class Enemy : MonoBehaviour
         if (FindObjectOfType<Player>().missed)
         {
             audioManager.Play("evadeWosh");
-            
         }
         else
         {
@@ -104,9 +108,19 @@ public class Enemy : MonoBehaviour
     public void attackStrong()
     {
         hitStrong.Play();
+        superBloodEffect.Play();
+        audioManager.Play("superStabEnemy");
+    }
+
+    public void shieldAttack()
+    {
+        audioManager.Play("shieldHitEnemy");
+        bloodShieldEffect.Play();
+        hitShieldEffect.Play();
     }
     public void stopAttackStrong()
     {
         GetComponent<Animator>().SetBool("ATK2", false);
+        adrenaline = 0;
     }
 }

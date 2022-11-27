@@ -62,7 +62,6 @@ public class TargetManager : MonoBehaviour
         targets[0].transform.localPosition.Set(0, Random.Range(0.3f, 0.7f), 0);
         // Set target position & scale
         targets[0].transform.DOScale(0.3f, 0.3f);
-        //targets[0].transform.localPosition = new Vector3(0, Random.Range(0.3f, 0.7f), 0);
         
         yield return new WaitForSeconds(wait_time);
 
@@ -77,7 +76,7 @@ public class TargetManager : MonoBehaviour
         targets[2].transform.DOScale(0.3f, 0.3f);
 
         // Deactivates the targets after timer
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.4f);
         
         foreach (var target in targets)
         {

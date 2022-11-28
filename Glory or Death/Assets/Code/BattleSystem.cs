@@ -77,6 +77,11 @@ public class BattleSystem : MonoBehaviour
         debugScreen();
         PlayerEvade();
         updateUI();
+
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
     }
 
     void SetupBattle()
@@ -154,7 +159,7 @@ public class BattleSystem : MonoBehaviour
         {
             //Play Animation
             playerAnimator.SetBool("ATK1", true);
-
+            playerUnit.adrenaline++;
             //Enemy takes damage
             StartCoroutine(waitForDamage(3.6f));
 
@@ -394,8 +399,8 @@ public class BattleSystem : MonoBehaviour
         //check shield
         hitNotif.GetComponent<TMP_Text>().text = "- " + (dmg);
 
-        hitNotif.GetComponent<TMP_Text>().DOFade(0, 1f);
-        hitNotif.transform.DOJump(new Vector2(infoHud.transform.position.x +40, infoHud.transform.position.y + 50), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
+        hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f);
+        hitNotif.transform.DOJump(new Vector2(infoHud.transform.position.x +1, infoHud.transform.position.y + 1), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
     }
     
     public void missHit()
@@ -403,8 +408,8 @@ public class BattleSystem : MonoBehaviour
         GameObject missNotif = Instantiate(missText, infoHud.transform.position, Quaternion.identity);
         missNotif.transform.SetParent(infoHud.transform);
 
-        missNotif.GetComponent<TMP_Text>().DOFade(0, 1f);
-        missNotif.transform.DOJump(new Vector2(infoHud.transform.position.x + 40, infoHud.transform.position.y + 50), 1, 1, 1f).OnComplete(() => Destroy(missNotif));
+        missNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f);
+        missNotif.transform.DOJump(new Vector2(infoHud.transform.position.x + 1, infoHud.transform.position.y + 1), 1, 1, 1f).OnComplete(() => Destroy(missNotif));
     }
 
     public void switchToEnemy()
@@ -461,7 +466,7 @@ public class BattleSystem : MonoBehaviour
 
         //Eliminate
         hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f).OnComplete(() => Destroy(hitNotif));
-        hitNotif.transform.DOJump(new Vector2(infoHud_EN.transform.position.x + 40, infoHud_EN.transform.position.y + 50), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
+        hitNotif.transform.DOJump(new Vector2(infoHud_EN.transform.position.x + 1, infoHud_EN.transform.position.y + 1), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
 
         if (isDead)
         {

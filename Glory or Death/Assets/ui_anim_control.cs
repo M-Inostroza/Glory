@@ -22,8 +22,8 @@ public class ui_anim_control : MonoBehaviour
         shieldManager.transform.DOLocalMoveX(shieldManager.transform.localPosition.x + 400, 1f).SetEase(Ease.InOutSine);
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 300, 1f).SetEase(Ease.InOutSine);
 
-        staminaContainer.transform.DOLocalMoveY(-220, 1f).SetEase(Ease.InOutSine);
+        staminaContainer.transform.DOLocalMoveY(-260, 1f).SetEase(Ease.InOutSine);
 
-        attackCommand.transform.DOMoveX(+160, 1f).SetEase(Ease.InOutSine);
+        attackCommand.transform.DOLocalMoveX(-410, 1f).SetEase(Ease.InOutSine);
     }
 }

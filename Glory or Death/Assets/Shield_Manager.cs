@@ -23,10 +23,10 @@ public class Shield_Manager : MonoBehaviour
     {
         if (!defenseAtive)
         {
-            originalPos = -12.5f;
+            originalPos = -13.5f;
             for (int i = 0; i < playerUnit.currentShield; i++)
             {
-                shieldPrefabs.Add(Instantiate(shield, new Vector2(originalPos, 2.8f), Quaternion.identity));
+                shieldPrefabs.Add(Instantiate(shield, new Vector2(originalPos, 3.3f), Quaternion.identity));
                 shieldPrefabs[i].transform.SetParent(gameObject.transform);
                 originalPos += .4f;
             }

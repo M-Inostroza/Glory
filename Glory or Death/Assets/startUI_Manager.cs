@@ -12,6 +12,8 @@ public class startUI_Manager : MonoBehaviour
     public GameObject BG;
     public GameObject combatUI;
 
+    public GameObject howToPlay;
+
     public GameObject faceOff_1;
     public GameObject faceOff_2;
     public GameObject thunder;
@@ -39,18 +41,12 @@ public class startUI_Manager : MonoBehaviour
         animateUI();
     }
 
-    private void Update()
-    {
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
-    }
-
     void animateUI()
     {
         glory_img.transform.DOLocalMoveY(145, .7f).SetEase(Ease.InOutSine).SetDelay(1.2f).OnComplete(()=>audioManager.Play("clash_glory"));
         death_img.transform.DOLocalMoveY(67, .7f).SetEase(Ease.InOutSine).SetDelay(1.2f);
+
+        howToPlay.transform.DOLocalMoveY(-230, 1f).SetEase(Ease.InOutSine).SetDelay(2.5f);
 
         or_img.transform.DOScale(0.3f, .3f).SetDelay(2.5f);
         rayo_img.transform.DOLocalMove(new Vector2(0, 105), .4f).SetEase(Ease.InOutSine).SetDelay(2f).OnComplete(() => thunderIntro());
@@ -66,13 +62,14 @@ public class startUI_Manager : MonoBehaviour
     {
         audioManager.Play("startGame");
 
-        CS50.transform.DOLocalMoveX(-600, 1f).SetEase(Ease.InOutSine);
+        CS50.transform.DOLocalMoveX(-700, 1f).SetEase(Ease.InOutSine);
         myName.transform.DOLocalMoveX(600, 1f).SetEase(Ease.InOutSine);
         button.transform.DOLocalMoveY(-500, 1f).SetEase(Ease.InOutSine);
         title_parent.transform.DOLocalMoveY(500, 1.1f).SetEase(Ease.InOutSine);
+        howToPlay.SetActive(false);
 
-        faceOff_1.transform.DOLocalMoveX(-310, 0.5f).SetDelay(.8f).OnComplete(() => shakeTheFaceOff());
-        faceOff_2.transform.DOLocalMoveX(310, 0.5f).SetDelay(.8f).OnComplete(() => BG.SetActive(false));
+        faceOff_1.transform.DOLocalMoveX(-300, 0.5f).SetDelay(.8f).OnComplete(() => shakeTheFaceOff());
+        faceOff_2.transform.DOLocalMoveX(300, 0.5f).SetDelay(.8f).OnComplete(() => BG.SetActive(false));
 
         faceOff_1.transform.DOLocalMoveX(-900, 0.5f).SetDelay(4f).OnComplete(() => combatUI.SetActive(true));
         faceOff_2.transform.DOLocalMoveX(900, 0.5f).SetDelay(4f).OnComplete(()=>dissapearUI());

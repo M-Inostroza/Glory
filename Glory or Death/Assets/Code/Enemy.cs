@@ -43,11 +43,11 @@ public class Enemy : MonoBehaviour
 
     public ParticleSystem hitStrong;
 
-    AudioMAnager audioManager;
+    AudioManager audioManager;
 
     private void Start()
     {
-        audioManager = FindObjectOfType<AudioMAnager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
 

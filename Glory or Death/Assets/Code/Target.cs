@@ -13,11 +13,11 @@ public class Target : MonoBehaviour
     public BattleSystem BattleSystem;
 
     //Audio
-    AudioMAnager audioManager;
+    AudioManager audioManager;
 
     private void Start()
     {
-        audioManager = FindObjectOfType<AudioMAnager>();
+        audioManager = FindObjectOfType<AudioManager>();
         anim = gameObject.GetComponent<Animator>();
         colider = gameObject.GetComponent<CircleCollider2D>();
     }

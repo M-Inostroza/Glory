@@ -34,7 +34,7 @@ public class startUI_Manager : MonoBehaviour
     public ParticleSystem rayo_effect;
 
     // Audio
-    public AudioMAnager audioManager;
+    public AudioManager audioManager;
     // Start is called before the first frame update
     private void Start()
     {

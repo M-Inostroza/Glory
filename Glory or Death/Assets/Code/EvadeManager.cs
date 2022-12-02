@@ -20,12 +20,12 @@ public class EvadeManager : MonoBehaviour
     List<GameObject> instantArrows = new List<GameObject>();
 
     //Audio
-    AudioMAnager audioManager;
+    AudioManager audioManager;
 
     private void Start()
     {
         playerAnimator = playerUnit.GetComponent<Animator>();
-        audioManager = FindObjectOfType<AudioMAnager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void OnEnable()

@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     public ParticleSystem superHitEffect;
     public ParticleSystem superBloodEffect;
 
-    AudioMAnager audioManager;
+    AudioManager audioManager;
 
 
     // Current Enemy
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        audioManager = FindObjectOfType<AudioMAnager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     public bool TakeDamage(int dmg)

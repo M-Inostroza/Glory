@@ -22,20 +22,22 @@ public class startUI_Manager : MonoBehaviour
     [SerializeField]
     private GameObject faceOff_thunder;
 
-    public GameObject combatUI;
+    public GameObject combat_UI;
 
     // Title
-    public GameObject title_parent;
-    public GameObject glory_img;
-    public GameObject death_img;
-    public GameObject or_img;
+    [SerializeField]
+    private GameObject title_container;
 
-    public GameObject rayo_img;
+    private Transform glory_img;
+    private Transform death_img;
+    private Transform or_img;
+    private Transform bolt_img;
+
     public ParticleSystem rayo_effect;
 
     // Audio
     public AudioManager audioManager;
-    // Start is called before the first frame update
+    
     private void Start()
     {
         //Get UI elements
@@ -47,6 +49,12 @@ public class startUI_Manager : MonoBehaviour
 
         faceOff_2 = transform.Find("faceOff_2");
         enemy_image = faceOff_2.transform.Find("enemy_img");
+
+        //Title
+        glory_img = title_container.transform.Find("Glory");
+        death_img = title_container.transform.Find("Death");
+        or_img = title_container.transform.Find("Or");
+        bolt_img = title_container.transform.Find("Bolt");
 
         audioManager.Play("MainTheme");
         animateUI();
@@ -60,7 +68,7 @@ public class startUI_Manager : MonoBehaviour
         howToPlay_button.transform.DOLocalMoveY(-230, 1f).SetEase(Ease.InOutSine).SetDelay(2.5f);
 
         or_img.transform.DOScale(0.3f, .3f).SetDelay(2.5f);
-        rayo_img.transform.DOLocalMove(new Vector2(0, 105), .4f).SetEase(Ease.InOutSine).SetDelay(2f).OnComplete(() => thunderIntro());
+        bolt_img.transform.DOLocalMove(new Vector2(0, 105), .4f).SetEase(Ease.InOutSine).SetDelay(2f).OnComplete(() => thunderIntro());
 
         play_button.transform.DOLocalMoveY(-100, 1f).SetEase(Ease.InOutSine).SetDelay(2.5f);
     }
@@ -71,13 +79,13 @@ public class startUI_Manager : MonoBehaviour
         audioManager.Play("startGame");
 
         play_button.transform.DOLocalMoveY(-500, 1f).SetEase(Ease.InOutSine);
-        title_parent.transform.DOLocalMoveY(500, 1.1f).SetEase(Ease.InOutSine);
+        title_container.transform.DOLocalMoveY(500, 1.1f).SetEase(Ease.InOutSine);
         howToPlay_button.gameObject.SetActive(false);
 
         faceOff_1.transform.DOLocalMoveX(-300, 0.5f).SetDelay(.8f).OnComplete(() => shakeTheFaceOff());
         faceOff_2.transform.DOLocalMoveX(300, 0.5f).SetDelay(.8f).OnComplete(() => background_image.SetActive(false));
 
-        faceOff_1.transform.DOLocalMoveX(-900, 0.5f).SetDelay(4f).OnComplete(() => combatUI.SetActive(true));
+        faceOff_1.transform.DOLocalMoveX(-900, 0.5f).SetDelay(4f).OnComplete(() => combat_UI.SetActive(true));
         faceOff_2.transform.DOLocalMoveX(900, 0.5f).SetDelay(4f).OnComplete(()=>dissapearUI());
     }
 

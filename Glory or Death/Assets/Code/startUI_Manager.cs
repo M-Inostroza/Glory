@@ -12,13 +12,8 @@ public class startUI_Manager : MonoBehaviour
     [SerializeField]
     private GameObject background_image;
 
-    // FaceOff Elements
-    private Transform faceOff_1;
-    private Transform player_image;
-
-    private Transform faceOff_2;
-    private Transform enemy_image;
-
+    [SerializeField]
+    private Transform player_image, enemy_image, faceOff_1, faceOff_2;
     [SerializeField]
     private GameObject faceOff_thunder;
 
@@ -40,24 +35,9 @@ public class startUI_Manager : MonoBehaviour
     
     private void Start()
     {
-        //Get UI elements
-        play_button = transform.Find("play_button");
-        howToPlay_button = transform.Find("howToPlay_button");
-
-        faceOff_1 = transform.Find("faceOff_1");
-        player_image = faceOff_1.transform.Find("player_img");
-
-        faceOff_2 = transform.Find("faceOff_2");
-        enemy_image = faceOff_2.transform.Find("enemy_img");
-
-        //Title
-        glory_img = title_container.transform.Find("Glory");
-        death_img = title_container.transform.Find("Death");
-        or_img = title_container.transform.Find("Or");
-        bolt_img = title_container.transform.Find("Bolt");
-
-        audioManager.Play("MainTheme");
+        getUI_elements();
         animateUI();
+        audioManager.Play("MainTheme");
     }
 
     void animateUI()
@@ -73,7 +53,6 @@ public class startUI_Manager : MonoBehaviour
         play_button.transform.DOLocalMoveY(-100, 1f).SetEase(Ease.InOutSine).SetDelay(2.5f);
     }
 
-    
     public void startFaceOff()
     {
         audioManager.Play("startGame");
@@ -110,4 +89,16 @@ public class startUI_Manager : MonoBehaviour
         audioManager.Play("thunder_title");
     }
 
+    void getUI_elements()
+    {
+        //Get UI elements
+        play_button = transform.Find("play_button");
+        howToPlay_button = transform.Find("howToPlay_button");
+
+        //Title
+        glory_img = title_container.transform.Find("Glory");
+        death_img = title_container.transform.Find("Death");
+        or_img = title_container.transform.Find("Or");
+        bolt_img = title_container.transform.Find("Bolt");
+    }
 }

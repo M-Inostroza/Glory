@@ -8,7 +8,6 @@ using DG.Tweening;
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleSystem : MonoBehaviour
 {
-    public static BattleSystem Instance { get; private set; }
     //Cooldown Commands
     [SerializeField]
     private bool canDefend = true;
@@ -67,7 +66,6 @@ public class BattleSystem : MonoBehaviour
     private void Start()
     {
         evadeTimer = 5f;
-        Instance = this;
         state = BattleState.START;
         SetupBattle();
     }
@@ -93,24 +91,19 @@ public class BattleSystem : MonoBehaviour
         //Get Animator
         playerAnimator = playerPrefab.GetComponent<Animator>();
 
-        //Set HP to max
+        //Set stats to max
         playerUnit.currentHP = playerUnit.maxHP;
         enemyUnit.currentHP = enemyUnit.maxHP;
-        
-        //Set shield to max
         playerUnit.currentShield = playerUnit.maxShield;
         enemyUnit.currentShield = enemyUnit.maxShield;
-
-        //Set Stamina to max
         playerUnit.currentStamina = playerUnit.maxStamina;
         enemyUnit.currentStamina = enemyUnit.maxStamina;
-
-        //Set Agility to max
         playerUnit.currentAgility = playerUnit.maxAgility;
         enemyUnit.currentAgility = enemyUnit.maxAgility;
 
         state = BattleState.PLAYERTURN;
     }
+
 
     public void OnAttackButton()
     {
@@ -159,7 +152,7 @@ public class BattleSystem : MonoBehaviour
         {
             //Play Animation
             playerAnimator.SetBool("ATK1", true);
-            playerUnit.adrenaline++;
+            playerUnit.adrenaline += 10;
             //Enemy takes damage
             StartCoroutine(waitForDamage(3.6f));
 

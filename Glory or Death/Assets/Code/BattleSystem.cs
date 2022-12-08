@@ -8,6 +8,9 @@ using DG.Tweening;
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleSystem : MonoBehaviour
 {
+    //Target Manager
+    private TargetManager targetManager;
+
     //Cooldown Commands
     [SerializeField]
     private bool canDefend = true;
@@ -91,6 +94,8 @@ public class BattleSystem : MonoBehaviour
         //Get Animator
         playerAnimator = playerPrefab.GetComponent<Animator>();
 
+        targetManager = FindObjectOfType<TargetManager>();
+
         //Set stats to max
         playerUnit.currentHP = playerUnit.maxHP;
         enemyUnit.currentHP = enemyUnit.maxHP;
@@ -150,6 +155,7 @@ public class BattleSystem : MonoBehaviour
         //Check stamina
         if (playerUnit.currentStamina >= 1)
         {
+            targetManager.attack();
             //Play Animation
             playerAnimator.SetBool("ATK1", true);
             playerUnit.adrenaline += 10;
@@ -171,6 +177,7 @@ public class BattleSystem : MonoBehaviour
         //Check stamina
         if (playerUnit.currentStamina >= 1)
         {
+            targetManager.attackHard();
             //Play Animation
             playerAnimator.SetBool("ATK2", true);
 
@@ -180,6 +187,8 @@ public class BattleSystem : MonoBehaviour
             //Reduce Stamina
             playerUnit.currentStamina -= 1;
             playerHUD.updateBricks(playerUnit.currentStamina);
+
+            playerUnit.adrenaline = 0;
 
             //Resets defend counter
             canDefend = true;
@@ -202,8 +211,6 @@ public class BattleSystem : MonoBehaviour
             switchToEnemy();
         } 
     }
-
-
     // Evade bools
     bool canRight = true;
     bool canLeft = true;

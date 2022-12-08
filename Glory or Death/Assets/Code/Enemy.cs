@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class Enemy : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public bool TakeDamage(int dmg)
+    /*public bool TakeDamage(int dmg)
     {
         transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);
 
@@ -72,6 +73,15 @@ public class Enemy : MonoBehaviour
         {
             return false;
         }
+    }*/
+    public bool TakeDamage(int dmg)
+    {
+        transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);
+
+        currentHP -= Math.Max(dmg - (currentShield > 0 ? 2 : 0), 0);
+        currentShield = Math.Max(currentShield - 1, 0);
+
+        return currentHP <= 0;
     }
 
     public void StopAttack()

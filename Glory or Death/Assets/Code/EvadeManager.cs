@@ -54,6 +54,7 @@ public class EvadeManager : MonoBehaviour
         pressCommands();
     }
 
+    
     // Main arrow mechanic
     void pressCommands()
     {

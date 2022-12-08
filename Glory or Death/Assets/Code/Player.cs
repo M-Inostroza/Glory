@@ -8,9 +8,6 @@ public class Player : MonoBehaviour
     //Name of the player *TODO* -> get name of player
     public string playerName;
 
-    //Target manager
-    public GameObject target_manager;
-
     //Start damage
     public int native_damage;
 
@@ -89,11 +86,6 @@ public class Player : MonoBehaviour
         {
             return false;
         }
-    }
-
-    public void activateTargets()
-    {
-        target_manager.SetActive(true);
     }
 
     public void stopAttack()

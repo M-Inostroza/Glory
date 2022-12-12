@@ -17,8 +17,12 @@ public class BattleSystem : MonoBehaviour
     public bool canEvade = false;
     private float evadeTimer;
      
-    // Defend system
-    public GameObject defendManager;
+    // Dodge system
+    public GameObject dodgeManager;
+
+    // Counter mechanic
+    private bool canCounter;
+    public GameObject counterManager;
 
     //Scores
     public int targetHit;
@@ -69,6 +73,7 @@ public class BattleSystem : MonoBehaviour
     private void Start()
     {
         evadeTimer = 5f;
+        canCounter = true;
         state = BattleState.START;
         SetupBattle();
     }
@@ -109,6 +114,7 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.PLAYERTURN;
     }
 
+    // ----------------- Buttons -----------------
 
     public void OnAttackButton()
     {
@@ -124,6 +130,21 @@ public class BattleSystem : MonoBehaviour
             return;
 
         PlayerSuperAttack();
+    }
+
+    public void OnCounterButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+        Debug.Log("counter");
+        PlayerCounter();
+    }
+
+    public void OnDodgeButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+        PlayDodge();
     }
 
     public void OnRestButton()
@@ -193,6 +214,25 @@ public class BattleSystem : MonoBehaviour
             //Resets defend counter
             canDefend = true;
         }
+    }
+
+    void PlayerCounter()
+    {
+        if (canCounter)
+        {
+            counterManager.SetActive(true);
+            canCounter = false;
+            switchToEnemy();
+        } else
+        {
+            return;
+        }
+    }
+
+    void PlayDodge()
+    {
+        dodgeManager.SetActive(true);
+        switchToEnemy();
     }
 
     void PlayerRest()
@@ -283,8 +323,8 @@ public class BattleSystem : MonoBehaviour
                 //Deals damage to Player
                 if (playerUnit.currentShield > 0)
                 {
-                    bool isDead = playerUnit.TakeDamage(totalDMG - 2);
-                    showHit(totalDMG - 2);
+                    bool isDead = playerUnit.TakeDamage(totalDMG);
+                    showHit(totalDMG);
                     if (isDead)
                     {
                         state = BattleState.LOST;
@@ -309,9 +349,9 @@ public class BattleSystem : MonoBehaviour
             {
                 // Attack weak
 
+                int totalDMG = enemyUnit.native_damage;
                 // Starts evade system
                 yield return new WaitForSeconds(1f);
-                defendManager.SetActive(true);
 
                 enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
 
@@ -324,8 +364,8 @@ public class BattleSystem : MonoBehaviour
                     enemyUnit.adrenaline += 2;
                     if (playerUnit.currentShield > 0)
                     {
-                        bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage - 2);
-                        showHit(enemyUnit.native_damage - 2);
+                        bool isDead = playerUnit.TakeDamage(totalDMG -= 2);
+                        showHit(totalDMG -= 2);
 
                         if (isDead)
                         {

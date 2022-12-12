@@ -56,18 +56,18 @@ public class Player : MonoBehaviour
     }
 
     public bool TakeDamage(int dmg)
-    { 
+    {
         //Check Agility
         if (!missed)
         {
             missed = false;
-            currentShield--;
             currentHP -= dmg;
+            currentShield--;
             
-            if (currentShield >= 0)
-            {
+            if (currentShield > 0)
+            {      
                 shield_manager.destroyShield();
-            } else if (currentShield < 0)
+            } else if (currentShield <= 0)
             {
                 currentShield = 0;
             }   

@@ -32,6 +32,8 @@ public class Enemy : MonoBehaviour
 
     public bool hasHit = false;
 
+    private counterManager counterManager;
+
     // Effects
     public ParticleSystem sandEffect;
     public ParticleSystem hitEffect;
@@ -49,6 +51,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        counterManager = FindObjectOfType<counterManager>();
     }
 
     public bool TakeDamage(int dmg)
@@ -110,4 +113,16 @@ public class Enemy : MonoBehaviour
         GetComponent<Animator>().SetBool("ATK2", false);
         adrenaline = 0;
     }
+
+    // Experimental anim
+    public void base_to_attack()
+    {
+        gameObject.GetComponent<Animator>().SetBool("attack", true);
+    }
+    public void base_to_fail()
+    {
+        gameObject.GetComponent<Animator>().SetBool("fail", true);
+    }
+
+    
 }

@@ -97,6 +97,11 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("ATK2", false);
     }
 
+    public void stopCounter()
+    {
+        gameObject.GetComponent<Animator>().SetBool("Counter", false);
+    }
+
     public void stopRest()
     {
         gameObject.GetComponent<Animator>().SetBool("Resting", false);
@@ -164,4 +169,8 @@ public class Player : MonoBehaviour
         audioManager.Play("evadeAttack");
         groundJumpEffect.Play();
     }
+
+
+    
+    
 }

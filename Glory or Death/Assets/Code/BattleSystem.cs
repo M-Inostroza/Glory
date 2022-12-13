@@ -11,6 +11,10 @@ public class BattleSystem : MonoBehaviour
     //Target Manager
     private TargetManager targetManager;
 
+    //Audio manager
+    [SerializeField]
+    private AudioManager audioManager;
+
     //Cooldown Commands
     [SerializeField]
     private bool canDefend = true;
@@ -216,6 +220,7 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerCounter()
     {
+        audioManager.Play("counter_charge");
         counterManager.SetActive(true);
         switchToEnemy();
     }
@@ -343,7 +348,7 @@ public class BattleSystem : MonoBehaviour
                 // Starts evade system
                 yield return new WaitForSeconds(1f);
 
-                enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
+                enemyUnit.GetComponent<Animator>().SetBool("base", true);
 
                 //Delay
                 yield return new WaitForSeconds(3.4f);

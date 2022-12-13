@@ -119,10 +119,20 @@ public class Enemy : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("attack", true);
     }
+    public void stop_attack()
+    {
+        gameObject.GetComponent<Animator>().SetBool("attack", false);
+        gameObject.GetComponent<Animator>().SetBool("base", false);
+    }
     public void base_to_fail()
     {
         gameObject.GetComponent<Animator>().SetBool("fail", true);
     }
+    public void stop_fail()
+    {
+        gameObject.GetComponent<Animator>().SetBool("fail", false);
+        gameObject.GetComponent<Animator>().SetBool("base", false);
+    }
 
-    
+
 }

@@ -52,9 +52,9 @@ public class counterManager : MonoBehaviour
 
             if (transform.localScale.x < scaleLimit)
             {
+                enemyUnit.GetComponent<Animator>().SetBool("attack", true);
                 audioManager.Play("counter_fail");
                 transform.DOShakePosition(0.4f, 0.05f, 40).OnComplete(() => killEverything());
-                enemyUnit.GetComponent<Animator>().SetBool("attack", true);
             }
             else if (transform.localScale.x > scaleLimit)
             {

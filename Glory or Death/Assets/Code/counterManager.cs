@@ -5,55 +5,55 @@ using DG.Tweening;
 
 public class counterManager : MonoBehaviour
 {
-    private bool canPress;
+    //Scale tween
     private Tween scaleDown;
 
     [SerializeField]
-    private GameObject timer;
+    private GameObject shadow;
 
     [SerializeField]
-    private ParticleSystem fire_loop, fire_hit;
+    private ParticleSystem fire_hit;
+
+    private void Start()
+    {
+        scaleDown = transform.DOScale(1, 3.5f).SetEase(Ease.InBack);
+    }
 
     private void OnEnable()
     {
-        canPress = true;
-        fire_loop.Play();
-        timer.SetActive(true);
-        scaleDown = transform.DOScale(1, 3.5f);
+        shadow.SetActive(true);
+        scaleDown.Play();
     }
     private void Update()
     {
-        scaleDown.Play().OnComplete(() => { killSprites(); fire_loop.Stop(); });
-        executeShield(0.8f);
+        scaleDown.Play().OnComplete(() => killEverything());
+        executeShield(0.9f);
     }
 
     void executeShield(float scaleLimit)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canPress)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            fire_loop.Stop();
             scaleDown.Kill();
 
-            canPress = false;
             if (transform.localScale.x < scaleLimit)
             {
                 Debug.Log("Too soon");
-                transform.DOShakePosition(0.4f, 0.05f, 40).OnComplete(() => killSprites());
+                transform.DOShakePosition(0.4f, 0.05f, 40).OnComplete(() => killEverything());
             }
             else if (transform.localScale.x > scaleLimit)
             {
                 StartCoroutine(hitShield());
             }
-            timer.SetActive(false);
+            shadow.SetActive(false);
         }
     }
 
-    void killSprites()
+    void killEverything()
     {
-        scaleDown.Rewind();
-        timer.SetActive(false);
+        scaleDown.Restart();
+        shadow.SetActive(false);
         gameObject.SetActive(false);
-        transform.parent.gameObject.SetActive(false);
     }
 
     IEnumerator hitShield()
@@ -61,7 +61,7 @@ public class counterManager : MonoBehaviour
         fire_hit.Play();
         
         yield return new WaitForSeconds(0.3f);
-        killSprites();
+        killEverything();
     }
 }
 

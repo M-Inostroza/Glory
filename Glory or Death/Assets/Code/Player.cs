@@ -61,11 +61,11 @@ public class Player : MonoBehaviour
         if (!missed)
         {
             missed = false;
-            currentHP -= dmg;
             currentShield--;
-            
+            currentHP -= dmg;
             if (currentShield > 0)
-            {      
+            {
+                
                 shield_manager.destroyShield();
             } else if (currentShield <= 0)
             {

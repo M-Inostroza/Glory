@@ -21,7 +21,6 @@ public class BattleSystem : MonoBehaviour
     public GameObject dodgeManager;
 
     // Counter mechanic
-    private bool canCounter;
     public GameObject counterManager;
 
     //Scores
@@ -73,7 +72,7 @@ public class BattleSystem : MonoBehaviour
     private void Start()
     {
         evadeTimer = 5f;
-        canCounter = true;
+
         state = BattleState.START;
         SetupBattle();
     }
@@ -136,7 +135,6 @@ public class BattleSystem : MonoBehaviour
     {
         if (state != BattleState.PLAYERTURN)
             return;
-        Debug.Log("counter");
         PlayerCounter();
     }
 
@@ -218,15 +216,8 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerCounter()
     {
-        if (canCounter)
-        {
-            counterManager.SetActive(true);
-            canCounter = false;
-            switchToEnemy();
-        } else
-        {
-            return;
-        }
+        counterManager.SetActive(true);
+        switchToEnemy();
     }
 
     void PlayDodge()
@@ -347,9 +338,8 @@ public class BattleSystem : MonoBehaviour
             } 
             else
             {
-                // Attack weak
+                // ---------- ATTACK WEAK ----------
 
-                int totalDMG = enemyUnit.native_damage;
                 // Starts evade system
                 yield return new WaitForSeconds(1f);
 
@@ -364,9 +354,9 @@ public class BattleSystem : MonoBehaviour
                     enemyUnit.adrenaline += 2;
                     if (playerUnit.currentShield > 0)
                     {
-                        bool isDead = playerUnit.TakeDamage(totalDMG -= 2);
-                        showHit(totalDMG -= 2);
-
+                        bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage - 2);
+                        showHit(enemyUnit.native_damage - 2);
+                        
                         if (isDead)
                         {
                             state = BattleState.LOST;

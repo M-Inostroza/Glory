@@ -134,5 +134,19 @@ public class Enemy : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("base", false);
     }
 
+    public void hurt_player()
+    {
+        var player = FindObjectOfType<Player>();
+        player.GetComponent<Animator>().SetBool("DF", true);
+
+        if (player.currentShield > 0)
+        {
+            FindObjectOfType<BattleSystem>().showHit(native_damage - 2);
+        } else
+        {
+            FindObjectOfType<BattleSystem>().showHit(native_damage);
+        } 
+    }
+
 
 }

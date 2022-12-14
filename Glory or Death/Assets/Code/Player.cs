@@ -60,12 +60,12 @@ public class Player : MonoBehaviour
         //Check Agility
         if (!missed)
         {
+            Debug.Log("Player taking damage");
             missed = false;
             currentShield--;
             currentHP -= dmg;
             if (currentShield > 0)
             {
-                
                 shield_manager.destroyShield();
             } else if (currentShield <= 0)
             {

@@ -139,6 +139,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (state != BattleState.PLAYERTURN)
             return;
+
         PlayerCounter();
     }
 
@@ -181,7 +182,7 @@ public class BattleSystem : MonoBehaviour
             targetManager.attack();
             //Play Animation
             playerAnimator.SetBool("ATK1", true);
-            playerUnit.adrenaline += 10;
+            playerUnit.adrenaline += 5;
             //Enemy takes damage
             StartCoroutine(waitForDamage(3.6f));
 
@@ -222,7 +223,8 @@ public class BattleSystem : MonoBehaviour
     {
         audioManager.Play("counter_charge");
         counterManager.SetActive(true);
-        switchToEnemy();
+        state = BattleState.ENEMYTURN;
+        StartCoroutine(EnemyTurn_counter());
     }
 
     void PlayDodge()
@@ -302,7 +304,7 @@ public class BattleSystem : MonoBehaviour
     }
 
     // Enemy turn
-    IEnumerator EnemyTurn()
+    IEnumerator EnemyTurn_attack()
     {
         //Check stamina
         if (enemyUnit.currentStamina >= 1)
@@ -344,14 +346,12 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 // ---------- ATTACK WEAK ----------
+                enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
 
                 // Starts evade system
-                yield return new WaitForSeconds(1f);
-
-                enemyUnit.GetComponent<Animator>().SetBool("base", true);
-
+                //yield return new WaitForSeconds(1f);
                 //Delay
-                yield return new WaitForSeconds(3.4f);
+                yield return new WaitForSeconds(4.4f);
 
                 //HITS!!
                 if (!playerUnit.missed)
@@ -360,7 +360,7 @@ public class BattleSystem : MonoBehaviour
                     if (playerUnit.currentShield > 0)
                     {
                         bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage - 2);
-                        showHit(enemyUnit.native_damage - 2);
+                        //showHit(enemyUnit.native_damage - 2);
                         
                         if (isDead)
                         {
@@ -392,6 +392,48 @@ public class BattleSystem : MonoBehaviour
             }
         }
     }
+
+    IEnumerator EnemyTurn_counter()
+    {
+        enemyUnit.GetComponent<Animator>().SetBool("base", true);
+        yield return new WaitForSeconds(2.6f);
+
+        if (!counterManager.GetComponent<counterManager>().counterSuccess)
+        {
+            enemyUnit.adrenaline += 2;
+            if (playerUnit.currentShield > 0)
+            {
+                bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage - 2);
+                //showHit(enemyUnit.native_damage - 2);
+
+                if (isDead)
+                {
+                    state = BattleState.LOST;
+                    EndBattle();
+                }
+                else
+                    state = BattleState.PLAYERTURN;
+            }
+            else
+            {
+                bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
+                showHit(enemyUnit.native_damage);
+                if (isDead)
+                {
+                    state = BattleState.LOST;
+                    EndBattle();
+                }
+                else
+                    state = BattleState.PLAYERTURN;
+            }
+        } else
+        {
+            enemyUnit.TakeDamage(1);
+        }
+
+        state = BattleState.PLAYERTURN;
+    }
+    
 
     void EndBattle()
     {
@@ -450,7 +492,7 @@ public class BattleSystem : MonoBehaviour
     public void switchToEnemy()
     {
         state = BattleState.ENEMYTURN;
-        StartCoroutine(EnemyTurn());
+        StartCoroutine(EnemyTurn_attack());
     }
 
     // Deactivates evade mode, deactivates evade manager, resets timer, resets challenge, changes to enemy turn.

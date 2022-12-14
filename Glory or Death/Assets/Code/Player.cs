@@ -60,7 +60,6 @@ public class Player : MonoBehaviour
         //Check Agility
         if (!missed)
         {
-            Debug.Log("Player taking damage");
             missed = false;
             currentShield--;
             currentHP -= dmg;
@@ -70,6 +69,7 @@ public class Player : MonoBehaviour
             } else if (currentShield <= 0)
             {
                 currentShield = 0;
+                shield_manager.gameObject.SetActive(false);
             }   
         }
         else

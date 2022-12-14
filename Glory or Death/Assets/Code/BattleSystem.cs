@@ -417,7 +417,7 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
-                showHit(enemyUnit.native_damage);
+                //showHit(enemyUnit.native_damage);
                 if (isDead)
                 {
                     state = BattleState.LOST;

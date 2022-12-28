@@ -182,7 +182,7 @@ public class BattleSystem : MonoBehaviour
             targetManager.attack();
             //Play Animation
             playerAnimator.SetBool("ATK1", true);
-            playerUnit.adrenaline += 5;
+            playerUnit.adrenaline += 2;
             //Enemy takes damage
             StartCoroutine(waitForDamage(3.6f));
 
@@ -345,8 +345,8 @@ public class BattleSystem : MonoBehaviour
             } 
             else
             {
-                // ---------- ATTACK WEAK ----------
-                enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
+                // ---------- ATTACK BASIC ----------
+                enemyUnit.GetComponent<Animator>().SetBool("attack_basic", true);
 
                 // Starts evade system
                 //yield return new WaitForSeconds(1f);

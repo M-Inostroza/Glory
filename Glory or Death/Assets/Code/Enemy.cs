@@ -6,8 +6,8 @@ using System;
 
 public class Enemy : MonoBehaviour
 {
-    //Name of the player *TODO* -> get name of player
-    public string playerName;
+    //Name of the enemy
+    public string enemyName;
 
     //Start damage
     public int native_damage;
@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     private counterManager counterManager;
 
     // Effects
-    public ParticleSystem sandEffect;
+    /*public ParticleSystem sandEffect;
     public ParticleSystem hitEffect;
 
     public ParticleSystem hitShieldEffect;
@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
     public ParticleSystem bloodEffect;
     public ParticleSystem superBloodEffect;
 
-    public ParticleSystem hitStrong;
+    public ParticleSystem hitStrong;*/
 
     AudioManager audioManager;
 
@@ -64,9 +64,14 @@ public class Enemy : MonoBehaviour
         return currentHP <= 0;
     }
 
-    public void StopAttack()
+    public void stopAttackBasic()
     {
-        GetComponent<Animator>().SetBool("ATK1", false);
+        GetComponent<Animator>().SetBool("attack_basic", false);
+    }
+
+    public void stopHurtBasic()
+    {
+        gameObject.GetComponent<Animator>().SetBool("hurt_basic", false);
     }
 
     public void stopEnemyDefense()
@@ -78,7 +83,6 @@ public class Enemy : MonoBehaviour
     public void playJump()
     {
         audioManager.Play("jumpWosh");
-        sandEffect.Play();
     }
 
     public void playAction()
@@ -90,23 +94,17 @@ public class Enemy : MonoBehaviour
         else
         {
             audioManager.Play("stab");
-            hitEffect.Play();
-            bloodEffect.Play();
         }
     }
 
     public void attackStrong()
     {
-        hitStrong.Play();
-        superBloodEffect.Play();
         audioManager.Play("superStabEnemy");
     }
 
     public void shieldAttack()
     {
         audioManager.Play("shieldHitEnemy");
-        bloodShieldEffect.Play();
-        hitShieldEffect.Play();
     }
     public void stopAttackStrong()
     {
@@ -119,11 +117,7 @@ public class Enemy : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("attack", true);
     }
-    public void stop_attack()
-    {
-        gameObject.GetComponent<Animator>().SetBool("attack", false);
-        gameObject.GetComponent<Animator>().SetBool("base", false);
-    }
+    
     public void base_to_fail()
     {
         gameObject.GetComponent<Animator>().SetBool("fail", true);

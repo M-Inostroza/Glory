@@ -35,10 +35,10 @@ public class Player : MonoBehaviour
     public float evade;
 
     // Effects
-    public ParticleSystem hitEffect;
-    public ParticleSystem bloodEffect;
-    public ParticleSystem sandEffect;
-    public ParticleSystem groundHitEffect;
+    public ParticleSystem atk_normal_spark;
+    public ParticleSystem atk_normal_blood;
+    public ParticleSystem jump_dust;
+    public ParticleSystem land_dust;
     public ParticleSystem groundJumpEffect;
 
     public ParticleSystem superHitEffect;
@@ -92,6 +92,8 @@ public class Player : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);
     }
+
+    
     public void stopSuperAttack()
     {
         gameObject.GetComponent<Animator>().SetBool("ATK2", false);
@@ -124,7 +126,7 @@ public class Player : MonoBehaviour
 
     public void startEnemyDefense()
     {
-        enemy_unit.GetComponent<Animator>().SetBool("Hurt", true);
+        enemy_unit.GetComponent<Animator>().SetBool("hurt_basic", true);
     }
 
     public void shakeHit()
@@ -135,26 +137,26 @@ public class Player : MonoBehaviour
     public void playJump()
     {
         audioManager.Play("jumpWosh");
-        sandEffect.Play();
+        jump_dust.Play();
     }
 
     public void playSuperJump()
     {
         audioManager.Play("superJumpWosh");
-        sandEffect.Play();
+        jump_dust.Play();
     }
 
     public void playLand()
     {
         audioManager.Play("fall");
-        groundHitEffect.Play();
+        land_dust.Play();
     }
 
     public void playStab()
     {
         audioManager.Play("stab");
-        hitEffect.Play();
-        bloodEffect.Play();
+        atk_normal_spark.Play();
+        atk_normal_blood.Play();
     }
 
     public void playSuperStab()

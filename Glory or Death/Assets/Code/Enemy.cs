@@ -35,9 +35,9 @@ public class Enemy : MonoBehaviour
     private counterManager counterManager;
 
     // Effects
-    /*public ParticleSystem sandEffect;
-    public ParticleSystem hitEffect;
-
+    public ParticleSystem jump_dust;
+    public ParticleSystem atk_normal_spark;
+    /*
     public ParticleSystem hitShieldEffect;
     public ParticleSystem bloodShieldEffect;
 
@@ -64,6 +64,56 @@ public class Enemy : MonoBehaviour
         return currentHP <= 0;
     }
 
+    public void executeAttack()
+    {
+        if (!FindObjectOfType<Player>().missed)
+        {
+            FindObjectOfType<Player>().GetComponent<Animator>().SetBool("HURT1", true);
+            adrenaline += 2;
+            if (FindObjectOfType<Player>().currentShield > 0)
+            {
+                bool isDead = FindObjectOfType<Player>().TakeDamage(native_damage - 2);
+                //showHit(enemyUnit.native_damage - 2);
+
+                if (isDead)
+                {
+                    FindObjectOfType<BattleSystem>().state = BattleState.LOST;
+                    FindObjectOfType<BattleSystem>().EndBattle();
+                }
+                else
+                    FindObjectOfType<BattleSystem>().state = BattleState.PLAYERTURN;
+            }
+            else
+            {
+                bool isDead = FindObjectOfType<Player>().TakeDamage(native_damage);
+                FindObjectOfType<BattleSystem>().showHit(native_damage);
+                if (isDead)
+                {
+                    FindObjectOfType<BattleSystem>().state = BattleState.LOST;
+                    FindObjectOfType<BattleSystem>().EndBattle();
+                }
+                else
+                    FindObjectOfType<BattleSystem>().state = BattleState.PLAYERTURN;
+            }
+        }
+        else
+        {
+            FindObjectOfType<BattleSystem>().missHit();
+            adrenaline++;
+            FindObjectOfType<BattleSystem>().state = BattleState.PLAYERTURN;
+        }
+    }
+
+    public void playJump()
+    {
+        audioManager.Play("jump_basic");
+        jump_dust.Play();
+    }
+    public void playAttack()
+    {
+        atk_normal_spark.Play();
+        audioManager.Play("enemy_attack_basic");
+    }
     public void stopAttackBasic()
     {
         GetComponent<Animator>().SetBool("attack_basic", false);
@@ -80,22 +130,9 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void playJump()
-    {
-        audioManager.Play("jumpWosh");
-    }
+    
 
-    public void playAction()
-    {
-        if (FindObjectOfType<Player>().missed)
-        {
-            audioManager.Play("evadeWosh");
-        }
-        else
-        {
-            audioManager.Play("stab");
-        }
-    }
+   
 
     public void attackStrong()
     {

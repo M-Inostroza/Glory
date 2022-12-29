@@ -348,47 +348,6 @@ public class BattleSystem : MonoBehaviour
                 // ---------- ATTACK BASIC ----------
                 enemyUnit.GetComponent<Animator>().SetBool("attack_basic", true);
 
-                // Starts evade system
-                //yield return new WaitForSeconds(1f);
-                //Delay
-                yield return new WaitForSeconds(4.4f);
-
-                //HITS!!
-                if (!playerUnit.missed)
-                {
-                    enemyUnit.adrenaline += 2;
-                    if (playerUnit.currentShield > 0)
-                    {
-                        bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage - 2);
-                        //showHit(enemyUnit.native_damage - 2);
-                        
-                        if (isDead)
-                        {
-                            state = BattleState.LOST;
-                            EndBattle();
-                        }
-                        else
-                            state = BattleState.PLAYERTURN;
-                    }
-                    else 
-                    {
-                        bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
-                        showHit(enemyUnit.native_damage);
-                        if (isDead)
-                        {
-                            state = BattleState.LOST;
-                            EndBattle();
-                        }
-                        else
-                            state = BattleState.PLAYERTURN;
-                    }
-                }
-                else
-                {
-                    missHit();
-                    enemyUnit.adrenaline++;
-                    state = BattleState.PLAYERTURN;
-                }
             }
         }
     }
@@ -435,7 +394,7 @@ public class BattleSystem : MonoBehaviour
     }
     
 
-    void EndBattle()
+    public void EndBattle()
     {
         if(state == BattleState.WON)
         {

@@ -92,8 +92,12 @@ public class Player : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);
     }
+    public void stopHurt()
+    {
+        gameObject.GetComponent<Animator>().SetBool("HURT1", false);
+    }
 
-    
+
     public void stopSuperAttack()
     {
         gameObject.GetComponent<Animator>().SetBool("ATK2", false);
@@ -115,10 +119,7 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("Evade", false);
     }
 
-    public void stopDefend()
-    {
-        gameObject.GetComponent<Animator>().SetBool("DF", false);
-    }
+    
     public void stopSuperDefend()
     {
         gameObject.GetComponent<Animator>().SetBool("DF2", false);
@@ -136,7 +137,7 @@ public class Player : MonoBehaviour
 
     public void playJump()
     {
-        audioManager.Play("jumpWosh");
+        audioManager.Play("jump_basic");
         jump_dust.Play();
     }
 

@@ -26,7 +26,7 @@ public class TargetManager : MonoBehaviour
 
         // Camera effect
         MainCamera.transform.DOLocalMove(new Vector3(3.3f, -1, -10), 1.5f);
-        MainCamera.DOFieldOfView(35, 1f);
+        MainCamera.DOFieldOfView(35, 2f);
     }
 
     public void attackHard()
@@ -64,7 +64,7 @@ public class TargetManager : MonoBehaviour
             }
             else
             {
-                targets[i].transform.localPosition = new Vector3(Random.Range(0.5f, -0.2f), Random.Range(-0.4f, -0.8f), 0);
+                targets[i].transform.localPosition = new Vector3(Random.Range(0.7f, -0.5f), Random.Range(-0.8f, -1.2f), 0);
             }
 
             // Set target position & scale

@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     public int maxHP;
     public int currentHP;
 
+    //Speed
+    public int maxSpeed;
+    public int currentSpeed;
+
     //Adrenaline
     public int adrenaline;
 

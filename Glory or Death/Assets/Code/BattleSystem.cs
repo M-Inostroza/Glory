@@ -8,6 +8,9 @@ using DG.Tweening;
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleSystem : MonoBehaviour
 {
+    //Selected actions
+    public string selectedPlayerAction;
+
     //Target Manager
     private TargetManager targetManager;
 
@@ -75,6 +78,7 @@ public class BattleSystem : MonoBehaviour
 
     private void Start()
     {
+        selectedPlayerAction = "None";
         evadeTimer = 5f;
 
         state = BattleState.START;
@@ -123,8 +127,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (state != BattleState.PLAYERTURN)
             return;
-
-        PlayerAttack();
+        selectedPlayerAction = "ATK1";
     }
 
     public void OnSuperAttackButton()
@@ -174,7 +177,7 @@ public class BattleSystem : MonoBehaviour
         PlayerEvade();
     }
 
-    void PlayerAttack()
+    public void PlayerAttack()
     {
         //Check stamina
         if (playerUnit.currentStamina >= 1)

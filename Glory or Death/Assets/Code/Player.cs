@@ -5,6 +5,9 @@ using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
+    //Time Manager
+    private timeManager timeManager;
+
     //Name of the player *TODO* -> get name of player
     public string playerName;
 
@@ -16,8 +19,8 @@ public class Player : MonoBehaviour
     public int currentHP;
 
     //Speed
-    public int maxSpeed;
-    public int currentSpeed;
+    public float maxSpeed;
+    public float baseSpeed;
 
     //Adrenaline
     public int adrenaline;
@@ -56,6 +59,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        timeManager = FindObjectOfType<timeManager>();
         audioManager = FindObjectOfType<AudioManager>();
     }
 
@@ -95,6 +99,8 @@ public class Player : MonoBehaviour
     public void stopAttack()
     {
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);
+        timeManager.playerTimer.fillAmount = 1;
+        timeManager.canActPlayer = true;
     }
     public void stopHurt()
     {

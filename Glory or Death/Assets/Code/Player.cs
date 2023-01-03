@@ -96,17 +96,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    // ------- Stop Anim Methods -------
     public void stopAttack()
     {
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.canActPlayer = true;
+        timeManager.can_perform_player = true;
     }
     public void stopHurt()
     {
         gameObject.GetComponent<Animator>().SetBool("HURT1", false);
     }
-
+    public void stopDefendSkill()
+    {
+        gameObject.GetComponent<Animator>().SetBool("DF_Skill", false);
+    }
 
     public void stopSuperAttack()
     {
@@ -128,7 +132,6 @@ public class Player : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("Evade", false);
     }
-
     
     public void stopSuperDefend()
     {

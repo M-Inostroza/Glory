@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
 
     public bool hasHit = false;
 
-    private counterManager counterManager;
+    private defendManager defendManager;
 
     // Effects
     public ParticleSystem jump_dust;
@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        counterManager = FindObjectOfType<counterManager>();
+        defendManager = FindObjectOfType<defendManager>();
     }
 
     public bool TakeDamage(int dmg)

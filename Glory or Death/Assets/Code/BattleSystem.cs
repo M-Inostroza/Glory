@@ -20,15 +20,14 @@ public class BattleSystem : MonoBehaviour
 
     //Cooldown Commands
     [SerializeField]
-    private bool canDefend = true;
     public bool canEvade = false;
     private float evadeTimer;
      
     // Dodge system
     public GameObject dodgeManager;
 
-    // Counter mechanic
-    public GameObject counterManager;
+    // Defend mechanic
+    public GameObject defendManager;
 
     //Scores
     public int targetHit;
@@ -78,7 +77,6 @@ public class BattleSystem : MonoBehaviour
 
     private void Start()
     {
-        selectedPlayerAction = "None";
         evadeTimer = 5f;
 
         state = BattleState.START;
@@ -130,20 +128,21 @@ public class BattleSystem : MonoBehaviour
         selectedPlayerAction = "ATK1";
     }
 
+    public void OnCounterButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+        selectedPlayerAction = "DF";
+
+        PlayerDefend();
+    }
+
     public void OnSuperAttackButton()
     {
         if (state != BattleState.PLAYERTURN)
             return;
 
         PlayerSuperAttack();
-    }
-
-    public void OnCounterButton()
-    {
-        if (state != BattleState.PLAYERTURN)
-            return;
-
-        PlayerCounter();
     }
 
     public void OnDodgeButton()
@@ -177,6 +176,8 @@ public class BattleSystem : MonoBehaviour
         PlayerEvade();
     }
 
+    // ----------------- Actions -----------------
+
     public void PlayerAttack()
     {
         //Check stamina
@@ -192,11 +193,13 @@ public class BattleSystem : MonoBehaviour
             //Reduce Stamina
             playerUnit.currentStamina -= 1;
             playerHUD.updateBricks(playerUnit.currentStamina);
-
-            //Resets defend counter
-            canDefend = true;
         }
             
+    }
+
+    void PlayerDefend()
+    {
+        defendManager.SetActive(true);
     }
 
     void PlayerSuperAttack()
@@ -216,18 +219,7 @@ public class BattleSystem : MonoBehaviour
             playerHUD.updateBricks(playerUnit.currentStamina);
 
             playerUnit.adrenaline = 0;
-
-            //Resets defend counter
-            canDefend = true;
         }
-    }
-
-    void PlayerCounter()
-    {
-        audioManager.Play("counter_charge");
-        counterManager.SetActive(true);
-        state = BattleState.ENEMYTURN;
-        StartCoroutine(EnemyTurn_counter());
     }
 
     void PlayDodge()
@@ -243,15 +235,13 @@ public class BattleSystem : MonoBehaviour
         playerHUD.restoreBricks();
     }
 
-    void PlayerDefend()
+    void PlayerCharge()
     {
-        if (canDefend)
-        {
-            playerUnit.currentShield++;
-            canDefend = false;
-            switchToEnemy();
-        } 
+        playerUnit.currentShield++;
+        switchToEnemy();
     }
+
+
     // Evade bools
     bool canRight = true;
     bool canLeft = true;
@@ -354,48 +344,6 @@ public class BattleSystem : MonoBehaviour
             }
         }
     }
-
-    IEnumerator EnemyTurn_counter()
-    {
-        enemyUnit.GetComponent<Animator>().SetBool("base", true);
-        yield return new WaitForSeconds(2.6f);
-
-        if (!counterManager.GetComponent<counterManager>().counterSuccess)
-        {
-            enemyUnit.adrenaline += 2;
-            if (playerUnit.currentShield > 0)
-            {
-                bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage - 2);
-                //showHit(enemyUnit.native_damage - 2);
-
-                if (isDead)
-                {
-                    state = BattleState.LOST;
-                    EndBattle();
-                }
-                else
-                    state = BattleState.PLAYERTURN;
-            }
-            else
-            {
-                bool isDead = playerUnit.TakeDamage(enemyUnit.native_damage);
-                //showHit(enemyUnit.native_damage);
-                if (isDead)
-                {
-                    state = BattleState.LOST;
-                    EndBattle();
-                }
-                else
-                    state = BattleState.PLAYERTURN;
-            }
-        } else
-        {
-            enemyUnit.TakeDamage(1);
-        }
-
-        state = BattleState.PLAYERTURN;
-    }
-    
 
     public void EndBattle()
     {

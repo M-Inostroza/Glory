@@ -5,6 +5,7 @@ using UnityEngine;
 public class gameManager : MonoBehaviour
 {
     public timeManager timeManager;
+    public BattleSystem battleSystem;
 
     private void Update()
     {

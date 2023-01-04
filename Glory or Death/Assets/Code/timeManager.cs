@@ -76,6 +76,10 @@ public class timeManager : MonoBehaviour
             case "ATK1":
                 actionIcon.sprite = iconSprites[0];
                 break;
+            case "DF":
+                actionIcon.sprite = iconSprites[3];
+                break;
+
         }
 
         //Execute selected action
@@ -85,6 +89,13 @@ public class timeManager : MonoBehaviour
             {
                 case "ATK1":
                     BS.PlayerAttack();
+                    BS.selectedPlayerAction = "None";
+                    can_perform_player = false;
+                    actionIcon.sprite = iconSprites[1];
+                    break;
+
+                case "DF":
+                    BS.PlayerDefend();
                     BS.selectedPlayerAction = "None";
                     can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];

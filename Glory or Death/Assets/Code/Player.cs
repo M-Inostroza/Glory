@@ -110,6 +110,8 @@ public class Player : MonoBehaviour
     public void stopDefendSkill()
     {
         gameObject.GetComponent<Animator>().SetBool("DF_Skill", false);
+        timeManager.playerTimer.fillAmount = 1;
+        timeManager.can_perform_player = true;
     }
 
     public void stopSuperAttack()

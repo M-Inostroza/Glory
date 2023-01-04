@@ -23,26 +23,29 @@ public class defendManager : MonoBehaviour
     // Battle System
     [SerializeField] private BattleSystem BS;
 
+    // Time Manager
+    [SerializeField] private timeManager timeManager;
+
     // Enemy unit
     public GameObject enemyUnit;
 
     // Control bool
-    public bool canDefend;
+    public bool canDefend = false;
     public bool defendSuccess;
 
     private void Start()
     {
         // Set the tween
         scaleUp = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad);
+        timeManager = FindObjectOfType<timeManager>();
     }
 
     private void OnEnable()
     {
-        canDefend = true;
         audioManager.Play("defend_charge");
         defendSuccess = false;
         shadow.SetActive(true);
-        scaleUp.Play();
+        canDefend = true;
     }
 
     private void OnDisable()
@@ -53,7 +56,8 @@ public class defendManager : MonoBehaviour
 
     private void Update()
     {
-        controlDefend(canDefend);
+        scaleUp.Play().OnComplete(() => KillOnFail());
+        controlDefend();
     }
 
     // Method to handle player's defense
@@ -78,11 +82,13 @@ public class defendManager : MonoBehaviour
     // Method to handle enemy's defeat
     void KillOnFail()
     {
+        Debug.Log("Kill on fail executing");
         BS.switchToEnemy();
         shadow.SetActive(false);
+        timeManager.playerTimer.fillAmount = 1;
+        timeManager.can_perform_player = true;
         gameObject.SetActive(false);
     }
-
 
     // Coroutine to play hit effect and kill everything on success
     IEnumerator HitShield()
@@ -93,11 +99,12 @@ public class defendManager : MonoBehaviour
         KillOnFail();
     }
 
-    void controlDefend(bool defend)
+    void controlDefend()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && defend && BS.state == BattleState.PLAYERTURN)
+        if (Input.GetKeyDown(KeyCode.A) && canDefend)
         {
             executeShield(0.9f);
+            canDefend = false;
         }
     }
 }

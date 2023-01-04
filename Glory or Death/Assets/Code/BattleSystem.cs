@@ -128,13 +128,11 @@ public class BattleSystem : MonoBehaviour
         selectedPlayerAction = "ATK1";
     }
 
-    public void OnCounterButton()
+    public void OnDefendButton()
     {
         if (state != BattleState.PLAYERTURN)
             return;
         selectedPlayerAction = "DF";
-
-        PlayerDefend();
     }
 
     public void OnSuperAttackButton()
@@ -158,14 +156,6 @@ public class BattleSystem : MonoBehaviour
             return;
 
         PlayerRest();
-    }
-
-    public void OnDefendButton()
-    {
-        if (state != BattleState.PLAYERTURN)
-            return;
-
-        PlayerDefend();
     }
 
     public void OnEvadeButton()
@@ -197,9 +187,13 @@ public class BattleSystem : MonoBehaviour
             
     }
 
-    void PlayerDefend()
+    public void PlayerDefend()
     {
         defendManager.SetActive(true);
+    }
+    public void PlayDodge()
+    {
+        dodgeManager.SetActive(true);
     }
 
     void PlayerSuperAttack()
@@ -220,12 +214,6 @@ public class BattleSystem : MonoBehaviour
 
             playerUnit.adrenaline = 0;
         }
-    }
-
-    void PlayDodge()
-    {
-        dodgeManager.SetActive(true);
-        switchToEnemy();
     }
 
     void PlayerRest()

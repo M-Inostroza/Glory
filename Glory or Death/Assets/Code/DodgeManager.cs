@@ -41,7 +41,7 @@ public class DodgeManager : MonoBehaviour
             GameObject randomArrow = arrowPrefabs[Random.Range(0, 4)];
             instantArrows.Add(Instantiate(randomArrow, new Vector2(gameObject.transform.position.x + intPos, gameObject.transform.position.y), randomArrow.transform.rotation));
             instantArrows[i].transform.SetParent(gameObject.transform);
-            instantArrows[i].transform.localScale = new Vector3(1, 1, 1);
+            instantArrows[i].transform.localScale = new Vector3(10, 10, 10);
             intPos += .8f;
         }
 
@@ -152,12 +152,12 @@ public class DodgeManager : MonoBehaviour
         // Triggers miss mechanic and animation if 4 arrows were hit
         if (extraAgility == 4)
         {
-            playerUnit.missed = true;
-            playerAnimator.SetBool("Evade", true);
+            playerUnit.missed = false; // test
+            playerAnimator.SetBool("DG_Skill", true);
         } else
         {
             playerUnit.missed = false;
-            playerAnimator.SetBool("DF", true);
+            playerAnimator.SetBool("DG_Skill_Fail", true);
         }
 
         if (playerUnit.currentAgility < 0)

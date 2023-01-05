@@ -113,6 +113,18 @@ public class Player : MonoBehaviour
         timeManager.playerTimer.fillAmount = 1;
         timeManager.can_perform_player = true;
     }
+    public void stopDodgeSkill()
+    {
+        gameObject.GetComponent<Animator>().SetBool("DG_Skill", false);
+        timeManager.playerTimer.fillAmount = 1;
+        timeManager.can_perform_player = true;
+    }
+    public void stopDodgeSkillFail()
+    {
+        gameObject.GetComponent<Animator>().SetBool("DG_Skill_Fail", false);
+        timeManager.playerTimer.fillAmount = 1;
+        timeManager.can_perform_player = true;
+    }
 
     public void stopSuperAttack()
     {
@@ -128,11 +140,6 @@ public class Player : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("Resting", false);
         FindObjectOfType<BattleSystem>().switchToEnemy();
-    }
-
-    public void stopEvade()
-    {
-        gameObject.GetComponent<Animator>().SetBool("Evade", false);
     }
     
     public void stopSuperDefend()

@@ -7,6 +7,12 @@ using TMPro;
 
 public class timeManager : MonoBehaviour
 {
+    /*
+     * 0: Sword
+     * 1: Hourglass
+     * 2: Boot
+     * 3: Shield
+     */
     //Array of sprites for the icons & active Icon
     public Sprite[] iconSprites;
     public Image actionIcon;
@@ -79,6 +85,9 @@ public class timeManager : MonoBehaviour
             case "DF":
                 actionIcon.sprite = iconSprites[3];
                 break;
+            case "DG":
+                actionIcon.sprite = iconSprites[2];
+                break;
 
         }
 
@@ -96,6 +105,13 @@ public class timeManager : MonoBehaviour
 
                 case "DF":
                     BS.PlayerDefend();
+                    BS.selectedPlayerAction = "None";
+                    can_perform_player = false;
+                    actionIcon.sprite = iconSprites[1];
+                    break;
+
+                case "DG":
+                    BS.PlayDodge();
                     BS.selectedPlayerAction = "None";
                     can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];

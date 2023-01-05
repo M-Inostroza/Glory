@@ -135,19 +135,26 @@ public class BattleSystem : MonoBehaviour
         selectedPlayerAction = "DF";
     }
 
+    public void OnDodgeButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+        selectedPlayerAction = "DG";
+    }
+
+    public void OnFocusButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+        selectedPlayerAction = "FC";
+    }
+
     public void OnSuperAttackButton()
     {
         if (state != BattleState.PLAYERTURN)
             return;
 
         PlayerSuperAttack();
-    }
-
-    public void OnDodgeButton()
-    {
-        if (state != BattleState.PLAYERTURN)
-            return;
-        PlayDodge();
     }
 
     public void OnRestButton()

@@ -88,6 +88,9 @@ public class timeManager : MonoBehaviour
             case "DG":
                 actionIcon.sprite = iconSprites[2];
                 break;
+            case "FC":
+                actionIcon.sprite = iconSprites[4];
+                break;
 
         }
 
@@ -112,6 +115,13 @@ public class timeManager : MonoBehaviour
 
                 case "DG":
                     BS.PlayDodge();
+                    BS.selectedPlayerAction = "None";
+                    can_perform_player = false;
+                    actionIcon.sprite = iconSprites[1];
+                    break;
+
+                case "FC":
+                    BS.PlayFocus();
                     BS.selectedPlayerAction = "None";
                     can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];

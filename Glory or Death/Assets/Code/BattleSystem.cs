@@ -29,6 +29,9 @@ public class BattleSystem : MonoBehaviour
     // Defend mechanic
     public GameObject defendManager;
 
+    // Focus manager
+    public GameObject focusManager;
+
     //Scores
     public int targetHit;
 
@@ -201,6 +204,10 @@ public class BattleSystem : MonoBehaviour
     public void PlayDodge()
     {
         dodgeManager.SetActive(true);
+    }
+    public void PlayFocus()
+    {
+        focusManager.SetActive(true);
     }
 
     void PlayerSuperAttack()

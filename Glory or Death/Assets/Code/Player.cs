@@ -126,6 +126,20 @@ public class Player : MonoBehaviour
         timeManager.can_perform_player = true;
     }
 
+    public void stopFocusSkill()
+    {
+        gameObject.GetComponent<Animator>().SetBool("FC_Skill", false);
+        timeManager.playerTimer.fillAmount = 1;
+        timeManager.can_perform_player = true;
+    }
+
+    public void stopFocusSkillFail()
+    {
+        gameObject.GetComponent<Animator>().SetBool("FC_Skill_Fail", false);
+        timeManager.playerTimer.fillAmount = 1;
+        timeManager.can_perform_player = true;
+    }
+
     public void stopSuperAttack()
     {
         gameObject.GetComponent<Animator>().SetBool("ATK2", false);

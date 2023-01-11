@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     //Shield
     public int maxShield;
     public int currentShield;
-    public Shield_Manager shield_manager;
+    public shieldPool shieldPool;
 
     //Stamina
     public int maxStamina;
@@ -73,11 +73,11 @@ public class Player : MonoBehaviour
             currentHP -= dmg;
             if (currentShield > 0)
             {
-                shield_manager.destroyShield();
+                //shieldPool.destroyShield();
             } else if (currentShield <= 0)
             {
                 currentShield = 0;
-                shield_manager.gameObject.SetActive(false);
+                shieldPool.gameObject.SetActive(false);
             }   
         }
         else

@@ -78,7 +78,7 @@ public class BattleSystem : MonoBehaviour
 
     public BattleState state;
 
-    private void Start()
+    private void Awake()
     {
         evadeTimer = 5f;
 

@@ -961,6 +961,22 @@ PrefabInstance:
       propertyPath: playerUnit
       value: 
       objectReference: {fileID: 1029225515368268549}
+    - target: {fileID: 2280420714164153680, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
+      propertyPath: playerScript
+      value: 
+      objectReference: {fileID: 1029225515368268549}
+    - target: {fileID: 2280420714164153680, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
+      propertyPath: shieldPrefab
+      value: 
+      objectReference: {fileID: 283863446780215462, guid: e0d60b1651aed5640befa38e602d6816, type: 3}
+    - target: {fileID: 2280420714164153680, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
+      propertyPath: positionOffset.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2280420714164153680, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
+      propertyPath: startingPosition.x
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2280420714164153683, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1414,6 +1430,10 @@ PrefabInstance:
       propertyPath: enemy_unit
       value: 
       objectReference: {fileID: 4396768323551569254}
+    - target: {fileID: 2910803755121839725, guid: a6b6d259dd3233f43a0ff481253a8397, type: 3}
+      propertyPath: shieldPool
+      value: 
+      objectReference: {fileID: 774676918}
     - target: {fileID: 2910803755121839725, guid: a6b6d259dd3233f43a0ff481253a8397, type: 3}
       propertyPath: shield_manager
       value: 

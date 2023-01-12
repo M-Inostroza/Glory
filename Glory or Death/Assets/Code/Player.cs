@@ -73,12 +73,8 @@ public class Player : MonoBehaviour
             currentHP -= dmg;
             if (currentShield > 0)
             {
-                //shieldPool.destroyShield();
-            } else if (currentShield <= 0)
-            {
-                currentShield = 0;
-                shieldPool.gameObject.SetActive(false);
-            }   
+                shieldPool.removeShield();
+            }
         }
         else
         {

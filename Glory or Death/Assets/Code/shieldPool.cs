@@ -9,7 +9,6 @@ public class shieldPool : MonoBehaviour
     public GameObject shield;
     private Player playerScript;
 
-    //private List<GameObject> shield_Pool = new List<GameObject>();
     private float originalPos = 18;
 
     private void Start()
@@ -23,17 +22,32 @@ public class shieldPool : MonoBehaviour
             shieldPrefab.transform.localPosition = new Vector2(originalPos, -17.5f);
 
             originalPos += 22;
-            //shield_Pool.Add(shieldPrefab);
         }
     }
 
 
-    public void removeShield()
+    public void RemoveShield()
     {
-        if (transform.childCount > 0)
+        int lastActiveChild = -1;
+
+        if (playerScript.currentShield == 1)
         {
-            Destroy(transform.GetChild(transform.childCount - 1));
-            //shield_Pool.RemoveAt(shield_Pool.Count - 1);
+            transform.GetChild(0).gameObject.SetActive(false);
+        } 
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).gameObject.activeInHierarchy)
+                {
+                    lastActiveChild = i;
+                }
+            }
+            if (lastActiveChild != -1)
+            {
+                transform.GetChild(lastActiveChild).gameObject.SetActive(false);
+            }
         }
+        playerScript.currentShield--;
     }
 }

@@ -69,11 +69,14 @@ public class Player : MonoBehaviour
         if (!missed)
         {
             missed = false;
-            currentShield--;
             currentHP -= dmg;
             if (currentShield > 0)
             {
-                shieldPool.removeShield();
+                shieldPool.RemoveShield();
+                if (currentShield <= 0)
+                {
+                    currentShield = 0;
+                }
             }
         }
         else

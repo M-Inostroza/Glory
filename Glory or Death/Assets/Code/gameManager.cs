@@ -14,4 +14,6 @@ public class gameManager : MonoBehaviour
             Debug.Log("Time out");
         }
     }
+
+    //This is a comment
 }

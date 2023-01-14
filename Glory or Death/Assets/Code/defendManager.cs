@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class defendManager : MonoBehaviour
 {
@@ -34,9 +35,7 @@ public class defendManager : MonoBehaviour
     public GameObject enemyUnit;
 
     // Control bool
-    public bool canDefend = false;
     public bool defendSuccess;
-    public int coolDown = 0;
 
     private void Start()
     {
@@ -50,8 +49,6 @@ public class defendManager : MonoBehaviour
         audioManager.Play("defend_charge");
         defendSuccess = false;
         shadow.SetActive(true);
-        canDefend = true;
-        Debug.Log("The cooldown is: " + coolDown);
     }
 
     private void OnDisable()
@@ -108,10 +105,9 @@ public class defendManager : MonoBehaviour
 
     void controlDefend()
     {
-        if (Input.GetKeyDown(KeyCode.A) && canDefend)
+        if (Input.GetKeyDown(KeyCode.A))
         {
             executeShield(0.9f);
-            canDefend = false;
         }
     }
 }

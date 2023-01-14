@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
 
 //Manages the battle states
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
@@ -18,12 +19,16 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private AudioManager audioManager;
 
-    //Cooldown Commands
+    // Cooldown Commands
     [SerializeField]
     public bool canEvade = false;
-    public bool canDefend = true;
     private float evadeTimer;
-     
+
+    public Image DefendButtonCD;
+    public Image AttackButtonCD;
+    public Image DodgeButtonCD;
+    public Image FocusButtonCD;
+
     // Dodge system
     public GameObject dodgeManager;
 
@@ -77,6 +82,7 @@ public class BattleSystem : MonoBehaviour
     //Gets the scripts for both
     Player playerUnit;
     Enemy enemyUnit;
+    timeManager timeManager;
 
     public BattleState state;
 
@@ -94,6 +100,11 @@ public class BattleSystem : MonoBehaviour
         PlayerEvade();
         updateUI();
 
+        timeManager.ReduceCooldown(DefendButtonCD);
+        timeManager.ReduceCooldown(AttackButtonCD);
+        timeManager.ReduceCooldown(DodgeButtonCD);
+        timeManager.ReduceCooldown(FocusButtonCD);
+
         if (Input.GetKey("escape"))
         {
             Application.Quit();
@@ -110,6 +121,7 @@ public class BattleSystem : MonoBehaviour
         playerAnimator = playerPrefab.GetComponent<Animator>();
 
         targetManager = FindObjectOfType<TargetManager>();
+        timeManager = FindObjectOfType<timeManager>();
 
 
         //Set stats to max
@@ -129,44 +141,49 @@ public class BattleSystem : MonoBehaviour
 
     public void OnAttackButton()
     {
-        if (state != BattleState.PLAYERTURN)
-            return;
-        selectedPlayerAction = "ATK1";
-
-        defendManagerScript.coolDown--;
+        if (AttackButtonCD.fillAmount == 0)
+        {
+            if (state != BattleState.PLAYERTURN)
+                return;
+            AttackButtonCD.fillAmount = 1;
+            selectedPlayerAction = "ATK1";
+        }
     }
 
     public void OnDefendButton()
     {
-        if (canDefend && defendManagerScript.coolDown <= 0)
+        if (DefendButtonCD.fillAmount == 0)
         {
-            defendManagerScript.coolDown += 2;
             if (state != BattleState.PLAYERTURN)
                 return;
+            DefendButtonCD.fillAmount = 1;
             selectedPlayerAction = "DF";
-            canDefend = false;
         } else
         {
-            Debug.Log("Cooldown: " + defendManagerScript.coolDown);
+            Debug.Log("still cooldown");
         }
     }
 
     public void OnDodgeButton()
     {
-        if (state != BattleState.PLAYERTURN)
-            return;
-        selectedPlayerAction = "DG";
-
-        defendManagerScript.coolDown--;
+        if (DodgeButtonCD.fillAmount == 0)
+        {
+            if (state != BattleState.PLAYERTURN)
+                return;
+            DodgeButtonCD.fillAmount = 1;
+            selectedPlayerAction = "DG";
+        }
     }
 
     public void OnFocusButton()
     {
-        if (state != BattleState.PLAYERTURN)
-            return;
+        if (FocusButtonCD.fillAmount == 0)
+        {
+            if (state != BattleState.PLAYERTURN)
+                return;
+        }
+        FocusButtonCD.fillAmount = 1;
         selectedPlayerAction = "FC";
-
-        defendManagerScript.coolDown--;
     }
 
 

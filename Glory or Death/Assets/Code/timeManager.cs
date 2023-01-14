@@ -25,6 +25,13 @@ public class timeManager : MonoBehaviour
     public float duration = 60f;
     public bool timeOut;
 
+    //Cooldowns
+    [SerializeField] private float DefendButtonCD;
+    public float Shield_CD = 7;
+    public float Attack_CD = 7;
+    public float Dodge_CD = 7;
+    public float Focus_CD = 7;
+
     // Player Timer
     public Image playerTimer;
     public Image playerActionIcon;
@@ -40,6 +47,8 @@ public class timeManager : MonoBehaviour
 
     private Enemy enemy;
     public bool can_perform_enemy = true;
+
+
 
 
     //Manages general timer
@@ -131,6 +140,30 @@ public class timeManager : MonoBehaviour
                 default:
                     playerTimer.fillAmount = 1;
                     BS.switchToEnemy();
+                    break;
+            }
+        }
+    }
+
+
+    // Cooldown timer
+    public void ReduceCooldown(Image timer)
+    {
+        if (timer.fillAmount > 0)
+        {
+            switch (timer.gameObject.tag)
+            {
+                case "ATK Counter":
+                    timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
+                    break;
+                case "DF Counter":
+                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 3);
+                    break;
+                case "DG Counter":
+                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 3);
+                    break;
+                case "FC Counter":
+                    timer.fillAmount -= Time.deltaTime / (Focus_CD * 3);
                     break;
             }
         }

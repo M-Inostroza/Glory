@@ -32,7 +32,7 @@ public class timeManager : MonoBehaviour
     public Image enemyTimer;
 
     //Generic wait time for turns
-    private float mainWaitTime = 3;
+    private float mainWaitTime = 6;
 
     // Fighting units
     private Player player;

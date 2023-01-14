@@ -7,6 +7,8 @@ public class gameManager : MonoBehaviour
     public timeManager timeManager;
     public BattleSystem battleSystem;
 
+    public int turnCounter;
+
     private void Update()
     {
         if (timeManager.timeOut)

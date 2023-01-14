@@ -21,6 +21,7 @@ public class BattleSystem : MonoBehaviour
     //Cooldown Commands
     [SerializeField]
     public bool canEvade = false;
+    public bool canDefend = true;
     private float evadeTimer;
      
     // Dodge system
@@ -28,6 +29,7 @@ public class BattleSystem : MonoBehaviour
 
     // Defend mechanic
     public GameObject defendManager;
+    public defendManager defendManagerScript;
 
     // Focus manager
     public GameObject focusManager;
@@ -109,6 +111,7 @@ public class BattleSystem : MonoBehaviour
 
         targetManager = FindObjectOfType<TargetManager>();
 
+
         //Set stats to max
         playerUnit.currentHP = playerUnit.maxHP;
         enemyUnit.currentHP = enemyUnit.maxHP;
@@ -129,13 +132,23 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PLAYERTURN)
             return;
         selectedPlayerAction = "ATK1";
+
+        defendManagerScript.coolDown--;
     }
 
     public void OnDefendButton()
     {
-        if (state != BattleState.PLAYERTURN)
-            return;
-        selectedPlayerAction = "DF";
+        if (canDefend && defendManagerScript.coolDown <= 0)
+        {
+            defendManagerScript.coolDown += 2;
+            if (state != BattleState.PLAYERTURN)
+                return;
+            selectedPlayerAction = "DF";
+            canDefend = false;
+        } else
+        {
+            Debug.Log("Cooldown: " + defendManagerScript.coolDown);
+        }
     }
 
     public void OnDodgeButton()
@@ -143,6 +156,8 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PLAYERTURN)
             return;
         selectedPlayerAction = "DG";
+
+        defendManagerScript.coolDown--;
     }
 
     public void OnFocusButton()
@@ -150,7 +165,12 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PLAYERTURN)
             return;
         selectedPlayerAction = "FC";
+
+        defendManagerScript.coolDown--;
     }
+
+
+    //----------------TO DO--------------------------
 
     public void OnSuperAttackButton()
     {

@@ -26,12 +26,17 @@ public class defendManager : MonoBehaviour
     // Time Manager
     [SerializeField] private timeManager timeManager;
 
+    // Shield Pool
+    [SerializeField] private shieldPool shieldPool;
+
+
     // Enemy unit
     public GameObject enemyUnit;
 
     // Control bool
     public bool canDefend = false;
     public bool defendSuccess;
+    public int coolDown = 0;
 
     private void Start()
     {
@@ -46,6 +51,7 @@ public class defendManager : MonoBehaviour
         defendSuccess = false;
         shadow.SetActive(true);
         canDefend = true;
+        Debug.Log("The cooldown is: " + coolDown);
     }
 
     private void OnDisable()
@@ -72,6 +78,8 @@ public class defendManager : MonoBehaviour
         else if (transform.localScale.x > scaleLimit)
         {
             defendSuccess = true;
+            shieldPool.AddShield();
+            playerUnit.GetComponent<Player>().currentShield++;
             playerAnim.SetBool("DF_Skill", true);
             StartCoroutine(HitShield());
             audioManager.Play("defend_success");
@@ -82,7 +90,6 @@ public class defendManager : MonoBehaviour
     // Method to handle enemy's defeat
     void KillOnFail()
     {
-        Debug.Log("Kill on fail executing");
         BS.switchToEnemy();
         shadow.SetActive(false);
         timeManager.playerTimer.fillAmount = 1;

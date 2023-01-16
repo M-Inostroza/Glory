@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
     public ParticleSystem superBloodEffect;
 
     AudioManager audioManager;
+    public Camera MainCamera;
 
 
     // Current Enemy
@@ -101,6 +102,11 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);
         timeManager.playerTimer.fillAmount = 1;
         timeManager.can_perform_player = true;
+    }
+    public void returnCamera()
+    {
+        MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), .5f);
+        MainCamera.DOFieldOfView(50, 0.5f);
     }
     public void stopHurt()
     {

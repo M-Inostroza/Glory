@@ -145,7 +145,6 @@ public class BattleSystem : MonoBehaviour
         {
             if (state != BattleState.PLAYERTURN)
                 return;
-            AttackButtonCD.fillAmount = 1;
             selectedPlayerAction = "ATK1";
         }
     }
@@ -156,7 +155,6 @@ public class BattleSystem : MonoBehaviour
         {
             if (state != BattleState.PLAYERTURN)
                 return;
-            DefendButtonCD.fillAmount = 1;
             selectedPlayerAction = "DF";
         } else
         {
@@ -170,7 +168,6 @@ public class BattleSystem : MonoBehaviour
         {
             if (state != BattleState.PLAYERTURN)
                 return;
-            DodgeButtonCD.fillAmount = 1;
             selectedPlayerAction = "DG";
         }
     }
@@ -182,7 +179,6 @@ public class BattleSystem : MonoBehaviour
             if (state != BattleState.PLAYERTURN)
                 return;
         }
-        FocusButtonCD.fillAmount = 1;
         selectedPlayerAction = "FC";
     }
 
@@ -379,7 +375,6 @@ public class BattleSystem : MonoBehaviour
             {
                 // ---------- ATTACK BASIC ----------
                 enemyUnit.GetComponent<Animator>().SetBool("attack_basic", true);
-
             }
         }
     }

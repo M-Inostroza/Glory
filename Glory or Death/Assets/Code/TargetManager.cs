@@ -25,8 +25,8 @@ public class TargetManager : MonoBehaviour
         StartCoroutine(activateTargets());
 
         // Camera effect
-        MainCamera.transform.DOLocalMove(new Vector3(3.3f, -1, -10), 1.5f);
-        MainCamera.DOFieldOfView(35, 2f);
+        MainCamera.transform.DOLocalMove(new Vector3(3.3f, -1, -10), 3f);
+        MainCamera.DOFieldOfView(35, 3f);
     }
 
     public void attackHard()
@@ -81,9 +81,6 @@ public class TargetManager : MonoBehaviour
             targets[i].transform.DOKill();
             targets[i].transform.DOScale(0, 0.3f).OnComplete(() => targets[i].gameObject.SetActive(false));
         }
-
-        MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), .5f);
-        MainCamera.DOFieldOfView(50, 0.5f);
 
         // Courtain
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);

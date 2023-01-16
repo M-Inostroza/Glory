@@ -20,6 +20,10 @@ public class Enemy : MonoBehaviour
     public int maxShield;
     public int currentShield;
 
+    //Speed
+    public float maxSpeed;
+    public float baseSpeed;
+
     //Stamina
     public int maxStamina;
     public int currentStamina;
@@ -47,10 +51,12 @@ public class Enemy : MonoBehaviour
     public ParticleSystem hitStrong;*/
 
     AudioManager audioManager;
+    BattleSystem BS;
 
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        BS = FindObjectOfType<BattleSystem>();
         defendManager = FindObjectOfType<defendManager>();
     }
 
@@ -73,7 +79,7 @@ public class Enemy : MonoBehaviour
             if (FindObjectOfType<Player>().currentShield > 0)
             {
                 bool isDead = FindObjectOfType<Player>().TakeDamage(native_damage - 2);
-                //showHit(enemyUnit.native_damage - 2);
+                BS.showHit(native_damage - 2);
 
                 if (isDead)
                 {

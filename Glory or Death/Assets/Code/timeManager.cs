@@ -26,11 +26,10 @@ public class timeManager : MonoBehaviour
     public bool timeOut;
 
     //Cooldowns
-    [SerializeField] private float DefendButtonCD;
-    public float Shield_CD = 7;
-    public float Attack_CD = 7;
-    public float Dodge_CD = 7;
-    public float Focus_CD = 7;
+    public float Shield_CD = 10;
+    public float Attack_CD = 10;
+    public float Dodge_CD = 10;
+    public float Focus_CD = 10;
 
     // Player Timer
     public Image playerTimer;
@@ -39,7 +38,7 @@ public class timeManager : MonoBehaviour
     public Image enemyTimer;
 
     //Generic wait time for turns
-    private float mainWaitTime = 6;
+    private float mainWaitTime = 10;
 
     // Fighting units
     private Player player;
@@ -74,6 +73,7 @@ public class timeManager : MonoBehaviour
     private void Update()
     {
         playerAction();
+        enemyAction();
     }
 
 
@@ -110,6 +110,7 @@ public class timeManager : MonoBehaviour
             {
                 case "ATK1":
                     BS.PlayerAttack();
+                    BS.AttackButtonCD.fillAmount = 1;
                     BS.selectedPlayerAction = "None";
                     can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];
@@ -117,6 +118,7 @@ public class timeManager : MonoBehaviour
 
                 case "DF":
                     BS.PlayerDefend();
+                    BS.DefendButtonCD.fillAmount = 1;
                     BS.selectedPlayerAction = "None";
                     can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];
@@ -124,6 +126,7 @@ public class timeManager : MonoBehaviour
 
                 case "DG":
                     BS.PlayDodge();
+                    BS.DodgeButtonCD.fillAmount = 1;
                     BS.selectedPlayerAction = "None";
                     can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];
@@ -131,6 +134,7 @@ public class timeManager : MonoBehaviour
 
                 case "FC":
                     BS.PlayFocus();
+                    BS.FocusButtonCD.fillAmount = 1;
                     BS.selectedPlayerAction = "None";
                     can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];
@@ -145,6 +149,14 @@ public class timeManager : MonoBehaviour
         }
     }
 
+    void enemyAction()
+    {
+        if (BS.state == BattleState.ENEMYTURN)
+        {
+            enemyTimer.fillAmount -= Time.deltaTime / (mainWaitTime - enemy.baseSpeed);
+        }
+    }
+
 
     // Cooldown timer
     public void ReduceCooldown(Image timer)
@@ -154,16 +166,16 @@ public class timeManager : MonoBehaviour
             switch (timer.gameObject.tag)
             {
                 case "ATK Counter":
-                    timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
+                    timer.fillAmount -= Time.deltaTime / (Attack_CD * 3);
                     break;
                 case "DF Counter":
-                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 3);
+                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 3.5f);
                     break;
                 case "DG Counter":
-                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 3);
+                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 3.5f);
                     break;
                 case "FC Counter":
-                    timer.fillAmount -= Time.deltaTime / (Focus_CD * 3);
+                    timer.fillAmount -= Time.deltaTime / (Focus_CD * 4);
                     break;
             }
         }

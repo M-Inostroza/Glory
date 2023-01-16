@@ -19,7 +19,7 @@ public class defendManager : MonoBehaviour
     [SerializeField] private GameObject shadow, playerUnit;
 
     // Fire effect that shows when success
-    [SerializeField] private ParticleSystem fire_hit;
+    [SerializeField] private ParticleSystem success_hit;
 
     // Battle System
     [SerializeField] private BattleSystem BS;
@@ -97,7 +97,7 @@ public class defendManager : MonoBehaviour
     // Coroutine to play hit effect and kill everything on success
     IEnumerator HitShield()
     {
-        fire_hit.Play();
+        success_hit.Play();
 
         yield return new WaitForSeconds(0.3f);
         KillOnFail();

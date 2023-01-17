@@ -64,6 +64,8 @@ public class Player : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
     }
 
+    //this is a comment
+
     public bool TakeDamage(int dmg)
     {
         //Check Agility

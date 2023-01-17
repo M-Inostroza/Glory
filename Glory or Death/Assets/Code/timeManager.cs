@@ -151,10 +151,7 @@ public class timeManager : MonoBehaviour
 
     void enemyAction()
     {
-        if (BS.state == BattleState.ENEMYTURN)
-        {
-            enemyTimer.fillAmount -= Time.deltaTime / (mainWaitTime - enemy.baseSpeed);
-        }
+        enemyTimer.fillAmount -= Time.deltaTime / (mainWaitTime - enemy.baseSpeed);
     }
 
 

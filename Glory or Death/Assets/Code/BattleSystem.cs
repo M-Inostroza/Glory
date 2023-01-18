@@ -11,6 +11,7 @@ public class BattleSystem : MonoBehaviour
 {
     //Selected actions
     public string selectedPlayerAction;
+    public string selectedEnemyAction;
 
     //Target Manager
     private TargetManager targetManager;
@@ -130,7 +131,6 @@ public class BattleSystem : MonoBehaviour
         playerUnit.currentShield = playerUnit.maxShield;
         enemyUnit.currentShield = enemyUnit.maxShield;
         playerUnit.currentStamina = playerUnit.maxStamina;
-        enemyUnit.currentStamina = enemyUnit.maxStamina;
         playerUnit.currentAgility = playerUnit.maxAgility;
         enemyUnit.currentAgility = enemyUnit.maxAgility;
 
@@ -332,50 +332,45 @@ public class BattleSystem : MonoBehaviour
     }
 
     // Enemy turn
-    IEnumerator EnemyTurn_attack()
+    public void EnemyTurn_attack()
     {
-        //Check stamina
-        if (enemyUnit.currentStamina >= 1)
+        // Attack Strong
+        if (enemyUnit.adrenaline == 12)
         {
-            // Attack Strong
-            if (enemyUnit.adrenaline == 12)
-            {
-                int totalDMG = enemyUnit.native_damage + 3;
-                enemyUnit.GetComponent<Animator>().SetBool("ATK2", true);
-                playerAnimator.SetBool("DF2", true);
+            int totalDMG = enemyUnit.native_damage + 3;
+            enemyUnit.GetComponent<Animator>().SetBool("ATK2", true);
+            playerAnimator.SetBool("DF2", true);
 
-                //Delay
-                yield return new WaitForSeconds(2.8f);
-                //Deals damage to Player
-                if (playerUnit.currentShield > 0)
+            //Deals damage to Player
+            if (playerUnit.currentShield > 0)
+            {
+                bool isDead = playerUnit.TakeDamage(totalDMG);
+                showHit(totalDMG);
+                if (isDead)
                 {
-                    bool isDead = playerUnit.TakeDamage(totalDMG);
-                    showHit(totalDMG);
-                    if (isDead)
-                    {
-                        state = BattleState.LOST;
-                        EndBattle();
-                    } 
-                    else
-                        state = BattleState.PLAYERTURN;
-                } else
-                {
-                    bool isDead = playerUnit.TakeDamage(totalDMG);
-                    showHit(totalDMG);
-                    if (isDead)
-                    {
-                        state = BattleState.LOST;
-                        EndBattle();
-                    }
-                    else
-                        state = BattleState.PLAYERTURN;
+                    state = BattleState.LOST;
+                    EndBattle();
                 }
-            } 
+                else
+                    state = BattleState.PLAYERTURN;
+            }
             else
             {
-                // ---------- ATTACK BASIC ----------
-                enemyUnit.GetComponent<Animator>().SetBool("attack_basic", true);
+                bool isDead = playerUnit.TakeDamage(totalDMG);
+                showHit(totalDMG);
+                if (isDead)
+                {
+                    state = BattleState.LOST;
+                    EndBattle();
+                }
+                else
+                    state = BattleState.PLAYERTURN;
             }
+        }
+        else
+        {
+            // ---------- ATTACK BASIC ----------
+            enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
         }
     }
 
@@ -405,7 +400,6 @@ public class BattleSystem : MonoBehaviour
         debugPLAYER_Stamina.text = "Stamina: " + playerUnit.currentStamina;
         debugPLAYER_Agility.text = "Agility: " + playerUnit.currentAgility;
 
-        debugENEMY_Stamina.text = "Stamina: " + enemyUnit.currentStamina;
         debugENEMY_HP.text = "HP: " + enemyUnit.currentHP;
         debugENEMY_Shield.text = "Shield: " + enemyUnit.currentShield;
         debugENEMY_Agility.text = "Agility: " + enemyUnit.currentAgility;
@@ -436,7 +430,7 @@ public class BattleSystem : MonoBehaviour
     public void switchToEnemy()
     {
         state = BattleState.ENEMYTURN;
-        StartCoroutine(EnemyTurn_attack());
+        EnemyTurn_attack();
     }
 
     // Deactivates evade mode, deactivates evade manager, resets timer, resets challenge, changes to enemy turn.

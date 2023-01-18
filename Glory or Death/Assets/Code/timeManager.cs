@@ -32,13 +32,15 @@ public class timeManager : MonoBehaviour
     public float Focus_CD = 10;
 
     // Player Timer
+    private bool playerTimerControl = true;
     public Image playerTimer;
     public Image playerActionIcon;
 
+    private bool enemyTimerControl = true;
     public Image enemyTimer;
 
     //Generic wait time for turns
-    private float mainWaitTime = 10;
+    private float mainWaitTime = 20;
 
     // Fighting units
     private Player player;
@@ -80,11 +82,11 @@ public class timeManager : MonoBehaviour
     //Manages action execution
     void playerAction()
     {
-        if (BS.state == BattleState.PLAYERTURN)
+        if (playerTimerControl)
         {
             playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.baseSpeed);
         }
-        
+
         //Changes icon for selected action
         switch (BS.selectedPlayerAction)
         {
@@ -106,6 +108,7 @@ public class timeManager : MonoBehaviour
         //Execute selected action
         if (playerTimer.fillAmount == 0 && can_perform_player)
         {
+            enemyTimerControl = false;
             switch (BS.selectedPlayerAction)
             {
                 case "ATK1":
@@ -143,7 +146,6 @@ public class timeManager : MonoBehaviour
 
                 default:
                     playerTimer.fillAmount = 1;
-                    BS.switchToEnemy();
                     break;
             }
         }
@@ -151,7 +153,25 @@ public class timeManager : MonoBehaviour
 
     void enemyAction()
     {
-        enemyTimer.fillAmount -= Time.deltaTime / (mainWaitTime - enemy.baseSpeed);
+        if (enemyTimerControl)
+        {
+            enemyTimer.fillAmount -= Time.deltaTime / (mainWaitTime - enemy.baseSpeed);
+        }
+        //Execute selected action
+        if (enemyTimer.fillAmount == 0)
+        {
+            playerTimerControl = false;
+            switch (BS.selectedEnemyAction)
+            {
+                case "ATK1":
+                    BS.EnemyTurn_attack();
+                    break;
+
+                default:
+                    playerTimer.fillAmount = 1;
+                    break;
+            }
+        }
     }
 
 

@@ -25,8 +25,8 @@ public class Enemy : MonoBehaviour
     public float baseSpeed;
 
     //Stamina
-    public int maxStamina;
-    public int currentStamina;
+    //public int maxStamina;
+    //public int currentStamina;
 
     public int adrenaline;
 
@@ -122,7 +122,7 @@ public class Enemy : MonoBehaviour
     }
     public void stopAttackBasic()
     {
-        GetComponent<Animator>().SetBool("attack_basic", false);
+        GetComponent<Animator>().SetBool("ATK1", false);
     }
 
     public void stopHurtBasic()
@@ -154,36 +154,4 @@ public class Enemy : MonoBehaviour
         GetComponent<Animator>().SetBool("ATK2", false);
         adrenaline = 0;
     }
-
-    // Experimental anim
-    public void base_to_attack()
-    {
-        gameObject.GetComponent<Animator>().SetBool("attack", true);
-    }
-    
-    public void base_to_fail()
-    {
-        gameObject.GetComponent<Animator>().SetBool("fail", true);
-    }
-    public void stop_fail()
-    {
-        gameObject.GetComponent<Animator>().SetBool("fail", false);
-        gameObject.GetComponent<Animator>().SetBool("base", false);
-    }
-
-    public void hurt_player()
-    {
-        var player = FindObjectOfType<Player>();
-        player.GetComponent<Animator>().SetBool("DF", true);
-
-        if (player.currentShield > 0)
-        {
-            FindObjectOfType<BattleSystem>().showHit(native_damage - 2);
-        } else
-        {
-            FindObjectOfType<BattleSystem>().showHit(native_damage);
-        } 
-    }
-
-
 }

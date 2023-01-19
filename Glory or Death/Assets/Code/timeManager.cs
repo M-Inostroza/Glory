@@ -22,7 +22,7 @@ public class timeManager : MonoBehaviour
 
     //Global time
     public TextMeshProUGUI timerText;
-    public float duration = 60f;
+    public float duration = 90f;
     public bool timeOut;
 
     //Cooldowns
@@ -32,11 +32,11 @@ public class timeManager : MonoBehaviour
     public float Focus_CD = 10;
 
     // Player Timer
-    private bool playerTimerControl = true;
+    public bool playerTimerControl = true;
     public Image playerTimer;
     public Image playerActionIcon;
 
-    private bool enemyTimerControl = true;
+    public bool enemyTimerControl = true;
     public Image enemyTimer;
 
     //Generic wait time for turns
@@ -44,10 +44,7 @@ public class timeManager : MonoBehaviour
 
     // Fighting units
     private Player player;
-    public bool can_perform_player = true;
-
     private Enemy enemy;
-    public bool can_perform_enemy = true;
 
 
 
@@ -106,40 +103,39 @@ public class timeManager : MonoBehaviour
         }
 
         //Execute selected action
-        if (playerTimer.fillAmount == 0 && can_perform_player)
+        if (playerTimer.fillAmount == 0)
         {
-            enemyTimerControl = false;
             switch (BS.selectedPlayerAction)
             {
                 case "ATK1":
+                    enemyTimerControl = false;
                     BS.PlayerAttack();
                     BS.AttackButtonCD.fillAmount = 1;
                     BS.selectedPlayerAction = "None";
-                    can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];
                     break;
 
                 case "DF":
+                    enemyTimerControl = false;
                     BS.PlayerDefend();
                     BS.DefendButtonCD.fillAmount = 1;
                     BS.selectedPlayerAction = "None";
-                    can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];
                     break;
 
                 case "DG":
+                    enemyTimerControl = false;
                     BS.PlayDodge();
                     BS.DodgeButtonCD.fillAmount = 1;
                     BS.selectedPlayerAction = "None";
-                    can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];
                     break;
 
                 case "FC":
+                    enemyTimerControl = false;
                     BS.PlayFocus();
                     BS.FocusButtonCD.fillAmount = 1;
                     BS.selectedPlayerAction = "None";
-                    can_perform_player = false;
                     actionIcon.sprite = iconSprites[1];
                     break;
 
@@ -161,6 +157,12 @@ public class timeManager : MonoBehaviour
         if (enemyTimer.fillAmount == 0)
         {
             playerTimerControl = false;
+            enemyTimerControl = false;
+
+            // Select action
+            BS.selectedEnemyAction = "ATK1";
+
+            // Execute action
             switch (BS.selectedEnemyAction)
             {
                 case "ATK1":
@@ -168,7 +170,7 @@ public class timeManager : MonoBehaviour
                     break;
 
                 default:
-                    playerTimer.fillAmount = 1;
+                    enemyTimer.fillAmount = 1;
                     break;
             }
         }

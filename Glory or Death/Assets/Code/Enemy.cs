@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
     public bool hasHit = false;
 
     private defendManager defendManager;
+    private timeManager timeManager;
 
     // Effects
     public ParticleSystem jump_dust;
@@ -52,11 +53,14 @@ public class Enemy : MonoBehaviour
 
     AudioManager audioManager;
     BattleSystem BS;
+    Animator animator;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
         BS = FindObjectOfType<BattleSystem>();
+        timeManager = FindObjectOfType<timeManager>();
         defendManager = FindObjectOfType<defendManager>();
     }
 
@@ -106,7 +110,6 @@ public class Enemy : MonoBehaviour
         {
             FindObjectOfType<BattleSystem>().missHit();
             adrenaline++;
-            FindObjectOfType<BattleSystem>().state = BattleState.PLAYERTURN;
         }
     }
 
@@ -120,9 +123,14 @@ public class Enemy : MonoBehaviour
         atk_normal_spark.Play();
         audioManager.Play("enemy_attack_basic");
     }
-    public void stopAttackBasic()
+
+    //Stop anim controllers
+    public void stopAttack()
     {
-        GetComponent<Animator>().SetBool("ATK1", false);
+        timeManager.enemyTimer.fillAmount = 1;
+        timeManager.playerTimerControl = true;
+        timeManager.enemyTimerControl = true;
+        GetComponent<Animator>().SetBool("attack", false);
     }
 
     public void stopHurtBasic()

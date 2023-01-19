@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
+
     //Time Manager
     private timeManager timeManager;
 
@@ -103,7 +104,8 @@ public class Player : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.can_perform_player = true;
+        timeManager.enemyTimerControl = true;
+        timeManager.playerTimerControl = true;
     }
     public void returnCamera()
     {
@@ -118,33 +120,38 @@ public class Player : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("DF_Skill", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.can_perform_player = true;
+        timeManager.enemyTimerControl = true;
+        timeManager.playerTimerControl = true;
     }
     public void stopDodgeSkill()
     {
         gameObject.GetComponent<Animator>().SetBool("DG_Skill", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.can_perform_player = true;
+        timeManager.enemyTimerControl = true;
+        timeManager.playerTimerControl = true;
     }
     public void stopDodgeSkillFail()
     {
         gameObject.GetComponent<Animator>().SetBool("DG_Skill_Fail", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.can_perform_player = true;
+        timeManager.enemyTimerControl = true;
+        timeManager.playerTimerControl = true;
     }
 
     public void stopFocusSkill()
     {
         gameObject.GetComponent<Animator>().SetBool("FC_Skill", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.can_perform_player = true;
+        timeManager.enemyTimerControl = true;
+        timeManager.playerTimerControl = true;
     }
 
     public void stopFocusSkillFail()
     {
         gameObject.GetComponent<Animator>().SetBool("FC_Skill_Fail", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.can_perform_player = true;
+        timeManager.enemyTimerControl = true;
+        timeManager.playerTimerControl = true;
     }
 
     public void stopSuperAttack()
@@ -160,7 +167,6 @@ public class Player : MonoBehaviour
     public void stopRest()
     {
         gameObject.GetComponent<Animator>().SetBool("Resting", false);
-        FindObjectOfType<BattleSystem>().switchToEnemy();
     }
     
     public void stopSuperDefend()

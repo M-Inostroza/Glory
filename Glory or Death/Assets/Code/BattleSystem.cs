@@ -216,6 +216,7 @@ public class BattleSystem : MonoBehaviour
         //Check stamina
         if (playerUnit.currentStamina >= 1)
         {
+            timeManager.playerTimerControl = false;
             targetManager.attack();
             //Play Animation
             playerAnimator.SetBool("ATK1", true);
@@ -232,15 +233,27 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayerDefend()
     {
-        defendManager.SetActive(true);
+        if (playerUnit.currentStamina >= 1)
+        {
+            timeManager.playerTimerControl = false;
+            defendManager.SetActive(true);
+        }
     }
     public void PlayDodge()
     {
-        dodgeManager.SetActive(true);
+        if (playerUnit.currentStamina >= 1)
+        {
+            timeManager.playerTimerControl = false;
+            dodgeManager.SetActive(true);
+        } 
     }
     public void PlayFocus()
     {
-        focusManager.SetActive(true);
+        if (playerUnit.currentStamina >= 1)
+        {
+            timeManager.playerTimerControl = false;
+            focusManager.SetActive(true);
+        }
     }
 
     void PlayerSuperAttack()
@@ -273,7 +286,6 @@ public class BattleSystem : MonoBehaviour
     void PlayerCharge()
     {
         playerUnit.currentShield++;
-        switchToEnemy();
     }
 
 
@@ -370,7 +382,8 @@ public class BattleSystem : MonoBehaviour
         else
         {
             // ---------- ATTACK BASIC ----------
-            enemyUnit.GetComponent<Animator>().SetBool("ATK1", true);
+            enemyUnit.GetComponent<Animator>().SetBool("attack", true);
+            
         }
     }
 
@@ -427,12 +440,6 @@ public class BattleSystem : MonoBehaviour
         missNotif.transform.DOJump(new Vector2(infoHud.transform.position.x + 1, infoHud.transform.position.y + 1), 1, 1, 1f).OnComplete(() => Destroy(missNotif));
     }
 
-    public void switchToEnemy()
-    {
-        state = BattleState.ENEMYTURN;
-        EnemyTurn_attack();
-    }
-
     // Deactivates evade mode, deactivates evade manager, resets timer, resets challenge, changes to enemy turn.
     private void resetEvades()
     {
@@ -440,7 +447,6 @@ public class BattleSystem : MonoBehaviour
         playerHUD.evadeSlider.gameObject.SetActive(false);
         evadeTimer = 5f;
         playerUnit.evade = 0;
-        switchToEnemy();
     }
 
     public void updateUI()
@@ -482,16 +488,6 @@ public class BattleSystem : MonoBehaviour
         //Eliminate
         hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f).OnComplete(() => Destroy(hitNotif));
         hitNotif.transform.DOJump(new Vector2(infoHud_EN.transform.position.x + 1, infoHud_EN.transform.position.y + 1), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
-
-        if (isDead)
-        {
-            state = BattleState.WON;
-            EndBattle();
-        }
-        else
-        {
-            switchToEnemy();
-        }
     }
 }
 

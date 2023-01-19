@@ -87,10 +87,8 @@ public class defendManager : MonoBehaviour
     // Method to handle enemy's defeat
     void KillOnFail()
     {
-        BS.switchToEnemy();
         shadow.SetActive(false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.can_perform_player = true;
         gameObject.SetActive(false);
     }
 

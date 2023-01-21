@@ -20,9 +20,12 @@ public class timeManager : MonoBehaviour
     //Battlesystem
     public BattleSystem BS;
 
+    //Game Manager
+    private gameManager GM;
+
     //Global time
     public TextMeshProUGUI timerText;
-    public float duration = 90f;
+    public float battleTimer = 90f;
     public bool timeOut;
 
     //Cooldowns
@@ -52,15 +55,16 @@ public class timeManager : MonoBehaviour
     //Manages general timer
     IEnumerator Start()
     {
+        GM = FindObjectOfType<gameManager>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
 
         float elapsedTime = 0f;
         int timer = 60;
-        while (elapsedTime < duration)
+        while (elapsedTime < battleTimer)
         {
             elapsedTime += Time.deltaTime;
-            timer = Mathf.RoundToInt(Mathf.Lerp(60, 0, elapsedTime / duration));
+            timer = Mathf.RoundToInt(Mathf.Lerp(60, 0, elapsedTime / battleTimer));
             timerText.text = timer.ToString();
             yield return null;
         }
@@ -197,6 +201,15 @@ public class timeManager : MonoBehaviour
                     timer.fillAmount -= Time.deltaTime / (Focus_CD * 4);
                     break;
             }
+        }
+    }
+
+
+    public void stopBattle()
+    {
+        if (battleTimer <= 0)
+        {
+            GM.showSummery();
         }
     }
 }

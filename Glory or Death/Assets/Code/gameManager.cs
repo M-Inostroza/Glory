@@ -17,5 +17,8 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    //This is a comment
+    public void showSummery()
+    {
+        Debug.Log("Showing summery");
+    }
 }

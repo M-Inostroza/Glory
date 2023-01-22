@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 
 public class timeManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class timeManager : MonoBehaviour
     //Array of sprites for the icons & active Icon
     public Sprite[] iconSprites;
     public Image actionIcon;
+    public Image shineEffect;
 
     //Battlesystem
     public BattleSystem BS;
@@ -112,37 +114,28 @@ public class timeManager : MonoBehaviour
             switch (BS.selectedPlayerAction)
             {
                 case "ATK1":
-                    enemyTimerControl = false;
+                    animateIcon(actionIcon.transform);
                     BS.PlayerAttack();
                     BS.AttackButtonCD.fillAmount = 1;
-                    BS.selectedPlayerAction = "None";
-                    actionIcon.sprite = iconSprites[1];
                     break;
 
                 case "DF":
-                    enemyTimerControl = false;
+                    animateIcon(actionIcon.transform);
                     BS.PlayerDefend();
                     BS.DefendButtonCD.fillAmount = 1;
-                    BS.selectedPlayerAction = "None";
-                    actionIcon.sprite = iconSprites[1];
                     break;
 
                 case "DG":
-                    enemyTimerControl = false;
+                    animateIcon(actionIcon.transform);
                     BS.PlayDodge();
                     BS.DodgeButtonCD.fillAmount = 1;
-                    BS.selectedPlayerAction = "None";
-                    actionIcon.sprite = iconSprites[1];
                     break;
 
                 case "FC":
-                    enemyTimerControl = false;
+                    animateIcon(actionIcon.transform);
                     BS.PlayFocus();
                     BS.FocusButtonCD.fillAmount = 1;
-                    BS.selectedPlayerAction = "None";
-                    actionIcon.sprite = iconSprites[1];
                     break;
-
 
                 default:
                     playerTimer.fillAmount = 1;
@@ -211,5 +204,20 @@ public class timeManager : MonoBehaviour
         {
             GM.showSummery();
         }
+    }
+
+    void animateIcon(Transform icon)
+    {
+        shineEffect.gameObject.SetActive(true);
+        shineEffect.rectTransform.DORotate(new Vector3(0, 0, 90), 1).SetEase(Ease.Linear);
+        icon.transform.DOScale(new Vector2(icon.transform.localScale.x + 0.9f, icon.transform.localScale.y + 0.9f), 0.4f).OnComplete(() => changeIcon(icon)).SetEase(Ease.OutBounce);
+    }
+
+    void changeIcon(Transform icon)
+    {
+        enemyTimerControl = false;
+        BS.selectedPlayerAction = "None";
+        actionIcon.sprite = iconSprites[1];
+        icon.gameObject.SetActive(false);
     }
 }

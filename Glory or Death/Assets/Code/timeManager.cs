@@ -52,8 +52,6 @@ public class timeManager : MonoBehaviour
     private Enemy enemy;
 
 
-
-
     //Manages general timer
     IEnumerator Start()
     {
@@ -89,23 +87,26 @@ public class timeManager : MonoBehaviour
         {
             playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.baseSpeed);
         }
-
+        
         //Changes icon for selected action
         switch (BS.selectedPlayerAction)
         {
             case "ATK1":
                 actionIcon.sprite = iconSprites[0];
+                animateIcon(actionIcon.transform);
                 break;
             case "DF":
                 actionIcon.sprite = iconSprites[3];
+                animateIcon(actionIcon.transform);
                 break;
             case "DG":
                 actionIcon.sprite = iconSprites[2];
+                animateIcon(actionIcon.transform);
                 break;
             case "FC":
                 actionIcon.sprite = iconSprites[4];
+                animateIcon(actionIcon.transform);
                 break;
-
         }
 
         //Execute selected action
@@ -114,25 +115,21 @@ public class timeManager : MonoBehaviour
             switch (BS.selectedPlayerAction)
             {
                 case "ATK1":
-                    animateIcon(actionIcon.transform);
                     BS.PlayerAttack();
                     BS.AttackButtonCD.fillAmount = 1;
                     break;
 
                 case "DF":
-                    animateIcon(actionIcon.transform);
                     BS.PlayerDefend();
                     BS.DefendButtonCD.fillAmount = 1;
                     break;
 
                 case "DG":
-                    animateIcon(actionIcon.transform);
                     BS.PlayDodge();
                     BS.DodgeButtonCD.fillAmount = 1;
                     break;
 
                 case "FC":
-                    animateIcon(actionIcon.transform);
                     BS.PlayFocus();
                     BS.FocusButtonCD.fillAmount = 1;
                     break;
@@ -208,16 +205,10 @@ public class timeManager : MonoBehaviour
 
     void animateIcon(Transform icon)
     {
-        shineEffect.gameObject.SetActive(true);
-        shineEffect.rectTransform.DORotate(new Vector3(0, 0, 90), 1).SetEase(Ease.Linear);
-        icon.transform.DOScale(new Vector2(icon.transform.localScale.x + 0.9f, icon.transform.localScale.y + 0.9f), 0.4f).OnComplete(() => changeIcon(icon)).SetEase(Ease.OutBounce);
-    }
-
-    void changeIcon(Transform icon)
-    {
-        enemyTimerControl = false;
-        BS.selectedPlayerAction = "None";
-        actionIcon.sprite = iconSprites[1];
-        icon.gameObject.SetActive(false);
+        Vector2 scale = new Vector2(0.005f, 0.005f);
+        int vrb = 20;
+        float duration = 1f;
+        float elastic = 3;
+        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic);
     }
 }

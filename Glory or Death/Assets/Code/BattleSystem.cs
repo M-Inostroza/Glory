@@ -143,9 +143,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (AttackButtonCD.fillAmount == 0)
         {
-            if (state != BattleState.PLAYERTURN)
-                return;
-            selectedPlayerAction = "ATK1";
+            timeManager.selectIcon("ATK1");
         }
     }
 
@@ -153,9 +151,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (DefendButtonCD.fillAmount == 0)
         {
-            if (state != BattleState.PLAYERTURN)
-                return;
-            selectedPlayerAction = "DF";
+            timeManager.selectIcon("DF");
         } else
         {
             Debug.Log("still cooldown");
@@ -166,9 +162,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (DodgeButtonCD.fillAmount == 0)
         {
-            if (state != BattleState.PLAYERTURN)
-                return;
-            selectedPlayerAction = "DG";
+            timeManager.selectIcon("DG");
         }
     }
 
@@ -176,10 +170,8 @@ public class BattleSystem : MonoBehaviour
     {
         if (FocusButtonCD.fillAmount == 0)
         {
-            if (state != BattleState.PLAYERTURN)
-                return;
+            timeManager.selectIcon("FC");
         }
-        selectedPlayerAction = "FC";
     }
 
 

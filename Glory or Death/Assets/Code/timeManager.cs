@@ -87,27 +87,6 @@ public class timeManager : MonoBehaviour
         {
             playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.baseSpeed);
         }
-        
-        //Changes icon for selected action
-        switch (BS.selectedPlayerAction)
-        {
-            case "ATK1":
-                actionIcon.sprite = iconSprites[0];
-                animateIcon(actionIcon.transform);
-                break;
-            case "DF":
-                actionIcon.sprite = iconSprites[3];
-                animateIcon(actionIcon.transform);
-                break;
-            case "DG":
-                actionIcon.sprite = iconSprites[2];
-                animateIcon(actionIcon.transform);
-                break;
-            case "FC":
-                actionIcon.sprite = iconSprites[4];
-                animateIcon(actionIcon.transform);
-                break;
-        }
 
         //Execute selected action
         if (playerTimer.fillAmount == 0)
@@ -209,6 +188,30 @@ public class timeManager : MonoBehaviour
         int vrb = 20;
         float duration = 1f;
         float elastic = 3;
-        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic);
+        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play();
+    }
+
+    public void selectIcon(string icon)
+    {
+        //Changes icon for selected action
+        switch (icon)
+        {
+            case "ATK1":
+                actionIcon.sprite = iconSprites[0];
+                animateIcon(actionIcon.transform);
+                break;
+            case "DF":
+                actionIcon.sprite = iconSprites[3];
+                animateIcon(actionIcon.transform);
+                break;
+            case "DG":
+                actionIcon.sprite = iconSprites[2];
+                animateIcon(actionIcon.transform);
+                break;
+            case "FC":
+                actionIcon.sprite = iconSprites[4];
+                animateIcon(actionIcon.transform);
+                break;
+        }
     }
 }

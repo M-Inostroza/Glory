@@ -12,6 +12,8 @@ public class BattleSystem : MonoBehaviour
     //Selected actions
     public string selectedPlayerAction;
     public string selectedEnemyAction;
+    // Avoid click spam
+    public bool canClick = true;
 
     //Target Manager
     private TargetManager targetManager;
@@ -141,16 +143,20 @@ public class BattleSystem : MonoBehaviour
 
     public void OnAttackButton()
     {
-        if (AttackButtonCD.fillAmount == 0)
+        if (AttackButtonCD.fillAmount == 0 && canClick)
         {
+            canClick = false;
+            selectedPlayerAction = "ATK1";
             timeManager.selectIcon("ATK1");
         }
     }
 
     public void OnDefendButton()
     {
-        if (DefendButtonCD.fillAmount == 0)
+        if (DefendButtonCD.fillAmount == 0 && canClick)
         {
+            canClick = false;
+            selectedPlayerAction = "DF";
             timeManager.selectIcon("DF");
         } else
         {
@@ -160,16 +166,20 @@ public class BattleSystem : MonoBehaviour
 
     public void OnDodgeButton()
     {
-        if (DodgeButtonCD.fillAmount == 0)
+        if (DodgeButtonCD.fillAmount == 0 && canClick)
         {
+            canClick = false;
+            selectedPlayerAction = "DG";
             timeManager.selectIcon("DG");
         }
     }
 
     public void OnFocusButton()
     {
-        if (FocusButtonCD.fillAmount == 0)
+        if (FocusButtonCD.fillAmount == 0 && canClick)
         {
+            canClick = false;
+            selectedPlayerAction = "FC";
             timeManager.selectIcon("FC");
         }
     }
@@ -208,7 +218,6 @@ public class BattleSystem : MonoBehaviour
         //Check stamina
         if (playerUnit.currentStamina >= 1)
         {
-            timeManager.playerTimerControl = false;
             targetManager.attack();
             //Play Animation
             playerAnimator.SetBool("ATK1", true);
@@ -219,6 +228,8 @@ public class BattleSystem : MonoBehaviour
             //Reduce Stamina
             playerUnit.currentStamina -= 1;
             playerHUD.updateBricks(playerUnit.currentStamina);
+
+            timeManager.defaultAction();
         }
             
     }
@@ -227,24 +238,24 @@ public class BattleSystem : MonoBehaviour
     {
         if (playerUnit.currentStamina >= 1)
         {
-            timeManager.playerTimerControl = false;
             defendManager.SetActive(true);
+            timeManager.defaultAction();
         }
     }
     public void PlayDodge()
     {
         if (playerUnit.currentStamina >= 1)
         {
-            timeManager.playerTimerControl = false;
             dodgeManager.SetActive(true);
+            timeManager.defaultAction();
         } 
     }
     public void PlayFocus()
     {
         if (playerUnit.currentStamina >= 1)
         {
-            timeManager.playerTimerControl = false;
             focusManager.SetActive(true);
+            timeManager.defaultAction();
         }
     }
 

@@ -89,32 +89,42 @@ public class timeManager : MonoBehaviour
         }
 
         //Execute selected action
-        if (playerTimer.fillAmount == 0)
+        if (playerTimer.fillAmount == 0 && playerTimerControl)
         {
             switch (BS.selectedPlayerAction)
             {
                 case "ATK1":
                     BS.PlayerAttack();
                     BS.AttackButtonCD.fillAmount = 1;
+                    playerTimerControl = false;
+                    enemyTimerControl = false;
                     break;
 
                 case "DF":
                     BS.PlayerDefend();
                     BS.DefendButtonCD.fillAmount = 1;
+                    playerTimerControl = false;
+                    enemyTimerControl = false;
                     break;
 
                 case "DG":
                     BS.PlayDodge();
                     BS.DodgeButtonCD.fillAmount = 1;
+                    playerTimerControl = false;
+                    enemyTimerControl = false;
                     break;
 
                 case "FC":
                     BS.PlayFocus();
                     BS.FocusButtonCD.fillAmount = 1;
+                    playerTimerControl = false;
+                    enemyTimerControl = false;
                     break;
 
                 default:
                     playerTimer.fillAmount = 1;
+                    playerTimerControl = true;
+                    enemyTimerControl = true;
                     break;
             }
         }
@@ -158,16 +168,16 @@ public class timeManager : MonoBehaviour
             switch (timer.gameObject.tag)
             {
                 case "ATK Counter":
-                    timer.fillAmount -= Time.deltaTime / (Attack_CD * 3);
+                    timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
                     break;
                 case "DF Counter":
-                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 3.5f);
+                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 4f);
                     break;
                 case "DG Counter":
-                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 3.5f);
+                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 4f);
                     break;
                 case "FC Counter":
-                    timer.fillAmount -= Time.deltaTime / (Focus_CD * 4);
+                    timer.fillAmount -= Time.deltaTime / (Focus_CD * 3);
                     break;
             }
         }
@@ -184,11 +194,11 @@ public class timeManager : MonoBehaviour
 
     void animateIcon(Transform icon)
     {
-        Vector2 scale = new Vector2(0.005f, 0.005f);
-        int vrb = 20;
-        float duration = 1f;
-        float elastic = 3;
-        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play();
+        Vector2 scale = new Vector2(0.1f, 0.1f);
+        int vrb = 8;
+        float duration = 0.3f;
+        float elastic = 1f;
+        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play().OnComplete(() => BS.canClick = true);
     }
 
     public void selectIcon(string icon)
@@ -213,5 +223,11 @@ public class timeManager : MonoBehaviour
                 animateIcon(actionIcon.transform);
                 break;
         }
+    }
+
+    public void defaultAction()
+    {
+        BS.selectedPlayerAction = "None";
+        actionIcon.sprite = iconSprites[1];
     }
 }

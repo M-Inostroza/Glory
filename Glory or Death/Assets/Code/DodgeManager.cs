@@ -46,7 +46,7 @@ public class DodgeManager : MonoBehaviour
         }
 
         // Sets timer to deactivate defend manager
-        StartCoroutine(commandTimer(1.5f)); // Normal 1.5
+        StartCoroutine(commandTimer(1.8f)); // Normal 1.8
     }
 
     private void Update()

@@ -55,6 +55,7 @@ public class defendManager : MonoBehaviour
     {
         transform.DOScale(0.01f, 0.1f);
         scaleUp.Rewind();
+        timeManager.playerTimerControl = true;
     }
 
     private void Update()

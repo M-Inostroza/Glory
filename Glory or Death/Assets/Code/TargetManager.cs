@@ -48,11 +48,13 @@ public class TargetManager : MonoBehaviour
         var targets = this.targets;
         var targetScale = this.targetScale;
         var wait_time = this.wait_time;
+        //10 calls
 
         for (int i = 0; i < targets.Length - 3; i++)
         {
             // Activate Target
             targets[i].SetActive(true);
+             //20 calls
 
             if (i == 0)
             {

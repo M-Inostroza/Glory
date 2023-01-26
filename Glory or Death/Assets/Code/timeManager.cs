@@ -196,7 +196,7 @@ public class timeManager : MonoBehaviour
     {
         Vector2 scale = new Vector2(0.1f, 0.1f);
         int vrb = 8;
-        float duration = 0.3f;
+        float duration = 0.4f;
         float elastic = 1f;
         Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play().OnComplete(() => BS.canClick = true);
     }

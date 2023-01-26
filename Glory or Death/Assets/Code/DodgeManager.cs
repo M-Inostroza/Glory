@@ -8,6 +8,9 @@ public class DodgeManager : MonoBehaviour
     public Player playerUnit;
     public GameObject[] arrowPrefabs;
 
+    // Set evade state
+    public GameObject dodgeBuffIcon;
+
     // Initial position of the arrows
     float intPos;
 
@@ -152,7 +155,8 @@ public class DodgeManager : MonoBehaviour
         // Triggers miss mechanic and animation if 4 arrows were hit
         if (extraAgility == 4)
         {
-            playerUnit.missed = false; // test
+            dodgeBuffIcon.SetActive(true);
+            playerUnit.missed = true;
             playerAnimator.SetBool("DG_Skill", true);
         } else
         {

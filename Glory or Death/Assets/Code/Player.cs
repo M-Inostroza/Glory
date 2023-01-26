@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     public int maxAgility;
     public int currentAgility;
     public bool missed = false;
+    public GameObject dodgeBuffIcon;
 
     public float evade;
 
@@ -132,10 +133,16 @@ public class Player : MonoBehaviour
     }
     public void stopDodgeSkillFail()
     {
-        gameObject.GetComponent<Animator>().SetBool("DG_Skill_Fail", false);
+        GetComponent<Animator>().SetBool("DG_Skill_Fail", false);
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
+    }
+
+    public void stopDodgeBuff()
+    {
+        missed = false;
+        GetComponent<Animator>().SetBool("Evade", false);
     }
 
     public void stopFocusSkill()
@@ -216,13 +223,10 @@ public class Player : MonoBehaviour
         superBloodEffect.Play();
     }
 
-    public void playEvadeAttack()
+    public void playDodgeEffect()
     {
+        dodgeBuffIcon.SetActive(false);
         audioManager.Play("evadeAttack");
         groundJumpEffect.Play();
     }
-
-
-    
-    
 }

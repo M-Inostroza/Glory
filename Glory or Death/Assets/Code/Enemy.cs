@@ -120,8 +120,15 @@ public class Enemy : MonoBehaviour
     }
     public void playAttack()
     {
-        atk_normal_spark.Play();
-        audioManager.Play("enemy_attack_basic");
+        if (FindObjectOfType<Player>().missed)
+        {
+            audioManager.Play("evadeAttack");
+            FindObjectOfType<Player>().GetComponent<Animator>().SetBool("Evade", true);
+        } else
+        {
+            atk_normal_spark.Play();
+            audioManager.Play("enemy_attack_basic");
+        }
     }
 
     //Stop anim controllers
@@ -143,10 +150,6 @@ public class Enemy : MonoBehaviour
         GetComponent<Animator>().SetBool("Hurt", false);
     }
 
-
-    
-
-   
 
     public void attackStrong()
     {

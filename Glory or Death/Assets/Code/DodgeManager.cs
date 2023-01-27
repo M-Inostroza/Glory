@@ -155,7 +155,7 @@ public class DodgeManager : MonoBehaviour
         // Triggers miss mechanic and animation if 4 arrows were hit
         if (extraAgility == 4)
         {
-            dodgeBuffIcon.SetActive(true);
+            animateBuff();
             playerUnit.missed = true;
             playerAnimator.SetBool("DG_Skill", true);
         } else
@@ -174,5 +174,11 @@ public class DodgeManager : MonoBehaviour
             instantArrows.Clear();
             Destroy(child.gameObject);
         }
+    }
+
+    void animateBuff()
+    {
+        dodgeBuffIcon.SetActive(true);
+        dodgeBuffIcon.transform.DOPunchScale(new Vector2(1f, 1f), 0.4f, 8, 1).Play();
     }
 }

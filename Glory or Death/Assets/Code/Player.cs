@@ -48,7 +48,6 @@ public class Player : MonoBehaviour
     public ParticleSystem atk_normal_blood;
     public ParticleSystem jump_dust;
     public ParticleSystem land_dust;
-    public ParticleSystem groundJumpEffect;
 
     public ParticleSystem superHitEffect;
     public ParticleSystem superBloodEffect;
@@ -138,11 +137,14 @@ public class Player : MonoBehaviour
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
     }
-
     public void stopDodgeBuff()
     {
         missed = false;
         GetComponent<Animator>().SetBool("Evade", false);
+    }
+    public void stopDodgeIcon()
+    {
+        dodgeBuffIcon.transform.DOScale(new Vector2(0, 0), 0.5f).SetEase(Ease.OutExpo).OnComplete(() => dodgeBuffIcon.SetActive(false));
     }
 
     public void stopFocusSkill()
@@ -221,12 +223,5 @@ public class Player : MonoBehaviour
         audioManager.Play("superStab");
         superHitEffect.Play();
         superBloodEffect.Play();
-    }
-
-    public void playDodgeEffect()
-    {
-        dodgeBuffIcon.SetActive(false);
-        audioManager.Play("evadeAttack");
-        groundJumpEffect.Play();
     }
 }

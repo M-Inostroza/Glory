@@ -52,4 +52,18 @@ public class playerSoundManager : MonoBehaviour
                 break;
         }
     }
+
+    public void dropSword()
+    {
+        int random = Random.Range(1, 4);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("DG_drop_1");
+                break;
+            case 2:
+                audioManager.Play("DG_drop_2");
+                break;
+        }
+    }
 }

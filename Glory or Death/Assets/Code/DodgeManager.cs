@@ -176,9 +176,9 @@ public class DodgeManager : MonoBehaviour
         }
     }
 
-    void animateBuff()
+    public void animateBuff()
     {
         dodgeBuffIcon.SetActive(true);
-        dodgeBuffIcon.transform.DOPunchScale(new Vector2(1f, 1f), 0.4f, 8, 1).Play();
+        dodgeBuffIcon.transform.DOPunchScale(new Vector2(12f, 12f), 0.4f, 8, 1);
     }
 }

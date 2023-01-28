@@ -145,9 +145,14 @@ public class BattleSystem : MonoBehaviour
     {
         if (AttackButtonCD.fillAmount == 0 && canClick)
         {
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "ATK1";
             timeManager.selectIcon("ATK1");
+        }
+        else
+        {
+            audioManager.Play("UI_select_fail");
         }
     }
 
@@ -155,12 +160,13 @@ public class BattleSystem : MonoBehaviour
     {
         if (DefendButtonCD.fillAmount == 0 && canClick)
         {
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "DF";
             timeManager.selectIcon("DF");
         } else
         {
-            Debug.Log("still cooldown");
+            audioManager.Play("UI_select_fail");
         }
     }
 
@@ -168,9 +174,14 @@ public class BattleSystem : MonoBehaviour
     {
         if (DodgeButtonCD.fillAmount == 0 && canClick)
         {
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "DG";
             timeManager.selectIcon("DG");
+        }
+        else
+        {
+            audioManager.Play("UI_select_fail");
         }
     }
 
@@ -178,9 +189,13 @@ public class BattleSystem : MonoBehaviour
     {
         if (FocusButtonCD.fillAmount == 0 && canClick)
         {
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "FC";
             timeManager.selectIcon("FC");
+        } else
+        {
+            audioManager.Play("UI_select_fail");
         }
     }
 

@@ -9,6 +9,9 @@ public class defendManager : MonoBehaviour
     // Scale tween
     private Tween scaleUp;
 
+    // Set defend state
+    public GameObject defendBuffIcon;
+
     // Animator of player
     [SerializeField] private Animator playerAnim;
 
@@ -46,7 +49,7 @@ public class defendManager : MonoBehaviour
 
     private void OnEnable()
     {
-        audioManager.Play("defend_charge");
+        audioManager.Play("DF_charge");
         defendSuccess = false;
         shadow.SetActive(true);
     }
@@ -55,7 +58,6 @@ public class defendManager : MonoBehaviour
     {
         transform.DOScale(0.01f, 0.1f);
         scaleUp.Rewind();
-        timeManager.playerTimerControl = true;
     }
 
     private void Update()
@@ -70,6 +72,7 @@ public class defendManager : MonoBehaviour
         scaleUp.Pause();
         if (transform.localScale.x < scaleLimit)
         {
+            playerAnim.SetBool("DG_Skill_Fail", true);
             audioManager.Play("defend_fail");
             transform.DOShakePosition(0.4f, 0.05f, 40).OnComplete(() => KillOnFail());
         }
@@ -89,7 +92,6 @@ public class defendManager : MonoBehaviour
     void KillOnFail()
     {
         shadow.SetActive(false);
-        timeManager.playerTimer.fillAmount = 1;
         gameObject.SetActive(false);
     }
 

@@ -66,4 +66,24 @@ public class playerSoundManager : MonoBehaviour
                 break;
         }
     }
+
+    // -----Defend----- //
+
+    //Defend(Success)
+    public void sword_shield_hit()
+    {
+        int random = Random.Range(1, 3);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("DF_sword_shield_1");
+                break;
+            case 2:
+                audioManager.Play("DF_sword_shield_2");
+                break;
+            case 3:
+                audioManager.Play("DF_sword_shield_3");
+                break;
+        }
+    }
 }

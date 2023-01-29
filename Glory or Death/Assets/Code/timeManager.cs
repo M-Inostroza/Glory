@@ -171,10 +171,10 @@ public class timeManager : MonoBehaviour
                     timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
                     break;
                 case "DF Counter":
-                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 4f);
+                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 4.5f);
                     break;
                 case "DG Counter":
-                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 4f);
+                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 4.5f);
                     break;
                 case "FC Counter":
                     timer.fillAmount -= Time.deltaTime / (Focus_CD * 3);

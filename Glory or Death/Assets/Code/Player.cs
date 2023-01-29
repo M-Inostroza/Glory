@@ -49,9 +49,6 @@ public class Player : MonoBehaviour
     public ParticleSystem jump_dust;
     public ParticleSystem land_dust;
 
-    public ParticleSystem superHitEffect;
-    public ParticleSystem superBloodEffect;
-
     AudioManager audioManager;
     public Camera MainCamera;
 
@@ -119,7 +116,6 @@ public class Player : MonoBehaviour
     public void stopDefendSkill()
     {
         gameObject.GetComponent<Animator>().SetBool("DF_Skill", false);
-        timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
     }
@@ -221,7 +217,5 @@ public class Player : MonoBehaviour
     public void playSuperStab()
     {
         audioManager.Play("superStab");
-        superHitEffect.Play();
-        superBloodEffect.Play();
     }
 }

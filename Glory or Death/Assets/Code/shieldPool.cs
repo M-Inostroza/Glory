@@ -40,7 +40,8 @@ public class shieldPool : MonoBehaviour
             }
             if (lastActiveChild != -1)
             {
-                transform.GetChild(lastActiveChild).gameObject.SetActive(false);
+                transform.GetChild(lastActiveChild).transform.DOShakePosition(0.5f, 5)
+                .OnComplete(()=>transform.GetChild(lastActiveChild).gameObject.SetActive(false));
             }
         }
         playerScript.currentShield--;

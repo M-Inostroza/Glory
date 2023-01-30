@@ -11,6 +11,31 @@ public class playerSoundManager : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
     }
 
+    // -----Attack----- //
+    // Targets
+    public void targetSounds()
+    {
+        int random = Random.Range(1, 5);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("ATK_target_hit_1");
+                break;
+            case 2:
+                audioManager.Play("ATK_target_hit_2");
+                break;
+            case 3:
+                audioManager.Play("ATK_target_hit_3");
+                break;
+            case 4:
+                audioManager.Play("ATK_target_hit_4");
+                break;
+            case 5:
+                audioManager.Play("ATK_target_hit_5");
+                break;
+        }
+    }
+
     // ------Dodge----- //
 
     //Skill(Success)
@@ -52,7 +77,6 @@ public class playerSoundManager : MonoBehaviour
                 break;
         }
     }
-
     public void dropSword()
     {
         int random = Random.Range(1, 4);

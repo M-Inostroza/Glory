@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class gameManager : MonoBehaviour
 {
-    public timeManager timeManager;
-    public BattleSystem battleSystem;
+    private timeManager timeManager;
+    private BattleSystem battleSystem;
 
     public int turnCounter;
+
+    private void Start()
+    {
+        timeManager = FindObjectOfType<timeManager>();
+        battleSystem = FindObjectOfType<BattleSystem>();
+    }
 
     private void Update()
     {
         if (timeManager.timeOut)
         {
-            Debug.Log("Time out");
+            timeManager.playerTimerControl = false;
+            timeManager.enemyTimerControl = false;
         }
     }
 

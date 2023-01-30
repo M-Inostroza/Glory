@@ -42,14 +42,7 @@ public class Enemy : MonoBehaviour
     // Effects
     public ParticleSystem jump_dust;
     public ParticleSystem atk_normal_spark;
-    /*
-    public ParticleSystem hitShieldEffect;
-    public ParticleSystem bloodShieldEffect;
-
-    public ParticleSystem bloodEffect;
-    public ParticleSystem superBloodEffect;
-
-    public ParticleSystem hitStrong;*/
+    
 
     AudioManager audioManager;
     BattleSystem BS;
@@ -87,11 +80,8 @@ public class Enemy : MonoBehaviour
 
                 if (isDead)
                 {
-                    FindObjectOfType<BattleSystem>().state = BattleState.LOST;
                     FindObjectOfType<BattleSystem>().EndBattle();
                 }
-                else
-                    FindObjectOfType<BattleSystem>().state = BattleState.PLAYERTURN;
             }
             else
             {
@@ -99,11 +89,8 @@ public class Enemy : MonoBehaviour
                 FindObjectOfType<BattleSystem>().showHit(native_damage);
                 if (isDead)
                 {
-                    FindObjectOfType<BattleSystem>().state = BattleState.LOST;
                     FindObjectOfType<BattleSystem>().EndBattle();
                 }
-                else
-                    FindObjectOfType<BattleSystem>().state = BattleState.PLAYERTURN;
             }
         }
         else
@@ -113,11 +100,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void playJump()
-    {
-        audioManager.Play("jump_basic");
-        jump_dust.Play();
-    }
+    
     public void playAttack()
     {
         if (FindObjectOfType<Player>().missed)
@@ -134,6 +117,7 @@ public class Enemy : MonoBehaviour
     //Stop anim controllers
     public void stopAttack()
     {
+        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         timeManager.enemyTimer.fillAmount = 1;
         timeManager.playerTimerControl = true;
         timeManager.enemyTimerControl = true;

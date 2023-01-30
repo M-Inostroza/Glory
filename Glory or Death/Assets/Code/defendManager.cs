@@ -9,9 +9,6 @@ public class defendManager : MonoBehaviour
     // Scale tween
     private Tween scaleUp;
 
-    // Set defend state
-    public GameObject defendBuffIcon;
-
     // Animator of player
     [SerializeField] private Animator playerAnim;
 
@@ -27,9 +24,6 @@ public class defendManager : MonoBehaviour
     // Battle System
     [SerializeField] private BattleSystem BS;
 
-    // Time Manager
-    [SerializeField] private timeManager timeManager;
-
     // Shield Pool
     [SerializeField] private shieldPool shieldPool;
 
@@ -44,7 +38,6 @@ public class defendManager : MonoBehaviour
     {
         // Set the tween
         scaleUp = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad);
-        timeManager = FindObjectOfType<timeManager>();
     }
 
     private void OnEnable()

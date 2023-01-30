@@ -46,13 +46,14 @@ public class focusTarget : MonoBehaviour
             if (canHit)
             {
                 Debug.Log("hit");
+                timeManager.enemyActionIcon.sprite = timeManager.iconSprites[0];
                 playerUnit.GetComponent<Animator>().SetBool("FC_Skill", true);
                 focusManager.gameObject.SetActive(false);
             }
             else
             {
-                Debug.Log("nope");
-                playerUnit.GetComponent<Animator>().SetBool("FC_Skill_Fail", true);
+                timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
+                playerUnit.GetComponent<Animator>().SetBool("DG_Skill_Fail", true);
                 focusManager.gameObject.SetActive(false);
             }
         }

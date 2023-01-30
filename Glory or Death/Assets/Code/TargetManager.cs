@@ -48,7 +48,6 @@ public class TargetManager : MonoBehaviour
         var targets = this.targets;
         var targetScale = this.targetScale;
         var wait_time = this.wait_time;
-        //10 calls
 
         for (int i = 0; i < targets.Length - 3; i++)
         {
@@ -75,8 +74,8 @@ public class TargetManager : MonoBehaviour
             yield return new WaitForSeconds(wait_time);
         }
 
-        // Deactivates the targets after timer
-        yield return new WaitForSeconds(1.4f);
+        // Deactivates the targets after timer (Mejorable)!!
+        yield return new WaitForSeconds(1f);
 
         for (int i = 0; i < targets.Length - 3; i++)
         {

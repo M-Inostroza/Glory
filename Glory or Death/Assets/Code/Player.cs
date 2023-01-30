@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     //Shield
     public int maxShield;
     public int currentShield;
-    public shieldPool shieldPool;
+    private shieldPool shieldPool;
 
     //Stamina
     public int maxStamina;
@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
     {
         timeManager = FindObjectOfType<timeManager>();
         audioManager = FindObjectOfType<AudioManager>();
+        shieldPool = FindObjectOfType<shieldPool>();
     }
 
     //this is a comment
@@ -187,12 +188,6 @@ public class Player : MonoBehaviour
     public void shakeHit()
     {
         transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);
-    }
-
-    public void playJump()
-    {
-        audioManager.Play("jump_basic");
-        jump_dust.Play();
     }
 
     public void playSuperJump()

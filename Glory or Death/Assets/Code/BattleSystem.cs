@@ -5,8 +5,6 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
 
-//Manages the battle states
-public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleSystem : MonoBehaviour
 {
     //Selected actions
@@ -32,7 +30,7 @@ public class BattleSystem : MonoBehaviour
     public Image DodgeButtonCD;
     public Image FocusButtonCD;
 
-    // Dodge system
+    // Dodge System
     public GameObject dodgeManager;
 
     // Defend mechanic
@@ -87,13 +85,9 @@ public class BattleSystem : MonoBehaviour
     Enemy enemyUnit;
     timeManager timeManager;
 
-    public BattleState state;
-
     private void Awake()
     {
         evadeTimer = 5f;
-
-        state = BattleState.START;
         SetupBattle();
     }
 
@@ -135,8 +129,6 @@ public class BattleSystem : MonoBehaviour
         playerUnit.currentStamina = playerUnit.maxStamina;
         playerUnit.currentAgility = playerUnit.maxAgility;
         enemyUnit.currentAgility = enemyUnit.maxAgility;
-
-        state = BattleState.PLAYERTURN;
     }
 
     // ----------------- Buttons -----------------
@@ -204,24 +196,16 @@ public class BattleSystem : MonoBehaviour
 
     public void OnSuperAttackButton()
     {
-        if (state != BattleState.PLAYERTURN)
-            return;
-
         PlayerSuperAttack();
     }
 
     public void OnRestButton()
     {
-        if (state != BattleState.PLAYERTURN)
-            return;
-
         PlayerRest();
     }
 
     public void OnEvadeButton()
     {
-        if (state != BattleState.PLAYERTURN)
-            return;
         isOnEvade = true;
         PlayerEvade();
     }
@@ -378,11 +362,8 @@ public class BattleSystem : MonoBehaviour
                 showHit(totalDMG);
                 if (isDead)
                 {
-                    state = BattleState.LOST;
                     EndBattle();
                 }
-                else
-                    state = BattleState.PLAYERTURN;
             }
             else
             {
@@ -390,11 +371,8 @@ public class BattleSystem : MonoBehaviour
                 showHit(totalDMG);
                 if (isDead)
                 {
-                    state = BattleState.LOST;
                     EndBattle();
                 }
-                else
-                    state = BattleState.PLAYERTURN;
             }
         }
         else
@@ -407,19 +385,7 @@ public class BattleSystem : MonoBehaviour
 
     public void EndBattle()
     {
-        if(state == BattleState.WON)
-        {
-            Debug.Log("You won!");
-            playerAnimator.SetBool("WIN", true);
-            victoryText.transform.DOLocalJump(new Vector2(0, 0), 10f, 1, .5f);
-            enemyUnit.GetComponent<Animator>().SetBool("Defeat", true);
-        } else if (state == BattleState.LOST)
-        {
-            Debug.Log("you lost");
-            playerAnimator.SetBool("DEFEAT", true);
-            enemyUnit.GetComponent<Animator>().SetBool("WIN", true);
-            defeatText.transform.DOLocalJump(new Vector2(0, 0), 10f, 1, .5f);
-        }
+        //TO DO
 
         thankYou.transform.DOLocalMoveY(-110, 1f);
     }

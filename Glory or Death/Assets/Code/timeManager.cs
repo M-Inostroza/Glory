@@ -17,7 +17,6 @@ public class timeManager : MonoBehaviour
     //Array of sprites for the icons & active Icon
     public Sprite[] iconSprites;
     public Image actionIcon;
-    public Image shineEffect;
 
     //Battlesystem
     public BattleSystem BS;
@@ -41,8 +40,10 @@ public class timeManager : MonoBehaviour
     public Image playerTimer;
     public Image playerActionIcon;
 
+    // Enemy Timer
     public bool enemyTimerControl = true;
     public Image enemyTimer;
+    public Image enemyActionIcon;
 
     //Generic wait time for turns
     private float mainWaitTime = 20;
@@ -130,6 +131,11 @@ public class timeManager : MonoBehaviour
         }
     }
 
+    public void showEnemyAction()
+    {
+        enemyActionIcon.sprite = iconSprites[0];
+    }
+
     void enemyAction()
     {
         if (enemyTimerControl)
@@ -152,6 +158,10 @@ public class timeManager : MonoBehaviour
                     BS.EnemyTurn_attack();
                     break;
 
+                case "CHR":
+                    Debug.Log("charging");
+                    break;
+
                 default:
                     enemyTimer.fillAmount = 1;
                     break;
@@ -160,7 +170,7 @@ public class timeManager : MonoBehaviour
     }
 
 
-    // Cooldown timer
+    // Cooldown timer (Mejorable!!)
     public void ReduceCooldown(Image timer)
     {
         if (timer.fillAmount > 0)

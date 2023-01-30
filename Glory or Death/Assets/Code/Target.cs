@@ -24,7 +24,7 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        audioManager.Play("targetHit");
+        FindObjectOfType<playerSoundManager>().targetSounds();
         colider.enabled = false;
         anim.SetBool("hit", true);
         BattleSystem.targetHit++;

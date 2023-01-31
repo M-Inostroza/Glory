@@ -32,6 +32,9 @@ public class focusManager : MonoBehaviour
 
     private void OnEnable()
     {
+        // Focus timer
+        StartCoroutine(focusTimer());
+
         // Set the range for the target sprite
         targetRangeMin = Random.Range(minX + 1, maxX - 1);
         targetRangeMax = targetRangeMin + 3.5f;
@@ -51,5 +54,11 @@ public class focusManager : MonoBehaviour
             // Reverse the direction of the cursor sprite
             targetSpeed *= -1;
         }
+    }
+
+    IEnumerator focusTimer()
+    {
+        yield return new WaitForSeconds(2);
+        gameObject.SetActive(false);
     }
 }

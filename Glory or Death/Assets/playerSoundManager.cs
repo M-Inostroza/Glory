@@ -110,4 +110,24 @@ public class playerSoundManager : MonoBehaviour
                 break;
         }
     }
+
+    public void blunt_hit()
+    {
+        int random = Random.Range(1, 4);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("ATK_blunt_1");
+                break;
+            case 2:
+                audioManager.Play("ATK_blunt_2");
+                break;
+            case 3:
+                audioManager.Play("ATK_blunt_3");
+                break;
+            case 4:
+                audioManager.Play("ATK_blunt_4");
+                break;
+        }
+    }
 }

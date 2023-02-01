@@ -1362,6 +1362,7 @@ GameObject:
   - component: {fileID: 2283184811534030757}
   - component: {fileID: 2913968218932214510}
   - component: {fileID: 4050385333767584266}
+  - component: {fileID: 6415578007958484369}
   m_Layer: 0
   m_Name: Enemy_1
   m_TagString: Untagged
@@ -1468,14 +1469,26 @@ MonoBehaviour:
   currentHP: 0
   maxShield: 0
   currentShield: 0
-  maxStamina: 10
-  currentStamina: 0
+  maxSpeed: 0
+  baseSpeed: 0
   adrenaline: 0
   maxAgility: 0
   currentAgility: 0
   hasHit: 0
   jump_dust: {fileID: 1432649504720736180}
   atk_normal_spark: {fileID: 6853268908441923811}
+--- !u!114 &6415578007958484369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6883682164787808221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29fce9c0f43a5a4e9f745a6d0867a73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7049061019918507029
 GameObject:
   m_ObjectHideFlags: 0

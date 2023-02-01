@@ -56,9 +56,11 @@ public class focusManager : MonoBehaviour
         }
     }
 
-    IEnumerator focusTimer()
+    IEnumerator focusTimer() // Mejorable!!
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.2f);
+        FindObjectOfType<timeManager>().enemyActionIcon.sprite = FindObjectOfType<timeManager>().iconSprites[1];
+        FindObjectOfType<Player>().GetComponent<Animator>().SetBool("DG_Skill_Fail", true);
         gameObject.SetActive(false);
     }
 }

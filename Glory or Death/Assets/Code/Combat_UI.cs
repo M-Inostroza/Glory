@@ -18,7 +18,7 @@ public class Combat_UI : MonoBehaviour
 
     void move_UI()
     {
-        player_stats.DOLocalMoveX(player_stats.localPosition.x + 300, 1f).SetEase(Ease.InOutSine);
+        player_stats.DOLocalMoveX(player_stats.localPosition.x + 320, 1f).SetEase(Ease.InOutSine);
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 300, 1f).SetEase(Ease.InOutSine);
 
         //shieldManager.transform.DOLocalMoveX(shieldManager.transform.localPosition.x + 400, 1f).SetEase(Ease.InOutSine);

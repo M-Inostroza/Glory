@@ -63,9 +63,9 @@ public class shieldPool : MonoBehaviour
     {
         var shieldPrefab = Instantiate(shield, new Vector2(0, 0), Quaternion.identity);
         shieldPrefab.transform.SetParent(transform, false);
-        shieldPrefab.transform.localScale = new Vector2(1, 1);
+        shieldPrefab.transform.localScale = new Vector2(0.8f, 0.8f);
         shieldPrefab.transform.localPosition = new Vector2(originalPos, -17.5f);
 
-        originalPos += 22;
+        originalPos += 18;
     }
 }

@@ -22,7 +22,7 @@ public class Combat_UI : MonoBehaviour
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 300, 1f).SetEase(Ease.InOutSine);
 
         //shieldManager.transform.DOLocalMoveX(shieldManager.transform.localPosition.x + 400, 1f).SetEase(Ease.InOutSine);
-        staminaContainer.transform.DOLocalMoveY(-260, 1f).SetEase(Ease.InOutSine);
+        staminaContainer.transform.DOLocalMoveY(-250, 1f).SetEase(Ease.InOutSine);
         inputManager.transform.DOLocalMoveX(-410, 1f).SetEase(Ease.InOutSine);
     }
 }

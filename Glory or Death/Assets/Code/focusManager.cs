@@ -6,7 +6,7 @@ using DG.Tweening;
 public class focusManager : MonoBehaviour
 {
     // Speed at which the cursor sprite moves
-    private float cursorDuration = 0.3f;
+    private float cursorDuration = 0.7f;
     private float targetSpeed = 1f;
 
     // Cursor sprite and target sprite
@@ -46,7 +46,7 @@ public class focusManager : MonoBehaviour
     private void Update()
     {
         // Move the cursor sprite from left to right
-        target.transform.Translate(targetSpeed * Time.deltaTime, 0, 0);
+        //target.transform.Translate(targetSpeed * Time.deltaTime, 0, 0);
 
         // Check if the cursor sprite has reached the end of the bar
         if (target.transform.localPosition.x > (maxX - 0.5f) || target.transform.localPosition.x < (minX + 0.5f))

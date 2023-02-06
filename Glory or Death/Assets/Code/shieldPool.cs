@@ -9,7 +9,7 @@ public class shieldPool : MonoBehaviour
     public GameObject shield;
     private Player playerScript;
 
-    private float originalPos = 18;
+    private float originalPos = -50;
 
     private void Start()
     {
@@ -61,11 +61,12 @@ public class shieldPool : MonoBehaviour
 
     private void spawnShield()
     {
-        var shieldPrefab = Instantiate(shield, new Vector2(0, 0), Quaternion.identity);
+        var shieldPrefab = Instantiate(shield, new Vector3(0, 0, 0), Quaternion.identity);
         shieldPrefab.transform.SetParent(transform, false);
-        shieldPrefab.transform.localScale = new Vector2(0.8f, 0.8f);
-        shieldPrefab.transform.localPosition = new Vector2(originalPos, -17.5f);
+        shieldPrefab.transform.localScale = new Vector3(1, 1, 1);
+        shieldPrefab.transform.localPosition = new Vector3(originalPos, 0, 0);
 
         originalPos += 18;
+        Debug.Log("Instsantiating...");
     }
 }

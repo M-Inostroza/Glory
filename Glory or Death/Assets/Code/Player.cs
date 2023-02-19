@@ -98,6 +98,27 @@ public class Player : MonoBehaviour
     }
 
     // ------- Stop Anim Methods -------
+    public void nextAttack()
+    {
+        Debug.Log(targetManager.attackOrder.First());
+        Debug.Log(targetManager.attackOrder.Count);
+
+        switch (targetManager.attackOrder.First())
+        {
+            case 0:
+                playerAnimator.Play("ATK_head");
+                targetManager.attackOrder.Remove(targetManager.attackOrder.First());
+                break;
+            case 1:
+                playerAnimator.Play("ATK_mid");
+                targetManager.attackOrder.Remove(targetManager.attackOrder.First());
+                break;
+            case 2:
+                playerAnimator.Play("ATK_bottom");
+                targetManager.attackOrder.Remove(targetManager.attackOrder.First());
+                break;
+        }
+    }
     public void stopAttack()
     {
         gameObject.GetComponent<Animator>().SetBool("ATK1", false);

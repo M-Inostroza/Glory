@@ -67,6 +67,5 @@ public class shieldPool : MonoBehaviour
         shieldPrefab.transform.localPosition = new Vector3(originalPos, 0, 0);
 
         originalPos += 18;
-        Debug.Log("Instsantiating...");
     }
 }

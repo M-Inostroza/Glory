@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
 public class TargetManager : MonoBehaviour
 {
     public GameObject[] targets;
+    public List<int> attackOrder = new List<int>();
 
     public BattleSystem BattleSystem;
 
@@ -22,6 +24,11 @@ public class TargetManager : MonoBehaviour
         courtain.DOColor(new Color(0, 0, 0, .5f), 1f);
 
         // Start target mechanic
+        /*
+        - 0 -> attack head
+        - 1 -> attack mid
+        - 2 -> attack bottom
+         */
         StartCoroutine(activateTargets());
 
         // Camera effect
@@ -49,23 +56,22 @@ public class TargetManager : MonoBehaviour
         var targetScale = this.targetScale;
         var wait_time = this.wait_time;
 
-        for (int i = 0; i < targets.Length - 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             // Activate Target
             targets[i].SetActive(true);
-             //20 calls
 
             if (i == 0)
             {
-                targets[i].transform.localPosition.Set(0, Random.Range(0.3f, 0.7f), 0);
+                targets[i].transform.localPosition.Set(0, Random.Range(0.2f, 0.8f), 0);
             }
             else if (i == 1)
             {
-                targets[i].transform.localPosition = new Vector3(Random.Range(-0.1f, -0.6f), 0, 0);
+                targets[i].transform.localPosition = new Vector3(Random.Range(0, -0.4f), 0, 0);
             }
             else
             {
-                targets[i].transform.localPosition = new Vector3(Random.Range(0.7f, -0.5f), Random.Range(-0.8f, -1.2f), 0);
+                targets[i].transform.localPosition = new Vector3(Random.Range(0.8f, -0.4f), Random.Range(-0.6f, -1.4f), 0);
             }
 
             // Set target position & scale
@@ -77,7 +83,7 @@ public class TargetManager : MonoBehaviour
         // Deactivates the targets after timer (Mejorable)!!
         yield return new WaitForSeconds(1f);
 
-        for (int i = 0; i < targets.Length - 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             targets[i].transform.DOKill();
             targets[i].transform.DOScale(0, 0.3f).OnComplete(() => targets[i].gameObject.SetActive(false));

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
@@ -212,7 +213,7 @@ public class BattleSystem : MonoBehaviour
 
     // ----------------- Actions -----------------
 
-    public void PlayerAttack()
+    /*public void PlayerAttack()
     {
         //Check stamina
         if (playerUnit.currentStamina >= 1)
@@ -231,6 +232,25 @@ public class BattleSystem : MonoBehaviour
             timeManager.defaultAction();
         }
             
+    }*/
+    public void PlayerAttack()
+    {
+        //Check stamina
+        if (playerUnit.currentStamina >= 1)
+        {
+            targetManager.attack();
+            //Play Animation
+            playerAnimator.Play("ATK_jump");
+            playerUnit.adrenaline += 1;
+            //Enemy takes damage
+            StartCoroutine(waitForDamage(3.6f));
+
+            //Reduce Stamina
+            playerUnit.currentStamina -= 1;
+            playerHUD.updateBricks(playerUnit.currentStamina);
+
+            timeManager.defaultAction();
+        }
     }
 
     public void PlayerDefend()

@@ -12,12 +12,8 @@ public class Target : MonoBehaviour
     //BattleSystem
     public BattleSystem BattleSystem;
 
-    //Audio
-    AudioManager audioManager;
-
     private void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
         anim = gameObject.GetComponent<Animator>();
         colider = gameObject.GetComponent<CircleCollider2D>();
     }
@@ -25,6 +21,18 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
         FindObjectOfType<playerSoundManager>().targetSounds();
+        switch (tag)
+        {
+            case "target_0":
+                FindObjectOfType<TargetManager>().attackOrder.Add(0);
+                break;
+            case "target_1":
+                FindObjectOfType<TargetManager>().attackOrder.Add(1);
+                break;
+            case "target_2":
+                FindObjectOfType<TargetManager>().attackOrder.Add(2);
+                break;
+        }
         colider.enabled = false;
         anim.SetBool("hit", true);
         BattleSystem.targetHit++;

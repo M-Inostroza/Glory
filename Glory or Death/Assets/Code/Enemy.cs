@@ -105,12 +105,12 @@ public class Enemy : MonoBehaviour
     {
         if (FindObjectOfType<Player>().missed)
         {
-            FindObjectOfType<playerSoundManager>().jumpSounds();
+            FindObjectOfType<SoundPlayer>().jumpSounds();
             FindObjectOfType<Player>().GetComponent<Animator>().SetBool("Evade", true);
         } else
         {
             atk_normal_spark.Play();
-            FindObjectOfType<playerSoundManager>().blunt_hit();
+            FindObjectOfType<SoundPlayer>().blunt_hit();
         }
     }
 

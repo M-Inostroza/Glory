@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -8,6 +9,8 @@ public class Player : MonoBehaviour
 
     //Time Manager
     private timeManager timeManager;
+    //Target manager
+    private TargetManager targetManager;
 
     //Name of the player *TODO* -> get name of player
     public string playerName;
@@ -58,6 +61,7 @@ public class Player : MonoBehaviour
     //Making a change
     private void Start()
     {
+        targetManager = FindObjectOfType<TargetManager>();
         timeManager = FindObjectOfType<timeManager>();
         audioManager = FindObjectOfType<AudioManager>();
         shieldPool = FindObjectOfType<shieldPool>();
@@ -100,28 +104,31 @@ public class Player : MonoBehaviour
     // ------- Stop Anim Methods -------
     public void nextAttack()
     {
-        Debug.Log(targetManager.attackOrder.First());
-        Debug.Log(targetManager.attackOrder.Count);
-
-        switch (targetManager.attackOrder.First())
+        if (targetManager.attackOrder.Count > 0)
         {
-            case 0:
-                playerAnimator.Play("ATK_head");
-                targetManager.attackOrder.Remove(targetManager.attackOrder.First());
-                break;
-            case 1:
-                playerAnimator.Play("ATK_mid");
-                targetManager.attackOrder.Remove(targetManager.attackOrder.First());
-                break;
-            case 2:
-                playerAnimator.Play("ATK_bottom");
-                targetManager.attackOrder.Remove(targetManager.attackOrder.First());
-                break;
+            switch (targetManager.attackOrder.First())
+            {
+                case 0:
+                    GetComponent<Animator>().Play("ATK_head");
+                    targetManager.attackOrder.Remove(targetManager.attackOrder.First());
+                    break;
+                case 1:
+                    GetComponent<Animator>().Play("ATK_mid");
+                    targetManager.attackOrder.Remove(targetManager.attackOrder.First());
+                    break;
+                case 2:
+                    GetComponent<Animator>().Play("ATK_bottom");
+                    targetManager.attackOrder.Remove(targetManager.attackOrder.First());
+                    break;
+            }
+        } else
+        {
+            GetComponent<Animator>().Play("ATK_back");
         }
     }
     public void stopAttack()
     {
-        gameObject.GetComponent<Animator>().SetBool("ATK1", false);
+        GetComponent<Animator>().Play("Idle");
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;

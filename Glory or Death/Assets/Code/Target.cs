@@ -20,7 +20,7 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        FindObjectOfType<playerSoundManager>().targetSounds();
+        FindObjectOfType<SoundPlayer>().targetSounds();
         switch (tag)
         {
             case "target_0":

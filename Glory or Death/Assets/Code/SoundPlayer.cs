@@ -36,9 +36,8 @@ public class SoundPlayer : MonoBehaviour
         }
     }
 
-    // ------Dodge----- //
+    // ------Jump----- //
 
-    //Skill(Success)
     public void jumpSounds()
     {
         int random = Random.Range(1, 4);

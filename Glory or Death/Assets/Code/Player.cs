@@ -233,8 +233,7 @@ public class Player : MonoBehaviour
     public void playStab()
     {
         audioManager.Play("stab");
-        atk_normal_spark.Play();
-        atk_normal_blood.Play();
+        Debug.Log("Fix audio");
     }
 
     public void playSuperStab()

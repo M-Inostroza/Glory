@@ -35,6 +35,28 @@ public class SoundPlayer : MonoBehaviour
                 break;
         }
     }
+    public void stabSounds()
+    {
+        int random = Random.Range(1, 5);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("ATK_stab_1");
+                break;
+            case 2:
+                audioManager.Play("ATK_stab_2");
+                break;
+            case 3:
+                audioManager.Play("ATK_stab_3");
+                break;
+            case 4:
+                audioManager.Play("ATK_stab_4");
+                break;
+            case 5:
+                audioManager.Play("ATK_stab_5");
+                break;
+        }
+    }
 
     // ------Jump----- //
 

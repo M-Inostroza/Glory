@@ -76,12 +76,10 @@ public class TargetManager : MonoBehaviour
 
             // Set target position & scale
             targets[i].transform.DOScale(targetScale, 0.3f);
-
-            yield return new WaitForSeconds(wait_time);
         }
 
         // Deactivates the targets after timer (Mejorable)!!
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(wait_time);
 
         for (int i = 0; i < 3; i++)
         {

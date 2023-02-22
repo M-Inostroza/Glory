@@ -398,7 +398,6 @@ public class BattleSystem : MonoBehaviour
         {
             // ---------- ATTACK BASIC ----------
             enemyUnit.GetComponent<Animator>().SetBool("attack", true);
-            
         }
     }
 

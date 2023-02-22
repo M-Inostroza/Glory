@@ -215,29 +215,22 @@ public class Player : MonoBehaviour
 
     public void shakeHit()
     {
-        transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);
+        transform.DOShakePosition(0.3f, 0.2f, 22, 10, false, true);
     }
 
-    public void playSuperJump()
+    public void hurtParts(int part)
     {
-        audioManager.Play("superJumpWosh");
-        jump_dust.Play();
-    }
-
-    public void playLand()
-    {
-        audioManager.Play("fall");
-        land_dust.Play();
-    }
-
-    public void playStab()
-    {
-        audioManager.Play("stab");
-        Debug.Log("Fix audio");
-    }
-
-    public void playSuperStab()
-    {
-        audioManager.Play("superStab");
+        switch (part)
+        {
+            case 0:
+                enemy_unit.GetComponent<Animator>().Play("head_hurt");
+                break;
+            case 1:
+                enemy_unit.GetComponent<Animator>().Play("mid_hurt");
+                break;
+            case 2:
+                enemy_unit.GetComponent<Animator>().Play("bottom_hurt");
+                break;
+        }
     }
 }

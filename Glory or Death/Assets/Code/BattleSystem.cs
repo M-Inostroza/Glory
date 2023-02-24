@@ -81,8 +81,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject infoHud_EN;
    
     //Gets the scripts for both
-    Player playerUnit;
-    Enemy enemyUnit;
+    public Player playerUnit;
+    public Enemy enemyUnit;
     timeManager timeManager;
 
     private void Awake()
@@ -110,10 +110,6 @@ public class BattleSystem : MonoBehaviour
 
     void SetupBattle()
     {
-        //Get scripts for every unit
-        playerUnit = playerPrefab.GetComponent<Player>();
-        enemyUnit = enemyPrefab.GetComponent<Enemy>();
-
         //Get Animator
         playerAnimator = playerPrefab.GetComponent<Animator>();
 
@@ -367,38 +363,8 @@ public class BattleSystem : MonoBehaviour
     // Enemy turn
     public void EnemyTurn_attack()
     {
-        // Attack Strong
-        if (enemyUnit.adrenaline == 12)
-        {
-            int totalDMG = enemyUnit.native_damage + 3;
-            enemyUnit.GetComponent<Animator>().SetBool("ATK2", true);
-            playerAnimator.SetBool("DF2", true);
-
-            //Deals damage to Player
-            if (playerUnit.currentShield > 0)
-            {
-                bool isDead = playerUnit.TakeDamage(totalDMG);
-                showHit(totalDMG);
-                if (isDead)
-                {
-                    EndBattle();
-                }
-            }
-            else
-            {
-                bool isDead = playerUnit.TakeDamage(totalDMG);
-                showHit(totalDMG);
-                if (isDead)
-                {
-                    EndBattle();
-                }
-            }
-        }
-        else
-        {
-            // ---------- ATTACK BASIC ----------
-            enemyUnit.GetComponent<Animator>().SetBool("attack", true);
-        }
+        Debug.Log(enemyUnit);
+        enemyUnit.GetComponent<Animator>().SetBool("attack", true);
     }
 
     public void EndBattle()

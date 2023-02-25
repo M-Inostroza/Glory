@@ -242,7 +242,6 @@ public class BattleSystem : MonoBehaviour
 
             //Reduce Stamina
             playerUnit.currentStamina -= 1;
-            playerHUD.updateBricks(playerUnit.currentStamina);
 
             timeManager.defaultAction();
         }
@@ -287,7 +286,6 @@ public class BattleSystem : MonoBehaviour
 
             //Reduce Stamina
             playerUnit.currentStamina -= 1;
-            playerHUD.updateBricks(playerUnit.currentStamina);
 
             playerUnit.adrenaline = 0;
         }
@@ -297,7 +295,6 @@ public class BattleSystem : MonoBehaviour
     {
         playerAnimator.SetBool("Resting", true);
         playerUnit.currentStamina = 5;
-        playerHUD.restoreBricks();
     }
 
     void PlayerCharge()

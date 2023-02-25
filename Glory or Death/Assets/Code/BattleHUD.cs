@@ -9,9 +9,8 @@ public class BattleHUD : MonoBehaviour
     public Slider hpSlider;
     public Slider evadeSlider;
     public Slider adrenalineSlider;
-    public GameObject [] bricks;
 
-
+    public Slider staminaSlider;
     public void setHP(int hp)
     {
         hpSlider.value = hp;
@@ -19,22 +18,9 @@ public class BattleHUD : MonoBehaviour
 
     private void Start()
     {
-        foreach(GameObject brick in bricks)
-        {
-            brick.SetActive(true);
-        }
+        // Set the stamina slider value to 100%.
+        staminaSlider.value = staminaSlider.maxValue;
     }
 
-    public void updateBricks(int stamina)
-    {
-        bricks[stamina].SetActive(false);
-    }
 
-    public void restoreBricks()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            bricks[i].SetActive(true);
-        }
-    }
 }

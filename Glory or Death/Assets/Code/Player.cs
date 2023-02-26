@@ -35,8 +35,8 @@ public class Player : MonoBehaviour
     private shieldPool shieldPool;
 
     //Stamina
-    public int maxStamina;
-    public int currentStamina;
+    public float maxStamina;
+    public float currentStamina;
 
     //Agility (Dodging)
     public int maxAgility;

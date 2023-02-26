@@ -51,24 +51,12 @@ public class BattleSystem : MonoBehaviour
     private Animator playerAnimator;
 
     //Gets the UI for both
-    public BattleHUD playerHUD;
-    public BattleHUD enemyHUD;
+    public PlayerHUD playerHUD;
+    public EnemyHUD enemyHUD;
 
     //Miss & Hit text Player
     public GameObject missText;
     public GameObject hitText;
-
-    //Debug UI player
-    public TMP_Text debugPLAYER_HP;
-    public TMP_Text debugPLAYER_Shield;
-    public TMP_Text debugPLAYER_Stamina;
-    public TMP_Text debugPLAYER_Agility;
-
-    //Debug UI enemy
-    public TMP_Text debugENEMY_HP;
-    public TMP_Text debugENEMY_Shield;
-    public TMP_Text debugENEMY_Stamina;
-    public TMP_Text debugENEMY_Agility;
 
     //Endgame 
     public GameObject victoryText;
@@ -93,7 +81,6 @@ public class BattleSystem : MonoBehaviour
 
     private void Update()
     {
-        debugScreen();
         PlayerEvade();
         updateUI();
 
@@ -231,8 +218,9 @@ public class BattleSystem : MonoBehaviour
     public void PlayerAttack()
     {
         //Check stamina
-        if (playerUnit.currentStamina >= 1)
+        if (playerUnit.currentStamina >= 25)
         {
+            playerUnit.currentStamina -= 25;
             targetManager.attack();
             //Play Animation
             playerAnimator.Play("ATK_jump");
@@ -360,7 +348,6 @@ public class BattleSystem : MonoBehaviour
     // Enemy turn
     public void EnemyTurn_attack()
     {
-        Debug.Log(enemyUnit);
         enemyUnit.GetComponent<Animator>().SetBool("attack", true);
     }
 
@@ -369,18 +356,6 @@ public class BattleSystem : MonoBehaviour
         //TO DO
 
         thankYou.transform.DOLocalMoveY(-110, 1f);
-    }
-
-    void debugScreen()
-    {
-        debugPLAYER_HP.text = "HP: " + playerUnit.currentHP;
-        debugPLAYER_Shield.text = "Shield: " + playerUnit.currentShield;
-        debugPLAYER_Stamina.text = "Stamina: " + playerUnit.currentStamina;
-        debugPLAYER_Agility.text = "Agility: " + playerUnit.currentAgility;
-
-        debugENEMY_HP.text = "HP: " + enemyUnit.currentHP;
-        debugENEMY_Shield.text = "Shield: " + enemyUnit.currentShield;
-        debugENEMY_Agility.text = "Agility: " + enemyUnit.currentAgility;
     }
 
     public void showHit(int dmg)
@@ -418,6 +393,9 @@ public class BattleSystem : MonoBehaviour
     {
         enemyHUD.setHP(enemyUnit.currentHP);
         playerHUD.setHP(playerUnit.currentHP);
+
+        playerHUD.staminaSlider.value = playerUnit.currentStamina;
+
         playerHUD.adrenalineSlider.value = playerUnit.adrenaline;
         if (playerUnit.adrenaline >= 20)
         {

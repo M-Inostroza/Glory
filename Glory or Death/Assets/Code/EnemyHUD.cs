@@ -4,13 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class BattleHUD : MonoBehaviour
+public class EnemyHUD : MonoBehaviour
 {
-    public Slider hpSlider;
-    public Slider evadeSlider;
-    public Slider adrenalineSlider;
-
-    public Slider staminaSlider;
+    public Slider hpSlider, adrenalineSlider, staminaSlider;
     public void setHP(int hp)
     {
         hpSlider.value = hp;
@@ -21,6 +17,4 @@ public class BattleHUD : MonoBehaviour
         // Set the stamina slider value to 100%.
         staminaSlider.value = staminaSlider.maxValue;
     }
-
-
 }

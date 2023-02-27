@@ -105,11 +105,18 @@ public class BattleSystem : MonoBehaviour
 
 
         //Set stats to max
+        // HP
         playerUnit.currentHP = playerUnit.maxHP;
         enemyUnit.currentHP = enemyUnit.maxHP;
+
+        // Shield
         playerUnit.currentShield = playerUnit.maxShield;
         enemyUnit.currentShield = enemyUnit.maxShield;
+
+        // Stamina
         playerUnit.currentStamina = playerUnit.maxStamina;
+        enemyUnit.currentStamina = enemyUnit.maxStamina;
+
         playerUnit.currentAgility = playerUnit.maxAgility;
         enemyUnit.currentAgility = enemyUnit.maxAgility;
     }
@@ -230,33 +237,31 @@ public class BattleSystem : MonoBehaviour
 
             //Reduce Stamina
             playerUnit.currentStamina -= 1;
-
-            timeManager.defaultAction();
         }
     }
 
     public void PlayerDefend()
     {
-        if (playerUnit.currentStamina >= 1)
+        if (playerUnit.currentStamina >= 20)
         {
+            playerUnit.currentStamina -= 20;
             defendManager.SetActive(true);
-            timeManager.defaultAction();
         }
     }
     public void PlayDodge()
     {
-        if (playerUnit.currentStamina >= 1)
+        if (playerUnit.currentStamina >= 20)
         {
+            playerUnit.currentStamina -= 20;
             dodgeManager.SetActive(true);
-            timeManager.defaultAction();
         } 
     }
     public void PlayFocus()
     {
-        if (playerUnit.currentStamina >= 1)
+        if (playerUnit.currentStamina >= 15)
         {
+            playerUnit.currentStamina -= 15;
             focusManager.SetActive(true);
-            timeManager.defaultAction();
         }
     }
 
@@ -349,6 +354,7 @@ public class BattleSystem : MonoBehaviour
     public void EnemyTurn_attack()
     {
         enemyUnit.GetComponent<Animator>().SetBool("attack", true);
+        enemyUnit.currentStamina -= 25;
     }
 
     public void EndBattle()
@@ -391,18 +397,22 @@ public class BattleSystem : MonoBehaviour
 
     public void updateUI()
     {
+        // Update health
         enemyHUD.setHP(enemyUnit.currentHP);
         playerHUD.setHP(playerUnit.currentHP);
 
-        playerHUD.staminaSlider.value = playerUnit.currentStamina;
 
-        playerHUD.adrenalineSlider.value = playerUnit.adrenaline;
+        // Update stamina
+        playerHUD.staminaSlider.DOValue(playerUnit.currentStamina, 0.5f);
+        enemyHUD.staminaSlider.DOValue(enemyUnit.currentStamina, 0.5f);
+
+        playerHUD.adrenalineSlider.DOValue(playerUnit.adrenaline, 0.5f);
         if (playerUnit.adrenaline >= 20)
         {
             playerUnit.adrenaline = 20;
         }
 
-        enemyHUD.adrenalineSlider.value = enemyUnit.adrenaline;
+        enemyHUD.adrenalineSlider.DOValue(enemyUnit.adrenaline, 0.5f);
         if (enemyUnit.adrenaline >= 20)
         {
             enemyUnit.adrenaline = 20;

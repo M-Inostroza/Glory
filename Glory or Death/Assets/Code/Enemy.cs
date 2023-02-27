@@ -25,8 +25,8 @@ public class Enemy : MonoBehaviour
     public float baseSpeed;
 
     //Stamina
-    //public int maxStamina;
-    //public int currentStamina;
+    public float maxStamina;
+    public float currentStamina;
 
     public int adrenaline;
 

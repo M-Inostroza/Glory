@@ -92,6 +92,8 @@ public class timeManager : MonoBehaviour
         //Execute selected action
         if (playerTimer.fillAmount == 0 && playerTimerControl)
         {
+            actionIcon.DOFade(0, 0.3f);
+
             switch (BS.selectedPlayerAction)
             {
                 case "ATK1":
@@ -143,7 +145,7 @@ public class timeManager : MonoBehaviour
             enemyTimer.fillAmount -= Time.deltaTime / (mainWaitTime - enemy.baseSpeed);
         }
         //Execute selected action
-        if (enemyTimer.fillAmount == 0)
+        if (enemyTimer.fillAmount == 0 && enemyTimerControl)
         {
             playerTimerControl = false;
             enemyTimerControl = false;
@@ -239,5 +241,6 @@ public class timeManager : MonoBehaviour
     {
         BS.selectedPlayerAction = "None";
         actionIcon.sprite = iconSprites[1];
+        actionIcon.DOFade(1, 0.3f);
     }
 }

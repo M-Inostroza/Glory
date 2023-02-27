@@ -63,15 +63,15 @@ public class TargetManager : MonoBehaviour
 
             if (i == 0)
             {
-                targets[i].transform.localPosition.Set(0, Random.Range(0.2f, 0.8f), 0);
+                targets[i].transform.localPosition.Set(Random.Range(-1f, 1.5f), Random.Range(3f, 1.5f), 0);
             }
             else if (i == 1)
             {
-                targets[i].transform.localPosition = new Vector3(Random.Range(0, -0.4f), 0, 0);
+                targets[i].transform.localPosition = new Vector3(Random.Range(-1.1f, 2.4f), Random.Range(1.3f, -0.4f), 0);
             }
             else
             {
-                targets[i].transform.localPosition = new Vector3(Random.Range(0.8f, -0.4f), Random.Range(-0.6f, -1.4f), 0);
+                targets[i].transform.localPosition = new Vector3(Random.Range(-1, 2.6f), Random.Range(-1.4f, -2.2f), 0);
             }
 
             // Set target position & scale

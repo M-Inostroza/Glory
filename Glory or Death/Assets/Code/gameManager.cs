@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class gameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class gameManager : MonoBehaviour
 
     private void Start()
     {
+        DOTween.SetTweensCapacity(500, 50);
+
         timeManager = FindObjectOfType<timeManager>();
         battleSystem = FindObjectOfType<BattleSystem>();
     }

@@ -51,8 +51,6 @@ public class Player : MonoBehaviour
     public ParticleSystem atk_normal_blood;
     public ParticleSystem jump_dust;
     public ParticleSystem land_dust;
-
-    AudioManager audioManager;
     public Camera MainCamera;
 
 
@@ -63,7 +61,6 @@ public class Player : MonoBehaviour
     {
         targetManager = FindObjectOfType<TargetManager>();
         timeManager = FindObjectOfType<timeManager>();
-        audioManager = FindObjectOfType<AudioManager>();
         shieldPool = FindObjectOfType<shieldPool>();
     }
 
@@ -132,6 +129,7 @@ public class Player : MonoBehaviour
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
+        timeManager.defaultAction();
     }
     public void returnCamera()
     {
@@ -147,6 +145,7 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("DF_Skill", false);
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
+        timeManager.defaultAction();
     }
     public void stopDodgeSkill()
     {
@@ -154,6 +153,7 @@ public class Player : MonoBehaviour
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
+        timeManager.defaultAction();
     }
     public void stopDodgeSkillFail()
     {
@@ -161,11 +161,13 @@ public class Player : MonoBehaviour
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
+        timeManager.defaultAction();
     }
     public void stopDodgeBuff()
     {
         missed = false;
         GetComponent<Animator>().SetBool("Evade", false);
+        timeManager.defaultAction();
     }
     public void stopDodgeIcon()
     {
@@ -178,6 +180,7 @@ public class Player : MonoBehaviour
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
+        timeManager.defaultAction();
     }
 
     public void stopFocusSkillFail()
@@ -186,7 +189,10 @@ public class Player : MonoBehaviour
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
+        timeManager.defaultAction();
     }
+
+    // TO DO
 
     public void stopSuperAttack()
     {

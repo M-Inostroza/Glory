@@ -34,40 +34,30 @@ public class defendManager : MonoBehaviour
     // Control bool
     public bool defendSuccess;
 
-    private void Start()
-    {
-        // Set the tween
-        scaleUp = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad);
-    }
-
     private void OnEnable()
     {
         audioManager.Play("DF_charge");
         defendSuccess = false;
         shadow.SetActive(true);
+        transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(() => Fail());
     }
 
     private void OnDisable()
     {
-        transform.DOScale(0.01f, 0.1f);
-        scaleUp.Rewind();
+        transform.DOScale(0, 0.1f);
     }
 
     private void Update()
     {
-        scaleUp.Play().OnComplete(() => KillOnFail());
         controlDefend();
     }
 
     // Method to handle player's defense
     void executeShield(float scaleLimit)
     {
-        scaleUp.Pause();
-        if (transform.localScale.x < scaleLimit)
+        if (transform.localScale.x < scaleLimit )
         {
-            playerAnim.SetBool("DG_Skill_Fail", true);
-            audioManager.Play("defend_fail");
-            transform.DOShakePosition(0.4f, 0.05f, 40).OnComplete(() => KillOnFail());
+            transform.DOShakePosition(0.4f, 0.05f, 40).OnComplete(() => Fail());
         }
         else if (transform.localScale.x > scaleLimit)
         {
@@ -75,35 +65,42 @@ public class defendManager : MonoBehaviour
             shieldPool.AddShield();
             playerUnit.GetComponent<Player>().currentShield++;
             playerAnim.SetBool("DF_Skill", true);
-            StartCoroutine(HitShield());
             audioManager.Play("defend_success");
+            success_hit.Play();
+            shadow.SetActive(false);
+            gameObject.SetActive(false);
         }
         shadow.SetActive(false);
     }
 
     // Method to handle enemy's defeat
-    void KillOnFail()
+    void Fail()
     {
+        playerAnim.SetBool("DG_Skill_Fail", true);
+        audioManager.Play("defend_fail");
         shadow.SetActive(false);
         gameObject.SetActive(false);
-    }
-
-    // Coroutine to play hit effect and kill everything on success
-    IEnumerator HitShield()
-    {
-        success_hit.Play();
-
-        yield return new WaitForSeconds(0.3f);
-        KillOnFail();
     }
 
     void controlDefend()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            executeShield(0.9f);
+            executeShield(0.85f);
         }
     }
+
+    /*void controlDefend()
+    {
+        if (Input.touchCount > 0)
+        { // if there's at least one touch
+            Touch touch = Input.GetTouch(0); // get the first touch
+            if (touch.phase == TouchPhase.Began)
+            { // if the touch just started
+                executeShield(0.85f); // execute the shield action
+            }
+        }
+    }*/
 }
 
 

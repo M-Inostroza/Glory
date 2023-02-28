@@ -24,6 +24,9 @@ public class timeManager : MonoBehaviour
     //Game Manager
     private gameManager GM;
 
+    //-----------------------------------------------------------------------------dev-----
+    private bool devMode = false;
+
     //Global time
     public TextMeshProUGUI timerText;
     public float battleTimer = 90f;
@@ -86,18 +89,23 @@ public class timeManager : MonoBehaviour
     {
         if (playerTimerControl)
         {
-            playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.baseSpeed);
+            if (devMode)
+            {
+                playerTimer.fillAmount -= Time.deltaTime * 1;
+            } else
+            {
+                playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.baseSpeed);
+            }
         }
 
         //Execute selected action
         if (playerTimer.fillAmount == 0 && playerTimerControl)
         {
-            actionIcon.DOFade(0, 0.3f);
-
             switch (BS.selectedPlayerAction)
             {
                 case "ATK1":
                     BS.PlayerAttack();
+                    actionIcon.DOFade(0, 0.3f);
                     BS.AttackButtonCD.fillAmount = 1;
                     playerTimerControl = false;
                     enemyTimerControl = false;
@@ -105,6 +113,7 @@ public class timeManager : MonoBehaviour
 
                 case "DF":
                     BS.PlayerDefend();
+                    actionIcon.DOFade(0, 0.3f);
                     BS.DefendButtonCD.fillAmount = 1;
                     playerTimerControl = false;
                     enemyTimerControl = false;
@@ -112,6 +121,7 @@ public class timeManager : MonoBehaviour
 
                 case "DG":
                     BS.PlayDodge();
+                    actionIcon.DOFade(0, 0.3f);
                     BS.DodgeButtonCD.fillAmount = 1;
                     playerTimerControl = false;
                     enemyTimerControl = false;
@@ -119,6 +129,7 @@ public class timeManager : MonoBehaviour
 
                 case "FC":
                     BS.PlayFocus();
+                    actionIcon.DOFade(0, 0.3f);
                     BS.FocusButtonCD.fillAmount = 1;
                     playerTimerControl = false;
                     enemyTimerControl = false;
@@ -180,16 +191,43 @@ public class timeManager : MonoBehaviour
             switch (timer.gameObject.tag)
             {
                 case "ATK Counter":
-                    timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
+                    if (devMode)
+                    {
+                        timer.fillAmount -= Time.deltaTime * 1;
+                    } else
+                    {
+                        timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
+                    }
                     break;
                 case "DF Counter":
-                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 4.5f);
+                    if (devMode)
+                    {
+                        timer.fillAmount -= Time.deltaTime * 1;
+                    }
+                    else
+                    {
+                        timer.fillAmount -= Time.deltaTime / (Shield_CD * 4.5f);
+                    }
                     break;
                 case "DG Counter":
-                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 4.5f);
+                    if (devMode)
+                    {
+                        timer.fillAmount -= Time.deltaTime * 1;
+                    }
+                    else
+                    {
+                        timer.fillAmount -= Time.deltaTime / (Dodge_CD * 4.5f);
+                    }
                     break;
                 case "FC Counter":
-                    timer.fillAmount -= Time.deltaTime / (Focus_CD * 3);
+                    if (devMode)
+                    {
+                        timer.fillAmount -= Time.deltaTime * 1;
+                    }
+                    else
+                    {
+                        timer.fillAmount -= Time.deltaTime / (Focus_CD * 3);
+                    }
                     break;
             }
         }

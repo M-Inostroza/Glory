@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class defendManager : MonoBehaviour
 {
-    // Scale tween
-    private Tween scaleUp;
-
     // Animator of player
     [SerializeField] private Animator playerAnim;
 
@@ -33,18 +30,17 @@ public class defendManager : MonoBehaviour
 
     // Control bool
     public bool defendSuccess;
+    bool transformControl;
+
+    Tween scaleUP;
 
     private void OnEnable()
     {
+        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad);
         audioManager.Play("DF_charge");
         defendSuccess = false;
         shadow.SetActive(true);
-        transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(() => Fail());
-    }
-
-    private void OnDisable()
-    {
-        transform.DOScale(0, 0.1f);
+        transformControl = true;
     }
 
     private void Update()
@@ -57,27 +53,33 @@ public class defendManager : MonoBehaviour
     {
         if (transform.localScale.x < scaleLimit )
         {
-            transform.DOShakePosition(0.4f, 0.05f, 40).OnComplete(() => Fail());
+            transform.DOShakePosition(0.4f, 0.05f, 40);
+            scaleUP.Rewind();
+            Fail();
         }
         else if (transform.localScale.x > scaleLimit)
         {
+            audioManager.Play("defend_success");
+            scaleUP.Rewind();
             defendSuccess = true;
             shieldPool.AddShield();
             playerUnit.GetComponent<Player>().currentShield++;
             playerAnim.SetBool("DF_Skill", true);
-            audioManager.Play("defend_success");
             success_hit.Play();
-            shadow.SetActive(false);
-            gameObject.SetActive(false);
-        }
-        shadow.SetActive(false);
+        } 
+        closeMinigame();
     }
 
     // Method to handle enemy's defeat
     void Fail()
     {
-        playerAnim.SetBool("DG_Skill_Fail", true);
         audioManager.Play("defend_fail");
+        playerAnim.SetBool("DG_Skill_Fail", true);
+        closeMinigame();
+    }
+
+    void closeMinigame()
+    {
         shadow.SetActive(false);
         gameObject.SetActive(false);
     }
@@ -88,8 +90,19 @@ public class defendManager : MonoBehaviour
         {
             executeShield(0.85f);
         }
+
+        if (transform.localScale.x == 1 && transformControl)
+        {
+            scaleUP.Rewind();
+            Fail();
+        }
+    }
+    private void OnDisable()
+    {
+        transformControl = false;
     }
 
+    // Touch Controls
     /*void controlDefend()
     {
         if (Input.touchCount > 0)

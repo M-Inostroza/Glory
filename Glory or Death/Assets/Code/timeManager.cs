@@ -25,7 +25,7 @@ public class timeManager : MonoBehaviour
     private gameManager GM;
 
     //-----------------------------------------------------------------------------dev-----
-    private bool devMode = false;
+    private bool devMode = true;
 
     //Global time
     public TextMeshProUGUI timerText;

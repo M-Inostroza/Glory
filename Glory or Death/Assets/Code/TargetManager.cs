@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class TargetManager : MonoBehaviour
 {
+
     public GameObject[] targets;
     public List<int> attackOrder = new List<int>();
 
@@ -16,9 +18,12 @@ public class TargetManager : MonoBehaviour
 
     [SerializeField]
     private float targetScale, wait_time;
+    [SerializeField]
+    private GameObject vFeedback;
 
     public void attack()
     {
+        vFeedback.SetActive(true);
         BattleSystem.targetHit = 0;
         // Courtain
         courtain.DOColor(new Color(0, 0, 0, .5f), 1f);
@@ -52,6 +57,8 @@ public class TargetManager : MonoBehaviour
 
     IEnumerator activateTargets()
     {
+        hideFeedback();
+
         var targets = this.targets;
         var targetScale = this.targetScale;
         var wait_time = this.wait_time;
@@ -89,9 +96,17 @@ public class TargetManager : MonoBehaviour
 
         // Courtain
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
+        
+        vFeedback.SetActive(false);
     }
 
-
+    void hideFeedback()
+    {
+        for (int i = 0; i < vFeedback.transform.childCount; i++)
+        {
+            vFeedback.transform.GetChild(i).GetComponent<Image>().DOFade(0.25f, 0.01f);
+        }
+    }
     IEnumerator activateTargetsHard()
     {
         var targets = this.targets;

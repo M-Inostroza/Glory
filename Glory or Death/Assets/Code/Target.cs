@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Target : MonoBehaviour
 {
+    public GameObject vFeedback;
     //Anim
     Animator anim;
     CircleCollider2D colider;
@@ -25,12 +27,15 @@ public class Target : MonoBehaviour
         {
             case "target_0":
                 FindObjectOfType<TargetManager>().attackOrder.Add(0);
+                animateFeedback(0);
                 break;
             case "target_1":
                 FindObjectOfType<TargetManager>().attackOrder.Add(1);
+                animateFeedback(1);
                 break;
             case "target_2":
                 FindObjectOfType<TargetManager>().attackOrder.Add(2);
+                animateFeedback(2);
                 break;
         }
         colider.enabled = false;
@@ -44,5 +49,11 @@ public class Target : MonoBehaviour
         anim.Rebind();
         colider.enabled = true;
         gameObject.SetActive(false);
+    }
+
+    void animateFeedback(int target)
+    {
+        vFeedback.transform.GetChild(target).transform.GetComponent<Image>().DOFade(1, 0.5f);
+        vFeedback.transform.GetChild(target).transform.DOPunchScale(new Vector2(0.1f, 0.1f), 0.4f, 8, 1);
     }
 }

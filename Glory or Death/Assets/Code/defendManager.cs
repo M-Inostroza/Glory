@@ -54,7 +54,6 @@ public class defendManager : MonoBehaviour
         if (transform.localScale.x < scaleLimit )
         {
             transform.DOShakePosition(0.4f, 0.05f, 40);
-            scaleUP.Rewind();
             Fail();
         }
         else if (transform.localScale.x > scaleLimit)
@@ -73,6 +72,7 @@ public class defendManager : MonoBehaviour
     // Method to handle enemy's defeat
     void Fail()
     {
+        scaleUP.Rewind();
         audioManager.Play("defend_fail");
         playerAnim.SetBool("DG_Skill_Fail", true);
         closeMinigame();
@@ -93,7 +93,7 @@ public class defendManager : MonoBehaviour
 
         if (transform.localScale.x == 1 && transformControl)
         {
-            scaleUP.Rewind();
+            transform.DOScale(0.01f, 0.01f);
             Fail();
         }
     }

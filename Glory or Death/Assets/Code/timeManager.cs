@@ -33,10 +33,10 @@ public class timeManager : MonoBehaviour
     public bool timeOut;
 
     //Cooldowns
-    public float Shield_CD = 10;
-    public float Attack_CD = 10;
-    public float Dodge_CD = 10;
-    public float Focus_CD = 10;
+    private float Shield_CD = 10;
+    private float Attack_CD = 10;
+    private float Dodge_CD = 10;
+    private float Focus_CD = 10;
 
     // Player Timer
     public bool playerTimerControl = true;
@@ -101,12 +101,12 @@ public class timeManager : MonoBehaviour
         //Execute selected action
         if (playerTimer.fillAmount == 0 && playerTimerControl)
         {
-            switch (BS.selectedPlayerAction)
+            switch (BS.GetPlayerAction())
             {
                 case "ATK1":
                     BS.PlayerAttack();
                     actionIcon.DOFade(0, 0.3f);
-                    BS.AttackButtonCD.fillAmount = 1;
+                    BS.GetAttackCD().fillAmount = 1;
                     playerTimerControl = false;
                     enemyTimerControl = false;
                     break;
@@ -114,7 +114,7 @@ public class timeManager : MonoBehaviour
                 case "DF":
                     BS.PlayerDefend();
                     actionIcon.DOFade(0, 0.3f);
-                    BS.DefendButtonCD.fillAmount = 1;
+                    BS.GetDefendCD().fillAmount = 1;
                     playerTimerControl = false;
                     enemyTimerControl = false;
                     break;
@@ -122,7 +122,7 @@ public class timeManager : MonoBehaviour
                 case "DG":
                     BS.PlayDodge();
                     actionIcon.DOFade(0, 0.3f);
-                    BS.DodgeButtonCD.fillAmount = 1;
+                    BS.GetDodgeCD().fillAmount = 1;
                     playerTimerControl = false;
                     enemyTimerControl = false;
                     break;
@@ -130,7 +130,7 @@ public class timeManager : MonoBehaviour
                 case "FC":
                     BS.PlayFocus();
                     actionIcon.DOFade(0, 0.3f);
-                    BS.FocusButtonCD.fillAmount = 1;
+                    BS.GetFocusCD().fillAmount = 1;
                     playerTimerControl = false;
                     enemyTimerControl = false;
                     break;
@@ -162,10 +162,10 @@ public class timeManager : MonoBehaviour
             enemyTimerControl = false;
 
             // Select action
-            BS.selectedEnemyAction = "ATK1";
+            BS.SetEnemyAction("ATK1");
 
             // Execute action
-            switch (BS.selectedEnemyAction)
+            switch (BS.GetEnemyAction())
             {
                 case "ATK1":
                     BS.EnemyTurn_attack();
@@ -190,7 +190,7 @@ public class timeManager : MonoBehaviour
         {
             switch (timer.gameObject.tag)
             {
-                case "ATK Counter":
+                case "AttackCD":
                     if (devMode)
                     {
                         timer.fillAmount -= Time.deltaTime * 1;
@@ -199,7 +199,7 @@ public class timeManager : MonoBehaviour
                         timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
                     }
                     break;
-                case "DF Counter":
+                case "DefendCD":
                     if (devMode)
                     {
                         timer.fillAmount -= Time.deltaTime * 1;
@@ -209,7 +209,7 @@ public class timeManager : MonoBehaviour
                         timer.fillAmount -= Time.deltaTime / (Shield_CD * 4.5f);
                     }
                     break;
-                case "DG Counter":
+                case "DodgeCD":
                     if (devMode)
                     {
                         timer.fillAmount -= Time.deltaTime * 1;
@@ -219,7 +219,7 @@ public class timeManager : MonoBehaviour
                         timer.fillAmount -= Time.deltaTime / (Dodge_CD * 4.5f);
                     }
                     break;
-                case "FC Counter":
+                case "FocusCD":
                     if (devMode)
                     {
                         timer.fillAmount -= Time.deltaTime * 1;
@@ -248,7 +248,7 @@ public class timeManager : MonoBehaviour
         int vrb = 8;
         float duration = 0.4f;
         float elastic = 1f;
-        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play().OnComplete(() => BS.canClick = true);
+        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play().OnComplete(() => BS.SetCanClick(true));
     }
 
     public void selectIcon(string icon)
@@ -277,7 +277,7 @@ public class timeManager : MonoBehaviour
 
     public void defaultAction()
     {
-        BS.selectedPlayerAction = "None";
+        BS.SetPlayerAction("none");
         actionIcon.sprite = iconSprites[1];
         actionIcon.DOFade(1, 0.3f);
     }

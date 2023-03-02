@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3414163935321649301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3904464890423211805}
+  m_Layer: 0
+  m_Name: Points Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3904464890423211805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3414163935321649301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7166205156225465697}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7166205156225465698
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,7 +59,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3904464890423211805}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -44,8 +76,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e424eb1232abb4c42bbcb7b60c4b2f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDefend: 1
+  selectedPlayerAction: 
+  selectedEnemyAction: 
+  canClick: 1
+  audioManager: {fileID: 0}
   canEvade: 0
+  DefendButtonCD: {fileID: 0}
+  AttackButtonCD: {fileID: 0}
+  DodgeButtonCD: {fileID: 0}
+  FocusButtonCD: {fileID: 0}
+  dodgeManager: {fileID: 0}
+  defendManager: {fileID: 0}
+  defendManagerScript: {fileID: 0}
+  focusManager: {fileID: 0}
   targetHit: 0
   playerPrefab: {fileID: 0}
   enemyPrefab: {fileID: 0}
@@ -53,14 +96,10 @@ MonoBehaviour:
   enemyHUD: {fileID: 0}
   missText: {fileID: 518011456093551952, guid: a769b354dfea45d4b838bf4742acfb44, type: 3}
   hitText: {fileID: 1690178452969996583, guid: f712002e9e5b86544b6fdca5c0064261, type: 3}
-  debugPLAYER_HP: {fileID: 0}
-  debugPLAYER_Shield: {fileID: 0}
-  debugPLAYER_Stamina: {fileID: 0}
-  debugPLAYER_Agility: {fileID: 0}
-  debugENEMY_HP: {fileID: 0}
-  debugENEMY_Shield: {fileID: 0}
-  debugENEMY_Stamina: {fileID: 0}
-  debugENEMY_Agility: {fileID: 0}
+  victoryText: {fileID: 0}
+  defeatText: {fileID: 0}
+  thankYou: {fileID: 0}
   infoHud: {fileID: 0}
   infoHud_EN: {fileID: 0}
-  state: 0
+  playerUnit: {fileID: 0}
+  enemyUnit: {fileID: 0}

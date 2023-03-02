@@ -8,16 +8,16 @@ using UnityEngine.UI;
 public class BattleSystem : MonoBehaviour
 {
     //Selected actions
-    public string selectedPlayerAction;
-    public string selectedEnemyAction;
+    private string selectedPlayerAction;
+    private string selectedEnemyAction;
+
     // Avoid click spam
-    public bool canClick = true;
+    private bool canClick = true;
 
     //Target Manager
     private TargetManager targetManager;
 
     //Audio manager
-    [SerializeField]
     private AudioManager audioManager;
 
     // Cooldown Commands
@@ -25,10 +25,11 @@ public class BattleSystem : MonoBehaviour
     public bool canEvade = false;
     private float evadeTimer;
 
-    public Image DefendButtonCD;
-    public Image AttackButtonCD;
-    public Image DodgeButtonCD;
-    public Image FocusButtonCD;
+    // Cooldown images (radial fill)
+    private Image AttackButtonCD;
+    private Image DefendButtonCD;
+    private Image DodgeButtonCD;
+    private Image FocusButtonCD;
 
     // Dodge System
     public GameObject dodgeManager;
@@ -58,10 +59,6 @@ public class BattleSystem : MonoBehaviour
     public GameObject missText;
     public GameObject hitText;
 
-    //Endgame 
-    public GameObject victoryText;
-    public GameObject defeatText;
-
     public GameObject thankYou;
 
     //Info Hud
@@ -75,6 +72,13 @@ public class BattleSystem : MonoBehaviour
 
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+
+        AttackButtonCD = GameObject.FindWithTag("AttackCD").GetComponent<Image>();
+        DefendButtonCD = GameObject.FindWithTag("DefendCD").GetComponent<Image>();
+        DodgeButtonCD = GameObject.FindWithTag("DodgeCD").GetComponent<Image>();
+        FocusButtonCD = GameObject.FindWithTag("FocusCD").GetComponent<Image>();
+
         evadeTimer = 5f;
         SetupBattle();
     }
@@ -181,6 +185,45 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    // Getters and Setters 
+    public void SetCanClick(bool newValue)
+    {
+        canClick = newValue;
+    }
+
+    public void SetPlayerAction(string newAction)
+    {
+        selectedPlayerAction = newAction;
+    }
+    public string GetPlayerAction()
+    {
+        return selectedPlayerAction;
+    }
+    public void SetEnemyAction(string newAction)
+    {
+        selectedEnemyAction = newAction;
+    }
+    public string GetEnemyAction()
+    {
+        return selectedEnemyAction;
+    }
+
+    public Image GetAttackCD()
+    {
+        return AttackButtonCD;
+    }
+    public Image GetDefendCD()
+    {
+        return DefendButtonCD;
+    }
+    public Image GetDodgeCD()
+    {
+        return DodgeButtonCD;
+    }
+    public Image GetFocusCD()
+    {
+        return FocusButtonCD;
+    }
 
     //----------------TO DO--------------------------
 

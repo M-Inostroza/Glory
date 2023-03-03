@@ -21,8 +21,7 @@ public class BattleSystem : MonoBehaviour
     private AudioManager audioManager;
 
     // Cooldown Commands
-    [SerializeField]
-    public bool canEvade = false;
+    //private bool canEvade = false;
     private float evadeTimer;
 
     // Cooldown images (radial fill)
@@ -70,7 +69,7 @@ public class BattleSystem : MonoBehaviour
     public Enemy enemyUnit;
     timeManager timeManager;
 
-    private void Awake()
+    private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
 
@@ -81,6 +80,7 @@ public class BattleSystem : MonoBehaviour
 
         evadeTimer = 5f;
         SetupBattle();
+        Debug.Log(dodgeManager);
     }
 
     private void Update()

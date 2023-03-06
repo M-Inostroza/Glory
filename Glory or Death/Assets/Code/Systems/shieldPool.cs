@@ -14,6 +14,11 @@ public class shieldPool : MonoBehaviour
     private void Start()
     {
         playerScript = FindObjectOfType<Player>();
+        Invoke("startShields", 0.3f);
+    }
+
+    void startShields()
+    {
         for (int i = 0; i < playerScript.currentShield; i++)
         {
             spawnShield();

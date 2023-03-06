@@ -65,12 +65,20 @@ public class BattleSystem : MonoBehaviour
     public GameObject infoHud_EN;
    
     //Gets the scripts for both
-    public Player playerUnit;
-    public Enemy enemyUnit;
+    private Player playerUnit;
+    private Enemy enemyUnit;
     timeManager timeManager;
 
     private void Start()
     {
+        playerAnimator = playerPrefab.GetComponent<Animator>();
+
+        targetManager = FindObjectOfType<TargetManager>();
+        timeManager = FindObjectOfType<timeManager>();
+
+        playerUnit = FindObjectOfType<Player>();
+        enemyUnit = FindObjectOfType<Enemy>();
+
         audioManager = FindObjectOfType<AudioManager>();
 
         AttackButtonCD = GameObject.FindWithTag("AttackCD").GetComponent<Image>();
@@ -80,7 +88,6 @@ public class BattleSystem : MonoBehaviour
 
         evadeTimer = 5f;
         SetupBattle();
-        Debug.Log(dodgeManager);
     }
 
     private void Update()
@@ -101,21 +108,15 @@ public class BattleSystem : MonoBehaviour
 
     void SetupBattle()
     {
-        //Get Animator
-        playerAnimator = playerPrefab.GetComponent<Animator>();
-
-        targetManager = FindObjectOfType<TargetManager>();
-        timeManager = FindObjectOfType<timeManager>();
-
-
         //Set stats to max
-        // HP
-        playerUnit.currentHP = playerUnit.maxHP;
-        enemyUnit.currentHP = enemyUnit.maxHP;
 
         // Shield
         playerUnit.currentShield = playerUnit.maxShield;
         enemyUnit.currentShield = enemyUnit.maxShield;
+
+        // HP
+        playerUnit.currentHP = playerUnit.maxHP;
+        enemyUnit.currentHP = enemyUnit.maxHP;
 
         // Stamina
         playerUnit.currentStamina = playerUnit.maxStamina;

@@ -5,14 +5,19 @@ using DG.Tweening;
 
 public class gameManager : MonoBehaviour
 {
+    public int tween;
+
     private timeManager timeManager;
     private BattleSystem battleSystem;
 
     public int turnCounter;
 
+    [SerializeField]
+    private Transform endFightUI;
+
     private void Start()
     {
-        DOTween.SetTweensCapacity(500, 50);
+        DOTween.SetTweensCapacity(750, 50);
 
         timeManager = FindObjectOfType<timeManager>();
         battleSystem = FindObjectOfType<BattleSystem>();
@@ -29,6 +34,6 @@ public class gameManager : MonoBehaviour
 
     public void showSummery()
     {
-        Debug.Log("Showing summery");
+        endFightUI.DOMoveY(tween, 1f);
     }
 }

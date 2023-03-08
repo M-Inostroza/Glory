@@ -19,17 +19,17 @@ public class timeManager : MonoBehaviour
     public Image actionIcon;
 
     //Battlesystem
-    public BattleSystem BS;
+    private BattleSystem BS;
 
     //Game Manager
     private gameManager GM;
 
     //-----------------------------------------------------------------------------dev-----
-    private bool devMode = true;
+    private bool devMode = false;
 
     //Global time
     public TextMeshProUGUI timerText;
-    public float battleTimer = 90f;
+    private float battleTimer = 10f;
     public bool timeOut;
 
     //Cooldowns
@@ -59,12 +59,13 @@ public class timeManager : MonoBehaviour
     //Manages general timer
     IEnumerator Start()
     {
+        BS = FindObjectOfType<BattleSystem>();
         GM = FindObjectOfType<gameManager>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
 
         float elapsedTime = 0f;
-        int timer = 60;
+        int timer = 10;
         while (elapsedTime < battleTimer)
         {
             elapsedTime += Time.deltaTime;
@@ -81,6 +82,7 @@ public class timeManager : MonoBehaviour
     {
         playerAction();
         enemyAction();
+        stopBattle();
     }
 
 
@@ -236,7 +238,7 @@ public class timeManager : MonoBehaviour
 
     public void stopBattle()
     {
-        if (battleTimer <= 0)
+        if (timerText.text == "0")
         {
             GM.showSummery();
         }

@@ -29,7 +29,7 @@ public class timeManager : MonoBehaviour
 
     //Global time
     public TextMeshProUGUI timerText;
-    private float battleTimer = 10f;
+    private float battleTimer = 90f;
     public bool timeOut;
 
     //Cooldowns
@@ -65,7 +65,7 @@ public class timeManager : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
 
         float elapsedTime = 0f;
-        int timer = 10;
+        int timer = 60;
         while (elapsedTime < battleTimer)
         {
             elapsedTime += Time.deltaTime;

@@ -130,7 +130,6 @@ public class BattleSystem : MonoBehaviour
 
     public void OnAttackButton()
     {
-        Debug.Log("attack");
         if (AttackButtonCD.fillAmount == 0 && canClick)
         {
             audioManager.Play("UI_select");

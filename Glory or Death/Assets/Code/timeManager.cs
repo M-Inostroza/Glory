@@ -283,4 +283,10 @@ public class timeManager : MonoBehaviour
         actionIcon.sprite = iconSprites[1];
         actionIcon.DOFade(1, 0.3f);
     }
+
+
+    public void executeFastTimer()
+    {
+        Debug.Log("executing fast timer");
+    }
 }

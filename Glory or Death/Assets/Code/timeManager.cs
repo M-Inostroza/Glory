@@ -26,6 +26,7 @@ public class timeManager : MonoBehaviour
 
     //-----------------------------------------------------------------------------dev-----
     private bool devMode = false;
+    private bool focusMode = false;
 
     //Global time
     public TextMeshProUGUI timerText;
@@ -94,7 +95,8 @@ public class timeManager : MonoBehaviour
             if (devMode)
             {
                 playerTimer.fillAmount -= Time.deltaTime * 1;
-            } else
+            } 
+            else
             {
                 playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.baseSpeed);
             }
@@ -282,11 +284,5 @@ public class timeManager : MonoBehaviour
         BS.SetPlayerAction("none");
         actionIcon.sprite = iconSprites[1];
         actionIcon.DOFade(1, 0.3f);
-    }
-
-
-    public void executeFastTimer()
-    {
-        Debug.Log("executing fast timer");
     }
 }

@@ -26,7 +26,6 @@ public class timeManager : MonoBehaviour
 
     //-----------------------------------------------------------------------------dev-----
     private bool devMode = false;
-    private bool focusMode = false;
 
     //Global time
     public TextMeshProUGUI timerText;

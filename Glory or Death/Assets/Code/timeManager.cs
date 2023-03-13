@@ -65,7 +65,7 @@ public class timeManager : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
 
         float elapsedTime = 0f;
-        int timer = 60;
+        int timer;
         while (elapsedTime < battleTimer)
         {
             elapsedTime += Time.deltaTime;

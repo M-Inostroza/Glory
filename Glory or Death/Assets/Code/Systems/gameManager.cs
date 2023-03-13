@@ -9,6 +9,7 @@ public class gameManager : MonoBehaviour
 
     private timeManager timeManager;
     private BattleSystem battleSystem;
+    private AudioManager audioManager;
 
     public int turnCounter;
 
@@ -21,6 +22,9 @@ public class gameManager : MonoBehaviour
 
         timeManager = FindObjectOfType<timeManager>();
         battleSystem = FindObjectOfType<BattleSystem>();
+        audioManager = FindObjectOfType<AudioManager>();
+
+        audioManager.Play("Combat-Theme");
     }
 
     private void Update()

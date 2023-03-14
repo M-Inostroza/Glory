@@ -29,7 +29,8 @@ public class timeManager : MonoBehaviour
 
     //Global time
     public TextMeshProUGUI timerText;
-    private float battleTimer = 90f;
+    public float battleTimer = 90f;
+    private bool timerIsRunning = false;
     public bool timeOut;
 
     //Cooldowns
@@ -57,32 +58,20 @@ public class timeManager : MonoBehaviour
 
 
     //Manages general timer
-    IEnumerator Start()
+    private void Start()
     {
         BS = FindObjectOfType<BattleSystem>();
         GM = FindObjectOfType<gameManager>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
-
-        float elapsedTime = 0f;
-        int timer;
-        while (elapsedTime < battleTimer)
-        {
-            elapsedTime += Time.deltaTime;
-            timer = Mathf.RoundToInt(Mathf.Lerp(60, 0, elapsedTime / battleTimer));
-            timerText.text = timer.ToString();
-            yield return null;
-        }
-        timerText.text = "0";
-
-        timeOut = true;
+        timerIsRunning = true;
     }
 
     private void Update()
     {
         playerAction();
         enemyAction();
-        stopBattle();
+        runTimer();
     }
 
 
@@ -236,15 +225,6 @@ public class timeManager : MonoBehaviour
         }
     }
 
-
-    public void stopBattle()
-    {
-        if (timerText.text == "0")
-        {
-            GM.showSummery();
-        }
-    }
-
     void animateIcon(Transform icon)
     {
         Vector2 scale = new Vector2(0.1f, 0.1f);
@@ -283,5 +263,27 @@ public class timeManager : MonoBehaviour
         BS.SetPlayerAction("none");
         actionIcon.sprite = iconSprites[1];
         actionIcon.DOFade(1, 0.3f);
+    }
+
+    private void runTimer()
+    {
+        if (timerIsRunning)
+        {
+            // Update the time remaining
+            battleTimer -= Time.deltaTime;
+            // Update the timer text
+            timerText.text = Mathf.RoundToInt(battleTimer).ToString("D2");
+            // Check if the timer has reached 0
+            if (battleTimer <= 0)
+            {
+                // Stop the timer
+                battleTimer = 0;
+                timerIsRunning = false;
+                playerTimerControl = false;
+                enemyTimerControl = false;
+
+                GM.showSummery();
+            }
+        }
     }
 }

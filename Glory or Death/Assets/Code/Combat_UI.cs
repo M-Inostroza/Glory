@@ -43,7 +43,13 @@ public class Combat_UI : MonoBehaviour
 
     void refillStamina()
     {
-        playerUnit.currentStamina += 0.5f * Time.deltaTime;
-        enemyUnit.currentStamina += 0.5f * Time.deltaTime;
+        if (playerUnit.currentStamina < playerUnit.maxStamina)
+        {
+            playerUnit.currentStamina += 0.5f * Time.deltaTime; //Mejorable
+        }
+        if (enemyUnit.currentStamina < enemyUnit.maxStamina)
+        {
+            enemyUnit.currentStamina += 0.5f * Time.deltaTime;
+        }
     }
 }

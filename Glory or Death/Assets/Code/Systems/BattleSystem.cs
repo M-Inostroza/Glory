@@ -278,9 +278,6 @@ public class BattleSystem : MonoBehaviour
             playerUnit.adrenaline += 1;
             //Enemy takes damage
             StartCoroutine(waitForDamage(3.6f));
-
-            //Reduce Stamina
-            playerUnit.currentStamina -= 1;
         }
     }
 
@@ -322,9 +319,6 @@ public class BattleSystem : MonoBehaviour
             //Enemy takes damage
             StartCoroutine(waitForDamage(4f));
 
-            //Reduce Stamina
-            playerUnit.currentStamina -= 1;
-
             playerUnit.adrenaline = 0;
         }
     }
@@ -332,7 +326,7 @@ public class BattleSystem : MonoBehaviour
     void PlayerRest()
     {
         playerAnimator.SetBool("Resting", true);
-        playerUnit.currentStamina = 5;
+        playerUnit.currentStamina += 50; //Mejorable
     }
 
     void PlayerCharge()

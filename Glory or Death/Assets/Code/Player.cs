@@ -46,11 +46,6 @@ public class Player : MonoBehaviour
 
     public float evade;
 
-    // Effects
-    public ParticleSystem atk_normal_spark;
-    public ParticleSystem atk_normal_blood;
-    public ParticleSystem jump_dust;
-    public ParticleSystem land_dust;
     public Camera MainCamera;
 
 

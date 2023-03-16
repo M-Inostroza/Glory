@@ -246,26 +246,6 @@ public class BattleSystem : MonoBehaviour
 
     // ----------------- Actions -----------------
 
-    /*public void PlayerAttack()
-    {
-        //Check stamina
-        if (playerUnit.currentStamina >= 1)
-        {
-            targetManager.attack();
-            //Play Animation
-            playerAnimator.SetBool("ATK1", true);
-            playerUnit.adrenaline += 2;
-            //Enemy takes damage
-            StartCoroutine(waitForDamage(3.6f));
-
-            //Reduce Stamina
-            playerUnit.currentStamina -= 1;
-            playerHUD.updateBricks(playerUnit.currentStamina);
-
-            timeManager.defaultAction();
-        }
-            
-    }*/
     public void PlayerAttack()
     {
         //Check stamina
@@ -464,22 +444,18 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         //Do DMG
-        bool isDead = enemyUnit.TakeDamage(playerUnit.native_damage + targetHit);
+        bool isDead = enemyUnit.TakeDamage(targetHit);
         enemyHUD.setHP(enemyUnit.currentHP);
 
         //Show dmg on enemy
         GameObject hitNotif = Instantiate(hitText, infoHud_EN.transform.position, Quaternion.identity);
         hitNotif.transform.SetParent(infoHud_EN.transform);
 
-        //Check defense
-        if (enemyUnit.currentShield > 0)
-            hitNotif.GetComponent<TMP_Text>().text = "- " + (playerUnit.native_damage - 2);
-        else
-            hitNotif.GetComponent<TMP_Text>().text = "- " + (playerUnit.native_damage + targetHit);
+        hitNotif.GetComponent<TMP_Text>().text = "- " + (targetHit);
 
         //Eliminate
-        hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f).OnComplete(() => Destroy(hitNotif));
-        hitNotif.transform.DOJump(new Vector2(infoHud_EN.transform.position.x + 1, infoHud_EN.transform.position.y + 1), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
+        hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f);
+        hitNotif.transform.DOJump(new Vector2(infoHud_EN.transform.position.x + 50, infoHud_EN.transform.position.y + 50), 10, 1, 0.6f).OnComplete(() => Destroy(hitNotif));
     }
 }
 

@@ -25,6 +25,7 @@ public class gameManager : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         audioManager.Play("Combat-Theme");
+        Debug.Log("update");
     }
 
     private void Update()

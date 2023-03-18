@@ -248,24 +248,18 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayerAttack()
     {
-        //Check stamina
-        if (playerUnit.currentStamina >= 25)
-        {
-            playerUnit.currentStamina -= 25;
-            targetManager.attack();
-            //Play Animation
-            playerAnimator.Play("ATK_jump");
-            playerUnit.adrenaline += 1;
-            //Enemy takes damage
-            StartCoroutine(waitForDamage(3.6f));
-        }
+        targetManager.attack();
+        //Play Animation
+        playerAnimator.Play("ATK_jump");
+        playerUnit.adrenaline += 1;
+        //Enemy takes damage
+        StartCoroutine(waitForDamage(3.6f));
     }
 
     public void PlayerDefend()
     {
         if (playerUnit.currentStamina >= 20)
         {
-            playerUnit.currentStamina -= 20;
             defendManager.SetActive(true);
         }
     }
@@ -273,7 +267,6 @@ public class BattleSystem : MonoBehaviour
     {
         if (playerUnit.currentStamina >= 20)
         {
-            playerUnit.currentStamina -= 20;
             dodgeManager.SetActive(true);
         } 
     }
@@ -281,7 +274,6 @@ public class BattleSystem : MonoBehaviour
     {
         if (playerUnit.currentStamina >= 15)
         {
-            playerUnit.currentStamina -= 15;
             focusManager.SetActive(true);
         }
     }

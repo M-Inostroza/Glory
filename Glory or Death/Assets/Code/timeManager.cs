@@ -96,44 +96,76 @@ public class timeManager : MonoBehaviour
             switch (BS.GetPlayerAction())
             {
                 case "ATK1":
-                    BS.PlayerAttack();
-                    actionIcon.DOFade(0, 0.3f);
-                    BS.GetAttackCD().fillAmount = 1;
-                    playerTimerControl = false;
-                    enemyTimerControl = false;
+                    if (player.currentStamina > 25)
+                    {
+                        BS.PlayerAttack();
+                        actionIcon.DOFade(0, 0.3f);
+                        BS.GetAttackCD().fillAmount = 1;
+                        playerTimerControl = false;
+                        enemyTimerControl = false;
+                        player.currentStamina -= 25;
+                    } else
+                    {
+                        setDefaultAction();
+                    }
                     break;
 
                 case "DF":
-                    BS.PlayerDefend();
-                    actionIcon.DOFade(0, 0.3f);
-                    BS.GetDefendCD().fillAmount = 1;
-                    playerTimerControl = false;
-                    enemyTimerControl = false;
+                    if (player.currentStamina > 20)
+                    {
+                        BS.PlayerDefend();
+                        actionIcon.DOFade(0, 0.3f);
+                        BS.GetDefendCD().fillAmount = 1;
+                        playerTimerControl = false;
+                        enemyTimerControl = false;
+                        player.currentStamina -= 20;
+                    } else
+                    {
+                        setDefaultAction();
+                    }
                     break;
 
                 case "DG":
-                    BS.PlayDodge();
-                    actionIcon.DOFade(0, 0.3f);
-                    BS.GetDodgeCD().fillAmount = 1;
-                    playerTimerControl = false;
-                    enemyTimerControl = false;
+                    if (player.currentStamina > 30)
+                    {
+                        BS.PlayDodge();
+                        actionIcon.DOFade(0, 0.3f);
+                        BS.GetDodgeCD().fillAmount = 1;
+                        playerTimerControl = false;
+                        enemyTimerControl = false;
+                        player.currentStamina -= 30;
+                    } else
+                    {
+                        setDefaultAction();
+                    }
                     break;
 
                 case "FC":
-                    BS.PlayFocus();
-                    actionIcon.DOFade(0, 0.3f);
-                    BS.GetFocusCD().fillAmount = 1;
-                    playerTimerControl = false;
-                    enemyTimerControl = false;
+                    if (player.currentStamina > 25)
+                    {
+                        BS.PlayFocus();
+                        actionIcon.DOFade(0, 0.3f);
+                        BS.GetFocusCD().fillAmount = 1;
+                        playerTimerControl = false;
+                        enemyTimerControl = false;
+                        player.currentStamina -= 25;
+                    } else
+                    {
+                        setDefaultAction();
+                    }
                     break;
 
                 default:
-                    playerTimer.fillAmount = 1;
-                    playerTimerControl = true;
-                    enemyTimerControl = true;
+                    setDefaultAction();
                     break;
             }
         }
+    }
+    void setDefaultAction()
+    {
+        playerTimer.fillAmount = 1;
+        playerTimerControl = true;
+        enemyTimerControl = true;
     }
 
     public void showEnemyAction()

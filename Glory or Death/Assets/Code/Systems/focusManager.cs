@@ -62,5 +62,6 @@ public class focusManager : MonoBehaviour
         FindObjectOfType<timeManager>().enemyActionIcon.sprite = FindObjectOfType<timeManager>().iconSprites[1];
         FindObjectOfType<Player>().GetComponent<Animator>().SetBool("DG_Skill_Fail", true);
         gameObject.SetActive(false);
+        Debug.Log("update");
     }
 }

@@ -125,6 +125,7 @@ public class Player : MonoBehaviour
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
         timeManager.defaultAction();
+        Debug.Log("still here");
     }
     public void returnCamera()
     {

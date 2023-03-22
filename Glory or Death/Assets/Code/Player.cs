@@ -235,4 +235,11 @@ public class Player : MonoBehaviour
                 break;
         }
     }
+
+    public IEnumerator boostSpeed()
+    {
+        baseSpeed += 2;
+        yield return new WaitForSeconds(3.5f);
+        baseSpeed -= 2;
+    }
 }

@@ -50,7 +50,7 @@ public class focusTarget : MonoBehaviour
                 timeManager.enemyActionIcon.sprite = timeManager.iconSprites[0];
                 playerUnit.GetComponent<Animator>().SetBool("FC_Skill", true);
                 focusManager.gameObject.SetActive(false);
-                StartCoroutine(boostSpeed());
+                playerUnit.StartCoroutine(playerUnit.boostSpeed());
             }
             else
             {
@@ -59,12 +59,5 @@ public class focusTarget : MonoBehaviour
                 focusManager.gameObject.SetActive(false);
             }
         }
-    }
-
-    public IEnumerator boostSpeed()
-    {
-        playerUnit.baseSpeed += 4;
-        yield return new WaitForSeconds(0.5f);
-        playerUnit.baseSpeed -= 4;
     }
 }

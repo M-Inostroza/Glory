@@ -6,7 +6,7 @@ using DG.Tweening;
 public class focusManager : MonoBehaviour
 {
     // Speed at which the cursor sprite moves
-    private float cursorDuration = 0.7f;
+    private float cursorDuration = 1f;
     private float targetSpeed = 1f;
 
     // Cursor sprite and target sprite
@@ -58,10 +58,9 @@ public class focusManager : MonoBehaviour
 
     IEnumerator focusTimer() // Mejorable!!
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(2.4f);
         FindObjectOfType<timeManager>().enemyActionIcon.sprite = FindObjectOfType<timeManager>().iconSprites[1];
         FindObjectOfType<Player>().GetComponent<Animator>().SetBool("DG_Skill_Fail", true);
         gameObject.SetActive(false);
-        Debug.Log("update");
     }
 }

@@ -39,6 +39,9 @@ public class Enemy : MonoBehaviour
     private defendManager defendManager;
     private timeManager timeManager;
 
+    [SerializeField]
+    private dirtToss dirtManager;
+
     // Effects
     public ParticleSystem jump_dust;
     public ParticleSystem atk_normal_spark;
@@ -99,6 +102,11 @@ public class Enemy : MonoBehaviour
             adrenaline++;
         }
     }
+    public void executeDirt()
+    {
+        dirtManager.gameObject.SetActive(true);
+        adrenaline += 2;
+    }
 
     
     public void playAttack()
@@ -125,6 +133,10 @@ public class Enemy : MonoBehaviour
     }
     public void stopHurt()
     {
+        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
+        timeManager.enemyTimer.fillAmount = 1;
+        timeManager.playerTimerControl = true;
+        timeManager.enemyTimerControl = true;
         GetComponent<Animator>().Play("Idle");
     }
 

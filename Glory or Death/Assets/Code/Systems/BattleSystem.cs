@@ -367,6 +367,11 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.GetComponent<Animator>().SetBool("attack", true);
         enemyUnit.currentStamina -= 25;
     }
+    public void EnemyTurn_dirt()
+    {
+        enemyUnit.GetComponent<Animator>().Play("dirt_toss");
+        enemyUnit.currentStamina -= 20;
+    }
 
     public void EndBattle()
     {

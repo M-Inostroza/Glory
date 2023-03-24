@@ -93,6 +93,10 @@ public class timeManager : MonoBehaviour
         //Execute selected action
         if (playerTimer.fillAmount == 0 && playerTimerControl)
         {
+            playerTimerControl = false;
+            enemyTimerControl = false;
+            playerTimer.fillAmount = 1;
+
             switch (BS.GetPlayerAction())
             {
                 case "ATK1":
@@ -101,8 +105,6 @@ public class timeManager : MonoBehaviour
                         BS.PlayerAttack();
                         actionIcon.DOFade(0, 0.3f);
                         BS.GetAttackCD().fillAmount = 1;
-                        playerTimerControl = false;
-                        enemyTimerControl = false;
                         player.currentStamina -= 25;
                     } else
                     {
@@ -116,8 +118,6 @@ public class timeManager : MonoBehaviour
                         BS.PlayerDefend();
                         actionIcon.DOFade(0, 0.3f);
                         BS.GetDefendCD().fillAmount = 1;
-                        playerTimerControl = false;
-                        enemyTimerControl = false;
                         player.currentStamina -= 20;
                     } else
                     {
@@ -131,8 +131,6 @@ public class timeManager : MonoBehaviour
                         BS.PlayDodge();
                         actionIcon.DOFade(0, 0.3f);
                         BS.GetDodgeCD().fillAmount = 1;
-                        playerTimerControl = false;
-                        enemyTimerControl = false;
                         player.currentStamina -= 30;
                     } else
                     {
@@ -146,8 +144,6 @@ public class timeManager : MonoBehaviour
                         BS.PlayFocus();
                         actionIcon.DOFade(0, 0.3f);
                         BS.GetFocusCD().fillAmount = 1;
-                        playerTimerControl = false;
-                        enemyTimerControl = false;
                         player.currentStamina -= 25;
                     } else
                     {
@@ -186,7 +182,9 @@ public class timeManager : MonoBehaviour
             enemyTimerControl = false;
 
             // Select action
-            BS.SetEnemyAction("ATK1");
+
+            //BS.SetEnemyAction("ATK1");
+            BS.SetEnemyAction("DIRT");
 
             // Execute action
             switch (BS.GetEnemyAction())
@@ -195,8 +193,8 @@ public class timeManager : MonoBehaviour
                     BS.EnemyTurn_attack();
                     break;
 
-                case "CHR":
-                    Debug.Log("charging");
+                case "DIRT":
+                    BS.EnemyTurn_dirt();
                     break;
 
                 default:

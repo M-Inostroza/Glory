@@ -6,6 +6,9 @@ public class dirtToss : MonoBehaviour
 {
     bool isDirty;
 
+    [SerializeField]
+    private BattleSystem BS;
+
     // Maximum opacity of the dirt texture
     public float maxOpacity = 0.5f;
 
@@ -29,6 +32,7 @@ public class dirtToss : MonoBehaviour
     {
         isDirty = true;
         opacity = maxOpacity;
+        BS.SetCanClick(false);
     }
 
     private void Update()
@@ -38,7 +42,6 @@ public class dirtToss : MonoBehaviour
 
     private void makeItDirt()
     {
-        // Set the opacity of the sprite renderer based on the opacity variable
         spriteRenderer.color = new Color(1f, 1f, 1f, opacity);
 
         // Check if the left mouse button is pressed and over the dirt texture
@@ -71,6 +74,7 @@ public class dirtToss : MonoBehaviour
             {
                 isDirty = false;
                 gameObject.SetActive(false);
+                BS.SetCanClick(true);
             }
         }
     }

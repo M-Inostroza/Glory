@@ -8,6 +8,7 @@ public class dirtToss : MonoBehaviour
 
     [SerializeField]
     private BattleSystem BS;
+    private Player player;
 
     // Maximum opacity of the dirt texture
     public float maxOpacity = 0.5f;
@@ -26,6 +27,7 @@ public class dirtToss : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        player = FindObjectOfType<Player>();
     }
 
     private void OnEnable()
@@ -39,7 +41,10 @@ public class dirtToss : MonoBehaviour
     {
         makeItDirt();
     }
-
+    private void OnDisable()
+    {
+        player.baseSpeed += 2;
+    }
     private void makeItDirt()
     {
         spriteRenderer.color = new Color(1f, 1f, 1f, opacity);

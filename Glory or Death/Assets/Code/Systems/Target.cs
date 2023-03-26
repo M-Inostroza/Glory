@@ -27,17 +27,14 @@ public class Target : MonoBehaviour
         {
             case "target_0":
                 FindObjectOfType<TargetManager>().attackOrder.Add(0);
-                Debug.Log("Adding Head");
                 animateFeedback(0);
                 break;
             case "target_1":
                 FindObjectOfType<TargetManager>().attackOrder.Add(1);
-                Debug.Log("Adding Torso");
                 animateFeedback(1);
                 break;
             case "target_2":
                 FindObjectOfType<TargetManager>().attackOrder.Add(2);
-                Debug.Log("Adding Leg");
                 animateFeedback(2);
                 break;
         }

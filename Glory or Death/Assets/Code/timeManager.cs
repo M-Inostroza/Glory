@@ -16,7 +16,13 @@ public class timeManager : MonoBehaviour
      */
     //Array of sprites for the icons & active Icon
     public Sprite[] iconSprites;
+
     public Image actionIcon;
+    public Image actionEnemyIcon;
+
+    public Image playerRing;
+    public Image EnemyRing;
+
 
     //Battlesystem
     private BattleSystem BS;
@@ -102,8 +108,8 @@ public class timeManager : MonoBehaviour
                 case "ATK1":
                     if (player.currentStamina > 25)
                     {
+                        fadeUnitTimer();
                         BS.PlayerAttack();
-                        actionIcon.DOFade(0, 0.3f);
                         BS.GetAttackCD().fillAmount = 1;
                         player.currentStamina -= 25;
                     } else
@@ -115,8 +121,8 @@ public class timeManager : MonoBehaviour
                 case "DF":
                     if (player.currentStamina > 20)
                     {
+                        fadeUnitTimer();
                         BS.PlayerDefend();
-                        actionIcon.DOFade(0, 0.3f);
                         BS.GetDefendCD().fillAmount = 1;
                         player.currentStamina -= 20;
                     } else
@@ -128,8 +134,8 @@ public class timeManager : MonoBehaviour
                 case "DG":
                     if (player.currentStamina > 30)
                     {
+                        fadeUnitTimer();
                         BS.PlayDodge();
-                        actionIcon.DOFade(0, 0.3f);
                         BS.GetDodgeCD().fillAmount = 1;
                         player.currentStamina -= 30;
                     } else
@@ -141,8 +147,8 @@ public class timeManager : MonoBehaviour
                 case "FC":
                     if (player.currentStamina > 25)
                     {
+                        fadeUnitTimer();
                         BS.PlayFocus();
-                        actionIcon.DOFade(0, 0.3f);
                         BS.GetFocusCD().fillAmount = 1;
                         player.currentStamina -= 25;
                     } else
@@ -159,7 +165,6 @@ public class timeManager : MonoBehaviour
     }
     void setDefaultAction()
     {
-        playerTimer.fillAmount = 1;
         playerTimerControl = true;
         enemyTimerControl = true;
     }
@@ -191,10 +196,12 @@ public class timeManager : MonoBehaviour
             {
                 case "ATK1":
                     BS.EnemyTurn_attack();
+                    fadeUnitTimer();
                     break;
 
                 case "DIRT":
                     BS.EnemyTurn_dirt();
+                    fadeUnitTimer();
                     break;
 
                 default:
@@ -292,7 +299,8 @@ public class timeManager : MonoBehaviour
     {
         BS.SetPlayerAction("none");
         actionIcon.sprite = iconSprites[1];
-        actionIcon.DOFade(1, 0.3f);
+
+        fadeInUnitTimer();
     }
 
     private void runTimer()
@@ -315,5 +323,23 @@ public class timeManager : MonoBehaviour
                 GM.showSummery();
             }
         }
+    }
+
+    // Utilities
+    public void fadeUnitTimer()
+    {
+        actionIcon.DOFade(0, 0.3f);
+        actionEnemyIcon.DOFade(0, 0.3f);
+
+        playerRing.DOFade(0, 0.3f);
+        EnemyRing.DOFade(0, 0.3f);
+    }
+    public void fadeInUnitTimer()
+    {
+        Debug.Log("from unit timer");
+        actionEnemyIcon.DOFade(1, 0.3f);
+        actionIcon.DOFade(1, 0.3f);
+        playerRing.DOFade(1, 0.3f);
+        EnemyRing.DOFade(1, 0.3f);
     }
 }

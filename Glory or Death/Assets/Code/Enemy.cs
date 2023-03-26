@@ -134,9 +134,17 @@ public class Enemy : MonoBehaviour
     public void stopHurt()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
-        timeManager.enemyTimer.fillAmount = 1;
         timeManager.playerTimerControl = true;
         timeManager.enemyTimerControl = true;
+        GetComponent<Animator>().Play("Idle");
+    }
+
+    public void stopDirt()
+    {
+        timeManager.playerTimerControl = true;
+        timeManager.enemyTimerControl = true;
+
+        timeManager.fadeInUnitTimer();
         GetComponent<Animator>().Play("Idle");
     }
 

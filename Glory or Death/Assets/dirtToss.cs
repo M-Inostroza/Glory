@@ -48,7 +48,8 @@ public class dirtToss : MonoBehaviour
     private void makeItDirt()
     {
         spriteRenderer.color = new Color(1f, 1f, 1f, opacity);
-
+        player.baseSpeed -= 2;
+        Debug.Log("use boolan flag");
         // Check if the left mouse button is pressed and over the dirt texture
         if (opacity > 0f && Input.GetMouseButton(0) && isDirty)
         {
@@ -68,10 +69,8 @@ public class dirtToss : MonoBehaviour
                 // Check if the scratch speed is greater than the threshold
                 if (scratchSpeed >= scratchSpeedThreshold)
                 {
-                    // Calculate the percentage of maximum opacity to reduce based on the scratch speed
                     float opacityReductionPercentage = scratchSpeed / scratchSpeedThreshold * opacityReductionPerScratch;
 
-                    // Reduce the opacity based on the percentage of maximum opacity to reduce
                     opacity -= maxOpacity * opacityReductionPercentage;
                 }
             }

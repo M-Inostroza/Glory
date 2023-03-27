@@ -141,10 +141,9 @@ public class Enemy : MonoBehaviour
 
     public void stopDirt()
     {
+        timeManager.fadeInUnitTimer();
         timeManager.playerTimerControl = true;
         timeManager.enemyTimerControl = true;
-
-        timeManager.fadeInUnitTimer();
         GetComponent<Animator>().Play("Idle");
     }
 

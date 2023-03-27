@@ -108,62 +108,66 @@ public class timeManager : MonoBehaviour
                 case "ATK1":
                     if (player.currentStamina > 25)
                     {
-                        fadeUnitTimer();
                         BS.PlayerAttack();
                         BS.GetAttackCD().fillAmount = 1;
                         player.currentStamina -= 25;
+                        fadeOutUnitTimer();
                     } else
                     {
-                        setDefaultAction();
+                        continueTimer();
+                        // Remember to set a visual clue about chosing an action
                     }
                     break;
 
                 case "DF":
                     if (player.currentStamina > 20)
                     {
-                        fadeUnitTimer();
                         BS.PlayerDefend();
                         BS.GetDefendCD().fillAmount = 1;
                         player.currentStamina -= 20;
+                        fadeOutUnitTimer();
                     } else
                     {
-                        setDefaultAction();
+                        continueTimer();
+                        // Remember to set a visual clue about chosing an action
                     }
                     break;
 
                 case "DG":
                     if (player.currentStamina > 30)
                     {
-                        fadeUnitTimer();
                         BS.PlayDodge();
                         BS.GetDodgeCD().fillAmount = 1;
                         player.currentStamina -= 30;
+                        fadeOutUnitTimer();
                     } else
                     {
-                        setDefaultAction();
+                        continueTimer();
+                        // Remember to set a visual clue about chosing an action
                     }
                     break;
 
                 case "FC":
                     if (player.currentStamina > 25)
                     {
-                        fadeUnitTimer();
                         BS.PlayFocus();
                         BS.GetFocusCD().fillAmount = 1;
                         player.currentStamina -= 25;
+                        fadeOutUnitTimer();
                     } else
                     {
-                        setDefaultAction();
+                        continueTimer();
+                        // Remember to set a visual clue about chosing an action
                     }
                     break;
 
                 default:
-                    setDefaultAction();
+                    continueTimer();
                     break;
             }
         }
     }
-    void setDefaultAction()
+    void continueTimer()
     {
         playerTimerControl = true;
         enemyTimerControl = true;
@@ -183,8 +187,13 @@ public class timeManager : MonoBehaviour
         //Execute selected action
         if (enemyTimer.fillAmount == 0 && enemyTimerControl)
         {
+            if (enemyActionIcon.color.a == 1)
+            {
+                fadeOutUnitTimer();
+            }
             playerTimerControl = false;
             enemyTimerControl = false;
+            enemyTimer.fillAmount = 1;
 
             // Select action
 
@@ -196,16 +205,10 @@ public class timeManager : MonoBehaviour
             {
                 case "ATK1":
                     BS.EnemyTurn_attack();
-                    fadeUnitTimer();
                     break;
 
                 case "DIRT":
                     BS.EnemyTurn_dirt();
-                    fadeUnitTimer();
-                    break;
-
-                default:
-                    enemyTimer.fillAmount = 1;
                     break;
             }
         }
@@ -326,7 +329,7 @@ public class timeManager : MonoBehaviour
     }
 
     // Utilities
-    public void fadeUnitTimer()
+    public void fadeOutUnitTimer()
     {
         actionIcon.DOFade(0, 0.3f);
         actionEnemyIcon.DOFade(0, 0.3f);
@@ -336,7 +339,6 @@ public class timeManager : MonoBehaviour
     }
     public void fadeInUnitTimer()
     {
-        Debug.Log("from unit timer");
         actionEnemyIcon.DOFade(1, 0.3f);
         actionIcon.DOFade(1, 0.3f);
         playerRing.DOFade(1, 0.3f);

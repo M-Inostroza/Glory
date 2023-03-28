@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class dirtToss : MonoBehaviour
 {
     bool isDirty;
+    bool speedReduced;
+
+    [SerializeField]
+    private Camera mainCam;
 
     [SerializeField]
     private BattleSystem BS;
@@ -32,6 +37,8 @@ public class dirtToss : MonoBehaviour
 
     private void OnEnable()
     {
+        mainCam.DOShakePosition(0.3f, 0.3f, 20, 10);
+        speedReduced = false;
         isDirty = true;
         opacity = maxOpacity;
         BS.SetCanClick(false);
@@ -44,12 +51,18 @@ public class dirtToss : MonoBehaviour
     private void OnDisable()
     {
         player.baseSpeed += 2;
+        speedReduced = false;
     }
     private void makeItDirt()
     {
         spriteRenderer.color = new Color(1f, 1f, 1f, opacity);
-        player.baseSpeed -= 2;
-        Debug.Log("use boolan flag");
+        
+
+        if (!speedReduced)
+        {
+            player.baseSpeed -= 2;
+            speedReduced = true;
+        }
         // Check if the left mouse button is pressed and over the dirt texture
         if (opacity > 0f && Input.GetMouseButton(0) && isDirty)
         {

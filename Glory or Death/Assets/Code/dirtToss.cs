@@ -24,14 +24,14 @@ public class dirtToss : MonoBehaviour
     // Percentage of maximum opacity to reduce per scratch
     public float opacityReductionPerScratch = 0.05f;
 
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer dirtTexture;
     private float opacity;
 
     private Vector3 prevMousePos;
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        dirtTexture = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<Player>();
     }
 
@@ -55,8 +55,8 @@ public class dirtToss : MonoBehaviour
     }
     private void makeItDirt()
     {
-        spriteRenderer.color = new Color(1f, 1f, 1f, opacity);
-        
+        dirtTexture.color = new Color(1f, 1f, 1f, opacity);
+        transform.DOMoveY(transform.position.y - 0.005f, 0.2f);
 
         if (!speedReduced)
         {

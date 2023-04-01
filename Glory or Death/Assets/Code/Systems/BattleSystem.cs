@@ -383,14 +383,12 @@ public class BattleSystem : MonoBehaviour
     public void showHit(int dmg)
     {
         //Show dmg
-        GameObject hitNotif = Instantiate(hitText, infoHud.transform.position, Quaternion.identity);
-        hitNotif.transform.SetParent(infoHud.transform);
-
+        GameObject hitNotif = Instantiate(hitText, infoHud.transform.position, Quaternion.identity, infoHud.transform);
         //check shield
         hitNotif.GetComponent<TMP_Text>().text = "- " + (dmg);
 
         hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-        hitNotif.transform.DOJump(new Vector2(infoHud.transform.position.x +1, infoHud.transform.position.y + 1), 1, 1, 1f).OnComplete(() => Destroy(hitNotif));
+        hitNotif.transform.DOJump(new Vector2(infoHud.transform.position.x +0.5f, infoHud.transform.position.y + 0.5f), 0.3f, 1, 1f).OnComplete(() => Destroy(hitNotif));
     }
     
     public void missHit()
@@ -447,12 +445,13 @@ public class BattleSystem : MonoBehaviour
         //Show dmg on enemy
         GameObject hitNotif = Instantiate(hitText, infoHud_EN.transform.position, Quaternion.identity);
         hitNotif.transform.SetParent(infoHud_EN.transform);
+        hitNotif.transform.localScale = new Vector2(3, 3);
 
         hitNotif.GetComponent<TMP_Text>().text = "- " + (targetHit);
 
         //Eliminate
         hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-        hitNotif.transform.DOJump(new Vector2(infoHud_EN.transform.position.x + 50, infoHud_EN.transform.position.y + 50), 10, 1, 0.6f).OnComplete(() => Destroy(hitNotif));
+        hitNotif.transform.DOJump(new Vector2(infoHud_EN.transform.position.x + 30, infoHud_EN.transform.position.y + 30), 8, 1, 0.6f).OnComplete(() => Destroy(hitNotif));
     }
 }
 

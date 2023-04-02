@@ -56,7 +56,9 @@ public class BattleSystem : MonoBehaviour
 
     //Miss & Hit text Player
     public GameObject missText;
-    public GameObject hitText;
+    public GameObject hitText_Enemy;
+
+    public GameObject hitText_Player;
 
     public GameObject thankYou;
 
@@ -380,15 +382,24 @@ public class BattleSystem : MonoBehaviour
         thankYou.transform.DOLocalMoveY(-110, 1f);
     }
 
-    public void showHit(int dmg)
+    public Vector2 jumpVector;
+    public float jumpPower;
+    public float jumpTime;
+    public void showHit(int dmg, string unit)
     {
         //Show dmg
-        GameObject hitNotif = Instantiate(hitText, infoHud.transform.position, Quaternion.identity, infoHud.transform);
-        //check shield
-        hitNotif.GetComponent<TMP_Text>().text = "- " + (dmg);
-
-        hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-        hitNotif.transform.DOJump(new Vector2(infoHud.transform.position.x +0.5f, infoHud.transform.position.y + 0.5f), 0.3f, 1, 1f).OnComplete(() => Destroy(hitNotif));
+        if (unit == "enemy")
+        {
+            hitText_Enemy.GetComponent<TMP_Text>().text = "- " + (dmg);
+            hitText_Enemy.SetActive(true);
+            hitText_Enemy.GetComponent<TMP_Text>().DOFade(0, 1.5f);
+            hitText_Enemy.transform.DOLocalJump(jumpVector, jumpPower, 1, jumpTime).OnComplete(() => hitText_Enemy.SetActive(false));
+        } else if (unit == "player") {
+            hitText_Player.GetComponent<TMP_Text>().text = "- " + (dmg);
+            hitText_Player.SetActive(true);
+            hitText_Player.GetComponent<TMP_Text>().DOFade(0, 1.5f);
+            hitText_Player.transform.DOLocalJump(-jumpVector, jumpPower, 1, jumpTime).OnComplete(() => hitText_Enemy.SetActive(false));
+        }
     }
     
     public void missHit()
@@ -443,15 +454,7 @@ public class BattleSystem : MonoBehaviour
         enemyHUD.setHP(enemyUnit.currentHP);
 
         //Show dmg on enemy
-        GameObject hitNotif = Instantiate(hitText, infoHud_EN.transform.position, Quaternion.identity);
-        hitNotif.transform.SetParent(infoHud_EN.transform);
-        hitNotif.transform.localScale = new Vector2(3, 3);
-
-        hitNotif.GetComponent<TMP_Text>().text = "- " + (targetHit);
-
-        //Eliminate
-        hitNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-        hitNotif.transform.DOJump(new Vector2(infoHud_EN.transform.position.x + 30, infoHud_EN.transform.position.y + 30), 8, 1, 0.6f).OnComplete(() => Destroy(hitNotif));
+        showHit(targetHit, "enemy");
     }
 }
 

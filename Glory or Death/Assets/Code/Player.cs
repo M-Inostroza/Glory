@@ -241,4 +241,9 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         baseSpeed -= 2;
     }
+
+    public void showEnemyDamage()
+    {
+        Debug.Log("finish this");
+    }
 }

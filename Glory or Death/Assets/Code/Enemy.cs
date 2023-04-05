@@ -89,7 +89,6 @@ public class Enemy : MonoBehaviour
             else
             {
                 bool isDead = FindObjectOfType<Player>().TakeDamage(native_damage);
-                FindObjectOfType<BattleSystem>().showHit(native_damage, "player");
                 if (isDead)
                 {
                     FindObjectOfType<BattleSystem>().EndBattle();

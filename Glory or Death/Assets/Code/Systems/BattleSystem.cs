@@ -452,9 +452,6 @@ public class BattleSystem : MonoBehaviour
         //Do DMG
         bool isDead = enemyUnit.TakeDamage(targetHit);
         enemyHUD.setHP(enemyUnit.currentHP);
-
-        //Show dmg on enemy
-        showHit(targetHit, "enemy");
     }
 }
 

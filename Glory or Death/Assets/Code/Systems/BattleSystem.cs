@@ -390,6 +390,7 @@ public class BattleSystem : MonoBehaviour
         //Show dmg
         if (unit == "enemy")
         {
+            Debug.Log("executing");
             hitText_Enemy.GetComponent<TMP_Text>().text = "- " + (dmg);
             hitText_Enemy.SetActive(true);
             hitText_Enemy.GetComponent<TMP_Text>().DOFade(0, 1.5f);

@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     //Target manager
     private TargetManager targetManager;
 
+    [SerializeField] BattleSystem BS;
+
     //Name of the player *TODO* -> get name of player
     public string playerName;
 
@@ -244,6 +246,6 @@ public class Player : MonoBehaviour
 
     public void showEnemyDamage()
     {
-        Debug.Log("finish this");
+        BS.showHit(native_damage, "enemy");
     }
 }

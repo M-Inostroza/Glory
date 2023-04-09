@@ -55,6 +55,9 @@ public class timeManager : MonoBehaviour
     public Image enemyTimer;
     public Image enemyActionIcon;
 
+    bool dirtPrevious = false;
+    private float dirtChance = 20;
+
     //Generic wait time for turns
     private float mainWaitTime = 20;
 
@@ -195,10 +198,22 @@ public class timeManager : MonoBehaviour
             enemyTimerControl = false;
             enemyTimer.fillAmount = 1;
 
-            // Select action
+            // Select action custom AI
 
-            //BS.SetEnemyAction("ATK1");
-            BS.SetEnemyAction("DIRT");
+            float attackRandom = Random.Range(0, 99);
+            Debug.Log("Dirtchance: " + dirtChance);
+            Debug.Log("Random " + attackRandom);
+            if (attackRandom > dirtChance || dirtPrevious)
+            {
+                BS.SetEnemyAction("ATK1");
+                dirtPrevious = false;
+                dirtChance += 5;
+            } else
+            {
+                BS.SetEnemyAction("DIRT");
+                dirtPrevious = true;
+                dirtChance = 20;
+            }
 
             // Execute action
             switch (BS.GetEnemyAction())

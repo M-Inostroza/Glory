@@ -62,8 +62,6 @@ public class Enemy : MonoBehaviour
 
     public bool TakeDamage(int dmg)
     {
-        //transform.DOShakePosition(0.3f, 0.1f, 18, 10, false, true);
-
         currentHP -= Math.Max(dmg - (currentShield > 0 ? 2 : 0), 0);
         currentShield = Math.Max(currentShield - 1, 0);
 
@@ -126,6 +124,7 @@ public class Enemy : MonoBehaviour
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         timeManager.enemyTimer.fillAmount = 1;
+        timeManager.fadeInUnitTimer();
         timeManager.playerTimerControl = true;
         timeManager.enemyTimerControl = true;
         GetComponent<Animator>().SetBool("attack", false);

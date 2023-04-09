@@ -387,13 +387,13 @@ public class BattleSystem : MonoBehaviour
     public float jumpTime;
     public void showHit(int dmg, GameObject unit)
     {
-        hitText_Enemy.transform.localPosition = new Vector3(0, 0, 0);
-        Tween fadeTween = hitText_Enemy.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-        Tween jumpTween = hitText_Enemy.transform.DOLocalJump(jumpVector, jumpPower, 1, jumpTime);
-        fadeTween.Restart();
-        jumpTween.Restart();
+        unit.transform.DOLocalMove(new Vector3(0, 0, 0), 0, true);
+        unit.GetComponent<TMP_Text>().DOFade(1, 0);
+
+        Tween fadeTween = unit.GetComponent<TMP_Text>().DOFade(0, 1.5f);
+        Tween jumpTween = unit.transform.DOLocalJump(jumpVector, jumpPower, 1, jumpTime);
+
         fadeTween.OnComplete(() => unit.SetActive(false));
-        Debug.Log("not restarting");
         
         //Show dmg
         if (unit == hitText_Enemy)

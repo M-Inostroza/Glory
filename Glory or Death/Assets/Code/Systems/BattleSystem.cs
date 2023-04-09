@@ -385,21 +385,30 @@ public class BattleSystem : MonoBehaviour
     public Vector2 jumpVector;
     public float jumpPower;
     public float jumpTime;
-    public void showHit(int dmg, string unit)
+    public void showHit(int dmg, GameObject unit)
     {
+        hitText_Enemy.transform.localPosition = new Vector3(0, 0, 0);
+        Tween fadeTween = hitText_Enemy.GetComponent<TMP_Text>().DOFade(0, 1.5f);
+        Tween jumpTween = hitText_Enemy.transform.DOLocalJump(jumpVector, jumpPower, 1, jumpTime);
+        fadeTween.Restart();
+        jumpTween.Restart();
+        fadeTween.OnComplete(() => unit.SetActive(false));
+        Debug.Log("not restarting");
+        
         //Show dmg
-        if (unit == "enemy")
+        if (unit == hitText_Enemy)
         {
-            Debug.Log("executing");
-            hitText_Enemy.GetComponent<TMP_Text>().text = "- " + (dmg);
+            hitText_Enemy.GetComponent<TMP_Text>().text = "- " + dmg;
             hitText_Enemy.SetActive(true);
-            hitText_Enemy.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-            hitText_Enemy.transform.DOLocalJump(jumpVector, jumpPower, 1, jumpTime).OnComplete(() => hitText_Enemy.SetActive(false));
-        } else if (unit == "player") {
+            fadeTween.Play();
+            jumpTween.Play();
+        } 
+        else if (unit == hitText_Player) 
+        {
             hitText_Player.GetComponent<TMP_Text>().text = "- " + (dmg);
             hitText_Player.SetActive(true);
-            hitText_Player.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-            hitText_Player.transform.DOLocalJump(-jumpVector, jumpPower, 1, jumpTime).OnComplete(() => hitText_Enemy.SetActive(false));
+            fadeTween.Play();
+            jumpTween.Play();
         }
     }
     

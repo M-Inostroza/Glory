@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour
             if (FindObjectOfType<Player>().currentShield > 0)
             {
                 bool isDead = FindObjectOfType<Player>().TakeDamage(native_damage - 2);
-                BS.showHit(native_damage - 2, "player");
+                BS.showHit(native_damage - 2, BS.hitText_Player);
 
                 if (isDead)
                 {

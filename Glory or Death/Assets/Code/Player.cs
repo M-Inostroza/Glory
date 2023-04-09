@@ -246,6 +246,6 @@ public class Player : MonoBehaviour
 
     public void showEnemyDamage()
     {
-        BS.showHit(native_damage, "enemy");
+        BS.showHit(native_damage, BS.hitText_Enemy);
     }
 }

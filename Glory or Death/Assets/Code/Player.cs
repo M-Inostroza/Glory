@@ -239,9 +239,9 @@ public class Player : MonoBehaviour
 
     public IEnumerator boostSpeed()
     {
-        baseSpeed += 2;
+        baseSpeed += 2.5f;
         yield return new WaitForSeconds(3.5f);
-        baseSpeed -= 2;
+        baseSpeed -= 2.5f;
     }
 
     public void showEnemyDamage()

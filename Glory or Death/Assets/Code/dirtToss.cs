@@ -8,6 +8,8 @@ public class dirtToss : MonoBehaviour
     bool isDirty;
     bool speedReduced;
 
+    float speedDebuff = 3f;
+
     [SerializeField]
     private Camera mainCam;
 
@@ -50,7 +52,7 @@ public class dirtToss : MonoBehaviour
     }
     private void OnDisable()
     {
-        player.baseSpeed += 2;
+        player.baseSpeed += speedDebuff;
         speedReduced = false;
     }
     private void makeItDirt()
@@ -60,7 +62,7 @@ public class dirtToss : MonoBehaviour
 
         if (!speedReduced)
         {
-            player.baseSpeed -= 2;
+            player.baseSpeed -= speedDebuff;
             speedReduced = true;
         }
         // Check if the left mouse button is pressed and over the dirt texture

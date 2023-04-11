@@ -16,6 +16,8 @@ public class TargetManager : MonoBehaviour
 
     public SpriteRenderer courtain;
 
+    public GameObject combat_UI;
+
     [SerializeField]
     private float targetScale, wait_time;
     [SerializeField]
@@ -23,6 +25,7 @@ public class TargetManager : MonoBehaviour
 
     public void attack()
     {
+        combat_UI.GetComponent<Combat_UI>().move_UI_out();
         vFeedback.SetActive(true);
         BattleSystem.targetHit = 0;
         // Courtain
@@ -98,13 +101,15 @@ public class TargetManager : MonoBehaviour
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
         
         vFeedback.SetActive(false);
+        Debug.Log("change critic and fade out");
+        combat_UI.GetComponent<Combat_UI>().move_UI_in();
     }
 
     void hideFeedback()
     {
         for (int i = 0; i < vFeedback.transform.childCount; i++)
         {
-            vFeedback.transform.GetChild(i).GetComponent<Image>().DOFade(0.25f, 0.01f);
+            vFeedback.transform.GetChild(i).GetComponent<Image>().DOFade(0.25f, 0);
         }
     }
     IEnumerator activateTargetsHard()

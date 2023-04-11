@@ -201,8 +201,6 @@ public class timeManager : MonoBehaviour
             // Select action custom AI
 
             float attackRandom = Random.Range(0, 99);
-            Debug.Log("Dirtchance: " + dirtChance);
-            Debug.Log("Random " + attackRandom);
             if (attackRandom > dirtChance || dirtPrevious)
             {
                 BS.SetEnemyAction("ATK1");

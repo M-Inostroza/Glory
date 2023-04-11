@@ -19,26 +19,44 @@ public class Combat_UI : MonoBehaviour
 
     private void OnEnable()
     {
-        move_UI();
+        move_UI_in();
     }
     private void Update()
     {
         refillStamina();
     }
 
-    void move_UI()
+    float move_in_speed = 1;
+
+    public void move_UI_in()
     {
-        player_stats.DOLocalMoveX(player_stats.localPosition.x + 340, 1f).SetEase(Ease.InOutSine);
-        enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 340, 1f).SetEase(Ease.InOutSine);
+        player_stats.DOLocalMoveX(player_stats.localPosition.x + 340, move_in_speed).SetEase(Ease.InOutSine);
+        enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 340, move_in_speed).SetEase(Ease.InOutSine);
 
-        player_stamina.DOLocalMoveX(player_stamina.localPosition.x + 180, 1f).SetEase(Ease.InOutSine);
-        enemy_stamina.DOLocalMoveX(enemy_stamina.localPosition.x - 180, 1f).SetEase(Ease.InOutSine);
+        player_stamina.DOLocalMoveX(player_stamina.localPosition.x + 180, move_in_speed).SetEase(Ease.InOutSine);
+        enemy_stamina.DOLocalMoveX(enemy_stamina.localPosition.x - 180, move_in_speed).SetEase(Ease.InOutSine);
 
-        player_timer.DOLocalMoveY(player_timer.localPosition.y - 160, 1f);
-        enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y - 160, 1f);
+        player_timer.DOLocalMoveY(player_timer.localPosition.y - 160, move_in_speed);
+        enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y - 160, move_in_speed);
 
-        inputManager.transform.DOLocalMoveX(-415, 1f).SetEase(Ease.InOutSine);
-        globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y - 80, 1f).SetEase(Ease.InOutSine);
+        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x + 80, move_in_speed).SetEase(Ease.InOutSine);
+        globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y - 80, move_in_speed).SetEase(Ease.InOutSine);
+    }
+
+    float move_out_speed = 0.6f;
+    public void move_UI_out()
+    {
+        player_stats.DOLocalMoveX(player_stats.localPosition.x - 340, move_out_speed).SetEase(Ease.InOutSine);
+        enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x + 340, move_out_speed).SetEase(Ease.InOutSine);
+
+        player_stamina.DOLocalMoveX(player_stamina.localPosition.x - 180, move_out_speed).SetEase(Ease.InOutSine);
+        enemy_stamina.DOLocalMoveX(enemy_stamina.localPosition.x + 180, move_out_speed).SetEase(Ease.InOutSine);
+
+        player_timer.DOLocalMoveY(player_timer.localPosition.y + 160, move_out_speed);
+        enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y + 160, move_out_speed);
+
+        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x - 80, move_out_speed).SetEase(Ease.InOutSine);
+        globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y + 80, move_out_speed).SetEase(Ease.InOutSine);
     }
 
     void refillStamina()

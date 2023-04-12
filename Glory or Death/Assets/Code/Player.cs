@@ -6,23 +6,20 @@ using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
-
     //Time Manager
     private timeManager timeManager;
+
     //Target manager
     private TargetManager targetManager;
 
     [SerializeField] BattleSystem BS;
 
-    //Name of the player *TODO* -> get name of player
-    public string playerName;
-
-    //Start damage
+    // Damage
     public int native_damage;
 
-    //HP
-    public int maxHP;
-    public int currentHP;
+    // HP
+    private int maxHP;
+    private int currentHP;
 
     //Speed
     public float maxSpeed;
@@ -247,5 +244,24 @@ public class Player : MonoBehaviour
     public void showEnemyDamage()
     {
         BS.showHit(native_damage, BS.hitText_Enemy);
+    }
+
+    // Getters and Setters
+    public int GetMaxHP()
+    {
+        return maxHP;
+    }
+    public void SetMaxHP(int MaxHP)
+    {
+        maxHP = MaxHP;
+    }
+
+    public int GetCurrentHP()
+    {
+        return currentHP;
+    }
+    public void SetCurrentHP(int CurrentHP)
+    {
+        maxHP = CurrentHP;
     }
 }

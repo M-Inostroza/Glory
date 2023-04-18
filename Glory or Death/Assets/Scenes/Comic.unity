@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 1905312}
   - component: {fileID: 1905314}
   - component: {fileID: 1905313}
+  - component: {fileID: 1905316}
+  - component: {fileID: 1905315}
   m_Layer: 5
   m_Name: Stripe 9
   m_TagString: Untagged
@@ -151,15 +153,15 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 884551931}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: 95.84}
-  m_SizeDelta: {x: 408.5859, y: 229.8295}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1905313
 MonoBehaviour:
@@ -199,6 +201,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905311}
   m_CullTransparentMesh: 1
+--- !u!111 &1905315
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905311}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: d3d8b4915b32a2045abf251ee9172076, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: d3d8b4915b32a2045abf251ee9172076, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &1905316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
 --- !u!1 &154864447
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +241,8 @@ GameObject:
   - component: {fileID: 154864448}
   - component: {fileID: 154864450}
   - component: {fileID: 154864449}
+  - component: {fileID: 154864452}
+  - component: {fileID: 154864451}
   m_Layer: 5
   m_Name: Stripe 6
   m_TagString: Untagged
@@ -232,10 +265,10 @@ RectTransform:
   m_Father: {fileID: 884551931}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 188.97, y: 107.92}
-  m_SizeDelta: {x: 345.51, y: 194.3513}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &154864449
 MonoBehaviour:
@@ -275,6 +308,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154864447}
   m_CullTransparentMesh: 1
+--- !u!114 &154864451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154864447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
+--- !u!111 &154864452
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154864447}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: cf8d535289f5cd1469ce4f79f4951be6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: cf8d535289f5cd1469ce4f79f4951be6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &419016482
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +348,8 @@ GameObject:
   - component: {fileID: 419016483}
   - component: {fileID: 419016485}
   - component: {fileID: 419016484}
+  - component: {fileID: 419016487}
+  - component: {fileID: 419016488}
   m_Layer: 5
   m_Name: Stripe 2
   m_TagString: Untagged
@@ -351,6 +415,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 419016482}
   m_CullTransparentMesh: 1
+--- !u!114 &419016487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419016482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
+--- !u!111 &419016488
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419016482}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 07bf48f16c8345446a6ab73ad10c5224, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 07bf48f16c8345446a6ab73ad10c5224, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &516933871
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,6 +455,8 @@ GameObject:
   - component: {fileID: 516933872}
   - component: {fileID: 516933874}
   - component: {fileID: 516933873}
+  - component: {fileID: 516933876}
+  - component: {fileID: 516933875}
   m_Layer: 5
   m_Name: Stripe 10
   m_TagString: Untagged
@@ -378,16 +473,16 @@ RectTransform:
   m_GameObject: {fileID: 516933871}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 884551931}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -114.6}
-  m_SizeDelta: {x: 311.4077, y: 175.1668}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &516933873
 MonoBehaviour:
@@ -427,6 +522,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 516933871}
   m_CullTransparentMesh: 1
+--- !u!111 &516933875
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516933871}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 10cc42f3e4ae4f74a9675174012d5742, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 10cc42f3e4ae4f74a9675174012d5742, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &516933876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516933871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
 --- !u!1 &650626246
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +564,7 @@ GameObject:
   - component: {fileID: 650626248}
   - component: {fileID: 650626247}
   - component: {fileID: 650626251}
+  - component: {fileID: 650626252}
   m_Layer: 5
   m_Name: Comic Canvas
   m_TagString: Untagged
@@ -544,6 +669,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   comicContainer: {fileID: 884551930}
   darkOverlay: {fileID: 1511918797}
+--- !u!95 &650626252
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650626246}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2a320d76d8d21e542b4d27e2c8491444, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &718941265
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,13 +700,15 @@ GameObject:
   - component: {fileID: 718941266}
   - component: {fileID: 718941268}
   - component: {fileID: 718941267}
+  - component: {fileID: 718941270}
+  - component: {fileID: 718941269}
   m_Layer: 5
   m_Name: Stripe 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &718941266
 RectTransform:
   m_ObjectHideFlags: 0
@@ -620,6 +767,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718941265}
   m_CullTransparentMesh: 1
+--- !u!114 &718941269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718941265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
+--- !u!111 &718941270
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718941265}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1be173f81c9168d4e93ceb2df5f4d06a, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1be173f81c9168d4e93ceb2df5f4d06a, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &884551930
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +853,8 @@ GameObject:
   - component: {fileID: 966520641}
   - component: {fileID: 966520643}
   - component: {fileID: 966520642}
+  - component: {fileID: 966520645}
+  - component: {fileID: 966520644}
   m_Layer: 5
   m_Name: Stripe 4
   m_TagString: Untagged
@@ -699,10 +877,10 @@ RectTransform:
   m_Father: {fileID: 884551931}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 188.97, y: -107.95}
-  m_SizeDelta: {x: 335.0388, y: 188.4593}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -436}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &966520642
 MonoBehaviour:
@@ -742,6 +920,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966520640}
   m_CullTransparentMesh: 1
+--- !u!111 &966520644
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966520640}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 404d7b30c21f8034fbb84c9b040bb94a, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 404d7b30c21f8034fbb84c9b040bb94a, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &966520645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966520640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
 --- !u!1 &1229600711
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,6 +960,8 @@ GameObject:
   - component: {fileID: 1229600712}
   - component: {fileID: 1229600714}
   - component: {fileID: 1229600713}
+  - component: {fileID: 1229600716}
+  - component: {fileID: 1229600715}
   m_Layer: 5
   m_Name: Stripe 3
   m_TagString: Untagged
@@ -769,16 +978,16 @@ RectTransform:
   m_GameObject: {fileID: 1229600711}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 884551931}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -193.18, y: -104}
-  m_SizeDelta: {x: 321.0031, y: 180.5642}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1229600713
 MonoBehaviour:
@@ -818,6 +1027,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1229600711}
   m_CullTransparentMesh: 1
+--- !u!114 &1229600715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229600711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
+--- !u!111 &1229600716
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229600711}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: d8085ecf11d52e840b23ef978a12a6bf, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: d8085ecf11d52e840b23ef978a12a6bf, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1363229445
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,6 +1067,8 @@ GameObject:
   - component: {fileID: 1363229446}
   - component: {fileID: 1363229448}
   - component: {fileID: 1363229447}
+  - component: {fileID: 1363229450}
+  - component: {fileID: 1363229449}
   m_Layer: 5
   m_Name: Stripe 8
   m_TagString: Untagged
@@ -846,15 +1086,15 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 884551931}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 188.96996, y: -104.00001}
-  m_SizeDelta: {x: 364.61, y: 205.09}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 776, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1363229447
 MonoBehaviour:
@@ -894,6 +1134,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363229445}
   m_CullTransparentMesh: 1
+--- !u!111 &1363229449
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363229445}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 4087494566cbbe846925cda5a16c9b69, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 4087494566cbbe846925cda5a16c9b69, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &1363229450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363229445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
 --- !u!1 &1511918795
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,6 +1250,8 @@ GameObject:
   - component: {fileID: 1641703790}
   - component: {fileID: 1641703792}
   - component: {fileID: 1641703791}
+  - component: {fileID: 1641703794}
+  - component: {fileID: 1641703793}
   m_Layer: 5
   m_Name: Stripe 5
   m_TagString: Untagged
@@ -1003,10 +1274,10 @@ RectTransform:
   m_Father: {fileID: 884551931}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -193.18, y: 108.67}
-  m_SizeDelta: {x: 362.9634, y: 204.17}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1641703791
 MonoBehaviour:
@@ -1021,7 +1292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1046,6 +1317,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641703789}
   m_CullTransparentMesh: 1
+--- !u!111 &1641703793
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641703789}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 187e9a731197f1d4abc2ffe8b87f4ca3, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 187e9a731197f1d4abc2ffe8b87f4ca3, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &1641703794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641703789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
 --- !u!1 &1775451738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,6 +1357,8 @@ GameObject:
   - component: {fileID: 1775451739}
   - component: {fileID: 1775451741}
   - component: {fileID: 1775451740}
+  - component: {fileID: 1775451743}
+  - component: {fileID: 1775451742}
   m_Layer: 5
   m_Name: Stripe 7
   m_TagString: Untagged
@@ -1074,15 +1376,15 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 884551931}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197.65, y: -111.18}
-  m_SizeDelta: {x: 333.92, y: 187.83}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -776, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1775451740
 MonoBehaviour:
@@ -1122,6 +1424,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775451738}
   m_CullTransparentMesh: 1
+--- !u!111 &1775451742
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775451738}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 3d8788f0d4e11d84a88c3c8d92b417cb, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 3d8788f0d4e11d84a88c3c8d92b417cb, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &1775451743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775451738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e39c9123bce51644940b9246fd79bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comicAnimator: {fileID: 650626252}
 --- !u!1 &1863190183
 GameObject:
   m_ObjectHideFlags: 0

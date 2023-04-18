@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class comicManager : MonoBehaviour
 {
     private List<GameObject> comicEpisodes = new List<GameObject>();
+    private Animator comicAnimator;
 
     [SerializeField]
     private GameObject comicContainer;
@@ -15,33 +16,25 @@ public class comicManager : MonoBehaviour
 
     void Start()
     {
+        comicAnimator = GetComponent<Animator>();
+
         foreach (Transform child in comicContainer.transform)
         {
             comicEpisodes.Add(child.gameObject);
         }
 
-        StartCoroutine(animateEpisodes());
+        startComic();
     }
 
-    IEnumerator animateEpisodes()
+    void startComic()
     {
-        comicEpisodes[0].transform.DOLocalMoveX(0, 20);
-        comicEpisodes[0].transform.DOScale(new Vector3(0.9f, 0.9f, 1), 25).OnComplete(() => comicEpisodes[0].SetActive(false));
-        darkOverlay.DOFade(0, 5);
-
-        yield return new WaitForSeconds(24);
-
-        comicEpisodes[1].SetActive(true);
-        comicEpisodes[1].transform.DOScale(new Vector3(1, 1, 1), 10);
-
-        yield return new WaitForSeconds(10);
-
-
+        darkOverlay.DOFade(0, 2);
+        comicEpisodes[0].SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    // Getter setters
+    public List<GameObject> getComicEpisodes()
     {
-        
+        return comicEpisodes;
     }
 }

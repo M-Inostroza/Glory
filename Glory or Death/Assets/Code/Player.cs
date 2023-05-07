@@ -18,8 +18,7 @@ public class Player : MonoBehaviour
     public int native_damage;
 
     // HP
-    private int maxHP;
-    private int currentHP;
+    [SerializeField] private int maxHP, currentHP;
 
     //Speed
     public float maxSpeed;
@@ -262,6 +261,6 @@ public class Player : MonoBehaviour
     }
     public void SetCurrentHP(int CurrentHP)
     {
-        maxHP = CurrentHP;
+        currentHP = CurrentHP;
     }
 }

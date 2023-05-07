@@ -117,7 +117,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.currentShield = enemyUnit.maxShield;
 
         // HP
-        playerUnit.SetCurrentHP(playerUnit.GetCurrentHP());
+        playerUnit.SetCurrentHP(playerUnit.GetMaxHP());
         enemyUnit.currentHP = enemyUnit.maxHP;
 
         // Stamina
@@ -435,6 +435,7 @@ public class BattleSystem : MonoBehaviour
         // Update health
         enemyHUD.setHP(enemyUnit.currentHP);
         playerHUD.setHP(playerUnit.GetCurrentHP());
+        
 
 
         // Update stamina

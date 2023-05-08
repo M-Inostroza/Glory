@@ -118,7 +118,7 @@ public class timeManager : MonoBehaviour
                     } else
                     {
                         continueTimer();
-                        // Remember to set a visual clue about chosing an action
+                        Debug.Log("Remember to set a visual clue about chosing an action");
                     }
                     break;
 

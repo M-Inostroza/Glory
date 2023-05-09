@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Combat_UI : MonoBehaviour
 {
     [SerializeField]
-    private Transform player_stats, enemy_stats, player_stamina, enemy_stamina, player_timer, enemy_timer;
+    private Transform player_stats, enemy_stats, player_stamina, enemy_stamina, player_timer, enemy_timer, stamina_alarm;
+
+    [SerializeField]
+    private Image alertUI;
 
     [SerializeField]
     private GameObject shieldManager, inputManager, globalTimer;
@@ -69,5 +73,11 @@ public class Combat_UI : MonoBehaviour
         {
             enemyUnit.currentStamina += 0.5f * Time.deltaTime;
         }
+    }
+
+    public void alarmStamina()
+    {
+        alertUI.DOFade(1, 0.5f);
+        stamina_alarm.DOShakePosition(0.5f);
     }
 }

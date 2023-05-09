@@ -22,7 +22,6 @@ public class stripe : MonoBehaviour
     {
         comicManager.getComicEpisodes()[int.Parse(nextAnim)].SetActive(true);
         comicAnimator.Play(nextAnim);
-        Debug.Log("debugging");
     }
     
 }

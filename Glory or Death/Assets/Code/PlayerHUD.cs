@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class PlayerHUD : MonoBehaviour
 {
+
     public Slider hpSlider, evadeSlider, adrenalineSlider, staminaSlider;
     public void setHP(int hp)
     {

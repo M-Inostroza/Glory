@@ -30,6 +30,9 @@ public class timeManager : MonoBehaviour
     //Game Manager
     private gameManager GM;
 
+    //Combat UI
+    private Combat_UI combarUI;
+
     //-----------------------------------------------------------------------------dev-----
     private bool devMode = false;
 
@@ -71,6 +74,7 @@ public class timeManager : MonoBehaviour
     {
         BS = FindObjectOfType<BattleSystem>();
         GM = FindObjectOfType<gameManager>();
+        combarUI = FindObjectOfType<Combat_UI>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
         timerIsRunning = true;
@@ -118,7 +122,10 @@ public class timeManager : MonoBehaviour
                     } else
                     {
                         continueTimer();
-                        Debug.Log("Remember to set a visual clue about chosing an action");
+                        // To do:
+                        combarUI.alarmStamina();
+                        // Make it vibrate when not enough stamina
+                        // Make stamina bar vibrate
                     }
                     break;
 
@@ -132,7 +139,7 @@ public class timeManager : MonoBehaviour
                     } else
                     {
                         continueTimer();
-                        // Remember to set a visual clue about chosing an action
+                        combarUI.alarmStamina();
                     }
                     break;
 
@@ -146,7 +153,7 @@ public class timeManager : MonoBehaviour
                     } else
                     {
                         continueTimer();
-                        // Remember to set a visual clue about chosing an action
+                        combarUI.alarmStamina();
                     }
                     break;
 
@@ -160,7 +167,7 @@ public class timeManager : MonoBehaviour
                     } else
                     {
                         continueTimer();
-                        // Remember to set a visual clue about chosing an action
+                        combarUI.alarmStamina();
                     }
                     break;
 

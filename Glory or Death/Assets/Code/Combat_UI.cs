@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class Combat_UI : MonoBehaviour
 {
     [SerializeField]
-    private Transform player_stats, enemy_stats, player_stamina, enemy_stamina, player_timer, enemy_timer, stamina_alarm;
+    private Transform player_stats, enemy_stats, player_stamina, enemy_stamina, player_timer, enemy_timer;
 
     [SerializeField]
-    private Image alertUI;
+    private GameObject stamina_alarm;
 
     [SerializeField]
     private GameObject shieldManager, inputManager, globalTimer;
@@ -37,8 +37,8 @@ public class Combat_UI : MonoBehaviour
         player_stats.DOLocalMoveX(player_stats.localPosition.x + 340, move_in_speed).SetEase(Ease.InOutSine);
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 340, move_in_speed).SetEase(Ease.InOutSine);
 
-        player_stamina.DOLocalMoveX(player_stamina.localPosition.x + 180, move_in_speed).SetEase(Ease.InOutSine);
-        enemy_stamina.DOLocalMoveX(enemy_stamina.localPosition.x - 180, move_in_speed).SetEase(Ease.InOutSine);
+        player_stamina.DOLocalMoveX(player_stamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
+        enemy_stamina.DOLocalMoveX(enemy_stamina.localPosition.x - 200, move_in_speed).SetEase(Ease.InOutSine);
 
         player_timer.DOLocalMoveY(player_timer.localPosition.y - 160, move_in_speed);
         enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y - 160, move_in_speed);
@@ -77,7 +77,9 @@ public class Combat_UI : MonoBehaviour
 
     public void alarmStamina()
     {
-        alertUI.DOFade(1, 0.5f);
-        stamina_alarm.DOShakePosition(0.5f);
+        Image staminaImage = stamina_alarm.GetComponent<Image>();
+        player_stamina.transform.DOShakePosition(0.6f, 4, 50);
+        staminaImage.DOFade(1, 0.2f);
+        stamina_alarm.transform.DOShakePosition(0.6f, 4, 50).OnComplete(()=> staminaImage.DOFade(0, 0.2f));
     }
 }

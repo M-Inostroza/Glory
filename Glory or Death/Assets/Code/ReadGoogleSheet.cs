@@ -8,7 +8,7 @@ using TMPro;
 
 public class ReadGoogleSheet : MonoBehaviour
 {
-    public int[] order_of_tiles;
+    /*public int[] order_of_tiles;
     string[] notes;
     public TextMeshProUGUI display;
     int i = 0;
@@ -30,12 +30,12 @@ public class ReadGoogleSheet : MonoBehaviour
     {
             
     }
-    public void takefromCSV()
+    /*public void takefromCSV()
     {
         StartCoroutine(ObtainSheetData());
-    }
+    }*/
    
-    IEnumerator ObtainSheetData()
+    /*IEnumerator ObtainSheetData()
     {
         //sectionName = GameObject.Find("SectionName");
         UnityWebRequest www = UnityWebRequest.Get("https://sheets.googleapis.com/v4/spreadsheets/1AoyJcY9NrOYcXUX8o7PZUKtxGfMTlk5R83yGexrb57Y/values/Consumables?key=AIzaSyDBRRL33WBuDwQHJ_j1vdMIM_QMmhi25SI");
@@ -69,5 +69,5 @@ public class ReadGoogleSheet : MonoBehaviour
             notes = lines[levelno].Split(new char[] { ',' });
             display.text = notes[0];
         }
-    }
+    }*/
 }

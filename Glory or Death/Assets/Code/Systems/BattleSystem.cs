@@ -7,28 +7,17 @@ using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour
 {
-    //Selected actions
-    private string selectedPlayerAction;
-    private string selectedEnemyAction;
-
-    // Avoid click spam
-    private bool canClick = true;
-
     //Target Manager
     private TargetManager targetManager;
 
     //Audio manager
     private AudioManager audioManager;
 
+    private Input_Manager Input_Manager;
+
     // Cooldown Commands
     //private bool canEvade = false;
     private float evadeTimer;
-
-    // Cooldown images (radial fill)
-    private Image AttackButtonCD;
-    private Image DefendButtonCD;
-    private Image DodgeButtonCD;
-    private Image FocusButtonCD;
 
     // Dodge System
     public GameObject dodgeManager;
@@ -69,6 +58,7 @@ public class BattleSystem : MonoBehaviour
     //Gets the scripts for both
     private Player playerUnit;
     private Enemy enemyUnit;
+
     timeManager timeManager;
 
     private void Start()
@@ -82,11 +72,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit = FindObjectOfType<Enemy>();
 
         audioManager = FindObjectOfType<AudioManager>();
-
-        AttackButtonCD = GameObject.FindWithTag("AttackCD").GetComponent<Image>();
-        DefendButtonCD = GameObject.FindWithTag("DefendCD").GetComponent<Image>();
-        DodgeButtonCD = GameObject.FindWithTag("DodgeCD").GetComponent<Image>();
-        FocusButtonCD = GameObject.FindWithTag("FocusCD").GetComponent<Image>();
+        Input_Manager = FindObjectOfType<Input_Manager>();
 
         evadeTimer = 5f;
         SetupBattle();
@@ -96,11 +82,6 @@ public class BattleSystem : MonoBehaviour
     {
         PlayerEvade();
         updateUI();
-
-        timeManager.ReduceCooldown(DefendButtonCD);
-        timeManager.ReduceCooldown(AttackButtonCD);
-        timeManager.ReduceCooldown(DodgeButtonCD);
-        timeManager.ReduceCooldown(FocusButtonCD);
 
         if (Input.GetKey("escape"))
         {
@@ -128,106 +109,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.currentAgility = enemyUnit.maxAgility;
     }
 
-    // ----------------- Buttons -----------------
-
-    public void OnAttackButton()
-    {
-        if (AttackButtonCD.fillAmount == 0 && canClick)
-        {
-            audioManager.Play("UI_select");
-            canClick = false;
-            selectedPlayerAction = "ATK1";
-            timeManager.selectIcon("ATK1");
-        }
-        else
-        {
-            audioManager.Play("UI_select_fail");
-        }
-    }
-
-    public void OnDefendButton()
-    {
-        if (DefendButtonCD.fillAmount == 0 && canClick)
-        {
-            audioManager.Play("UI_select");
-            canClick = false;
-            selectedPlayerAction = "DF";
-            timeManager.selectIcon("DF");
-        } else
-        {
-            audioManager.Play("UI_select_fail");
-        }
-    }
-
-    public void OnDodgeButton()
-    {
-        if (DodgeButtonCD.fillAmount == 0 && canClick)
-        {
-            audioManager.Play("UI_select");
-            canClick = false;
-            selectedPlayerAction = "DG";
-            timeManager.selectIcon("DG");
-        }
-        else
-        {
-            audioManager.Play("UI_select_fail");
-        }
-    }
-
-    public void OnFocusButton()
-    {
-        if (FocusButtonCD.fillAmount == 0 && canClick)
-        {
-            audioManager.Play("UI_select");
-            canClick = false;
-            selectedPlayerAction = "FC";
-            timeManager.selectIcon("FC");
-        } else
-        {
-            audioManager.Play("UI_select_fail");
-        }
-    }
-
-    // Getters and Setters 
-    public void SetCanClick(bool newValue)
-    {
-        canClick = newValue;
-    }
-
-    public void SetPlayerAction(string newAction)
-    {
-        selectedPlayerAction = newAction;
-    }
-    public string GetPlayerAction()
-    {
-        return selectedPlayerAction;
-    }
-    public void SetEnemyAction(string newAction)
-    {
-        selectedEnemyAction = newAction;
-    }
-    public string GetEnemyAction()
-    {
-        return selectedEnemyAction;
-    }
-
-    public Image GetAttackCD()
-    {
-        return AttackButtonCD;
-    }
-    public Image GetDefendCD()
-    {
-        return DefendButtonCD;
-    }
-    public Image GetDodgeCD()
-    {
-        return DodgeButtonCD;
-    }
-    public Image GetFocusCD()
-    {
-        return FocusButtonCD;
-    }
-
+    
     //----------------TO DO--------------------------
 
     public void OnSuperAttackButton()
@@ -278,6 +160,14 @@ public class BattleSystem : MonoBehaviour
         {
             focusManager.SetActive(true);
         }
+    }
+
+    public void PlayRest()
+    {
+        playerUnit.currentStamina += 50;
+        timeManager.continueTimer();
+        Input_Manager.SetPlayerAction("none");
+        timeManager.selectIcon("Default");
     }
 
     // TO DO

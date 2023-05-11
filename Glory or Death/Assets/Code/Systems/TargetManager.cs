@@ -101,7 +101,6 @@ public class TargetManager : MonoBehaviour
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
         
         vFeedback.SetActive(false);
-        Debug.Log("change critic and fade out");
         combat_UI.GetComponent<Combat_UI>().move_UI_in();
     }
 

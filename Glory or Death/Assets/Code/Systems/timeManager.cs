@@ -26,6 +26,7 @@ public class timeManager : MonoBehaviour
 
     //Battlesystem
     private BattleSystem BS;
+    private Input_Manager Input_Manager;
 
     //Game Manager
     private gameManager GM;
@@ -35,6 +36,7 @@ public class timeManager : MonoBehaviour
 
     //-----------------------------------------------------------------------------dev-----
     private bool devMode = false;
+    //-----------------------------------------------------------------------------dev-----
 
     //Global time
     public TextMeshProUGUI timerText;
@@ -74,6 +76,7 @@ public class timeManager : MonoBehaviour
     {
         BS = FindObjectOfType<BattleSystem>();
         GM = FindObjectOfType<gameManager>();
+        Input_Manager = FindObjectOfType<Input_Manager>();
         combarUI = FindObjectOfType<Combat_UI>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
@@ -110,22 +113,19 @@ public class timeManager : MonoBehaviour
             enemyTimerControl = false;
             playerTimer.fillAmount = 1;
 
-            switch (BS.GetPlayerAction())
+            switch (Input_Manager.GetPlayerAction())
             {
                 case "ATK1":
                     if (player.currentStamina > 25)
                     {
                         BS.PlayerAttack();
-                        BS.GetAttackCD().fillAmount = 1;
+                        Input_Manager.GetAttackCD().fillAmount = 1;
                         player.currentStamina -= 25;
                         fadeOutUnitTimer();
                     } else
                     {
                         continueTimer();
-                        // To do:
                         combarUI.alarmStamina();
-                        // Make it vibrate when not enough stamina
-                        // Make stamina bar vibrate
                     }
                     break;
 
@@ -133,7 +133,7 @@ public class timeManager : MonoBehaviour
                     if (player.currentStamina > 20)
                     {
                         BS.PlayerDefend();
-                        BS.GetDefendCD().fillAmount = 1;
+                        Input_Manager.GetDefendCD().fillAmount = 1;
                         player.currentStamina -= 20;
                         fadeOutUnitTimer();
                     } else
@@ -147,7 +147,7 @@ public class timeManager : MonoBehaviour
                     if (player.currentStamina > 30)
                     {
                         BS.PlayDodge();
-                        BS.GetDodgeCD().fillAmount = 1;
+                        Input_Manager.GetDodgeCD().fillAmount = 1;
                         player.currentStamina -= 30;
                         fadeOutUnitTimer();
                     } else
@@ -161,7 +161,7 @@ public class timeManager : MonoBehaviour
                     if (player.currentStamina > 25)
                     {
                         BS.PlayFocus();
-                        BS.GetFocusCD().fillAmount = 1;
+                        Input_Manager.GetFocusCD().fillAmount = 1;
                         player.currentStamina -= 25;
                         fadeOutUnitTimer();
                     } else
@@ -171,13 +171,18 @@ public class timeManager : MonoBehaviour
                     }
                     break;
 
+                case "RST":
+                    BS.PlayRest();
+                    fadeOutUnitTimer();
+                    break;
+
                 default:
                     continueTimer();
                     break;
             }
         }
     }
-    void continueTimer()
+    public void continueTimer()
     {
         playerTimerControl = true;
         enemyTimerControl = true;
@@ -210,18 +215,18 @@ public class timeManager : MonoBehaviour
             float attackRandom = Random.Range(0, 99);
             if (attackRandom > dirtChance || dirtPrevious)
             {
-                BS.SetEnemyAction("ATK1");
+                Input_Manager.SetEnemyAction("ATK1");
                 dirtPrevious = false;
                 dirtChance += 5;
             } else
             {
-                BS.SetEnemyAction("DIRT");
+                Input_Manager.SetEnemyAction("DIRT");
                 dirtPrevious = true;
                 dirtChance = 20;
             }
 
             // Execute action
-            switch (BS.GetEnemyAction())
+            switch (Input_Manager.GetEnemyAction())
             {
                 case "ATK1":
                     BS.EnemyTurn_attack();
@@ -287,11 +292,11 @@ public class timeManager : MonoBehaviour
 
     void animateIcon(Transform icon)
     {
-        Vector2 scale = new Vector2(0.1f, 0.1f);
+        Vector2 scale = new Vector2(0.2f, 0.2f);
         int vrb = 8;
-        float duration = 0.4f;
+        float duration = 0.3f;
         float elastic = 1f;
-        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play().OnComplete(() => BS.SetCanClick(true));
+        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play().OnComplete(() => Input_Manager.SetCanClick(true));
     }
 
     public void selectIcon(string icon)
@@ -315,12 +320,20 @@ public class timeManager : MonoBehaviour
                 actionIcon.sprite = iconSprites[4];
                 animateIcon(actionIcon.transform);
                 break;
+            case "RST":
+                actionIcon.sprite = iconSprites[5];
+                animateIcon(actionIcon.transform);
+                break;
+            case "Default":
+                actionIcon.sprite = iconSprites[1];
+                animateIcon(actionIcon.transform);
+                break;
         }
     }
 
     public void defaultAction()
     {
-        BS.SetPlayerAction("none");
+        Input_Manager.SetPlayerAction("none");
         actionIcon.sprite = iconSprites[1];
 
         fadeInUnitTimer();
@@ -330,15 +343,14 @@ public class timeManager : MonoBehaviour
     {
         if (timerIsRunning)
         {
-            // Update the time remaining
             battleTimer -= Time.deltaTime;
-            // Update the timer text
             timerText.text = Mathf.RoundToInt(battleTimer).ToString("D2");
-            // Check if the timer has reached 0
+
+            
             if (battleTimer <= 0)
             {
-                // Stop the timer
                 battleTimer = 0;
+
                 timerIsRunning = false;
                 playerTimerControl = false;
                 enemyTimerControl = false;
@@ -351,17 +363,22 @@ public class timeManager : MonoBehaviour
     // Utilities
     public void fadeOutUnitTimer()
     {
-        actionIcon.DOFade(0, 0.3f);
-        actionEnemyIcon.DOFade(0, 0.3f);
+        float fadeTime = 0.1f;
 
-        playerRing.DOFade(0, 0.3f);
-        EnemyRing.DOFade(0, 0.3f);
+        actionIcon.DOFade(0, fadeTime);
+        actionEnemyIcon.DOFade(0, fadeTime);
+
+        playerRing.DOFade(0, fadeTime);
+        EnemyRing.DOFade(0, fadeTime);
     }
     public void fadeInUnitTimer()
     {
-        actionEnemyIcon.DOFade(1, 0.3f);
-        actionIcon.DOFade(1, 0.3f);
-        playerRing.DOFade(1, 0.3f);
-        EnemyRing.DOFade(1, 0.3f);
+        float fadeTime = 0.1f;
+
+        actionEnemyIcon.DOFade(1, fadeTime);
+        actionIcon.DOFade(1, fadeTime);
+
+        playerRing.DOFade(1, fadeTime);
+        EnemyRing.DOFade(1, fadeTime);
     }
 }

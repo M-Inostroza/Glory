@@ -5,17 +5,16 @@ using DG.Tweening;
 
 public class dirtToss : MonoBehaviour
 {
-    bool isDirty;
-    bool speedReduced;
+    private bool isDirty, speedReduced;
 
-    float speedDebuff = 3f;
+    // How much the base speed will be reduced
+    private float speedDebuff = 3f;
 
     [SerializeField]
     private Camera mainCam;
 
-    [SerializeField]
-    private BattleSystem BS;
     private Player player;
+    private Input_Manager Input_Manager;
 
     // Maximum opacity of the dirt texture
     public float maxOpacity = 0.5f;
@@ -33,17 +32,19 @@ public class dirtToss : MonoBehaviour
 
     private void Start()
     {
+        Input_Manager = FindObjectOfType<Input_Manager>();
         dirtTexture = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<Player>();
     }
 
     private void OnEnable()
     {
+        Debug.Log(Input_Manager);
         mainCam.DOShakePosition(0.3f, 0.3f, 20, 10);
         speedReduced = false;
         isDirty = true;
         opacity = maxOpacity;
-        BS.SetCanClick(false);
+        Input_Manager.SetCanClick(false);
     }
 
     private void Update()
@@ -93,7 +94,7 @@ public class dirtToss : MonoBehaviour
             {
                 isDirty = false;
                 gameObject.SetActive(false);
-                BS.SetCanClick(true);
+                Input_Manager.SetCanClick(true);
             }
         }
     }

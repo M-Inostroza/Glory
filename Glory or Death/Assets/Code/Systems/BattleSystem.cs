@@ -164,7 +164,7 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayRest()
     {
-        playerUnit.currentStamina += 50;
+        playerUnit.currentStamina += 50; // Mejorable
         timeManager.continueTimer();
         Input_Manager.SetPlayerAction("none");
         timeManager.selectIcon("Default");

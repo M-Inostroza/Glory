@@ -7306,6 +7306,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Input_Manager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 4141887622415292789, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -40
+      objectReference: {fileID: 0}
     - target: {fileID: 4141887622415292790, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -7317,6 +7321,14 @@ PrefabInstance:
     - target: {fileID: 4141887622415292790, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Input_Manager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4141887622420766704, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4141887622420766706, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: reduceStaminaTest
       objectReference: {fileID: 0}
     - target: {fileID: 4141887622421959693, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
       propertyPath: m_AnchorMax.x
@@ -8938,5 +8950,9 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 7047655270613907326, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
+      propertyPath: baseSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}

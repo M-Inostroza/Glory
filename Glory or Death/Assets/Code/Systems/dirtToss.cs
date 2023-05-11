@@ -39,12 +39,10 @@ public class dirtToss : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(Input_Manager);
-        mainCam.DOShakePosition(0.3f, 0.3f, 20, 10);
+        mainCam.DOShakePosition(0.3f, 0.3f, 20, 10).OnComplete(() => Input_Manager.SetCanClick(false));
         speedReduced = false;
         isDirty = true;
         opacity = maxOpacity;
-        Input_Manager.SetCanClick(false);
     }
 
     private void Update()

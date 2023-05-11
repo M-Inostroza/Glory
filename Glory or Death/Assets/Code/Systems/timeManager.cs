@@ -173,7 +173,6 @@ public class timeManager : MonoBehaviour
 
                 case "RST":
                     BS.PlayRest();
-                    fadeOutUnitTimer();
                     break;
 
                 default:

@@ -13,7 +13,6 @@ public class Input_Manager : MonoBehaviour
     private string selectedEnemyAction;
 
     // Custom classes
-    private Player player;
     private timeManager timeManager;
     private AudioManager audioManager;
 
@@ -28,7 +27,6 @@ public class Input_Manager : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<Player>();
         audioManager = FindObjectOfType<AudioManager>();
         timeManager = FindObjectOfType<timeManager>();
 
@@ -138,6 +136,7 @@ public class Input_Manager : MonoBehaviour
     {
         return selectedPlayerAction;
     }
+
     public void SetEnemyAction(string newAction)
     {
         selectedEnemyAction = newAction;
@@ -145,6 +144,11 @@ public class Input_Manager : MonoBehaviour
     public string GetEnemyAction()
     {
         return selectedEnemyAction;
+    }
+
+    public GameObject GetRestButton()
+    {
+        return RST;
     }
 
     public Image GetAttackCD()

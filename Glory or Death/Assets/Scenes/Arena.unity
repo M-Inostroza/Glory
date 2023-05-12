@@ -7327,8 +7327,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4141887622420766706, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6536527407968327857}
+    - target: {fileID: 4141887622420766706, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: reduceStaminaTest
+      value: testRage
+      objectReference: {fileID: 0}
+    - target: {fileID: 4141887622420766706, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Enemy, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4141887622421959693, guid: 5fd7d0f67b151364cb3f9c4decd92605, type: 3}
       propertyPath: m_AnchorMax.x

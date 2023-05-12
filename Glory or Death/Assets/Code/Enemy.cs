@@ -45,7 +45,8 @@ public class Enemy : MonoBehaviour
     // Effects
     public ParticleSystem jump_dust;
     public ParticleSystem atk_normal_spark;
-    
+
+    private bool isAngry = false;
 
     AudioManager audioManager;
     BattleSystem BS;
@@ -58,6 +59,20 @@ public class Enemy : MonoBehaviour
         BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
         defendManager = FindObjectOfType<defendManager>();
+    }
+
+    private void Update()
+    {
+        executeRage();
+        limitHP();
+    }
+
+    private void limitHP()
+    {
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+        }
     }
 
     public bool TakeDamage(int dmg)
@@ -105,6 +120,18 @@ public class Enemy : MonoBehaviour
         adrenaline += 2;
     }
 
+    public void executeRage()
+    {
+        if (currentHP < (maxHP / 2) && !isAngry)
+        {
+            isAngry = true;
+            Debug.Log("Enemy angry");
+        }
+    }
+    public void testRage()
+    {
+        currentHP -= 10;
+    }
     
     public void playAttack()
     {

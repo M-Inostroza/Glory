@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
@@ -36,7 +34,6 @@ public class Enemy : MonoBehaviour
 
     public bool hasHit = false;
 
-    private defendManager defendManager;
     private timeManager timeManager;
 
     [SerializeField]
@@ -46,19 +43,19 @@ public class Enemy : MonoBehaviour
     public ParticleSystem jump_dust;
     public ParticleSystem atk_normal_spark;
 
+    [SerializeField]
+    private Camera mainCamera;
+
     private bool isAngry = false;
 
     AudioManager audioManager;
     BattleSystem BS;
-    Animator animator;
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
         BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
-        defendManager = FindObjectOfType<defendManager>();
     }
 
     private void Update()
@@ -125,8 +122,20 @@ public class Enemy : MonoBehaviour
         if (currentHP < (maxHP / 2) && !isAngry)
         {
             isAngry = true;
-            Debug.Log("Enemy angry");
+            native_damage += 2;
+            Debug.Log("Angry");
+            Debug.Log("Native dmg: " + native_damage);
+            baseSpeed += 4;
+            Debug.Log("Speed: " + baseSpeed);
+            GetComponent<Animator>().Play("Rage");
+            mainCamera.DOFieldOfView(40, 1f);
+            mainCamera.transform.DOLocalMove(new Vector3(2.5f, -1, -10), 1f);
         }
+    }
+    public void returnCameraZoom()
+    {
+        mainCamera.DOFieldOfView(50, 0.7f);
+        mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.7f);
     }
     public void testRage()
     {
@@ -159,17 +168,15 @@ public class Enemy : MonoBehaviour
     public void stopHurt()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
-        timeManager.playerTimerControl = true;
-        timeManager.enemyTimerControl = true;
-        GetComponent<Animator>().Play("Idle");
+        timeManager.continueTimer();
+        backToIdle();
     }
 
     public void stopDirt()
     {
         timeManager.fadeInUnitTimer();
-        timeManager.playerTimerControl = true;
-        timeManager.enemyTimerControl = true;
-        GetComponent<Animator>().Play("Idle");
+        timeManager.continueTimer();
+        backToIdle();
     }
 
     public void stopEnemyDefense()
@@ -191,5 +198,10 @@ public class Enemy : MonoBehaviour
     {
         GetComponent<Animator>().SetBool("ATK2", false);
         adrenaline = 0;
+    }
+
+    public void backToIdle()
+    {
+        GetComponent<Animator>().Play("Idle");
     }
 }

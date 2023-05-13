@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -185,6 +183,12 @@ public class timeManager : MonoBehaviour
     {
         playerTimerControl = true;
         enemyTimerControl = true;
+    }
+
+    public void stopUnitTimer()
+    {
+        playerTimerControl = false;
+        enemyTimerControl = false;
     }
 
     public void showEnemyAction()

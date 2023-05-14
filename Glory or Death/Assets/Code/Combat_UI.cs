@@ -10,6 +10,9 @@ public class Combat_UI : MonoBehaviour
     private Transform player_stats, enemy_stats, player_stamina, enemy_stamina, player_timer, enemy_timer;
 
     [SerializeField]
+    private GameObject DMG_Feedback;
+
+    [SerializeField]
     private GameObject shieldManager, inputManager, globalTimer, stamina_alarm;
 
     //Unit sliders
@@ -27,10 +30,10 @@ public class Combat_UI : MonoBehaviour
         refillStamina();
     }
 
-    float move_in_speed = 0.7f;
-
     public void move_UI_in()
     {
+        float move_in_speed = 0.7f;
+
         player_stats.DOLocalMoveX(player_stats.localPosition.x + 340, move_in_speed).SetEase(Ease.InOutSine);
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 340, move_in_speed).SetEase(Ease.InOutSine);
 
@@ -44,9 +47,10 @@ public class Combat_UI : MonoBehaviour
         globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y - 70, move_in_speed).SetEase(Ease.InOutSine);
     }
 
-    float move_out_speed = 0.7f;
     public void move_UI_out()
     {
+        float move_out_speed = 0.7f;
+
         player_stats.DOLocalMoveX(player_stats.localPosition.x - 340, move_out_speed).SetEase(Ease.InOutSine);
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x + 340, move_out_speed).SetEase(Ease.InOutSine);
 
@@ -79,15 +83,18 @@ public class Combat_UI : MonoBehaviour
             inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(-40, 0.7f);
         }
     }
-    public void reduceStaminaTest()
-    {
-        playerUnit.currentStamina -= 30;
-    }
     public void alarmStamina()
     {
         Image staminaImage = stamina_alarm.GetComponent<Image>();
         player_stamina.transform.DOShakePosition(0.6f, 4, 50);
         staminaImage.DOFade(1, 0.2f);
         stamina_alarm.transform.DOShakePosition(0.6f, 4, 50).OnComplete(()=> staminaImage.DOFade(0, 0.2f));
+    }
+
+    public void rageFeedback()
+    {
+        DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f).OnComplete(()=> DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
+        DMG_Feedback.transform.GetChild(1).GetComponent<Image>().DOFade(1, 0.5f).OnComplete(()=> DMG_Feedback.transform.GetChild(1).GetComponent<Image>().DOFade(0, 0.5f));
+        Debug.Log("this is not working");
     }
 }

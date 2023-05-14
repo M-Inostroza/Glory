@@ -121,21 +121,35 @@ public class Enemy : MonoBehaviour
     {
         if (currentHP < (maxHP / 2) && !isAngry)
         {
+            executeCameraZoom();
+            timeManager.stopUnitTimer();
+            FindObjectOfType<Combat_UI>().move_UI_out();
             isAngry = true;
             native_damage += 2;
-            Debug.Log("Angry");
-            Debug.Log("Native dmg: " + native_damage);
             baseSpeed += 4;
-            Debug.Log("Speed: " + baseSpeed);
             GetComponent<Animator>().Play("Rage");
-            mainCamera.DOFieldOfView(40, 1f);
-            mainCamera.transform.DOLocalMove(new Vector3(2.5f, -1, -10), 1f);
         }
+    }
+    public void returnFromRage()
+    {
+        returnCameraZoom();
+        FindObjectOfType<Combat_UI>().move_UI_in();
+        timeManager.continueTimer();
+    }
+    public void executeCameraZoom()
+    {
+        mainCamera.DOFieldOfView(40, 1f);
+        mainCamera.transform.DOLocalMove(new Vector3(2.5f, -1, -10), 1f);
     }
     public void returnCameraZoom()
     {
-        mainCamera.DOFieldOfView(50, 0.7f);
+        mainCamera.DOFieldOfView(50, 1f);
         mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.7f);
+    }
+
+    public void playAudience()
+    {
+        audioManager.Play("Audience_cheer");
     }
     public void testRage()
     {

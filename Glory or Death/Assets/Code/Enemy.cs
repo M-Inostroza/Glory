@@ -151,6 +151,10 @@ public class Enemy : MonoBehaviour
     {
         audioManager.Play("Audience_cheer");
     }
+    public void playGrunt()
+    {
+        audioManager.Play("Enemy_charge");
+    }
     public void testRage()
     {
         currentHP -= 10;

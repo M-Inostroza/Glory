@@ -8236,7 +8236,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4165626104174654189, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}
       propertyPath: sounds.Array.size
-      value: 48
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 4165626104174654189, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}
       propertyPath: sounds.Array.data[0].clip
@@ -8675,6 +8675,14 @@ PrefabInstance:
       value: Audience_cheer
       objectReference: {fileID: 0}
     - target: {fileID: 4165626104174654189, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}
+      propertyPath: sounds.Array.data[48].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: f0012f5b7ee2c7c40a60d63f3de50b3a, type: 3}
+    - target: {fileID: 4165626104174654189, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}
+      propertyPath: sounds.Array.data[48].name
+      value: Enemy_charge
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165626104174654189, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}
       propertyPath: sounds.Array.data[4].pitch
       value: 1
       objectReference: {fileID: 0}
@@ -8799,6 +8807,10 @@ PrefabInstance:
       value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 4165626104174654189, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}
+      propertyPath: sounds.Array.data[48].pitch
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165626104174654189, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}
       propertyPath: sounds.Array.data[5].volume
       value: 0.08
       objectReference: {fileID: 0}
@@ -8916,6 +8928,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165626104174654189, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}
       propertyPath: sounds.Array.data[47].volume
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165626104174654189, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}
+      propertyPath: sounds.Array.data[48].volume
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5542351962129424460, guid: 077a69c1c5b1b1d49a070de078298522, type: 3}

@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class Combat_UI : MonoBehaviour
 {
     [SerializeField]
-    private Transform player_stats, enemy_stats, player_stamina, enemy_stamina, player_timer, enemy_timer;
+    private Transform player_stats, enemy_stats, player_stamina, player_timer, enemy_timer;
 
     [SerializeField]
-    private GameObject DMG_Feedback;
+    private GameObject DMG_Feedback, SPEED_Feedback;
 
     [SerializeField]
     private GameObject shieldManager, inputManager, globalTimer, stamina_alarm;
@@ -38,7 +38,6 @@ public class Combat_UI : MonoBehaviour
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 340, move_in_speed).SetEase(Ease.InOutSine);
 
         player_stamina.DOLocalMoveX(player_stamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
-        enemy_stamina.DOLocalMoveX(enemy_stamina.localPosition.x - 200, move_in_speed).SetEase(Ease.InOutSine);
 
         player_timer.DOLocalMoveY(player_timer.localPosition.y - 160, move_in_speed);
         enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y - 160, move_in_speed);
@@ -55,7 +54,6 @@ public class Combat_UI : MonoBehaviour
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x + 340, move_out_speed).SetEase(Ease.InOutSine);
 
         player_stamina.DOLocalMoveX(player_stamina.localPosition.x - 180, move_out_speed).SetEase(Ease.InOutSine);
-        enemy_stamina.DOLocalMoveX(enemy_stamina.localPosition.x + 180, move_out_speed).SetEase(Ease.InOutSine);
 
         player_timer.DOLocalMoveY(player_timer.localPosition.y + 160, move_out_speed);
         enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y + 160, move_out_speed);
@@ -91,10 +89,20 @@ public class Combat_UI : MonoBehaviour
         stamina_alarm.transform.DOShakePosition(0.6f, 4, 50).OnComplete(()=> staminaImage.DOFade(0, 0.2f));
     }
 
-    public void rageFeedback()
+    public void damageBuff()
     {
-        DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f).OnComplete(()=> DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
-        DMG_Feedback.transform.GetChild(1).GetComponent<Image>().DOFade(1, 0.5f).OnComplete(()=> DMG_Feedback.transform.GetChild(1).GetComponent<Image>().DOFade(0, 0.5f));
-        Debug.Log("this is not working");
+        DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(()=> DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
+        DMG_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+
+        DMG_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
+        DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+    }
+    public void speedBuff()
+    {
+        SPEED_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => SPEED_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
+        SPEED_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+
+        SPEED_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
+        SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
     }
 }

@@ -155,6 +155,14 @@ public class Enemy : MonoBehaviour
     {
         audioManager.Play("Enemy_charge");
     }
+    public void doDamageBuff()
+    {
+        FindObjectOfType<Combat_UI>().damageBuff();
+    }
+    public void doSpeedBuff()
+    {
+        FindObjectOfType<Combat_UI>().speedBuff();
+    }
     public void testRage()
     {
         currentHP -= 10;

@@ -330,7 +330,6 @@ public class BattleSystem : MonoBehaviour
 
         // Update stamina
         playerHUD.staminaSlider.DOValue(playerUnit.currentStamina, 0.5f);
-        enemyHUD.staminaSlider.DOValue(enemyUnit.currentStamina, 0.5f);
 
         playerHUD.adrenalineSlider.DOValue(playerUnit.adrenaline, 0.5f);
         if (playerUnit.adrenaline >= 20)

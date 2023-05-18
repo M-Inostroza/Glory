@@ -7,15 +7,9 @@ using DG.Tweening;
 
 public class EnemyHUD : MonoBehaviour
 {
-    public Slider hpSlider, adrenalineSlider, staminaSlider;
+    public Slider hpSlider, adrenalineSlider;
     public void setHP(int hp)
     {
         hpSlider.DOValue(hp, 0.5f);
-    }
-
-    private void Start()
-    {
-        // Set the stamina slider value to 100%.
-        staminaSlider.value = staminaSlider.maxValue;
     }
 }

@@ -202,6 +202,7 @@ public class timeManager : MonoBehaviour
         {
             enemyTimer.fillAmount -= Time.deltaTime / (mainWaitTime - enemy.baseSpeed);
         }
+
         //Execute selected action
         if (enemyTimer.fillAmount == 0 && enemyTimerControl)
         {
@@ -209,24 +210,34 @@ public class timeManager : MonoBehaviour
             {
                 fadeOutUnitTimer();
             }
-            playerTimerControl = false;
-            enemyTimerControl = false;
+            stopUnitTimer();
             enemyTimer.fillAmount = 1;
 
             // Select action custom AI
-
-            float attackRandom = Random.Range(0, 99);
-            if (attackRandom > dirtChance || dirtPrevious)
+            if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)
             {
-                Input_Manager.SetEnemyAction("ATK1");
+                Input_Manager.SetEnemyAction("RAGE");
                 dirtPrevious = false;
                 dirtChance += 5;
-            } else
+                enemy.setAngryState(true);
+            } 
+            else
             {
-                Input_Manager.SetEnemyAction("DIRT");
-                dirtPrevious = true;
-                dirtChance = 20;
+                float attackRandom = Random.Range(0, 99);
+                if (attackRandom > dirtChance || dirtPrevious)
+                {
+                    Input_Manager.SetEnemyAction("ATK1");
+                    dirtPrevious = false;
+                    dirtChance += 5;
+                }
+                else
+                {
+                    Input_Manager.SetEnemyAction("DIRT");
+                    dirtPrevious = true;
+                    dirtChance = 10;
+                }
             }
+
 
             // Execute action
             switch (Input_Manager.GetEnemyAction())
@@ -237,6 +248,10 @@ public class timeManager : MonoBehaviour
 
                 case "DIRT":
                     BS.EnemyTurn_dirt();
+                    break;
+
+                case "RAGE":
+                    BS.EnemyTurn_rage();
                     break;
             }
         }

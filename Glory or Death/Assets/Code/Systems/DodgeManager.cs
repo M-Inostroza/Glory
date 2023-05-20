@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class DodgeManager : MonoBehaviour
 {
-    public Player playerUnit;
+    private Player playerUnit;
+
+    [SerializeField] private Slider evadeSlider;
+    [SerializeField] private GameObject evadeTarget;
+
     public GameObject[] arrowPrefabs;
 
     // Set evade state
@@ -15,28 +20,29 @@ public class DodgeManager : MonoBehaviour
     float intPos;
 
     Animator playerAnimator;
-
-    // The agility given by the arrows
-    int extraAgility;
+    AudioManager audioManager;
 
     // Instantiated arrows
     List<GameObject> instantArrows = new List<GameObject>();
 
-    //Audio
-    AudioManager audioManager;
-
+    
     private void Start()
     {
+        playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void OnEnable()
     {
-        // Resets player's agility after buff
-        playerUnit.currentAgility -= extraAgility;
-        extraAgility = 0;
-        
+        // Slowmo
+        Time.timeScale = 0.5f;
+
+        // Set target position
+        float newRandom = Random.Range(0, 80);
+        evadeTarget.transform.DOLocalMoveX(newRandom, 0.2f);
+
+
         // Spawn arrows
         intPos = -1.5f;
         for (int i = 0; i < 4; i++)
@@ -48,8 +54,8 @@ public class DodgeManager : MonoBehaviour
             intPos += .8f;
         }
 
-        // Sets timer to deactivate defend manager
-        StartCoroutine(commandTimer(1.8f)); // Normal 1.8
+        // Timer to close
+        StartCoroutine(evadeTimer(2.8f)); // Normal 1.8
     }
 
     private void Update()
@@ -61,18 +67,15 @@ public class DodgeManager : MonoBehaviour
     // Main arrow mechanic
     void pressCommands()
     {
-        // If there are arrows to play
         if(instantArrows.Count > 0)
         {
-            // Checks the direction of the first arrow of the list
             switch (instantArrows[0].name)
             {
                 case "down(Clone)":
-                    // If player hits the arrow
                     if (Input.GetKeyDown(KeyCode.DownArrow))
                     {
                         killArrow(instantArrows[0]);
-                    } // If player fails the arrow
+                    }
                     else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         failArrow(instantArrows[0]);
@@ -108,18 +111,14 @@ public class DodgeManager : MonoBehaviour
                     }
                     break;
             }
-        } else
-        {
-            StartCoroutine(animWait());
         }
-        
     }
 
     // Improves agility, animates the arrow and removes it from the list
     void killArrow(GameObject arrow)
     {
         audioManager.Play("arrowEvadeWosh");
-        extraAgility++;
+        evadeSlider.DOValue(evadeSlider.value + 50, 0.2f);
         instantArrows.RemoveAt(0);
         arrow.transform.DOLocalJump(new Vector2(arrow.transform.localPosition.x, arrow.transform.localPosition.y + 10), 6, 1, 0.3f).OnComplete(() => Destroy(arrow.gameObject));
     }
@@ -128,32 +127,27 @@ public class DodgeManager : MonoBehaviour
     void failArrow(GameObject arrow)
     {
         audioManager.Play("arrowFail");
-        extraAgility--;
+        evadeSlider.DOValue(evadeSlider.value - 30, 0.4f);
         instantArrows.RemoveAt(0);
         arrow.transform.DOShakePosition(0.3f, 4, 20).OnComplete(() => Destroy(arrow.gameObject));
     }
 
-    // Deactivates defend manager
-    IEnumerator commandTimer(float time)
+    // Deactivates self
+    IEnumerator evadeTimer(float time)
     {
         yield return new WaitForSeconds(time);
         gameObject.SetActive(false);
     }
 
-    // Waits for the arrow anim to finish before deactivating the defend manager, so it doesn't conflict with DOTween.
-    IEnumerator animWait()
-    {
-        yield return new WaitForSeconds(0.3f);
-        gameObject.SetActive(false);
-    }
-
-    // Adds extra agility, limits agility and destroys arrows
     private void OnDisable()
     {
-        playerUnit.currentAgility += extraAgility;
+        Debug.Log("evade slider value: " + evadeSlider.value);
+        Debug.Log("X: " + evadeTarget.transform.localPosition.x);
+
+        Time.timeScale = 1;
 
         // Triggers miss mechanic and animation if 4 arrows were hit
-        if (extraAgility == 4)
+        if (evadeSlider.value >= (evadeTarget.transform.localPosition.x))
         {
             animateBuff();
             playerUnit.missed = true;
@@ -163,12 +157,7 @@ public class DodgeManager : MonoBehaviour
             playerUnit.missed = false;
             playerAnimator.SetBool("DG_Skill_Fail", true);
         }
-
-        if (playerUnit.currentAgility < 0)
-        {
-            playerUnit.currentAgility = 0;
-        }
-
+        evadeSlider.value = -100;
         foreach (Transform child in transform)
         {
             instantArrows.Clear();

@@ -103,7 +103,6 @@ public class BattleSystem : MonoBehaviour
 
         // Stamina
         playerUnit.currentStamina = playerUnit.maxStamina;
-        enemyUnit.currentStamina = enemyUnit.maxStamina;
 
         playerUnit.currentAgility = playerUnit.maxAgility;
         enemyUnit.currentAgility = enemyUnit.maxAgility;
@@ -257,12 +256,15 @@ public class BattleSystem : MonoBehaviour
     public void EnemyTurn_attack()
     {
         enemyUnit.GetComponent<Animator>().SetBool("attack", true);
-        enemyUnit.currentStamina -= 25;
     }
     public void EnemyTurn_dirt()
     {
         enemyUnit.GetComponent<Animator>().Play("dirt_toss");
-        enemyUnit.currentStamina -= 20;
+    }
+
+    public void EnemyTurn_rage()
+    {
+        enemyUnit.executeRage();
     }
 
     public void EndBattle()

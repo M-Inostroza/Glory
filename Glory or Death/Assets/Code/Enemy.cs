@@ -22,10 +22,6 @@ public class Enemy : MonoBehaviour
     public float maxSpeed;
     public float baseSpeed;
 
-    //Stamina
-    public float maxStamina;
-    public float currentStamina;
-
     public int adrenaline;
 
     //Agility (Dodging)
@@ -60,7 +56,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        executeRage();
         limitHP();
     }
 
@@ -119,54 +114,14 @@ public class Enemy : MonoBehaviour
 
     public void executeRage()
     {
-        if (currentHP < (maxHP / 2) && !isAngry)
-        {
-            executeCameraZoom();
-            timeManager.stopUnitTimer();
-            FindObjectOfType<Combat_UI>().move_UI_out();
-            isAngry = true;
-            native_damage += 2;
-            baseSpeed += 4;
-            GetComponent<Animator>().Play("Rage");
-        }
+        executeCameraZoom();
+        timeManager.stopUnitTimer();
+        FindObjectOfType<Combat_UI>().move_UI_out();
+        baseSpeed += 5;
+        native_damage += 3;
+        GetComponent<Animator>().Play("Rage");
     }
-    public void returnFromRage()
-    {
-        returnCameraZoom();
-        FindObjectOfType<Combat_UI>().move_UI_in();
-        timeManager.continueTimer();
-    }
-    public void executeCameraZoom()
-    {
-        mainCamera.DOFieldOfView(40, 1f);
-        mainCamera.transform.DOLocalMove(new Vector3(2.5f, -1, -10), 1f);
-    }
-    public void returnCameraZoom()
-    {
-        mainCamera.DOFieldOfView(50, 1f);
-        mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.7f);
-    }
-
-    public void playAudience()
-    {
-        audioManager.Play("Audience_cheer");
-    }
-    public void playGrunt()
-    {
-        audioManager.Play("Enemy_charge");
-    }
-    public void doDamageBuff()
-    {
-        FindObjectOfType<Combat_UI>().damageBuff();
-    }
-    public void doSpeedBuff()
-    {
-        FindObjectOfType<Combat_UI>().speedBuff();
-    }
-    public void testRage()
-    {
-        currentHP -= 10;
-    }
+    
     
     public void playAttack()
     {
@@ -181,7 +136,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    //Stop anim controllers
+    // Utilities
     public void stopAttack()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
@@ -229,5 +184,57 @@ public class Enemy : MonoBehaviour
     public void backToIdle()
     {
         GetComponent<Animator>().Play("Idle");
+    }
+
+    public void returnFromRage()
+    {
+        returnCameraZoom();
+        FindObjectOfType<Combat_UI>().move_UI_in();
+        timeManager.continueTimer();
+        timeManager.fadeInUnitTimer();
+    }
+    public void executeCameraZoom()
+    {
+        mainCamera.DOFieldOfView(45, 1f);
+        mainCamera.transform.DOLocalMove(new Vector3(2.5f, -1, -10), 1f);
+    }
+    public void returnCameraZoom()
+    {
+        mainCamera.DOFieldOfView(50, 1f);
+        mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.7f);
+    }
+
+    public void playAudience()
+    {
+        audioManager.Play("Audience_cheer");
+    }
+    public void playGrunt()
+    {
+        audioManager.Play("Enemy_charge");
+    }
+    public void doDamageBuff()
+    {
+        FindObjectOfType<Combat_UI>().damageBuff();
+    }
+    public void doSpeedBuff()
+    {
+        FindObjectOfType<Combat_UI>().speedBuff();
+    }
+
+    public void doCameraShake()
+    {
+        mainCamera.DOShakePosition(0.8f, 1, 80, 20);
+    }
+    public void testRage()
+    {
+        currentHP -= 10;
+    }
+    public bool getAngryState()
+    {
+        return isAngry;
+    }
+    public void setAngryState(bool newState)
+    {
+        isAngry = newState;
     }
 }

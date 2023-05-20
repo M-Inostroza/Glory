@@ -34,8 +34,8 @@ public class Combat_UI : MonoBehaviour
     {
         float move_in_speed = 0.7f;
 
-        player_stats.DOLocalMoveX(player_stats.localPosition.x + 340, move_in_speed).SetEase(Ease.InOutSine);
-        enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 340, move_in_speed).SetEase(Ease.InOutSine);
+        player_stats.DOLocalMoveX(player_stats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
+        enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 350, move_in_speed).SetEase(Ease.InOutSine);
 
         player_stamina.DOLocalMoveX(player_stamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
 
@@ -67,10 +67,6 @@ public class Combat_UI : MonoBehaviour
         if (playerUnit.currentStamina < playerUnit.maxStamina)
         {
             playerUnit.currentStamina += 0.5f * Time.deltaTime; //Mejorable
-        }
-        if (enemyUnit.currentStamina < enemyUnit.maxStamina)
-        {
-            enemyUnit.currentStamina += 0.5f * Time.deltaTime;
         }
 
         if (playerUnit.currentStamina < 30)

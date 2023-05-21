@@ -9,7 +9,7 @@ public class DodgeManager : MonoBehaviour
     private Player playerUnit;
 
     [SerializeField] private Slider evadeSlider;
-    [SerializeField] private GameObject evadeTarget;
+    [SerializeField] private GameObject evadeTarget, starFeedback;
 
     public GameObject[] arrowPrefabs;
 
@@ -37,6 +37,18 @@ public class DodgeManager : MonoBehaviour
     {
         // Slowmo
         Time.timeScale = 0.5f;
+        Transform fillArea = evadeSlider.transform.GetChild(0);
+
+        evadeSlider.gameObject.SetActive(true);
+        
+        foreach (Transform child in fillArea.transform)
+        {
+            Image childImage = child.GetComponent<Image>();
+            if (childImage)
+            {
+                childImage.DOFade(1, 0.2f);
+            }
+        }
 
         // Set target position
         float newRandom = Random.Range(0, 80);
@@ -61,6 +73,7 @@ public class DodgeManager : MonoBehaviour
     private void Update()
     {
         pressCommands();
+        checkCritic();
     }
 
     
@@ -118,7 +131,7 @@ public class DodgeManager : MonoBehaviour
     void killArrow(GameObject arrow)
     {
         audioManager.Play("arrowEvadeWosh");
-        evadeSlider.DOValue(evadeSlider.value + 50, 0.2f);
+        evadeSlider.DOValue(evadeSlider.value + 50, 0.08f);
         instantArrows.RemoveAt(0);
         arrow.transform.DOLocalJump(new Vector2(arrow.transform.localPosition.x, arrow.transform.localPosition.y + 10), 6, 1, 0.3f).OnComplete(() => Destroy(arrow.gameObject));
     }
@@ -139,20 +152,36 @@ public class DodgeManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void checkCritic()
+    {
+        if (evadeSlider.value >= 95)
+        {
+            starFeedback.GetComponent<Image>().DOFade(1, 0.02f).OnComplete(()=>doCritic());
+        }
+    }
+    void doCritic()
+    {
+        starFeedback.transform.DOLocalJump(new Vector3(140,28,0), 12, 1, 0.7f).OnComplete(() => starFeedback.transform.localPosition = new Vector2(112, 0));
+        starFeedback.transform.DOLocalRotate(new Vector3(0, 0, -160), 0.7f).OnComplete(() => starFeedback.transform.localRotation = Quaternion.identity);
+        starFeedback.GetComponent<Image>().DOFade(0, 0.5f).OnComplete(() => closeMinigame());
+        Debug.Log("finish this");
+    }
     private void OnDisable()
     {
-        Debug.Log("evade slider value: " + evadeSlider.value);
-        Debug.Log("X: " + evadeTarget.transform.localPosition.x);
+        closeMinigame();
+        checkSuccess();
+    }
 
-        Time.timeScale = 1;
-
+    public void checkSuccess()
+    {
         // Triggers miss mechanic and animation if 4 arrows were hit
         if (evadeSlider.value >= (evadeTarget.transform.localPosition.x))
         {
             animateBuff();
             playerUnit.missed = true;
             playerAnimator.SetBool("DG_Skill", true);
-        } else
+        }
+        else
         {
             playerUnit.missed = false;
             playerAnimator.SetBool("DG_Skill_Fail", true);
@@ -163,6 +192,22 @@ public class DodgeManager : MonoBehaviour
             instantArrows.Clear();
             Destroy(child.gameObject);
         }
+    }
+
+    public void closeMinigame()
+    {
+        Time.timeScale = 1;
+
+        Transform fillArea = evadeSlider.transform.GetChild(0);
+        foreach (Transform child in fillArea.transform)
+        {
+            Image childImage = child.GetComponent<Image>();
+            if (childImage)
+            {
+                childImage.DOFade(0, 0.2f);
+            }
+        }
+        evadeSlider.gameObject.SetActive(false);
     }
 
     public void animateBuff()

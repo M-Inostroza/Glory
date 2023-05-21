@@ -46,7 +46,7 @@ public class DodgeManager : MonoBehaviour
             Image childImage = child.GetComponent<Image>();
             if (childImage)
             {
-                childImage.DOFade(1, 0.2f);
+                childImage.DOFade(1, 0.4f);
             }
         }
 
@@ -67,7 +67,7 @@ public class DodgeManager : MonoBehaviour
         }
 
         // Timer to close
-        StartCoroutine(evadeTimer(2.8f)); // Normal 1.8
+        StartCoroutine(evadeTimer(4.8f)); // Normal 1.8
     }
 
     private void Update()
@@ -152,25 +152,23 @@ public class DodgeManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    bool hasJumped = false;
     public void checkCritic()
     {
-        if (evadeSlider.value >= 95)
+        if (evadeSlider.value >= 95 && hasJumped == false)
         {
-            starFeedback.GetComponent<Image>().DOFade(1, 0.02f).OnComplete(()=>doCritic());
+            starFeedback.GetComponent<Image>().DOFade(1, 0).OnComplete(() => doCritic());
         }
+        Debug.Log("DO case time out and arrows fail");
     }
     void doCritic()
     {
-        starFeedback.transform.DOLocalJump(new Vector3(140,28,0), 12, 1, 0.7f).OnComplete(() => starFeedback.transform.localPosition = new Vector2(112, 0));
-        starFeedback.transform.DOLocalRotate(new Vector3(0, 0, -160), 0.7f).OnComplete(() => starFeedback.transform.localRotation = Quaternion.identity);
-        starFeedback.GetComponent<Image>().DOFade(0, 0.5f).OnComplete(() => closeMinigame());
-        Debug.Log("finish this");
+        starFeedback.transform.DOLocalJump(new Vector3(140, 28, 0), 18, 1, 0.6f).OnComplete(()=> starFeedback.transform.DOLocalMove(new Vector2(112,0), 0));
+        starFeedback.transform.DOLocalRotate(new Vector3(0, 0, -160), 0.6f).OnComplete(()=> starFeedback.transform.localRotation = Quaternion.identity);
+        starFeedback.GetComponent<Image>().DOFade(0, 0.6f).OnComplete(() => closeMinigame());
+        hasJumped = true;
     }
-    private void OnDisable()
-    {
-        closeMinigame();
-        checkSuccess();
-    }
+    
 
     public void checkSuccess()
     {
@@ -197,7 +195,7 @@ public class DodgeManager : MonoBehaviour
     public void closeMinigame()
     {
         Time.timeScale = 1;
-
+        checkSuccess();
         Transform fillArea = evadeSlider.transform.GetChild(0);
         foreach (Transform child in fillArea.transform)
         {

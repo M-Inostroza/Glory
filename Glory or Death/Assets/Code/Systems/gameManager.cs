@@ -5,7 +5,6 @@ using DG.Tweening;
 
 public class gameManager : MonoBehaviour
 {
-    public int tween;
 
     private timeManager timeManager;
     private BattleSystem battleSystem;
@@ -18,7 +17,7 @@ public class gameManager : MonoBehaviour
 
     private void Start()
     {
-        DOTween.SetTweensCapacity(1750, 50);
+        DOTween.SetTweensCapacity(1750, 500);
 
         timeManager = FindObjectOfType<timeManager>();
         battleSystem = FindObjectOfType<BattleSystem>();
@@ -38,6 +37,6 @@ public class gameManager : MonoBehaviour
 
     public void showSummery()
     {
-        endFightUI.DOMoveY(tween, 1f);
+        endFightUI.DOMoveY(-10, 1f);
     }
 }

@@ -53,6 +53,7 @@ public class DodgeManager : MonoBehaviour
     private void Update()
     {
         pressCommands();
+        StartCoroutine(checkList());
         checkCritic();
     }
 
@@ -117,6 +118,16 @@ public class DodgeManager : MonoBehaviour
             }
         }
     }
+
+    IEnumerator checkList()
+    {
+        if (instantArrows.Count == 0)
+        {
+            yield return new WaitForSeconds(0.4f);
+            closeMinigame();
+            Debug.Log("fix this");
+        }
+    }
     void killArrow(GameObject arrow)
     {
         audioManager.Play("arrowEvadeWosh");
@@ -137,7 +148,6 @@ public class DodgeManager : MonoBehaviour
         {
             starFeedback.GetComponent<Image>().DOFade(1, 0).OnComplete(() => doCritic());
         }
-        Debug.Log("check null case");
     }
     void doCritic()
     {
@@ -157,6 +167,7 @@ public class DodgeManager : MonoBehaviour
         }
         else
         {
+            audioManager.Play("Audience_boo");
             playerUnit.missed = false;
             playerAnimator.SetBool("DG_Skill_Fail", true);
         }
@@ -213,8 +224,8 @@ public class DodgeManager : MonoBehaviour
 
         returnCameraSlow();
         
-        evadeSlider.transform.DOLocalMoveY(-170, 0.2f);
-        evadeSlider.transform.DOScale(1f, 0.2f);
+        evadeSlider.transform.DOLocalMoveY(-170, 0.4f);
+        evadeSlider.transform.DOScale(1f, 0.4f);
 
         gameObject.SetActive(false);
     }
@@ -222,7 +233,7 @@ public class DodgeManager : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.GetComponent<SpriteRenderer>().DOFade(0, 0.3f).OnComplete(()=>clear(child));
+            child.GetComponent<SpriteRenderer>().DOFade(0, 0.4f).OnComplete(()=>clear(child));
         }
         void clear(Transform child)
         {

@@ -136,16 +136,14 @@ public class Player : MonoBehaviour
     public void stopDefendSkill()
     {
         gameObject.GetComponent<Animator>().SetBool("DF_Skill", false);
-        timeManager.enemyTimerControl = true;
-        timeManager.playerTimerControl = true;
+        timeManager.continueTimer();
         timeManager.defaultAction();
     }
     public void stopDodgeSkill()
     {
         gameObject.GetComponent<Animator>().SetBool("DG_Skill", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.enemyTimerControl = true;
-        timeManager.playerTimerControl = true;
+        timeManager.continueTimer();
         timeManager.defaultAction();
     }
     public void stopDodgeSkillFail()

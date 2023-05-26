@@ -95,7 +95,6 @@ public class BattleSystem : MonoBehaviour
 
         // Shield
         playerUnit.currentShield = playerUnit.maxShield;
-        enemyUnit.currentShield = enemyUnit.maxShield;
 
         // HP
         playerUnit.SetCurrentHP(playerUnit.GetMaxHP());
@@ -105,7 +104,6 @@ public class BattleSystem : MonoBehaviour
         playerUnit.currentStamina = playerUnit.maxStamina;
 
         playerUnit.currentAgility = playerUnit.maxAgility;
-        enemyUnit.currentAgility = enemyUnit.maxAgility;
     }
 
     
@@ -239,7 +237,7 @@ public class BattleSystem : MonoBehaviour
             if (playerUnit.evade >= 20 )
             {
                 playerUnit.missed = true;
-                playerAnimator.SetBool("Evade", true);
+                playerAnimator.SetBool("evadeJump", true);
 
                 // Deactivates evade mode, deactivates evade manager, resets timer, resets challenge, changes to enemy turn.
                 resetEvades();

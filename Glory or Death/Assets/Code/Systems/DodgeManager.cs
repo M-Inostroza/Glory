@@ -14,6 +14,7 @@ public class DodgeManager : MonoBehaviour
     [SerializeField] private float Timer;
 
     bool hasStarJumped = false;
+    bool isCritic = false;
 
     public GameObject[] arrowPrefabs;
 
@@ -39,6 +40,7 @@ public class DodgeManager : MonoBehaviour
     private void OnEnable()
     {
         hasStarJumped = false;
+        isCritic = false;
 
         spawnArrows();
         doCameraSlow(35, 0.7f, 0.5f);
@@ -133,10 +135,16 @@ public class DodgeManager : MonoBehaviour
                     break;
                     
             }
-        }
-        if (evadeSlider.value >= 95 && hasStarJumped == false)
+        } else if (instantArrows.Count == 0)
         {
-            starFeedback.GetComponent<Image>().DOFade(1, 0).OnComplete(() => doCritic());
+            if (evadeSlider.value >= 95 && hasStarJumped == false)
+            {
+                isCritic = true;
+                starFeedback.GetComponent<Image>().DOFade(1, 0).OnComplete(() => doCritic());
+            } else
+            {
+                StartCoroutine(mainTimer(0.4f));
+            }
         }
     }
 
@@ -161,28 +169,32 @@ public class DodgeManager : MonoBehaviour
             audioManager.Play("Audience_boo");
             playerUnit.missed = false;
             playerAnimator.SetBool("DG_Skill_Fail", true);
-            StartCoroutine(noArrowsTimer(0.4f));
         }
-        else if (evadeSlider.value > evadeTarget.transform.localPosition.x && evadeSlider.value <= 95)
+        else if (evadeSlider.value > evadeTarget.transform.localPosition.x)
         {
             audioManager.Play("Audience_cheer_mid");
             animateBuff();
             playerUnit.missed = true;
-            playerAnimator.SetBool("DG_Skill", true);
+            playerAnimator.SetBool("evadeSuccess", true);
         }
     }
     void doCritic()
     {
+        playerUnit.missed = true;
         audioManager.Play("Audience_cheer_high");
         starFeedback.transform.DOLocalJump(new Vector3(140, 28, 0), 18, 1, 0.6f).OnComplete(()=> starFeedback.transform.DOLocalMove(new Vector2(112,0), 0));
         starFeedback.transform.DOLocalRotate(new Vector3(0, 0, -160), 0.6f).OnComplete(()=> starFeedback.transform.localRotation = Quaternion.identity);
         starFeedback.GetComponent<Image>().DOFade(0, 0.6f).OnComplete(() => closeMinigame());
         hasStarJumped = true;
-        playerAnimator.SetBool("DG_Skill", true);
+        playerAnimator.SetBool("evadeSuccess", true);
+        animateBuff();
     }
     void closeMinigame()
     {
-        checkSuccess();
+        if (!isCritic)
+        {
+            checkSuccess();
+        }
         destroyArrows();
         Transform fillArea = evadeSlider.transform.GetChild(0);
 
@@ -229,18 +241,14 @@ public class DodgeManager : MonoBehaviour
         Time.timeScale = timeScale;
         // 50, 0.5f, 1
     }
-    void animateBuff()
+    public void animateBuff()
     {
         dodgeBuffIcon.SetActive(true);
-        dodgeBuffIcon.transform.DOPunchScale(new Vector2(12f, 12f), 0.4f, 8, 1).OnComplete(() => dodgeBuffIcon.SetActive(false));
+        dodgeBuffIcon.GetComponent<SpriteRenderer>().DOFade(1, 0.5f);
+        dodgeBuffIcon.transform.DOLocalMoveY(230, 0.8f).SetEase(Ease.OutExpo);
     }
 
     IEnumerator mainTimer(float time)
-    {
-        yield return new WaitForSeconds(time);
-        closeMinigame();
-    }
-    IEnumerator noArrowsTimer(float time)
     {
         yield return new WaitForSeconds(time);
         closeMinigame();

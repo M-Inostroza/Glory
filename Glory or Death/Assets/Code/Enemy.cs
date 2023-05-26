@@ -4,48 +4,27 @@ using System;
 
 public class Enemy : MonoBehaviour
 {
-    //Name of the enemy
-    public string enemyName;
-
-    //Start damage
-    public int native_damage;
-
-    //HP
+    public int nativeDamage;
     public int maxHP;
     public int currentHP;
-
-    //Shield
-    public int maxShield;
-    public int currentShield;
+    public int adrenaline;
 
     //Speed
     public float maxSpeed;
     public float baseSpeed;
 
-    public int adrenaline;
-
-    //Agility (Dodging)
-    public int maxAgility;
-    public int currentAgility;
-
-    public bool hasHit = false;
-
-    private timeManager timeManager;
-
     [SerializeField]
     private dirtToss dirtManager;
-
-    // Effects
-    public ParticleSystem jump_dust;
-    public ParticleSystem atk_normal_spark;
 
     [SerializeField]
     private Camera mainCamera;
 
     private bool isAngry = false;
+    public bool hasHit = false;
 
     AudioManager audioManager;
     BattleSystem BS;
+    timeManager timeManager;
 
     private void Start()
     {
@@ -69,9 +48,7 @@ public class Enemy : MonoBehaviour
 
     public bool TakeDamage(int dmg)
     {
-        currentHP -= Math.Max(dmg - (currentShield > 0 ? 2 : 0), 0);
-        currentShield = Math.Max(currentShield - 1, 0);
-
+        currentHP -= dmg;
         return currentHP <= 0;
     }
 
@@ -79,12 +56,12 @@ public class Enemy : MonoBehaviour
     {
         if (!FindObjectOfType<Player>().missed)
         {
-            FindObjectOfType<Player>().GetComponent<Animator>().SetBool("HURT1", true);
+            FindObjectOfType<Player>().GetComponent<Animator>().SetBool("HURT", true);
             adrenaline += 2;
             if (FindObjectOfType<Player>().currentShield > 0)
             {
-                bool isDead = FindObjectOfType<Player>().TakeDamage(native_damage - 2);
-                BS.showHit(native_damage - 2, BS.hitText_Player);
+                bool isDead = FindObjectOfType<Player>().TakeDamage(nativeDamage - 2);
+                BS.showHit(nativeDamage - 2, BS.hitText_Player);
 
                 if (isDead)
                 {
@@ -93,7 +70,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                bool isDead = FindObjectOfType<Player>().TakeDamage(native_damage);
+                bool isDead = FindObjectOfType<Player>().TakeDamage(nativeDamage);
                 if (isDead)
                 {
                     FindObjectOfType<BattleSystem>().EndBattle();
@@ -118,7 +95,7 @@ public class Enemy : MonoBehaviour
         timeManager.stopUnitTimer();
         FindObjectOfType<Combat_UI>().move_UI_out();
         baseSpeed += 5;
-        native_damage += 3;
+        nativeDamage += 3;
         GetComponent<Animator>().Play("Rage");
     }
     
@@ -128,10 +105,9 @@ public class Enemy : MonoBehaviour
         if (FindObjectOfType<Player>().missed)
         {
             FindObjectOfType<SoundPlayer>().jumpSounds();
-            FindObjectOfType<Player>().GetComponent<Animator>().SetBool("Evade", true);
+            FindObjectOfType<Player>().GetComponent<Animator>().SetBool("evadeJump", true);
         } else
         {
-            atk_normal_spark.Play();
             FindObjectOfType<SoundPlayer>().blunt_hit();
         }
     }
@@ -142,8 +118,7 @@ public class Enemy : MonoBehaviour
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         timeManager.enemyTimer.fillAmount = 1;
         timeManager.fadeInUnitTimer();
-        timeManager.playerTimerControl = true;
-        timeManager.enemyTimerControl = true;
+        timeManager.continueTimer();
         GetComponent<Animator>().SetBool("attack", false);
     }
     public void stopHurt()
@@ -227,7 +202,7 @@ public class Enemy : MonoBehaviour
     }
     public void testRage()
     {
-        currentHP -= 10;
+        currentHP -= 20;
     }
     public bool getAngryState()
     {

@@ -120,8 +120,7 @@ public class Player : MonoBehaviour
     {
         GetComponent<Animator>().Play("Idle");
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.enemyTimerControl = true;
-        timeManager.playerTimerControl = true;
+        timeManager.continueTimer();
         timeManager.defaultAction();
     }
     public void returnCamera()
@@ -131,7 +130,7 @@ public class Player : MonoBehaviour
     }
     public void stopHurt()
     {
-        gameObject.GetComponent<Animator>().SetBool("HURT1", false);
+        gameObject.GetComponent<Animator>().SetBool("HURT", false);
     }
     public void stopDefendSkill()
     {
@@ -141,7 +140,7 @@ public class Player : MonoBehaviour
     }
     public void stopDodgeSkill()
     {
-        gameObject.GetComponent<Animator>().SetBool("DG_Skill", false);
+        gameObject.GetComponent<Animator>().SetBool("evadeSuccess", false);
         timeManager.playerTimer.fillAmount = 1;
         timeManager.continueTimer();
         timeManager.defaultAction();
@@ -154,15 +153,16 @@ public class Player : MonoBehaviour
         timeManager.playerTimerControl = true;
         timeManager.defaultAction();
     }
-    public void stopDodgeBuff()
+    public void stopEvadeJump()
     {
         missed = false;
-        GetComponent<Animator>().SetBool("Evade", false);
+        GetComponent<Animator>().SetBool("evadeJump", false);
         timeManager.defaultAction();
     }
     public void stopDodgeIcon()
     {
-        dodgeBuffIcon.transform.DOScale(new Vector2(0, 0), 0.5f).SetEase(Ease.OutExpo).OnComplete(() => dodgeBuffIcon.SetActive(false));
+        dodgeBuffIcon.GetComponent<SpriteRenderer>().DOFade(0, 0.5f);
+        dodgeBuffIcon.transform.DOLocalMoveY(270, 0.8f).SetEase(Ease.OutExpo).OnComplete(() => dodgeBuffIcon.SetActive(false));
     }
 
     public void stopFocusSkill()

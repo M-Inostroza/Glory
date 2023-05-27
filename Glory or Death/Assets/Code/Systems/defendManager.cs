@@ -62,7 +62,7 @@ public class defendManager : MonoBehaviour
             scaleUP.Rewind();
             defendSuccess = true;
             shieldPool.AddShield();
-            playerUnit.GetComponent<Player>().currentShield++;
+            playerUnit.GetComponent<Player>().SetCurrentShield(+1);
             playerAnim.SetBool("DF_Skill", true);
             success_hit.Play();
         } 

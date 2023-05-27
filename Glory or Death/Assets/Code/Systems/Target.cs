@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
@@ -7,15 +5,14 @@ using UnityEngine.UI;
 public class Target : MonoBehaviour
 {
     public GameObject vFeedback;
-    //Anim
+    
     Animator anim;
     CircleCollider2D colider;
-
-    //BattleSystem
-    public BattleSystem BattleSystem;
+    BattleSystem BattleSystem;
 
     private void Start()
     {
+        BattleSystem = FindObjectOfType<BattleSystem>();
         anim = gameObject.GetComponent<Animator>();
         colider = gameObject.GetComponent<CircleCollider2D>();
     }
@@ -41,14 +38,7 @@ public class Target : MonoBehaviour
         colider.enabled = false;
         anim.SetBool("hit", true);
         BattleSystem.targetHit++;
-        FindObjectOfType<Player>().adrenaline += 1;
-    }
-
-    void killTarget()
-    {
-        anim.Rebind();
-        colider.enabled = true;
-        gameObject.SetActive(false);
+        FindObjectOfType<Player>().incrementAdrenaline(1);
     }
 
     void animateFeedback(int target)

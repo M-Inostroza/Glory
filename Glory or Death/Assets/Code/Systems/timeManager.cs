@@ -100,7 +100,7 @@ public class timeManager : MonoBehaviour
             } 
             else
             {
-                playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.baseSpeed);
+                playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.GetBaseSpeed());
             }
         }
 

@@ -6,31 +6,17 @@ using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
-    //Time Manager
     private timeManager timeManager;
-
-    //Target manager
     private TargetManager targetManager;
-
-    [SerializeField] BattleSystem BS;
-
-    // Damage
-    public int native_damage;
-
-    // HP
-    [SerializeField] private int maxHP, currentHP;
-
-    //Speed
-    public float maxSpeed;
-    public float baseSpeed;
-
-    //Adrenaline
-    public int adrenaline;
-
-    //Shield
-    public int maxShield;
-    public int currentShield;
+    private BattleSystem BS;
     private shieldPool shieldPool;
+    
+    [SerializeField] private int maxHP, currentHP;
+    [SerializeField] private float maxSpeed, baseSpeed;
+    [SerializeField] private int adrenaline;
+    [SerializeField] private int nativeDamage;
+    [SerializeField] private int maxShield, currentShield;
+    [SerializeField] private int critHits;
 
     //Stamina
     public float maxStamina;
@@ -52,12 +38,11 @@ public class Player : MonoBehaviour
     //Making a change
     private void Start()
     {
+        BS = FindObjectOfType<BattleSystem>();
         targetManager = FindObjectOfType<TargetManager>();
         timeManager = FindObjectOfType<timeManager>();
         shieldPool = FindObjectOfType<shieldPool>();
     }
-
-    //this is a comment
 
     public bool TakeDamage(int dmg)
     {
@@ -240,7 +225,7 @@ public class Player : MonoBehaviour
 
     public void showEnemyDamage()
     {
-        BS.showHit(native_damage, BS.hitText_Enemy);
+        BS.showHit(nativeDamage, BS.hitText_Enemy);
     }
 
     // Getters and Setters
@@ -260,5 +245,81 @@ public class Player : MonoBehaviour
     public void SetCurrentHP(int CurrentHP)
     {
         currentHP = CurrentHP;
+    }
+
+    // Shield
+    public int GetMaxShield()
+    {
+        return maxShield;
+    }
+    public void SetMaxShield(int MaxShield)
+    {
+        maxShield = MaxShield;
+    }
+    public int GetCurrentShield()
+    {
+        return currentShield;
+    }
+    public void SetCurrentShield(int newCurrent)
+    {
+        currentShield = newCurrent;
+    }
+    public void incrementCurrentShield(int newShield)
+    {
+        currentShield += newShield;
+    }
+    public void reduceCurrentShield(int newShield)
+    {
+        currentShield -= newShield;
+    }
+
+    // Speed
+    public float GetBaseSpeed()
+    {
+        return baseSpeed;
+    }
+    public void incrementBaseSpeed(float BaseSpeed)
+    {
+        baseSpeed += BaseSpeed;
+    }
+    public void reduceBaseSpeed(float BaseSpeed)
+    {
+        baseSpeed -= BaseSpeed;
+    }
+
+    // Adrenaline
+    public int GetAdrenaline()
+    {
+        return adrenaline;
+    }
+    public void SetAdrenaline(int newAdrenaline)
+    {
+        adrenaline = newAdrenaline;
+    }
+    public void incrementAdrenaline(int newAdrenaline)
+    {
+       adrenaline  += newAdrenaline;
+    }
+    public void reduceadrenaline(int newAdrenaline)
+    {
+        adrenaline -= newAdrenaline;
+    }
+
+    // Critic Hits
+    public int GetCritHits()
+    {
+        return critHits;
+    }
+    public void SetCritHits(int newHit)
+    {
+        critHits = newHit;
+    }
+    public void increaseCritHits(int newHit)
+    {
+        critHits += newHit;
+    }
+    public void reduceHits(int newHit)
+    {
+        critHits -= newHit;
     }
 }

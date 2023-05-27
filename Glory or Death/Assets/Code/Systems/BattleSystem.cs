@@ -7,12 +7,8 @@ using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour
 {
-    //Target Manager
     private TargetManager targetManager;
-
-    //Audio manager
     private AudioManager audioManager;
-
     private Input_Manager Input_Manager;
 
     // Cooldown Commands
@@ -91,12 +87,8 @@ public class BattleSystem : MonoBehaviour
 
     void SetupBattle()
     {
-        //Set stats to max
+        playerUnit.SetCurrentShield(playerUnit.GetMaxShield());
 
-        // Shield
-        playerUnit.currentShield = playerUnit.maxShield;
-
-        // HP
         playerUnit.SetCurrentHP(playerUnit.GetMaxHP());
         enemyUnit.currentHP = enemyUnit.maxHP;
 
@@ -132,7 +124,7 @@ public class BattleSystem : MonoBehaviour
         targetManager.attack();
         //Play Animation
         playerAnimator.Play("ATK_jump");
-        playerUnit.adrenaline += 1;
+        playerUnit.incrementAdrenaline(1);
         //Enemy takes damage
         StartCoroutine(waitForDamage(3.6f));
     }
@@ -179,8 +171,6 @@ public class BattleSystem : MonoBehaviour
 
             //Enemy takes damage
             StartCoroutine(waitForDamage(4f));
-
-            playerUnit.adrenaline = 0;
         }
     }
 
@@ -189,12 +179,6 @@ public class BattleSystem : MonoBehaviour
         playerAnimator.SetBool("Resting", true);
         playerUnit.currentStamina += 50; //Mejorable
     }
-
-    void PlayerCharge()
-    {
-        playerUnit.currentShield++;
-    }
-
 
     // Evade bools
     bool canRight = true;
@@ -331,10 +315,10 @@ public class BattleSystem : MonoBehaviour
         // Update stamina
         playerHUD.staminaSlider.DOValue(playerUnit.currentStamina, 0.5f);
 
-        playerHUD.adrenalineSlider.DOValue(playerUnit.adrenaline, 0.5f);
-        if (playerUnit.adrenaline >= 20)
+        playerHUD.adrenalineSlider.DOValue(playerUnit.GetAdrenaline(), 0.5f);
+        if (playerUnit.GetAdrenaline() >= 20)
         {
-            playerUnit.adrenaline = 20;
+            playerUnit.SetAdrenaline(20);
         }
 
         enemyHUD.adrenalineSlider.DOValue(enemyUnit.adrenaline, 0.5f);
@@ -352,6 +336,14 @@ public class BattleSystem : MonoBehaviour
         //Do DMG
         bool isDead = enemyUnit.TakeDamage(targetHit);
         enemyHUD.setHP(enemyUnit.currentHP);
+    }
+    
+    public void checkCritics()
+    {
+        if (targetHit == 3)
+        {
+            playerUnit.increaseCritHits(1);
+        }
     }
 }
 

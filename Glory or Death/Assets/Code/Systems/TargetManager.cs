@@ -6,13 +6,11 @@ using UnityEngine.UI;
 
 public class TargetManager : MonoBehaviour
 {
-
     public GameObject[] targets;
     public List<int> attackOrder = new List<int>();
 
-    public BattleSystem BattleSystem;
-
-    public Camera MainCamera;
+    private BattleSystem BattleSystem;
+    private Camera MainCamera;
 
     public SpriteRenderer courtain;
 
@@ -23,20 +21,26 @@ public class TargetManager : MonoBehaviour
     [SerializeField]
     private GameObject vFeedback;
 
+    private void Start()
+    {
+        BattleSystem = FindObjectOfType<BattleSystem>();
+        MainCamera = FindObjectOfType<Camera>();
+    }
+
+
+    /*
+        - 0 -> attack head
+        - 1 -> attack mid
+        - 2 -> attack bottom
+         */
     public void attack()
     {
         combat_UI.GetComponent<Combat_UI>().move_UI_out();
         vFeedback.SetActive(true);
         BattleSystem.targetHit = 0;
+
         // Courtain
         courtain.DOColor(new Color(0, 0, 0, .5f), 1f);
-
-        // Start target mechanic
-        /*
-        - 0 -> attack head
-        - 1 -> attack mid
-        - 2 -> attack bottom
-         */
         StartCoroutine(activateTargets());
 
         // Camera effect
@@ -68,7 +72,6 @@ public class TargetManager : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            // Activate Target
             targets[i].SetActive(true);
 
             if (i == 0)

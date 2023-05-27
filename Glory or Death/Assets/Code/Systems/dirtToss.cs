@@ -51,7 +51,7 @@ public class dirtToss : MonoBehaviour
     }
     private void OnDisable()
     {
-        player.baseSpeed += speedDebuff;
+        player.incrementBaseSpeed(speedDebuff);
         speedReduced = false;
     }
     private void makeItDirt()
@@ -61,7 +61,7 @@ public class dirtToss : MonoBehaviour
 
         if (!speedReduced)
         {
-            player.baseSpeed -= speedDebuff;
+            player.reduceBaseSpeed(speedDebuff);
             speedReduced = true;
         }
         // Check if the left mouse button is pressed and over the dirt texture

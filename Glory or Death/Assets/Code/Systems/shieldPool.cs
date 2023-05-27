@@ -19,7 +19,7 @@ public class shieldPool : MonoBehaviour
 
     void startShields()
     {
-        for (int i = 0; i < playerScript.currentShield; i++)
+        for (int i = 0; i < playerScript.GetCurrentShield(); i++)
         {
             spawnShield();
         }
@@ -30,7 +30,7 @@ public class shieldPool : MonoBehaviour
     {
         int lastActiveChild = -1;
 
-        if (playerScript.currentShield == 1)
+        if (playerScript.GetCurrentShield() == 1)
         {
             transform.GetChild(0).gameObject.SetActive(false);
         } 
@@ -49,7 +49,7 @@ public class shieldPool : MonoBehaviour
                 .OnComplete(()=>transform.GetChild(lastActiveChild).gameObject.SetActive(false));
             }
         }
-        playerScript.currentShield--;
+        playerScript.reduceCurrentShield(1);
     }
 
     public void AddShield()

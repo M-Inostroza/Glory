@@ -259,26 +259,29 @@ public class BattleSystem : MonoBehaviour
     public Vector2 jumpVector;
     public float jumpPower;
     public float jumpTime;
-    public void showHit(int dmg, GameObject unit)
+    public void showHit(int dmg, Transform jumper)
     {
-        unit.transform.DOLocalMove(new Vector3(0, 0, 0), 0, true);
-        unit.GetComponent<TMP_Text>().DOFade(1, 0);
+        jumper.gameObject.SetActive(true);
 
-        Tween fadeTween = unit.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-        Tween jumpTween = unit.transform.DOLocalJump(jumpVector, jumpPower, 1, jumpTime);
+        jumper.transform.DOLocalMove(new Vector3(0, 0, 0), 0, true);
+        jumper.GetComponent<TMP_Text>().DOFade(1, 0);
 
-        fadeTween.OnComplete(() => unit.SetActive(false));
+        Tween fadeTween = jumper.GetComponent<TMP_Text>().DOFade(0, 1.5f);
+        Tween jumpTween = jumper.transform.DOLocalJump(jumpVector, jumpPower, 1, jumpTime);
+
+        fadeTween.OnComplete(() => jumper.gameObject.SetActive(false));
         
         //Show dmg
-        if (unit == hitText_Enemy)
+        if (jumper.name == "Hit Text enemy")
         {
             hitText_Enemy.GetComponent<TMP_Text>().text = "- " + dmg;
             hitText_Enemy.SetActive(true);
             fadeTween.Play();
             jumpTween.Play();
         } 
-        else if (unit == hitText_Player) 
+        else if (jumper.name == "Hit Text player") 
         {
+            Debug.Log("Player");
             hitText_Player.GetComponent<TMP_Text>().text = "- " + (dmg);
             hitText_Player.SetActive(true);
             fadeTween.Play();

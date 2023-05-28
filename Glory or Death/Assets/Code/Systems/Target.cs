@@ -46,4 +46,11 @@ public class Target : MonoBehaviour
         vFeedback.transform.GetChild(target).transform.GetComponent<Image>().DOFade(1, 0.5f);
         vFeedback.transform.GetChild(target).transform.DOPunchScale(new Vector2(0.1f, 0.1f), 0.4f, 8, 1);
     }
+
+    public void killTarget()
+    {
+        anim.Rebind();
+        gameObject.SetActive(false);
+        colider.enabled = true;
+    }
 }

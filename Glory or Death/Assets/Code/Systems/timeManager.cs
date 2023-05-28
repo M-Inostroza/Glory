@@ -22,14 +22,9 @@ public class timeManager : MonoBehaviour
     public Image EnemyRing;
 
 
-    //Battlesystem
     private BattleSystem BS;
     private Input_Manager Input_Manager;
-
-    //Game Manager
     private gameManager GM;
-
-    //Combat UI
     private Combat_UI combarUI;
 
     //-----------------------------------------------------------------------------dev-----
@@ -64,7 +59,7 @@ public class timeManager : MonoBehaviour
     //Generic wait time for turns
     private float mainWaitTime = 20;
 
-    // Fighting units
+    // Units
     private Player player;
     private Enemy enemy;
 
@@ -381,7 +376,7 @@ public class timeManager : MonoBehaviour
     // Utilities
     public void fadeOutUnitTimer()
     {
-        float fadeTime = 0.1f;
+        float fadeTime = 0.05f;
 
         actionIcon.DOFade(0, fadeTime);
         actionEnemyIcon.DOFade(0, fadeTime);
@@ -391,7 +386,7 @@ public class timeManager : MonoBehaviour
     }
     public void fadeInUnitTimer()
     {
-        float fadeTime = 0.1f;
+        float fadeTime = 0.05f;
 
         actionEnemyIcon.DOFade(1, fadeTime);
         actionIcon.DOFade(1, fadeTime);

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
@@ -225,10 +224,12 @@ public class Player : MonoBehaviour
 
     public void showEnemyDamage()
     {
-        BS.showHit(nativeDamage, BS.hitText_Enemy);
+        BS.showHit(nativeDamage, BS.hitText_Enemy.transform);
     }
 
     // Getters and Setters
+
+    // HP
     public int GetMaxHP()
     {
         return maxHP;
@@ -237,7 +238,6 @@ public class Player : MonoBehaviour
     {
         maxHP = MaxHP;
     }
-
     public int GetCurrentHP()
     {
         return currentHP;

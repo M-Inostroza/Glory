@@ -13,7 +13,7 @@ public class Combat_UI : MonoBehaviour
     private GameObject DMG_Feedback, SPEED_Feedback;
 
     [SerializeField]
-    private GameObject shieldManager, inputManager, globalTimer, stamina_alarm;
+    private GameObject shieldManager, inputManager, globalTimer, staminaAlarm;
 
     //Unit sliders
     [SerializeField]
@@ -72,22 +72,42 @@ public class Combat_UI : MonoBehaviour
         if (playerUnit.currentStamina < 30)
         {
             inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(55, 0.7f);
-        } else
+        }
+        else
         {
             inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(-40, 0.7f);
         }
     }
     public void alarmStamina()
     {
-        Image staminaImage = stamina_alarm.GetComponent<Image>();
-        player_stamina.transform.DOShakePosition(0.6f, 4, 50);
-        staminaImage.DOFade(1, 0.2f);
-        stamina_alarm.transform.DOShakePosition(0.6f, 4, 50).OnComplete(()=> staminaImage.DOFade(0, 0.2f));
+        bool hasPlayed = false;
+        if (hasPlayed)
+        {
+            fadeON();
+            player_stamina.transform.DOShakePosition(0.6f, 4, 50);
+            staminaAlarm.transform.DOShakePosition(0.6f, 4, 50).OnComplete(() => fadeOFF());
+            hasPlayed = true;
+        }
+        
+        void fadeON()
+        {
+            foreach (Transform child in staminaAlarm.transform)
+            {
+                child.GetComponent<Image>().DOFade(1, 0.2f);
+            }
+        }
+        void fadeOFF()
+        {
+            foreach (Transform child in staminaAlarm.transform)
+            {
+                child.GetComponent<Image>().DOFade(0, 0.2f);
+            }
+        }
     }
 
     public void damageBuff()
     {
-        DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(()=> DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
+        DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
         DMG_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
 
         DMG_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
@@ -100,5 +120,12 @@ public class Combat_UI : MonoBehaviour
 
         SPEED_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
         SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+    }
+
+    // Test
+
+    public void reduceStamina()
+    {
+        playerUnit.currentStamina = 10;
     }
 }

@@ -44,8 +44,6 @@ public class Input_Manager : MonoBehaviour
         timeManager.ReduceCooldown(FocusButtonCD);
     }
 
-    // Input Manager
-
     public void OnAttackButton()
     {
         if (AttackButtonCD.fillAmount == 0 && canClick)

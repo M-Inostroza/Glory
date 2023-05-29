@@ -11,6 +11,27 @@ public class SoundPlayer : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
     }
 
+    // ----- Audience ----- //
+    public void cheerSounds()
+    {
+        int random = Random.Range(1, 4);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("Audience_cheer_mid");
+                break;
+            case 2:
+                audioManager.Play("Audience_cheer_mid_2");
+                break;
+            case 3:
+                audioManager.Play("Audience_cheer_mid_3");
+                break;
+            case 4:
+                audioManager.Play("Audience_cheer_mid_4");
+                break;
+        }
+    }
+
     // -----Attack----- //
     // Targets
     public void targetSounds()

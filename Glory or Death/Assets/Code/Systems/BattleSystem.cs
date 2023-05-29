@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
-using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -32,7 +30,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
 
-    //Anims
+    
     private Animator playerAnimator;
 
     //Gets the UI for both
@@ -51,7 +49,6 @@ public class BattleSystem : MonoBehaviour
     public GameObject infoHud;
     public GameObject infoHud_EN;
    
-    //Gets the scripts for both
     private Player playerUnit;
     private Enemy enemyUnit;
 
@@ -122,10 +119,8 @@ public class BattleSystem : MonoBehaviour
     public void PlayerAttack()
     {
         targetManager.attack();
-        //Play Animation
         playerAnimator.Play("ATK_jump");
         playerUnit.incrementAdrenaline(1);
-        //Enemy takes damage
         StartCoroutine(waitForDamage(3.6f));
     }
 
@@ -153,8 +148,8 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayRest()
     {
+        playerUnit.GetComponent<Animator>().Play("Cheer");
         playerUnit.currentStamina += 50; // Mejorable
-        timeManager.continueTimer();
         Input_Manager.SetPlayerAction("none");
         timeManager.selectIcon("Default");
     }
@@ -281,7 +276,6 @@ public class BattleSystem : MonoBehaviour
         } 
         else if (jumper.name == "Hit Text player") 
         {
-            Debug.Log("Player");
             hitText_Player.GetComponent<TMP_Text>().text = "- " + (dmg);
             hitText_Player.SetActive(true);
             fadeTween.Play();

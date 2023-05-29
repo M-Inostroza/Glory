@@ -73,7 +73,9 @@ public class timeManager : MonoBehaviour
         combarUI = FindObjectOfType<Combat_UI>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
-        timerIsRunning = true;
+        // timerIsRunning = true;
+
+        Input_Manager.SetPlayerAction("none");
     }
 
     private void Update()
@@ -84,7 +86,6 @@ public class timeManager : MonoBehaviour
     }
 
 
-    //Manages action execution
     void playerAction()
     {
         if (playerTimerControl)
@@ -102,10 +103,7 @@ public class timeManager : MonoBehaviour
         //Execute selected action
         if (playerTimer.fillAmount == 0 && playerTimerControl)
         {
-            playerTimerControl = false;
-            enemyTimerControl = false;
-            playerTimer.fillAmount = 1;
-
+            stopUnitTimer();
             switch (Input_Manager.GetPlayerAction())
             {
                 case "ATK1":
@@ -168,7 +166,8 @@ public class timeManager : MonoBehaviour
                     BS.PlayRest();
                     break;
 
-                default:
+                case "none":
+                    playerTimer.fillAmount = 1;
                     continueTimer();
                     break;
             }
@@ -198,7 +197,6 @@ public class timeManager : MonoBehaviour
             enemyTimer.fillAmount -= Time.deltaTime / (mainWaitTime - enemy.baseSpeed);
         }
 
-        //Execute selected action
         if (enemyTimer.fillAmount == 0 && enemyTimerControl)
         {
             if (enemyActionIcon.color.a == 1)
@@ -206,7 +204,7 @@ public class timeManager : MonoBehaviour
                 fadeOutUnitTimer();
             }
             stopUnitTimer();
-            enemyTimer.fillAmount = 1;
+            
 
             // Select action custom AI
             if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)
@@ -314,7 +312,6 @@ public class timeManager : MonoBehaviour
 
     public void selectIcon(string icon)
     {
-        //Changes icon for selected action
         switch (icon)
         {
             case "ATK1":

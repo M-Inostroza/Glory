@@ -181,7 +181,7 @@ public class Enemy : MonoBehaviour
 
     public void playAudience()
     {
-        audioManager.Play("Audience_cheer");
+        audioManager.Play("Audience_boo");
     }
     public void playGrunt()
     {

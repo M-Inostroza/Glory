@@ -1,46 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
 
 public class defendManager : MonoBehaviour
 {
-    // Animator of player
     [SerializeField] private Animator playerAnim;
 
-    // Audio Manager
-    [SerializeField] private AudioManager audioManager;
+    private AudioManager audioManager;
+    private shieldPool shieldPool;
 
     // Object that shows the total size of the target
     [SerializeField] private GameObject shadow, playerUnit;
-
-    // Fire effect that shows when success
-    [SerializeField] private ParticleSystem success_hit;
-
-    // Battle System
-    [SerializeField] private BattleSystem BS;
-
-    // Shield Pool
-    [SerializeField] private shieldPool shieldPool;
-
-
-    // Enemy unit
     public GameObject enemyUnit;
 
-    // Control bool
-    public bool defendSuccess;
+    // Control
+    bool defendSuccess;
     bool transformControl;
 
     Tween scaleUP;
 
     private void OnEnable()
     {
-        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad);
-        audioManager.Play("DF_charge");
+        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(()=> Fail());
         defendSuccess = false;
         shadow.SetActive(true);
         transformControl = true;
+    }
+
+    private void Start()
+    {
+        shieldPool = FindObjectOfType<shieldPool>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void Update()
@@ -48,9 +37,9 @@ public class defendManager : MonoBehaviour
         controlDefend();
     }
 
-    // Method to handle player's defense
     void executeShield(float scaleLimit)
     {
+        Debug.Log("The shield scale: " + transform.localScale.x);
         if (transform.localScale.x < scaleLimit )
         {
             transform.DOShakePosition(0.4f, 0.05f, 40);
@@ -64,7 +53,6 @@ public class defendManager : MonoBehaviour
             shieldPool.AddShield();
             playerUnit.GetComponent<Player>().SetCurrentShield(+1);
             playerAnim.SetBool("DF_Skill", true);
-            success_hit.Play();
         } 
         closeMinigame();
     }
@@ -74,7 +62,7 @@ public class defendManager : MonoBehaviour
     {
         scaleUP.Rewind();
         audioManager.Play("defend_fail");
-        playerAnim.SetBool("DG_Skill_Fail", true);
+        playerAnim.SetBool("skillFail", true);
         closeMinigame();
     }
 
@@ -101,19 +89,6 @@ public class defendManager : MonoBehaviour
     {
         transformControl = false;
     }
-
-    // Touch Controls
-    /*void controlDefend()
-    {
-        if (Input.touchCount > 0)
-        { // if there's at least one touch
-            Touch touch = Input.GetTouch(0); // get the first touch
-            if (touch.phase == TouchPhase.Began)
-            { // if the touch just started
-                executeShield(0.85f); // execute the shield action
-            }
-        }
-    }*/
 }
 
 

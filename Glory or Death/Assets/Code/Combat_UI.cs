@@ -78,10 +78,11 @@ public class Combat_UI : MonoBehaviour
             inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(-40, 0.7f);
         }
     }
+
+    private bool hasPlayed = false;
     public void alarmStamina()
     {
-        bool hasPlayed = false;
-        if (hasPlayed)
+        if (!hasPlayed)
         {
             fadeON();
             player_stamina.transform.DOShakePosition(0.6f, 4, 50);
@@ -102,6 +103,7 @@ public class Combat_UI : MonoBehaviour
             {
                 child.GetComponent<Image>().DOFade(0, 0.2f);
             }
+            hasPlayed = false;
         }
     }
 

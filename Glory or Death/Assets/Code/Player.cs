@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
     }
     public void stopDodgeSkillFail()
     {
-        GetComponent<Animator>().SetBool("DG_Skill_Fail", false);
+        GetComponent<Animator>().SetBool("skillFail", false);
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;

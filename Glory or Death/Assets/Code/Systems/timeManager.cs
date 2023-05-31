@@ -82,7 +82,7 @@ public class timeManager : MonoBehaviour
     {
         playerAction();
         enemyAction();
-        runTimer();
+        //runTimer();
     }
 
 
@@ -104,11 +104,13 @@ public class timeManager : MonoBehaviour
         if (playerTimer.fillAmount == 0 && playerTimerControl)
         {
             stopUnitTimer();
+            playerTimer.fillAmount = 1;
             switch (Input_Manager.GetPlayerAction())
             {
                 case "ATK1":
                     if (player.currentStamina > 25)
                     {
+                        Debug.Log("Executing from timeManager");
                         BS.PlayerAttack();
                         Input_Manager.GetAttackCD().fillAmount = 1;
                         player.currentStamina -= 25;
@@ -167,7 +169,6 @@ public class timeManager : MonoBehaviour
                     break;
 
                 case "none":
-                    playerTimer.fillAmount = 1;
                     continueTimer();
                     break;
             }

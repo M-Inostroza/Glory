@@ -118,6 +118,7 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayerAttack()
     {
+        Debug.Log("Executing from BattleSystem");
         targetManager.attack();
         playerAnimator.Play("ATK_jump");
         playerUnit.incrementAdrenaline(1);

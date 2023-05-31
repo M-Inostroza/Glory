@@ -13,7 +13,7 @@ public class Combat_UI : MonoBehaviour
     private GameObject DMG_Feedback, SPEED_Feedback;
 
     [SerializeField]
-    private GameObject shieldManager, inputManager, globalTimer, staminaAlarm;
+    private GameObject shieldManager, inputManager, globalTimer, staminaAlarm, shieldFeedback;
 
     //Unit sliders
     [SerializeField]
@@ -104,6 +104,33 @@ public class Combat_UI : MonoBehaviour
                 child.GetComponent<Image>().DOFade(0, 0.2f);
             }
             hasPlayed = false;
+        }
+    }
+
+    private bool shieldFeedControl = false;
+    public void shieldFeed()
+    {
+        if (!shieldFeedControl)
+        {
+            fadeON();
+            shieldFeedControl = true;
+            shieldFeedback.transform.DOLocalMoveY(140, 1f).OnComplete(()=> fadeOFF());
+        }
+
+        void fadeON()
+        {
+            foreach (Transform child in shieldFeedback.transform)
+            {
+                child.GetComponent<Image>().DOFade(1, 0.2f);
+            }
+        }
+        void fadeOFF()
+        {
+            foreach (Transform child in shieldFeedback.transform)
+            {
+                child.GetComponent<Image>().DOFade(0, 0.2f).OnComplete(()=> shieldFeedback.transform.DOLocalMoveY(110, 0));
+            }
+            shieldFeedControl = false;
         }
     }
 

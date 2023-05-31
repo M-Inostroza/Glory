@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 1.23, y: 1.49}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2566625585510348099
@@ -196,7 +196,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64, y: 0.69}
+  m_Size: {x: 1.13, y: 1.14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -247,17 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7ed999deb9c4f4aa3b117754773c70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defendBuffIcon: {fileID: 0}
   playerAnim: {fileID: 0}
-  audioManager: {fileID: 0}
   shadow: {fileID: 5101037441954023854}
   playerUnit: {fileID: 0}
-  success_hit: {fileID: 0}
-  BS: {fileID: 0}
-  timeManager: {fileID: 0}
-  shieldPool: {fileID: 0}
   enemyUnit: {fileID: 0}
-  defendSuccess: 0
 --- !u!212 &1967985528771217550
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -304,7 +297,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64, y: 0.69}
+  m_Size: {x: 1.13, y: 1.14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

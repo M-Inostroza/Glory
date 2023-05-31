@@ -365,8 +365,6 @@ public class timeManager : MonoBehaviour
                 timerIsRunning = false;
                 playerTimerControl = false;
                 enemyTimerControl = false;
-
-                GM.showSummery();
             }
         }
     }

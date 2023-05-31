@@ -12,8 +12,6 @@ public class gameManager : MonoBehaviour
 
     public int turnCounter;
 
-    [SerializeField]
-    private Transform endFightUI;
 
     private void Start()
     {
@@ -33,10 +31,5 @@ public class gameManager : MonoBehaviour
             timeManager.playerTimerControl = false;
             timeManager.enemyTimerControl = false;
         }
-    }
-
-    public void showSummery()
-    {
-        endFightUI.DOMoveY(-10, 1f);
     }
 }

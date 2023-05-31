@@ -172,4 +172,9 @@ public class SoundPlayer : MonoBehaviour
                 break;
         }
     }
+
+    public void audienceQueen()
+    {
+        audioManager.Play("Audience_queen");
+    }
 }

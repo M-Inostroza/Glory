@@ -45,14 +45,14 @@ public class defendManager : MonoBehaviour
             transform.DOShakePosition(0.4f, 0.05f, 40);
             Fail();
         }
-        else if (transform.localScale.x > scaleLimit)
+        else if (transform.localScale.x > scaleLimit && transform.localScale.x < 95)
         {
             audioManager.Play("defend_success");
             scaleUP.Rewind();
             defendSuccess = true;
             shieldPool.AddShield();
             playerUnit.GetComponent<Player>().SetCurrentShield(+1);
-            playerAnim.SetBool("DF_Skill", true);
+            playerAnim.SetBool("skillShieldSuccess", true);
         } 
         closeMinigame();
     }
@@ -76,12 +76,12 @@ public class defendManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            executeShield(0.85f);
+            executeShield(0.8f);
         }
 
         if (transform.localScale.x == 1 && transformControl)
         {
-            transform.DOScale(0.01f, 0.01f);
+            transform.DOScale(0, 0);
             Fail();
         }
     }

@@ -167,6 +167,12 @@ public class Player : MonoBehaviour
         timeManager.defaultAction();
     }
 
+    public void stopShieldSuccess()
+    {
+        gameObject.GetComponent<Animator>().SetBool("skillShieldSuccess", false);
+        FindObjectOfType<Combat_UI>().shieldFeed();
+    }
+
     // TO DO
 
     public void stopSuperAttack()

@@ -1115,6 +1115,7 @@ MonoBehaviour:
   inputManager: {fileID: 8292258600438106534}
   globalTimer: {fileID: 4141887624144493807}
   staminaAlarm: {fileID: 0}
+  shieldFeedback: {fileID: 0}
   playerUnit: {fileID: 0}
   enemyUnit: {fileID: 0}
 --- !u!1 &4141887622651127242
@@ -1656,7 +1657,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4141887623104856064}
-  - component: {fileID: 4141887623104856071}
   m_Layer: 5
   m_Name: Shield Pool
   m_TagString: Untagged
@@ -1684,19 +1684,6 @@ RectTransform:
   m_AnchoredPosition: {x: 104.2, y: -48.8}
   m_SizeDelta: {x: 140, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4141887623104856071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4141887623104856069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b0c66745257793479f0972f8168ad1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shield: {fileID: 1675122570757938712, guid: 72ce145b3c1479b43954c33ebede47d4, type: 3}
 --- !u!1 &4141887623135549799
 GameObject:
   m_ObjectHideFlags: 0

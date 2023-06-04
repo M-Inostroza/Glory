@@ -13,23 +13,20 @@ public class defendManager : MonoBehaviour
     public GameObject enemyUnit;
 
     // Control
-    bool defendSuccess;
     bool transformControl;
 
     Tween scaleUP;
-
-    private void OnEnable()
-    {
-        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(()=> Fail());
-        defendSuccess = false;
-        shadow.SetActive(true);
-        transformControl = true;
-    }
-
-    private void Start()
+    private void Awake()
     {
         shieldPool = FindObjectOfType<shieldPool>();
         audioManager = FindObjectOfType<AudioManager>();
+    }
+    private void OnEnable()
+    {
+        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(()=> Fail());
+        shadow.SetActive(true);
+        transformControl = true;
+        audioManager.Play("Shield_charge");
     }
 
     private void Update()
@@ -39,7 +36,6 @@ public class defendManager : MonoBehaviour
 
     void executeShield(float scaleLimit)
     {
-        Debug.Log("The shield scale: " + transform.localScale.x);
         if (transform.localScale.x < scaleLimit )
         {
             transform.DOShakePosition(0.4f, 0.05f, 40);
@@ -49,8 +45,7 @@ public class defendManager : MonoBehaviour
         {
             audioManager.Play("defend_success");
             scaleUP.Rewind();
-            defendSuccess = true;
-            shieldPool.AddShield();
+            shieldPool.increaseShield();
             playerUnit.GetComponent<Player>().SetCurrentShield(+1);
             playerAnim.SetBool("skillShieldSuccess", true);
         } 

@@ -25,12 +25,14 @@ public class Enemy : MonoBehaviour
     AudioManager audioManager;
     BattleSystem BS;
     timeManager timeManager;
+    Player Player;
 
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
         BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
+        Player = FindObjectOfType<Player>();
     }
 
     private void Update()
@@ -54,32 +56,32 @@ public class Enemy : MonoBehaviour
 
     public void executeAttack()
     {
-        if (!FindObjectOfType<Player>().missed)
+        if (!Player.missed)
         {
-            FindObjectOfType<Player>().GetComponent<Animator>().SetBool("HURT", true);
+            Player.GetComponent<Animator>().SetBool("HURT", true);
             adrenaline += 2;
-            if (FindObjectOfType<Player>().GetCurrentShield() > 0)
+            if (Player.GetCurrentShield() > 0)
             {
-                bool isDead = FindObjectOfType<Player>().TakeDamage(nativeDamage - 2);
+                bool isDead = Player.TakeDamage(nativeDamage - 2);
                 BS.showHit(nativeDamage - 2, BS.hitText_Player.transform);
 
                 if (isDead)
                 {
-                    FindObjectOfType<BattleSystem>().EndBattle();
+                    BS.EndBattle();
                 }
             }
             else
             {
-                bool isDead = FindObjectOfType<Player>().TakeDamage(nativeDamage);
+                bool isDead = Player.TakeDamage(nativeDamage);
                 if (isDead)
                 {
-                    FindObjectOfType<BattleSystem>().EndBattle();
+                    BS.EndBattle();
                 }
             }
         }
         else
         {
-            FindObjectOfType<BattleSystem>().missHit();
+            BS.missHit();
             adrenaline++;
         }
     }
@@ -130,6 +132,8 @@ public class Enemy : MonoBehaviour
 
     public void stopDirt()
     {
+        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
+        timeManager.enemyTimer.fillAmount = 1;
         timeManager.fadeInUnitTimer();
         timeManager.continueTimer();
         backToIdle();

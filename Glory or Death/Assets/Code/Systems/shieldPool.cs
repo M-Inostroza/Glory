@@ -6,71 +6,26 @@ using UnityEngine.UI;
 
 public class shieldPool : MonoBehaviour
 {
-    public GameObject shield;
-    private Player playerScript;
+    private Player Player;
 
-    private float originalPos = -50;
-
+    [SerializeField]
+    private Slider shieldSlider;
     private void Start()
     {
-        playerScript = FindObjectOfType<Player>();
-        Invoke("startShields", 0.3f);
+        Player = FindObjectOfType<Player>();
+        shieldSlider.maxValue = Player.GetMaxShield();
+    }
+    private void Update()
+    {
+        shieldSlider.value = Player.GetCurrentShield();
     }
 
-    void startShields()
+    public void increaseShield()
     {
-        for (int i = 0; i < playerScript.GetCurrentShield(); i++)
-        {
-            spawnShield();
-        }
+        shieldSlider.DOValue(Player.GetCurrentShield() + 1, 1);
     }
-
-
-    public void RemoveShield()
+    public void decreaseShield()
     {
-        int lastActiveChild = -1;
-
-        if (playerScript.GetCurrentShield() == 1)
-        {
-            transform.GetChild(0).gameObject.SetActive(false);
-        } 
-        else
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                if (transform.GetChild(i).gameObject.activeInHierarchy)
-                {
-                    lastActiveChild = i;
-                }
-            }
-            if (lastActiveChild != -1)
-            {
-                transform.GetChild(lastActiveChild).transform.DOShakePosition(0.5f, 5)
-                .OnComplete(()=>transform.GetChild(lastActiveChild).gameObject.SetActive(false));
-            }
-        }
-        playerScript.reduceCurrentShield(1);
-    }
-
-    public void AddShield()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (!transform.GetChild(i).gameObject.activeSelf)
-            {
-                transform.GetChild(i).gameObject.SetActive(true);
-                break;
-            }
-        }
-    }
-
-    private void spawnShield()
-    {
-        var shieldPrefab = Instantiate(shield, new Vector3(0, 0, 0), Quaternion.identity);
-        shieldPrefab.transform.SetParent(transform, false);
-        shieldPrefab.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-        shieldPrefab.transform.localPosition = new Vector3(originalPos, 0, 0);
-
-        originalPos += 16;
+        shieldSlider.DOValue(Player.GetCurrentShield()  - 1, 1);
     }
 }

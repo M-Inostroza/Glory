@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
             currentHP -= dmg;
             if (currentShield > 0)
             {
-                shieldPool.RemoveShield();
+                shieldPool.decreaseShield();
                 if (currentShield <= 0)
                 {
                     currentShield = 0;
@@ -171,6 +171,9 @@ public class Player : MonoBehaviour
     {
         gameObject.GetComponent<Animator>().SetBool("skillShieldSuccess", false);
         FindObjectOfType<Combat_UI>().shieldFeed();
+        timeManager.playerTimer.fillAmount = 1;
+        timeManager.continueTimer();
+        timeManager.defaultAction();
     }
 
     // TO DO
@@ -270,13 +273,13 @@ public class Player : MonoBehaviour
     {
         currentShield = newCurrent;
     }
-    public void incrementCurrentShield(int newShield)
+    public void incrementCurrentShield()
     {
-        currentShield += newShield;
+        currentShield++;
     }
-    public void reduceCurrentShield(int newShield)
+    public void reduceCurrentShield()
     {
-        currentShield -= newShield;
+        currentShield--;
     }
 
     // Speed

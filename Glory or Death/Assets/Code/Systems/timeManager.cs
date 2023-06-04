@@ -85,7 +85,6 @@ public class timeManager : MonoBehaviour
         //runTimer();
     }
 
-
     void playerAction()
     {
         if (playerTimerControl)
@@ -110,7 +109,6 @@ public class timeManager : MonoBehaviour
                 case "ATK1":
                     if (player.currentStamina > 25)
                     {
-                        Debug.Log("Executing from timeManager");
                         BS.PlayerAttack();
                         Input_Manager.GetAttackCD().fillAmount = 1;
                         player.currentStamina -= 25;
@@ -206,8 +204,7 @@ public class timeManager : MonoBehaviour
             }
             stopUnitTimer();
             
-
-            // Select action custom AI
+            // Select action
             if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)
             {
                 Input_Manager.SetEnemyAction("RAGE");

@@ -6,10 +6,8 @@ using DG.Tweening;
 public class BattleSystem : MonoBehaviour
 {
     private TargetManager targetManager;
-    private AudioManager audioManager;
     private Input_Manager Input_Manager;
 
-    // Cooldown Commands
     //private bool canEvade = false;
     private float evadeTimer;
 
@@ -64,7 +62,6 @@ public class BattleSystem : MonoBehaviour
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
 
-        audioManager = FindObjectOfType<AudioManager>();
         Input_Manager = FindObjectOfType<Input_Manager>();
 
         evadeTimer = 5f;
@@ -89,9 +86,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit.SetCurrentHP(playerUnit.GetMaxHP());
         enemyUnit.currentHP = enemyUnit.maxHP;
 
-        // Stamina
         playerUnit.currentStamina = playerUnit.maxStamina;
-
         playerUnit.currentAgility = playerUnit.maxAgility;
     }
 
@@ -248,13 +243,9 @@ public class BattleSystem : MonoBehaviour
     public void EndBattle()
     {
         //TO DO
-
         thankYou.transform.DOLocalMoveY(-110, 1f);
     }
 
-    public Vector2 jumpVector;
-    public float jumpPower;
-    public float jumpTime;
     public void showHit(int dmg, Transform jumper)
     {
         jumper.gameObject.SetActive(true);
@@ -263,7 +254,7 @@ public class BattleSystem : MonoBehaviour
         jumper.GetComponent<TMP_Text>().DOFade(1, 0);
 
         Tween fadeTween = jumper.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-        Tween jumpTween = jumper.transform.DOLocalJump(jumpVector, jumpPower, 1, jumpTime);
+        Tween jumpTween = jumper.transform.DOLocalJump(new Vector2(40, 30), 30, 1, 1);
 
         fadeTween.OnComplete(() => jumper.gameObject.SetActive(false));
         

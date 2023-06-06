@@ -1,34 +1,28 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class defendManager : MonoBehaviour
 {
     [SerializeField] private Animator playerAnim;
+    [SerializeField] private Slider shieldBar;
 
     private AudioManager audioManager;
-    private shieldPool shieldPool;
-
+    
     // Object that shows the total size of the target
     [SerializeField] private GameObject shadow, playerUnit;
     public GameObject enemyUnit;
 
     // Control
     bool transformControl;
-
     Tween scaleUP;
+
+
     private void Awake()
     {
-        shieldPool = FindObjectOfType<shieldPool>();
         audioManager = FindObjectOfType<AudioManager>();
     }
-    private void OnEnable()
-    {
-        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(()=> Fail());
-        shadow.SetActive(true);
-        transformControl = true;
-        audioManager.Play("Shield_charge");
-    }
-
+    
     private void Update()
     {
         controlDefend();
@@ -45,8 +39,7 @@ public class defendManager : MonoBehaviour
         {
             audioManager.Play("defend_success");
             scaleUP.Rewind();
-            shieldPool.increaseShield();
-            playerUnit.GetComponent<Player>().SetCurrentShield(+1);
+            increaseShield();
             playerAnim.SetBool("skillShieldSuccess", true);
         } 
         closeMinigame();
@@ -59,12 +52,6 @@ public class defendManager : MonoBehaviour
         audioManager.Play("defend_fail");
         playerAnim.SetBool("skillFail", true);
         closeMinigame();
-    }
-
-    void closeMinigame()
-    {
-        shadow.SetActive(false);
-        gameObject.SetActive(false);
     }
 
     void controlDefend()
@@ -80,8 +67,31 @@ public class defendManager : MonoBehaviour
             Fail();
         }
     }
-    private void OnDisable()
+
+    public void increaseShield()
     {
+        shieldBar.DOValue(shieldBar.value++, 0.5f);
+    }
+    public void decreaseShield()
+    {
+        shieldBar.DOValue(shieldBar.value--, 0.5f);
+    }
+    public float getShieldValue()
+    {
+        return shieldBar.value;
+    }
+
+    public void activateShieldMinigame()
+    {
+        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(() => Fail());
+        shadow.SetActive(true);
+        transformControl = true;
+        audioManager.Play("Shield_charge");
+    }
+
+    void closeMinigame()
+    {
+        shadow.SetActive(false);
         transformControl = false;
     }
 }

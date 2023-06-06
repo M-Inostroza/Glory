@@ -15,8 +15,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject dodgeManager;
 
     // Defend mechanic
-    public GameObject defendManager;
-    public defendManager defendManagerScript;
+    defendManager defendManager;
 
     // Focus manager
     public GameObject focusManager;
@@ -57,14 +56,15 @@ public class BattleSystem : MonoBehaviour
         playerAnimator = playerPrefab.GetComponent<Animator>();
 
         targetManager = FindObjectOfType<TargetManager>();
+        defendManager = FindObjectOfType<defendManager>();
         timeManager = FindObjectOfType<timeManager>();
 
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
 
         Input_Manager = FindObjectOfType<Input_Manager>();
-
         evadeTimer = 5f;
+
         SetupBattle();
     }
 
@@ -81,8 +81,6 @@ public class BattleSystem : MonoBehaviour
 
     void SetupBattle()
     {
-        playerUnit.SetCurrentShield(playerUnit.GetMaxShield());
-
         playerUnit.SetCurrentHP(playerUnit.GetMaxHP());
         enemyUnit.currentHP = enemyUnit.maxHP;
 
@@ -113,7 +111,6 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayerAttack()
     {
-        Debug.Log("Executing from BattleSystem");
         targetManager.attack();
         playerAnimator.Play("ATK_jump");
         playerUnit.incrementAdrenaline(1);
@@ -124,7 +121,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (playerUnit.currentStamina >= 20)
         {
-            defendManager.SetActive(true);
+            defendManager.activateShieldMinigame();
         }
     }
     public void PlayDodge()

@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
     private timeManager timeManager;
     private TargetManager targetManager;
     private BattleSystem BS;
-    private shieldPool shieldPool;
     
     [SerializeField] private int maxHP, currentHP;
     [SerializeField] private float maxSpeed, baseSpeed;
@@ -40,19 +39,17 @@ public class Player : MonoBehaviour
         BS = FindObjectOfType<BattleSystem>();
         targetManager = FindObjectOfType<TargetManager>();
         timeManager = FindObjectOfType<timeManager>();
-        shieldPool = FindObjectOfType<shieldPool>();
     }
 
     public bool TakeDamage(int dmg)
     {
-        //Check Agility
         if (!missed)
         {
             missed = false;
             currentHP -= dmg;
             if (currentShield > 0)
             {
-                shieldPool.decreaseShield();
+                FindObjectOfType<defendManager>().decreaseShield();
                 if (currentShield <= 0)
                 {
                     currentShield = 0;
@@ -256,31 +253,6 @@ public class Player : MonoBehaviour
         currentHP = CurrentHP;
     }
 
-    // Shield
-    public int GetMaxShield()
-    {
-        return maxShield;
-    }
-    public void SetMaxShield(int MaxShield)
-    {
-        maxShield = MaxShield;
-    }
-    public int GetCurrentShield()
-    {
-        return currentShield;
-    }
-    public void SetCurrentShield(int newCurrent)
-    {
-        currentShield = newCurrent;
-    }
-    public void incrementCurrentShield()
-    {
-        currentShield++;
-    }
-    public void reduceCurrentShield()
-    {
-        currentShield--;
-    }
 
     // Speed
     public float GetBaseSpeed()

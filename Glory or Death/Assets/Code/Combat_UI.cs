@@ -13,7 +13,7 @@ public class Combat_UI : MonoBehaviour
     private GameObject DMG_Feedback, SPEED_Feedback;
 
     [SerializeField]
-    private GameObject shieldManager, inputManager, globalTimer, staminaAlarm, shieldFeedback;
+    private GameObject inputManager, globalTimer, staminaAlarm, shieldFeedback;
 
     //Unit sliders
     [SerializeField]

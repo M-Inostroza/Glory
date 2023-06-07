@@ -1,11 +1,9 @@
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
 
 public class defendManager : MonoBehaviour
 {
     [SerializeField] private Animator playerAnim;
-    [SerializeField] private Slider shieldBar;
 
     private AudioManager audioManager;
     
@@ -70,15 +68,11 @@ public class defendManager : MonoBehaviour
 
     public void increaseShield()
     {
-        shieldBar.DOValue(shieldBar.value++, 0.5f);
+        playerUnit.GetComponent<Player>().increaseCurrentShield();
     }
     public void decreaseShield()
     {
-        shieldBar.DOValue(shieldBar.value--, 0.5f);
-    }
-    public float getShieldValue()
-    {
-        return shieldBar.value;
+        playerUnit.GetComponent<Player>().decreaseCurrentShield();
     }
 
     public void activateShieldMinigame()

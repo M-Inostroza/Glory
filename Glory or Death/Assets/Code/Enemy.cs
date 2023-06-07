@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
         {
             Player.GetComponent<Animator>().SetBool("HURT", true);
             adrenaline += 2;
-            if (FindObjectOfType<defendManager>().getShieldValue() > 0)
+            if (Player.getCurrentShield() > 0)
             {
                 FindObjectOfType<defendManager>().decreaseShield();
                 bool isDead = Player.TakeDamage(nativeDamage - 2);

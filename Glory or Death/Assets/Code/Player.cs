@@ -253,7 +253,31 @@ public class Player : MonoBehaviour
         currentHP = CurrentHP;
     }
 
-
+    // Shield
+    public int GetMaxShield()
+    {
+        return maxShield;
+    }
+    public void setMaxShield(int newShield)
+    {
+        maxShield = newShield;
+    }
+    public int getCurrentShield()
+    {
+        return currentShield;
+    }
+    public void setCurrentShield(int newShield)
+    {
+        currentShield = newShield;
+    }
+    public void increaseCurrentShield()
+    {
+        currentShield++;
+    }
+    public void decreaseCurrentShield()
+    {
+        currentShield--;
+    }
     // Speed
     public float GetBaseSpeed()
     {

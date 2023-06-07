@@ -12,6 +12,8 @@ public class Combat_UI : MonoBehaviour
     [SerializeField]
     private GameObject DMG_Feedback, SPEED_Feedback;
 
+    [SerializeField] private Slider shieldBar;
+
     [SerializeField]
     private GameObject inputManager, globalTimer, staminaAlarm, shieldFeedback;
 
@@ -27,6 +29,7 @@ public class Combat_UI : MonoBehaviour
     }
     private void Update()
     {
+        updateShieldBar();
         refillStamina();
     }
 
@@ -134,6 +137,10 @@ public class Combat_UI : MonoBehaviour
         }
     }
 
+    void updateShieldBar()
+    {
+        shieldBar.value = playerUnit.getCurrentShield();
+    }
     public void damageBuff()
     {
         DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));

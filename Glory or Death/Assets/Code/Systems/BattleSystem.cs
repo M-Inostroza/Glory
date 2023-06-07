@@ -84,6 +84,8 @@ public class BattleSystem : MonoBehaviour
         playerUnit.SetCurrentHP(playerUnit.GetMaxHP());
         enemyUnit.currentHP = enemyUnit.maxHP;
 
+        playerUnit.setCurrentShield(playerUnit.GetMaxShield());
+
         playerUnit.currentStamina = playerUnit.maxStamina;
         playerUnit.currentAgility = playerUnit.maxAgility;
     }

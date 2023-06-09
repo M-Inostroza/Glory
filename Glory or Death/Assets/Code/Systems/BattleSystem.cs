@@ -322,7 +322,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         //Do DMG
-        bool isDead = enemyUnit.TakeDamage(targetHit);
+        enemyUnit.TakeDamage(targetHit);
         enemyHUD.setHP(enemyUnit.currentHP);
     }
     

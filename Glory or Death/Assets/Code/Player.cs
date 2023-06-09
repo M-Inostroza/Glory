@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
         timeManager = FindObjectOfType<timeManager>();
     }
 
-    public bool TakeDamage(int dmg)
+    public void TakeDamage(int dmg)
     {
         if (!missed)
         {
@@ -59,16 +59,6 @@ public class Player : MonoBehaviour
         else
         {
             missed = true;
-        }
-
-        if (currentHP <= 0)
-        {
-            currentHP = 0;
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 

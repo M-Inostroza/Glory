@@ -48,10 +48,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public bool TakeDamage(int dmg)
+    public void TakeDamage(int dmg)
     {
         currentHP -= dmg;
-        return currentHP <= 0;
     }
 
     public void executeAttack()
@@ -62,22 +61,12 @@ public class Enemy : MonoBehaviour
             adrenaline += 2;
             if (Player.getCurrentShield() > 0)
             {
-                FindObjectOfType<defendManager>().decreaseShield();
-                bool isDead = Player.TakeDamage(nativeDamage - 2);
+                Player.TakeDamage(nativeDamage - 2);
                 BS.showHit(nativeDamage - 2, BS.hitText_Player.transform);
-
-                if (isDead)
-                {
-                    BS.EndBattle();
-                }
             }
             else
             {
-                bool isDead = Player.TakeDamage(nativeDamage);
-                if (isDead)
-                {
-                    BS.EndBattle();
-                }
+                Player.TakeDamage(nativeDamage);
             }
         }
         else

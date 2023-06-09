@@ -15,7 +15,6 @@ public class defendManager : MonoBehaviour
     bool transformControl;
     Tween scaleUP;
 
-
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();

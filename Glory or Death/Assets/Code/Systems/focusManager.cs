@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class focusManager : MonoBehaviour
 {
@@ -23,16 +24,16 @@ public class focusManager : MonoBehaviour
 
     private void Start()
     {
-        // Create the tween and set the initial position of the cursor to the right side of the screen
+        // Set the initial position of the cursor to the right side of the screen
         cursor.transform.localPosition = new Vector2(maxX, cursor.transform.localPosition.y);
 
-        // Use the DOMoveX method to move the cursor to the left side of the screen
+        // Tween the cursor to the left side of the screen
         cursor.transform.DOLocalMoveX(minX, cursorDuration).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
     }
 
     private void OnEnable()
     {
-        // Focus timer
+        // Minigame timer
         StartCoroutine(focusTimer());
 
         // Set the range for the target sprite
@@ -59,7 +60,6 @@ public class focusManager : MonoBehaviour
     IEnumerator focusTimer() // Mejorable!!
     {
         yield return new WaitForSeconds(2.4f);
-        FindObjectOfType<timeManager>().enemyActionIcon.sprite = FindObjectOfType<timeManager>().iconSprites[1];
         FindObjectOfType<Player>().GetComponent<Animator>().SetBool("DG_Skill_Fail", true);
         gameObject.SetActive(false);
     }

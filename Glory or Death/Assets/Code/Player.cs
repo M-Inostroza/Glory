@@ -145,15 +145,6 @@ public class Player : MonoBehaviour
         timeManager.defaultAction();
     }
 
-    public void stopFocusSkillFail()
-    {
-        gameObject.GetComponent<Animator>().SetBool("FC_Skill_Fail", false);
-        timeManager.playerTimer.fillAmount = 1;
-        timeManager.enemyTimerControl = true;
-        timeManager.playerTimerControl = true;
-        timeManager.defaultAction();
-    }
-
     public void stopShieldSuccess()
     {
         gameObject.GetComponent<Animator>().SetBool("skillShieldSuccess", false);

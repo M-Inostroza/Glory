@@ -18,7 +18,6 @@ public class focusManager : MonoBehaviour
     [SerializeField]
     private GameObject playerUnit;
 
-    private bool isHit;
 
     // Set limits of bar
     private float minX = -8.5f;
@@ -42,8 +41,6 @@ public class focusManager : MonoBehaviour
 
     private void OnEnable()
     {
-        isHit = true;
-
         // Minigame timer
         StartCoroutine(focusTimer());
 
@@ -55,7 +52,7 @@ public class focusManager : MonoBehaviour
         target.transform.localPosition = new Vector2(targetRangeMin, -14.85f);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // Move the cursor sprite from left to right
         //target.transform.Translate(targetSpeed * Time.deltaTime, 0, 0);
@@ -80,42 +77,35 @@ public class focusManager : MonoBehaviour
 
     void checkFocus()
     {
-        if (Input.GetKey(KeyCode.A) && isHit)
+        if (Input.GetKey(KeyCode.A))
         {
-            isHit = false;
+            float targetXstart = target.transform.localPosition.x - 1.3f;
+            float targetXend = target.transform.localPosition.x + 1.3f;
 
-            float cursorXstart = cursor.transform.localPosition.x;
-            float cursorXend = cursorXstart + 0.8f;
-
-            Debug.Log("Cursor start: " + cursorXstart);
-            Debug.Log("Cursor end: " + cursorXend);
-
-            Debug.Log("Target position: " + target.transform.localPosition.x);
-
-            if (target.transform.localPosition.x < cursorXstart && target.transform.localPosition.x > cursorXend)
+            if (cursor.transform.localPosition.x > targetXstart && cursor.transform.localPosition.x < targetXend)
             {
-                Debug.Log("Is a match!");
+                successFocus();
             } else
             {
-                Debug.Log("Is not a match!");
+                failFocus();
             }
         }
     }
 
-    void checkHit()
+    void successFocus()
     {
-        if (isHit)
-        {
-            timeManager.enemyActionIcon.sprite = timeManager.iconSprites[0];
-            playerUnit.GetComponent<Animator>().SetBool("FC_Skill", true);
-            gameObject.SetActive(false);
-            playerUnit.GetComponent<Player>().StartCoroutine(playerUnit.GetComponent<Player>().boostSpeed());
-        }
-        else
-        {
-            timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
-            playerUnit.GetComponent<Animator>().SetBool("DG_Skill_Fail", true);
-            gameObject.SetActive(false);
-        }
+        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[0];
+        playerUnit.GetComponent<Animator>().SetBool("FC_Skill", true);
+        playerUnit.GetComponent<Player>().StartCoroutine(playerUnit.GetComponent<Player>().boostSpeed());
+        gameObject.SetActive(false);
+        Debug.Log("Success!");
+    }
+
+    void failFocus()
+    {
+        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
+        playerUnit.GetComponent<Animator>().SetBool("skillFail", true);
+        gameObject.SetActive(false);
+        Debug.Log("Fail!");
     }
 }

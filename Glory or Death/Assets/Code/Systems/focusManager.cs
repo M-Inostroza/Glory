@@ -95,7 +95,7 @@ public class focusManager : MonoBehaviour
     void successFocus()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[0];
-        playerUnit.GetComponent<Animator>().SetBool("FC_Skill", true);
+        playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
         playerUnit.GetComponent<Player>().StartCoroutine(playerUnit.GetComponent<Player>().boostSpeed());
         gameObject.SetActive(false);
         Debug.Log("Success!");

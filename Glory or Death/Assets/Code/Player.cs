@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
 
     public void stopFocusSkill()
     {
-        gameObject.GetComponent<Animator>().SetBool("FC_Skill", false);
+        gameObject.GetComponent<Animator>().SetBool("focusSuccess", false);
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;

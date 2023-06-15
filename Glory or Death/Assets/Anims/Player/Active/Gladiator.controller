@@ -134,7 +134,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: focus_skill
+  m_Name: focusSuccess
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -548,7 +548,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: FC_Skill
+    m_ConditionEvent: focusSuccess
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5517212349163507676}
@@ -851,7 +851,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: FC_Skill
+  - m_Name: focusSuccess
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1106,10 +1106,10 @@ AnimatorStateMachine:
     m_Position: {x: 290, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8420429202870562629}
-    m_Position: {x: 420, y: 450, z: 0}
+    m_Position: {x: 180, y: 490, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8033052287461449998}
-    m_Position: {x: 290, y: 490, z: 0}
+    m_Position: {x: 180, y: 450, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -317276225108932219}
     m_Position: {x: 325, y: 595, z: 0}
@@ -1551,7 +1551,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: FC_Skill
+    m_ConditionEvent: focusSuccess
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8033052287461449998}
@@ -1559,9 +1559,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.17380953
   m_TransitionOffset: 0
-  m_ExitTime: 0.9
+  m_ExitTime: 0.90000004
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

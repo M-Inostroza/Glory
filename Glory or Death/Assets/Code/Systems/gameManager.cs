@@ -5,13 +5,11 @@ using DG.Tweening;
 
 public class gameManager : MonoBehaviour
 {
-
     private timeManager timeManager;
     private BattleSystem battleSystem;
     private AudioManager audioManager;
 
     public int turnCounter;
-
 
     private void Start()
     {
@@ -26,10 +24,19 @@ public class gameManager : MonoBehaviour
 
     private void Update()
     {
+        quitGame();
         if (timeManager.timeOut)
         {
             timeManager.playerTimerControl = false;
             timeManager.enemyTimerControl = false;
+        }
+    }
+
+    void quitGame()
+    {
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
         }
     }
 }

@@ -55,6 +55,7 @@ public class defendManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
+            Debug.Log("from shield manager");
             executeShield(0.8f);
         }
 

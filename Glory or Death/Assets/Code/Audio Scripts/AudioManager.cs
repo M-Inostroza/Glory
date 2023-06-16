@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-
     public Sound[] sounds;
-    // Start is called before the first frame update
     void Awake()
     {
         foreach (Sound s in sounds)
@@ -30,5 +28,4 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Stop();
     }
-
 }

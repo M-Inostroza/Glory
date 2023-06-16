@@ -31,6 +31,14 @@ public class SoundPlayer : MonoBehaviour
                 break;
         }
     }
+    public void audienceQueen()
+    {
+        audioManager.Play("Audience_queen");
+    }
+    public void audienceBoo()
+    {
+        audioManager.Play("Audience_boo");
+    }
 
     // -----Attack----- //
     // Targets
@@ -173,8 +181,31 @@ public class SoundPlayer : MonoBehaviour
         }
     }
 
-    public void audienceQueen()
+    
+
+    public void swordGrab()
     {
-        audioManager.Play("Audience_queen");
+        audioManager.Play("sword_grab");
+    }
+    public void focusBuff()
+    {
+        audioManager.Play("Focus_Buff");
+    }
+
+    public void metalStone()
+    {
+        int random = Random.Range(1, 3);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("Metal_Stone");
+                break;
+            case 2:
+                audioManager.Play("Metal_Stone_2");
+                break;
+            case 3:
+                audioManager.Play("Metal_Stone_3");
+                break;
+        }
     }
 }

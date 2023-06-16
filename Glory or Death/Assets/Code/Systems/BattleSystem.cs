@@ -5,51 +5,44 @@ using DG.Tweening;
 
 public class BattleSystem : MonoBehaviour
 {
-    private TargetManager targetManager;
-    private Input_Manager Input_Manager;
+    TargetManager targetManager;
+    defendManager defendManager;
+    Input_Manager Input_Manager;
+    timeManager timeManager;
 
     //private bool canEvade = false;
     private float evadeTimer;
 
-    // Dodge System
+    // Systems
     public GameObject dodgeManager;
-
-    // Defend mechanic
-    defendManager defendManager;
-
-    // Focus manager
     public GameObject focusManager;
 
-    //Scores
+    // Scores
     public int targetHit;
 
-    //Get player and enemy GO
+    // Units
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
+    private Player playerUnit;
+    private Enemy enemyUnit;
 
-    
+    // Animators
     private Animator playerAnimator;
 
-    //Gets the UI for both
+    // UI
     public PlayerHUD playerHUD;
     public EnemyHUD enemyHUD;
 
-    //Miss & Hit text Player
+    // Text elements
     public GameObject missText;
     public GameObject hitText_Enemy;
-
     public GameObject hitText_Player;
-
     public GameObject thankYou;
 
     //Info Hud
     public GameObject infoHud;
     public GameObject infoHud_EN;
-   
-    private Player playerUnit;
-    private Enemy enemyUnit;
 
-    timeManager timeManager;
 
     private void Start()
     {
@@ -63,20 +56,13 @@ public class BattleSystem : MonoBehaviour
         enemyUnit = FindObjectOfType<Enemy>();
 
         Input_Manager = FindObjectOfType<Input_Manager>();
-        evadeTimer = 5f;
 
         SetupBattle();
     }
 
     private void Update()
     {
-        PlayerEvade();
         updateUI();
-
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
     }
 
     void SetupBattle()
@@ -88,25 +74,6 @@ public class BattleSystem : MonoBehaviour
 
         playerUnit.currentStamina = playerUnit.maxStamina;
         playerUnit.currentAgility = playerUnit.maxAgility;
-    }
-
-    
-    //----------------TO DO--------------------------
-
-    public void OnSuperAttackButton()
-    {
-        PlayerSuperAttack();
-    }
-
-    public void OnRestButton()
-    {
-        PlayerRest();
-    }
-
-    public void OnEvadeButton()
-    {
-        isOnEvade = true;
-        PlayerEvade();
     }
 
     // ----------------- Actions -----------------
@@ -149,82 +116,10 @@ public class BattleSystem : MonoBehaviour
         timeManager.selectIcon("Default");
     }
 
-    // TO DO
-    void PlayerSuperAttack()
-    {
-        //Check stamina
-        if (playerUnit.currentStamina >= 1)
-        {
-            targetManager.attackHard();
-            //Play Animation
-            playerAnimator.SetBool("ATK2", true);
 
-            //Enemy takes damage
-            StartCoroutine(waitForDamage(4f));
-        }
-    }
 
-    void PlayerRest()
-    {
-        playerAnimator.SetBool("Resting", true);
-        playerUnit.currentStamina += 50; //Mejorable
-    }
 
-    // Evade bools
-    bool canRight = true;
-    bool canLeft = true;
-    bool isOnEvade = false;
-
-    void PlayerEvade()
-    {
-        // Checks if is on evade mode
-        if (isOnEvade)
-        {
-            // Sets evade mechanic and timer (default 5f)
-            playerHUD.evadeSlider.gameObject.SetActive(true);
-            evadeTimer -= Time.deltaTime;
-            if (evadeTimer <= 0)
-            {
-                evadeTimer = 0;
-            }
-            Debug.Log(evadeTimer);
-
-            // Fill bar resistance & UI update
-            playerUnit.evade -= playerUnit.evade * Time.deltaTime * 0.5f;
-            playerHUD.evadeSlider.value = playerUnit.evade;
-
-            // Direction arrows mechanic & evade buff
-            if (Input.GetKeyDown("left") && canLeft)
-            {
-                canLeft = false;
-                canRight = true;
-                playerUnit.evade++;
-            }
-            else if (Input.GetKeyDown("right") && canRight)
-            {
-                canRight = false;
-                canLeft = true;
-                playerUnit.evade++;
-            }
-
-            // Triggers miss and evade anim
-            if (playerUnit.evade >= 20 )
-            {
-                playerUnit.missed = true;
-                playerAnimator.SetBool("evadeJump", true);
-
-                // Deactivates evade mode, deactivates evade manager, resets timer, resets challenge, changes to enemy turn.
-                resetEvades();
-            }
-            else if (evadeTimer == 0)
-            {
-                playerUnit.missed = false;
-                resetEvades();
-            }               
-        }    
-    }
-
-    // Enemy turn
+    // ------------------------Enemy turn------------------------
     public void EnemyTurn_attack()
     {
         enemyUnit.GetComponent<Animator>().SetBool("attack", true);
@@ -233,16 +128,9 @@ public class BattleSystem : MonoBehaviour
     {
         enemyUnit.GetComponent<Animator>().Play("dirt_toss");
     }
-
     public void EnemyTurn_rage()
     {
         enemyUnit.executeRage();
-    }
-
-    public void EndBattle()
-    {
-        //TO DO
-        thankYou.transform.DOLocalMoveY(-110, 1f);
     }
 
     public void showHit(int dmg, Transform jumper)
@@ -257,7 +145,7 @@ public class BattleSystem : MonoBehaviour
 
         fadeTween.OnComplete(() => jumper.gameObject.SetActive(false));
         
-        //Show dmg
+        // Show dmg
         if (jumper.name == "Hit Text enemy")
         {
             hitText_Enemy.GetComponent<TMP_Text>().text = "- " + dmg;
@@ -283,26 +171,16 @@ public class BattleSystem : MonoBehaviour
         missNotif.transform.DOJump(new Vector2(infoHud.transform.position.x + 1, infoHud.transform.position.y + 1), 1, 1, 1f).OnComplete(() => Destroy(missNotif));
     }
 
-    // Deactivates evade mode, deactivates evade manager, resets timer, resets challenge, changes to enemy turn.
-    private void resetEvades()
-    {
-        isOnEvade = false;
-        playerHUD.evadeSlider.gameObject.SetActive(false);
-        evadeTimer = 5f;
-        playerUnit.evade = 0;
-    }
-
     public void updateUI()
     {
         // Update health
         enemyHUD.setHP(enemyUnit.currentHP);
         playerHUD.setHP(playerUnit.GetCurrentHP());
         
-
-
         // Update stamina
         playerHUD.staminaSlider.DOValue(playerUnit.currentStamina, 0.5f);
 
+        // Update adrenaline
         playerHUD.adrenalineSlider.DOValue(playerUnit.GetAdrenaline(), 0.5f);
         if (playerUnit.GetAdrenaline() >= 20)
         {

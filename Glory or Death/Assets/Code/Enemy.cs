@@ -183,11 +183,11 @@ public class Enemy : MonoBehaviour
     }
     public void doDamageBuff()
     {
-        FindObjectOfType<Combat_UI>().damageBuff();
+        FindObjectOfType<Combat_UI>().damageBuff("enemy");
     }
     public void doSpeedBuff()
     {
-        FindObjectOfType<Combat_UI>().speedBuff();
+        FindObjectOfType<Combat_UI>().speedBuff("enemy");
     }
 
     public void doCameraShake()

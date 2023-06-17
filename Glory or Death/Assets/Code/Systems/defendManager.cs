@@ -13,6 +13,8 @@ public class defendManager : MonoBehaviour
 
     // Control
     bool transformControl;
+    bool canDefend = false;
+
     Tween scaleUP;
 
     private void Awake()
@@ -23,6 +25,32 @@ public class defendManager : MonoBehaviour
     private void Update()
     {
         controlDefend();
+    }
+
+    public void activateShieldMinigame()
+    {
+        canDefend = true;
+        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(() => Fail());
+        shadow.SetActive(true);
+        transformControl = true;
+        audioManager.Play("Shield_charge");
+    }
+
+    void controlDefend()
+    {
+        if (canDefend)
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                executeShield(0.8f);
+            }
+        }
+
+        if (transform.localScale.x == 1 && transformControl)
+        {
+            transform.DOScale(0, 0);
+            Fail();
+        }
     }
 
     void executeShield(float scaleLimit)
@@ -36,7 +64,7 @@ public class defendManager : MonoBehaviour
         {
             audioManager.Play("defend_success");
             scaleUP.Rewind();
-            increaseShield();
+            playerUnit.GetComponent<Player>().increaseCurrentShield();
             playerAnim.SetBool("skillShieldSuccess", true);
         } 
         closeMinigame();
@@ -51,42 +79,11 @@ public class defendManager : MonoBehaviour
         closeMinigame();
     }
 
-    void controlDefend()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Debug.Log("from shield manager");
-            executeShield(0.8f);
-        }
-
-        if (transform.localScale.x == 1 && transformControl)
-        {
-            transform.DOScale(0, 0);
-            Fail();
-        }
-    }
-
-    public void increaseShield()
-    {
-        playerUnit.GetComponent<Player>().increaseCurrentShield();
-    }
-    public void decreaseShield()
-    {
-        playerUnit.GetComponent<Player>().decreaseCurrentShield();
-    }
-
-    public void activateShieldMinigame()
-    {
-        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(() => Fail());
-        shadow.SetActive(true);
-        transformControl = true;
-        audioManager.Play("Shield_charge");
-    }
-
     void closeMinigame()
     {
         shadow.SetActive(false);
         transformControl = false;
+        canDefend = false;
     }
 }
 

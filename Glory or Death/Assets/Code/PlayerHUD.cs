@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using DG.Tweening;
 
 public class PlayerHUD : MonoBehaviour
 {
 
-    public Slider hpSlider, evadeSlider, adrenalineSlider, staminaSlider;
+    public Slider hpSlider, adrenalineSlider, staminaSlider;
     public void setHP(int hp)
     {
         hpSlider.DOValue(hp, 0.5f);

@@ -89,9 +89,7 @@ public class focusManager : MonoBehaviour
     void successFocus()
     {
         audioManager.Play("Focus_Success");
-        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[0];
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
-        playerUnit.GetComponent<Player>().StartCoroutine(playerUnit.GetComponent<Player>().boostSpeed());
         gameObject.SetActive(false);
         canFocus = false;
     }

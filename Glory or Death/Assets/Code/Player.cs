@@ -21,19 +21,16 @@ public class Player : MonoBehaviour
     public float currentStamina;
 
     //Agility (Dodging)
-    public int maxAgility;
-    public int currentAgility;
     public bool missed = false;
     public GameObject dodgeBuffIcon;
 
-    public float evade;
 
     public Camera MainCamera;
 
-
     // Current Enemy
     public GameObject enemy_unit;
-    //Making a change
+
+    
     private void Start()
     {
         BS = FindObjectOfType<BattleSystem>();
@@ -49,7 +46,7 @@ public class Player : MonoBehaviour
             currentHP -= dmg;
             if (currentShield > 0)
             {
-                FindObjectOfType<defendManager>().decreaseShield();
+                decreaseCurrentShield();
                 if (currentShield <= 0)
                 {
                     currentShield = 0;
@@ -62,7 +59,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // ------- Stop Anim Methods -------
+    // ------- Anim Methods -------
     public void nextAttack()
     {
         if (targetManager.attackOrder.Count > 0)
@@ -135,7 +132,6 @@ public class Player : MonoBehaviour
         dodgeBuffIcon.GetComponent<SpriteRenderer>().DOFade(0, 0.5f);
         dodgeBuffIcon.transform.DOLocalMoveY(270, 0.8f).SetEase(Ease.OutExpo).OnComplete(() => dodgeBuffIcon.SetActive(false));
     }
-
     public void stopFocusSkill()
     {
         gameObject.GetComponent<Animator>().SetBool("focusSuccess", false);
@@ -144,7 +140,6 @@ public class Player : MonoBehaviour
         timeManager.playerTimerControl = true;
         timeManager.defaultAction();
     }
-
     public void stopShieldSuccess()
     {
         gameObject.GetComponent<Animator>().SetBool("skillShieldSuccess", false);
@@ -153,38 +148,19 @@ public class Player : MonoBehaviour
         timeManager.continueTimer();
         timeManager.defaultAction();
     }
-
-    // TO DO
-
-    public void stopSuperAttack()
-    {
-        gameObject.GetComponent<Animator>().SetBool("ATK2", false);
-    }
-
-    public void stopCounter()
-    {
-        gameObject.GetComponent<Animator>().SetBool("Counter", false);
-    }
-
     public void stopRest()
     {
         gameObject.GetComponent<Animator>().SetBool("Resting", false);
     }
-    
     public void stopSuperDefend()
     {
         gameObject.GetComponent<Animator>().SetBool("DF2", false);
     }
-
     public void startEnemyDefense()
     {
         enemy_unit.GetComponent<Animator>().SetBool("hurt_basic", true);
     }
 
-    public void shakeHit()
-    {
-        transform.DOShakePosition(0.3f, 0.2f, 22, 10, false, true);
-    }
 
     public void hurtParts(int part)
     {
@@ -202,19 +178,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator boostSpeed()
-    {
-        baseSpeed += 2.5f;
-        yield return new WaitForSeconds(3.5f);
-        baseSpeed -= 2.5f;
-    }
-
     public void showEnemyDamage()
     {
         BS.showHit(nativeDamage, BS.hitText_Enemy.transform);
     }
 
-    // Getters and Setters
+    // ---------------- Getters and Setters ----------------
 
     // HP
     public int GetMaxHP()
@@ -232,6 +201,20 @@ public class Player : MonoBehaviour
     public void SetCurrentHP(int CurrentHP)
     {
         currentHP = CurrentHP;
+    }
+
+    // DMG
+    public int getDamage()
+    {
+        return nativeDamage;
+    }
+    public void increaseDamage(int newDamage)
+    {
+        nativeDamage += newDamage;
+    }
+    public void decreaseDamage(int newDamage)
+    {
+        nativeDamage -= newDamage;
     }
 
     // Shield
@@ -259,6 +242,7 @@ public class Player : MonoBehaviour
     {
         currentShield--;
     }
+
     // Speed
     public float GetBaseSpeed()
     {
@@ -307,5 +291,28 @@ public class Player : MonoBehaviour
     public void reduceHits(int newHit)
     {
         critHits -= newHit;
+    }
+
+
+    // Buffs
+    public void doDamageBuff()
+    {
+        FindObjectOfType<Combat_UI>().damageBuff("player");
+    }
+    public void doSpeedBuff()
+    {
+        FindObjectOfType<Combat_UI>().speedBuff("player");
+    }
+    public IEnumerator boostSpeed()
+    {
+        baseSpeed += 3f;
+        yield return new WaitForSeconds(3.5f);
+        baseSpeed -= 3f;
+    }
+
+    // Effects
+    public void shakeHit()
+    {
+        transform.DOShakePosition(0.3f, 0.2f, 22, 10, false, true);
     }
 }

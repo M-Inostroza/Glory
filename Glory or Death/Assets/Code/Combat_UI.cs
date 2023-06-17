@@ -10,9 +10,15 @@ public class Combat_UI : MonoBehaviour
     private Transform player_stats, enemy_stats, player_stamina, player_timer, enemy_timer;
 
     [SerializeField]
-    private GameObject DMG_Feedback, SPEED_Feedback;
+    private GameObject enemy_DMG_Feedback, enemy_SPEED_Feedback; // Enemy
+    [SerializeField]
+    private GameObject player_DMG_Feedback, player_SPEED_Feedback; // Enemy
 
-    [SerializeField] private Slider shieldBar;
+    /*[SerializeField]
+    private GameObject DMG_Feedback, SPEED_Feedback; // Player*/
+
+    [SerializeField] 
+    private Slider shieldBar;
 
     [SerializeField]
     private GameObject inputManager, globalTimer, staminaAlarm, shieldFeedback;
@@ -48,7 +54,6 @@ public class Combat_UI : MonoBehaviour
         inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x + 70, move_in_speed).SetEase(Ease.InOutSine);
         globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y - 70, move_in_speed).SetEase(Ease.InOutSine);
     }
-
     public void move_UI_out()
     {
         float move_out_speed = 0.7f;
@@ -64,6 +69,7 @@ public class Combat_UI : MonoBehaviour
         inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x - 80, move_out_speed).SetEase(Ease.InOutSine);
         globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y + 80, move_out_speed).SetEase(Ease.InOutSine);
     }
+
 
     void refillStamina()
     {
@@ -110,6 +116,7 @@ public class Combat_UI : MonoBehaviour
         }
     }
 
+
     private bool shieldFeedControl = false;
     public void shieldFeed()
     {
@@ -141,25 +148,45 @@ public class Combat_UI : MonoBehaviour
     {
         shieldBar.value = playerUnit.getCurrentShield();
     }
-    public void damageBuff()
+    public void damageBuff(string unit)
     {
-        DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
-        DMG_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+        if (unit == "player")
+        {
+            player_DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => player_DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
+            player_DMG_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
 
-        DMG_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
-        DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+            player_DMG_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => player_DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
+            player_DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+        } else if (unit == "enemy")
+        {
+            enemy_DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => enemy_DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
+            enemy_DMG_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+
+            enemy_DMG_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => enemy_DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
+            enemy_DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+        }
     }
-    public void speedBuff()
+    public void speedBuff(string unit)
     {
-        SPEED_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => SPEED_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
-        SPEED_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+        if (unit == "player")
+        {
+            player_SPEED_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => player_SPEED_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
+            player_SPEED_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
 
-        SPEED_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
-        SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+            player_SPEED_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => player_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
+            player_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+        } else if (unit == "enemy")
+        {
+            enemy_SPEED_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => enemy_SPEED_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
+            enemy_SPEED_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+
+            enemy_SPEED_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => enemy_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
+            enemy_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+        }
+        
     }
 
     // Test
-
     public void reduceStamina()
     {
         playerUnit.currentStamina = 10;

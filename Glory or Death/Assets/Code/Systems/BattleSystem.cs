@@ -73,7 +73,6 @@ public class BattleSystem : MonoBehaviour
         playerUnit.setCurrentShield(playerUnit.GetMaxShield());
 
         playerUnit.currentStamina = playerUnit.maxStamina;
-        playerUnit.currentAgility = playerUnit.maxAgility;
     }
 
     // ----------------- Actions -----------------

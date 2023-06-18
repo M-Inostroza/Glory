@@ -2186,6 +2186,9 @@ MonoBehaviour:
   enemy_SPEED_Feedback: {fileID: 0}
   player_DMG_Feedback: {fileID: 0}
   player_SPEED_Feedback: {fileID: 0}
+  playerHpSlider: {fileID: 0}
+  playerAdrenalineSlider: {fileID: 0}
+  staminaSlider: {fileID: 0}
   shieldBar: {fileID: 0}
   inputManager: {fileID: 8292258600438106534}
   globalTimer: {fileID: 4141887624144493807}
@@ -4026,7 +4029,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4141887623517397724}
-  - component: {fileID: 4141887623517397699}
   m_Layer: 5
   m_Name: Player HUD
   m_TagString: Untagged
@@ -4061,22 +4063,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4141887623517397699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4141887624031381829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: addbec05c79096047b99ca888c2989e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpSlider: {fileID: 4141887623470230202}
-  evadeSlider: {fileID: 0}
-  adrenalineSlider: {fileID: 4141887622709547528}
-  staminaSlider: {fileID: 4141887623849552712}
 --- !u!1 &4141887624080371595
 GameObject:
   m_ObjectHideFlags: 0

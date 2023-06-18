@@ -9,6 +9,7 @@ public class BattleSystem : MonoBehaviour
     defendManager defendManager;
     Input_Manager Input_Manager;
     timeManager timeManager;
+    Combat_UI combat_UI;
 
     //private bool canEvade = false;
     private float evadeTimer;
@@ -30,7 +31,6 @@ public class BattleSystem : MonoBehaviour
     private Animator playerAnimator;
 
     // UI
-    public PlayerHUD playerHUD;
     public EnemyHUD enemyHUD;
 
     // Text elements
@@ -51,6 +51,7 @@ public class BattleSystem : MonoBehaviour
         targetManager = FindObjectOfType<TargetManager>();
         defendManager = FindObjectOfType<defendManager>();
         timeManager = FindObjectOfType<timeManager>();
+        combat_UI = FindObjectOfType<Combat_UI>();
 
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
@@ -174,13 +175,13 @@ public class BattleSystem : MonoBehaviour
     {
         // Update health
         enemyHUD.setHP(enemyUnit.currentHP);
-        playerHUD.setHP(playerUnit.GetCurrentHP());
-        
+        combat_UI.setPlayerHP(playerUnit.GetCurrentHP());
+
         // Update stamina
-        playerHUD.staminaSlider.DOValue(playerUnit.currentStamina, 0.5f);
+        combat_UI.GetStaminaSlider().DOValue(playerUnit.currentStamina, 0.5f);
 
         // Update adrenaline
-        playerHUD.adrenalineSlider.DOValue(playerUnit.GetAdrenaline(), 0.5f);
+        combat_UI.GetPlayerAdrenalineSlider().DOValue(playerUnit.GetAdrenaline(), 0.5f);
         if (playerUnit.GetAdrenaline() >= 20)
         {
             playerUnit.SetAdrenaline(20);

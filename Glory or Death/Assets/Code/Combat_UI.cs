@@ -12,13 +12,10 @@ public class Combat_UI : MonoBehaviour
     [SerializeField]
     private GameObject enemy_DMG_Feedback, enemy_SPEED_Feedback; // Enemy
     [SerializeField]
-    private GameObject player_DMG_Feedback, player_SPEED_Feedback; // Enemy
-
-    /*[SerializeField]
-    private GameObject DMG_Feedback, SPEED_Feedback; // Player*/
+    private GameObject player_DMG_Feedback, player_SPEED_Feedback; // Player
 
     [SerializeField] 
-    private Slider shieldBar;
+    private Slider playerHpSlider, playerAdrenalineSlider, staminaSlider, shieldBar;
 
     [SerializeField]
     private GameObject inputManager, globalTimer, staminaAlarm, shieldFeedback;
@@ -29,6 +26,10 @@ public class Combat_UI : MonoBehaviour
     [SerializeField]
     private Enemy enemyUnit;
 
+    private void Start()
+    {
+        staminaSlider.DOValue(staminaSlider.maxValue, 1.5f);
+    }
     private void OnEnable()
     {
         move_UI_in();
@@ -37,6 +38,10 @@ public class Combat_UI : MonoBehaviour
     {
         updateShieldBar();
         refillStamina();
+    }
+    public void setPlayerHP(int hp)
+    {
+        playerHpSlider.DOValue(hp, 0.5f);
     }
 
     public void move_UI_in()
@@ -70,7 +75,7 @@ public class Combat_UI : MonoBehaviour
         globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y + 80, move_out_speed).SetEase(Ease.InOutSine);
     }
 
-
+    // Stamina
     void refillStamina()
     {
         if (playerUnit.currentStamina < playerUnit.maxStamina)
@@ -115,8 +120,12 @@ public class Combat_UI : MonoBehaviour
             hasPlayed = false;
         }
     }
+    public Slider GetStaminaSlider()
+    {
+        return staminaSlider;
+    }
 
-
+    // Shield
     private bool shieldFeedControl = false;
     public void shieldFeed()
     {
@@ -143,11 +152,16 @@ public class Combat_UI : MonoBehaviour
             shieldFeedControl = false;
         }
     }
-
     void updateShieldBar()
     {
-        shieldBar.value = playerUnit.getCurrentShield();
+        shieldBar.DOValue(playerUnit.getCurrentShield(), .5f);
     }
+    public void shakeShieldBar()
+    {
+        shieldBar.transform.DOShakePosition(0.5f, 1, 10, 90);
+    }
+
+    // Buffs
     public void damageBuff(string unit)
     {
         if (unit == "player")
@@ -184,6 +198,12 @@ public class Combat_UI : MonoBehaviour
             enemy_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
         }
         
+    }
+
+    // Stamina
+    public Slider GetPlayerAdrenalineSlider()
+    {
+        return playerAdrenalineSlider;
     }
 
     // Test

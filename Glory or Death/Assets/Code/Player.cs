@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
             currentHP -= dmg;
             if (currentShield > 0)
             {
+                FindObjectOfType<Combat_UI>().shakeShieldBar();
                 decreaseCurrentShield();
                 if (currentShield <= 0)
                 {

@@ -24,13 +24,11 @@ public class Player : MonoBehaviour
     public bool missed = false;
     public GameObject dodgeBuffIcon;
 
-
     public Camera MainCamera;
 
     // Current Enemy
     public GameObject enemy_unit;
 
-    
     private void Start()
     {
         BS = FindObjectOfType<BattleSystem>();

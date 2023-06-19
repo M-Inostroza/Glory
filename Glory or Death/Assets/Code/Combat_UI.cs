@@ -158,7 +158,7 @@ public class Combat_UI : MonoBehaviour
     }
     public void shakeShieldBar()
     {
-        shieldBar.transform.DOShakePosition(0.5f, 1, 10, 90);
+        shieldBar.transform.DOShakePosition(0.5f, 2.5f, 50, 90);
     }
 
     // Buffs

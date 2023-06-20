@@ -59,6 +59,14 @@ public class Player : MonoBehaviour
     }
 
     // ------- Anim Methods -------
+    public void blockAttack()
+    {
+        GetComponent<Animator>().Play("blockAttack");
+    }
+    public void backToIdle()
+    {
+        GetComponent<Animator>().Play("Idle");
+    }
     public void nextAttack()
     {
         if (targetManager.attackOrder.Count > 0)

@@ -8,18 +8,30 @@ public class CounterManager : MonoBehaviour
 {
     public GameObject shieldImage;
     public GameObject counterBullet;
+    public GameObject overlay;
+    public Camera mainCamera;
+
 
     float rotationSpeed = 150;
 
     private void Start()
     {
-        counterBullet.transform.DOLocalMoveX(-17, 6);
+        counterBullet.transform.DOLocalMoveX(-17, 16);
     }
 
     private void Update()
     {
         rotateOnKey();
         rotateOnStart();
+    }
+
+    private void OnEnable()
+    {
+        startMinigame();
+    }
+    private void OnDisable()
+    {
+        closeMinigame();
     }
 
     void rotateOnKey()
@@ -33,7 +45,21 @@ public class CounterManager : MonoBehaviour
 
     void rotateOnStart()
     {
-        float rotationAmount = 50 * Time.deltaTime;
+        float rotationAmount = 20 * Time.deltaTime;
         shieldImage.transform.Rotate(0f, 0f, rotationAmount);
+    }
+
+    public void startMinigame()
+    {
+        mainCamera.DOFieldOfView(20, 1);
+        mainCamera.transform.DOLocalMoveY(-2.5f, 1);
+        overlay.GetComponent<Image>().DOFade(0.85f, 1);
+    }
+
+    public void closeMinigame()
+    {
+        mainCamera.DOFieldOfView(50, 0.5f);
+        mainCamera.transform.DOLocalMoveY(0, 0.5f);
+        overlay.GetComponent<Image>().DOFade(0, 0.5f);
     }
 }

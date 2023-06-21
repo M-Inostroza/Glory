@@ -13,8 +13,8 @@ public class Enemy : MonoBehaviour
     public float maxSpeed;
     public float baseSpeed;
 
-    [SerializeField]
-    private dirtToss dirtManager;
+    [SerializeField] dirtToss dirtManager;
+    [SerializeField] CounterManager counterManager;
 
     [SerializeField]
     private Camera mainCamera;
@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     public bool hasHit = false;
 
     AudioManager audioManager;
+    
     BattleSystem BS;
     timeManager timeManager;
     Player Player;
@@ -57,15 +58,16 @@ public class Enemy : MonoBehaviour
     {
         if (!Player.missed)
         {
-            Player.GetComponent<Animator>().SetBool("HURT", true);
             adrenaline += 2;
             if (Player.getCurrentShield() > 0)
             {
-                Player.TakeDamage(nativeDamage - 2);
-                BS.showHit(nativeDamage - 2, BS.hitText_Player.transform);
+                counterManager.gameObject.SetActive(true);
             }
             else
             {
+                BS.showHit(nativeDamage, BS.hitText_Player.transform);
+                GetComponent<Animator>().SetBool("attack", true);
+                Player.GetComponent<Animator>().SetBool("HURT", true);
                 Player.TakeDamage(nativeDamage);
             }
         }

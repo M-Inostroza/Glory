@@ -36,21 +36,20 @@ public class Player : MonoBehaviour
         timeManager = FindObjectOfType<timeManager>();
     }
 
+    private void Update()
+    {
+        if (currentShield <= 0)
+        {
+            currentShield = 0;
+        }
+    }
+
     public void TakeDamage(int dmg)
     {
         if (!missed)
         {
             missed = false;
             currentHP -= dmg;
-            if (currentShield > 0)
-            {
-                FindObjectOfType<Combat_UI>().shakeShieldBar();
-                decreaseCurrentShield();
-                if (currentShield <= 0)
-                {
-                    currentShield = 0;
-                }
-            }
         }
         else
         {

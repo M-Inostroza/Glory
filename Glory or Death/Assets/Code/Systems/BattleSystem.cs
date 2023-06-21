@@ -43,6 +43,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject infoHud;
     public GameObject infoHud_EN;
 
+    [SerializeField] GameObject counterManager;
+
 
     private void Start()
     {
@@ -122,7 +124,7 @@ public class BattleSystem : MonoBehaviour
     // ------------------------Enemy turn------------------------
     public void EnemyTurn_attack()
     {
-        enemyUnit.GetComponent<Animator>().SetBool("attack", true);
+        enemyUnit.executeAttack();
     }
     public void EnemyTurn_dirt()
     {

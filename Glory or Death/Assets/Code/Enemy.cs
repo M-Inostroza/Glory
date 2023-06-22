@@ -65,7 +65,6 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                BS.showHit(nativeDamage, BS.hitText_Player.transform);
                 GetComponent<Animator>().SetBool("attack", true);
                 Player.GetComponent<Animator>().SetBool("HURT", true);
                 Player.TakeDamage(nativeDamage);
@@ -192,9 +191,14 @@ public class Enemy : MonoBehaviour
         FindObjectOfType<Combat_UI>().speedBuff("enemy");
     }
 
-    public void doCameraShake()
+    public void doCameraShake(int level)
     {
-        mainCamera.DOShakePosition(0.8f, 1, 80, 20);
+        if (level == 1)
+        {
+            mainCamera.DOShakePosition(0.8f, 1, 80, 20);
+        } else {
+            mainCamera.DOShakePosition(0.6f, 0.5f, 20, 10);
+        }
     }
     public void testRage()
     {
@@ -207,5 +211,15 @@ public class Enemy : MonoBehaviour
     public void setAngryState(bool newState)
     {
         isAngry = newState;
+    }
+
+
+    public void showDmgFeedbackPlayer()
+    {
+        BS.showHit(nativeDamage, BS.hitText_Player.transform);
+    }
+    public void showDmgFeedbackPlayerReduced()
+    {
+        BS.showHit(nativeDamage - 2, BS.hitText_Player.transform);
     }
 }

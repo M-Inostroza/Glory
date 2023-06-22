@@ -321,4 +321,13 @@ public class Player : MonoBehaviour
     {
         transform.DOShakePosition(0.3f, 0.2f, 22, 10, false, true);
     }
+    public void blockHit()
+    {
+        FindObjectOfType<AudioManager>().Play("Shield_metal");
+        Time.timeScale = 0.2f;
+    }
+    public void returnTime()
+    {
+        Time.timeScale = 1;
+    }
 }

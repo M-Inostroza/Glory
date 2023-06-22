@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
@@ -7,27 +6,24 @@ public class dirtToss : MonoBehaviour
 {
     private bool isDirty, speedReduced;
 
-    // How much the base speed will be reduced
-    private float speedDebuff = 3f;
+    private float speedDebuff = 5f;
 
     [SerializeField]
     private Camera mainCam;
 
     private Player player;
     private Input_Manager Input_Manager;
+    private SpriteRenderer dirtTexture;
 
-    // Maximum opacity of the dirt texture
+    // Dirt texture opacity
     public float maxOpacity = 0.5f;
+    private float opacity;
 
-    // Speed threshold for scratch detection
-    public float scratchSpeedThreshold = 10000f;
+    // Scratch's speed threshold
+    public float scratchSpeedThreshold = 9000f;
 
     // Percentage of maximum opacity to reduce per scratch
     public float opacityReductionPerScratch = 0.05f;
-
-    private SpriteRenderer dirtTexture;
-    private float opacity;
-
     private Vector3 prevMousePos;
 
     private void Start()
@@ -43,6 +39,7 @@ public class dirtToss : MonoBehaviour
         speedReduced = false;
         isDirty = true;
         opacity = maxOpacity;
+        StartCoroutine(deactivateTimer(7));
     }
 
     private void Update()
@@ -64,7 +61,7 @@ public class dirtToss : MonoBehaviour
             player.reduceBaseSpeed(speedDebuff);
             speedReduced = true;
         }
-        // Check if the left mouse button is pressed and over the dirt texture
+        
         if (opacity > 0f && Input.GetMouseButton(0) && isDirty)
         {
             // Convert the mouse position to world coordinates
@@ -95,5 +92,13 @@ public class dirtToss : MonoBehaviour
                 Input_Manager.SetCanClick(true);
             }
         }
+    }
+
+    IEnumerator deactivateTimer(int time)
+    {
+        yield return new WaitForSeconds(time);
+        DOTween.To(() => opacity, x => opacity = x, 0, 1);
+        yield return new WaitForSeconds(1);
+        gameObject.SetActive(false);
     }
 }

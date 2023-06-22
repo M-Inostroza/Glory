@@ -11,13 +11,7 @@ public class CounterManager : MonoBehaviour
     public GameObject overlay;
     public Camera mainCamera;
 
-
-    float rotationSpeed = 150;
-
-    private void Start()
-    {
-        counterBullet.transform.DOLocalMoveX(-17, 16);
-    }
+    float rotationSpeed = 100;
 
     private void Update()
     {
@@ -54,6 +48,7 @@ public class CounterManager : MonoBehaviour
         mainCamera.DOFieldOfView(20, 1);
         mainCamera.transform.DOLocalMoveY(-2.5f, 1);
         overlay.GetComponent<Image>().DOFade(0.85f, 1);
+        counterBullet.transform.DOLocalMoveX(-4, 6).OnComplete(()=> counterBullet.transform.DOLocalMoveX(12, 0));
     }
 
     public void closeMinigame()

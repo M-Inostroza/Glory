@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            BS.missHit();
+            GetComponent<Animator>().SetBool("attack", true);
             adrenaline++;
         }
     }

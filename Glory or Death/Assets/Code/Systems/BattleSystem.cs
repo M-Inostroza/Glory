@@ -43,9 +43,6 @@ public class BattleSystem : MonoBehaviour
     public GameObject infoHud;
     public GameObject infoHud_EN;
 
-    [SerializeField] GameObject counterManager;
-
-
     private void Start()
     {
         playerAnimator = playerPrefab.GetComponent<Animator>();
@@ -66,6 +63,7 @@ public class BattleSystem : MonoBehaviour
     private void Update()
     {
         updateUI();
+        checkEndFight();
     }
 
     void SetupBattle()
@@ -157,20 +155,18 @@ public class BattleSystem : MonoBehaviour
         } 
         else if (jumper.name == "Hit Text player") 
         {
-            hitText_Player.GetComponent<TMP_Text>().text = "- " + (dmg);
+            if (!playerUnit.missed)
+            {
+                hitText_Player.GetComponent<TMP_Text>().text = "- " + (dmg);
+            } else
+            {
+                hitText_Player.GetComponent<TMP_Text>().text = "Missed!";
+            }
+            
             hitText_Player.SetActive(true);
             fadeTween.Play();
             jumpTween.Play();
         }
-    }
-    
-    public void missHit()
-    {
-        GameObject missNotif = Instantiate(missText, infoHud.transform.position, Quaternion.identity);
-        missNotif.transform.SetParent(infoHud.transform);
-
-        missNotif.GetComponent<TMP_Text>().DOFade(0, 1.5f);
-        missNotif.transform.DOJump(new Vector2(infoHud.transform.position.x + 1, infoHud.transform.position.y + 1), 1, 1, 1f).OnComplete(() => Destroy(missNotif));
     }
 
     public void updateUI()
@@ -211,6 +207,17 @@ public class BattleSystem : MonoBehaviour
         if (targetHit == 3)
         {
             playerUnit.increaseCritHits(1);
+        }
+    }
+
+    public void checkEndFight()
+    {
+        if (playerUnit.GetCurrentHP() <= 0)
+        {
+            Debug.Log("Defeat!");
+        } else if (enemyUnit.currentHP <= 0)
+        {
+            Debug.Log("Win!");
         }
     }
 }

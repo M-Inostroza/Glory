@@ -6,7 +6,7 @@ public class dirtToss : MonoBehaviour
 {
     private bool isDirty, speedReduced;
 
-    private float speedDebuff = 5f;
+    private float speedDebuff = 7f;
 
     [SerializeField]
     private Camera mainCam;

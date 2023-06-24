@@ -56,8 +56,8 @@ public class Combat_UI : MonoBehaviour
         player_timer.DOLocalMoveY(player_timer.localPosition.y - 160, move_in_speed);
         enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y - 160, move_in_speed);
 
-        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x + 70, move_in_speed).SetEase(Ease.InOutSine);
-        globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y - 70, move_in_speed).SetEase(Ease.InOutSine);
+        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x + 80, move_in_speed).SetEase(Ease.InOutSine);
+        globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y - 80, move_in_speed).SetEase(Ease.InOutSine);
     }
     public void move_UI_out()
     {
@@ -73,6 +73,17 @@ public class Combat_UI : MonoBehaviour
 
         inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x - 80, move_out_speed).SetEase(Ease.InOutSine);
         globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y + 80, move_out_speed).SetEase(Ease.InOutSine);
+    }
+
+    public void move_Inputs_in()
+    {
+        float move_in_speed = 0.7f;
+        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x + 80, move_in_speed);
+    }
+    public void move_Inputs_out()
+    {
+        float move_out_speed = 0.7f;
+        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x - 80, move_out_speed);
     }
 
     // Stamina
@@ -133,7 +144,7 @@ public class Combat_UI : MonoBehaviour
         {
             fadeON();
             shieldFeedControl = true;
-            shieldFeedback.transform.DOLocalMoveY(140, 1f).OnComplete(()=> fadeOFF());
+            shieldFeedback.transform.DOLocalMoveY(140, 0.8f).OnComplete(()=> fadeOFF());
         }
 
         void fadeON()

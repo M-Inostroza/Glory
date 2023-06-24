@@ -6,6 +6,7 @@ public class dirtToss : MonoBehaviour
 {
     private bool isDirty, speedReduced;
 
+    [SerializeField]
     private float speedDebuff = 7f;
 
     [SerializeField]
@@ -53,6 +54,7 @@ public class dirtToss : MonoBehaviour
     }
     private void makeItDirt()
     {
+        FindObjectOfType<Combat_UI>().move_Inputs_out();
         dirtTexture.color = new Color(1f, 1f, 1f, opacity);
         transform.DOMoveY(transform.position.y - 0.005f, 0.2f);
 
@@ -90,6 +92,7 @@ public class dirtToss : MonoBehaviour
                 isDirty = false;
                 gameObject.SetActive(false);
                 Input_Manager.SetCanClick(true);
+                FindObjectOfType<Combat_UI>().move_Inputs_in();
             }
         }
     }
@@ -99,6 +102,12 @@ public class dirtToss : MonoBehaviour
         yield return new WaitForSeconds(time);
         DOTween.To(() => opacity, x => opacity = x, 0, 1);
         yield return new WaitForSeconds(1);
+        FindObjectOfType<Combat_UI>().move_Inputs_in();
         gameObject.SetActive(false);
+    }
+
+    public bool isDirtyActive()
+    {
+        return isDirty;
     }
 }

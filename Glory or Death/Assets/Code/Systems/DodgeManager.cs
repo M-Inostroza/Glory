@@ -244,8 +244,10 @@ public class DodgeManager : MonoBehaviour
     public void animateBuff()
     {
         dodgeBuffIcon.SetActive(true);
-        dodgeBuffIcon.GetComponent<SpriteRenderer>().DOFade(1, 0.5f);
-        dodgeBuffIcon.transform.DOLocalMoveY(230, 0.8f).SetEase(Ease.OutExpo);
+    }
+    public void deactivateDodgeBuff()
+    {
+        dodgeBuffIcon.SetActive(false);
     }
 
     IEnumerator mainTimer(float time)

@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int nativeDamage;
     [SerializeField] private int maxShield, currentShield;
     [SerializeField] private int critHits;
+    [SerializeField] private DodgeManager dodgeManager;
 
     //Stamina
     public float maxStamina;
@@ -22,7 +23,6 @@ public class Player : MonoBehaviour
 
     //Agility (Dodging)
     public bool missed = false;
-    public GameObject dodgeBuffIcon;
 
     public Camera MainCamera;
 
@@ -135,8 +135,7 @@ public class Player : MonoBehaviour
     }
     public void stopDodgeIcon()
     {
-        dodgeBuffIcon.GetComponent<SpriteRenderer>().DOFade(0, 0.5f);
-        dodgeBuffIcon.transform.DOLocalMoveY(270, 0.8f).SetEase(Ease.OutExpo).OnComplete(() => dodgeBuffIcon.SetActive(false));
+        dodgeManager.deactivateDodgeBuff();
     }
     public void stopFocusSkill()
     {
@@ -221,6 +220,21 @@ public class Player : MonoBehaviour
     public void decreaseDamage(int newDamage)
     {
         nativeDamage -= newDamage;
+    }
+    public void deactivateAttackFeed()
+    {
+        GameObject attackFeedback = targetManager.GetAttackFeedback();
+        foreach (Transform child in attackFeedback.GetComponentsInChildren<Transform>(true))
+        {
+            if (child == transform)
+                continue;
+            child.transform.DOScale(0, 0.3f).SetEase(Ease.InBack).OnComplete(()=> deactivate(child.gameObject));
+        }
+        void deactivate(GameObject childGO)
+        {
+            childGO.gameObject.SetActive(false);
+            attackFeedback.SetActive(false);
+        }
     }
 
     // Shield

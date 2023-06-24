@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
         if (!Player.missed)
         {
             adrenaline += 2;
-            if (Player.getCurrentShield() > 0)
+            if (Player.getCurrentShield() > 0 && !dirtManager.isDirtyActive())
             {
                 counterManager.gameObject.SetActive(true);
             }

@@ -6,10 +6,8 @@ using DG.Tweening;
 
 public class CounterManager : MonoBehaviour
 {
-    public GameObject shieldImage;
-    public GameObject counterBullet;
-    public GameObject overlay;
-    public Camera mainCamera;
+    [SerializeField] GameObject shieldImage, counterBullet, counterTarget, overlay;
+    [SerializeField] Camera mainCamera;
 
     float rotationSpeed = 100;
 
@@ -45,6 +43,7 @@ public class CounterManager : MonoBehaviour
 
     public void startMinigame()
     {
+        counterTarget.transform.DOPunchScale(new Vector3(0.05f,0.05f,0.05f), 1, 6, 3).SetLoops(-1, LoopType.Restart);
         mainCamera.DOFieldOfView(20, 1);
         mainCamera.transform.DOLocalMoveY(-2.5f, 1);
         overlay.GetComponent<Image>().DOFade(0.85f, 1);

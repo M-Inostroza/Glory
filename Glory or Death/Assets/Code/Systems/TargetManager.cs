@@ -6,33 +6,29 @@ using UnityEngine.UI;
 
 public class TargetManager : MonoBehaviour
 {
+    /*
+     - 0 -> attack head
+     - 1 -> attack mid
+     - 2 -> attack bottom
+    */
+
     public GameObject[] targets;
     public List<int> attackOrder = new List<int>();
 
     private BattleSystem BattleSystem;
     private Camera MainCamera;
 
-    public SpriteRenderer courtain;
-
-    public GameObject combat_UI;
-
-    [SerializeField]
-    private float targetScale, wait_time;
-    [SerializeField]
-    private GameObject vFeedback;
-
+    [SerializeField] SpriteRenderer courtain;
+    [SerializeField] GameObject combat_UI;
+    [SerializeField] GameObject vFeedback;
+    [SerializeField] float targetScale, wait_time;
+    
     private void Start()
     {
         BattleSystem = FindObjectOfType<BattleSystem>();
         MainCamera = FindObjectOfType<Camera>();
     }
 
-
-    /*
-        - 0 -> attack head
-        - 1 -> attack mid
-        - 2 -> attack bottom
-         */
     public void attack()
     {
         combat_UI.GetComponent<Combat_UI>().move_UI_out();
@@ -43,7 +39,7 @@ public class TargetManager : MonoBehaviour
         courtain.DOColor(new Color(0, 0, 0, .5f), 1f);
         StartCoroutine(activateTargets());
 
-        // Camera effect
+        // Camera
         MainCamera.transform.DOLocalMove(new Vector3(3.3f, -1, -10), 3f);
         MainCamera.DOFieldOfView(35, 3f);
     }
@@ -64,8 +60,6 @@ public class TargetManager : MonoBehaviour
 
     IEnumerator activateTargets()
     {
-        hideFeedback();
-
         var targets = this.targets;
         var targetScale = this.targetScale;
         var wait_time = this.wait_time;
@@ -88,10 +82,10 @@ public class TargetManager : MonoBehaviour
             }
 
             // Set target position & scale
-            targets[i].transform.DOScale(targetScale, 0.3f);
+            targets[i].transform.DOScale(targetScale, 0.2f);
         }
 
-        // Deactivates the targets after timer (Mejorable)!!
+        // Deactivates after timer (Mejorable)!!
         yield return new WaitForSeconds(wait_time);
 
         for (int i = 0; i < 3; i++)
@@ -100,19 +94,14 @@ public class TargetManager : MonoBehaviour
             targets[i].transform.DOScale(0, 0.3f).OnComplete(() => targets[i].gameObject.SetActive(false));
         }
 
-        // Courtain
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
-        
-        vFeedback.SetActive(false);
         combat_UI.GetComponent<Combat_UI>().move_UI_in();
     }
 
-    void hideFeedback()
+    // Getters and Setters
+    public GameObject GetAttackFeedback()
     {
-        for (int i = 0; i < vFeedback.transform.childCount; i++)
-        {
-            vFeedback.transform.GetChild(i).GetComponent<Image>().DOFade(0.25f, 0);
-        }
+        return vFeedback;
     }
     IEnumerator activateTargetsHard()
     {

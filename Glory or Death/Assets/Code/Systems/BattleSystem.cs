@@ -37,6 +37,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject missText;
     public GameObject hitText_Enemy;
     public GameObject hitText_Player;
+    public GameObject missText_Player;
     public GameObject thankYou;
 
     //Info Hud
@@ -102,10 +103,7 @@ public class BattleSystem : MonoBehaviour
     }
     public void PlayFocus()
     {
-        if (playerUnit.currentStamina >= 15)
-        {
-            focusManager.SetActive(true);
-        }
+        focusManager.SetActive(true);
     }
 
     public void PlayRest()
@@ -155,15 +153,13 @@ public class BattleSystem : MonoBehaviour
         } 
         else if (jumper.name == "Hit Text player") 
         {
-            if (!playerUnit.missed)
-            {
-                hitText_Player.GetComponent<TMP_Text>().text = "- " + (dmg);
-            } else
-            {
-                hitText_Player.GetComponent<TMP_Text>().text = "Missed!";
-            }
-            
+            hitText_Player.GetComponent<TMP_Text>().text = "- " + (dmg);
             hitText_Player.SetActive(true);
+            fadeTween.Play();
+            jumpTween.Play();
+        } else if (jumper.name == "Miss Text player")
+        {
+            missText_Player.SetActive(true);
             fadeTween.Play();
             jumpTween.Play();
         }

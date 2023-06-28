@@ -37,17 +37,19 @@ public class CounterManager : MonoBehaviour
 
     void rotateOnStart()
     {
-        float rotationAmount = 20 * Time.deltaTime;
+        float rotationAmount = 10 * Time.deltaTime;
         shieldImage.transform.Rotate(0f, 0f, rotationAmount);
     }
 
     public void startMinigame()
     {
+        float randomRotation = Random.Range(0, 360);
+        shieldImage.transform.DORotate(new Vector3(0, 0, randomRotation), 0);
         counterTarget.transform.DOPunchScale(new Vector3(0.05f,0.05f,0.05f), 1, 6, 3).SetLoops(-1, LoopType.Restart);
         mainCamera.DOFieldOfView(20, 1);
         mainCamera.transform.DOLocalMoveY(-2.5f, 1);
         overlay.GetComponent<Image>().DOFade(0.85f, 1);
-        counterBullet.transform.DOLocalMoveX(-4, 6).OnComplete(()=> counterBullet.transform.DOLocalMoveX(12, 0));
+        counterBullet.transform.DOLocalMoveX(-3.25f, 8.5f).SetEase(Ease.OutBack).OnComplete(()=> counterBullet.transform.DOLocalMoveX(12, 0));
     }
 
     public void closeMinigame()

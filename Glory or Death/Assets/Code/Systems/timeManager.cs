@@ -149,11 +149,11 @@ public class timeManager : MonoBehaviour
                     break;
 
                 case "FC":
-                    if (player.currentStamina > 25)
+                    if (player.currentStamina > 35)
                     {
                         BS.PlayFocus();
                         Input_Manager.GetFocusCD().fillAmount = 1;
-                        player.currentStamina -= 25;
+                        player.currentStamina -= 35;
                         fadeOutUnitTimer();
                     } else
                     {
@@ -292,7 +292,7 @@ public class timeManager : MonoBehaviour
                     }
                     else
                     {
-                        timer.fillAmount -= Time.deltaTime / (Focus_CD * 3);
+                        timer.fillAmount -= Time.deltaTime / (Focus_CD * 4);
                     }
                     break;
             }

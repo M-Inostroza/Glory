@@ -216,7 +216,13 @@ public class Enemy : MonoBehaviour
 
     public void showDmgFeedbackPlayer()
     {
-        BS.showHit(nativeDamage, BS.hitText_Player.transform);
+        if (!Player.missed)
+        {
+            BS.showHit(nativeDamage, BS.hitText_Player.transform);
+        } else
+        {
+            BS.showHit(nativeDamage, BS.missText_Player.transform);
+        }
     }
     public void showDmgFeedbackPlayerReduced()
     {

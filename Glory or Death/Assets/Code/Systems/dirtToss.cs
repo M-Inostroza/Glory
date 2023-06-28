@@ -36,6 +36,7 @@ public class dirtToss : MonoBehaviour
 
     private void OnEnable()
     {
+        FindObjectOfType<Combat_UI>().move_Inputs_out();
         mainCam.DOShakePosition(0.3f, 0.3f, 20, 10).OnComplete(() => Input_Manager.SetCanClick(false));
         speedReduced = false;
         isDirty = true;
@@ -54,7 +55,6 @@ public class dirtToss : MonoBehaviour
     }
     private void makeItDirt()
     {
-        FindObjectOfType<Combat_UI>().move_Inputs_out();
         dirtTexture.color = new Color(1f, 1f, 1f, opacity);
         transform.DOMoveY(transform.position.y - 0.005f, 0.2f);
 

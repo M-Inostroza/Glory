@@ -175,13 +175,16 @@ public class Combat_UI : MonoBehaviour
     // Buffs
     public void damageBuff(string unit)
     {
+        var playerImgDmg = player_DMG_Feedback.GetComponent<Image>();
+        var child = player_DMG_Feedback.transform.GetChild(0);
         if (unit == "player")
         {
-            player_DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => player_DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
-            player_DMG_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+            playerImgDmg.DOFade(1, 0);
+            player_DMG_Feedback.transform.DOLocalMoveY(65, 0);
+            player_DMG_Feedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(() => playerImgDmg.DOFade(0, 0.5f));
 
-            player_DMG_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => player_DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
-            player_DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+            child.transform.DOLocalMoveY(0, 0.8f).OnComplete(() => child.GetComponent<Image>().DOFade(0, 0.5f));
+            child.GetComponent<Image>().DOFade(1, 0.5f);
         } else if (unit == "enemy")
         {
             enemy_DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => enemy_DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
@@ -193,13 +196,16 @@ public class Combat_UI : MonoBehaviour
     }
     public void speedBuff(string unit)
     {
+        var playerImgSpeed = player_SPEED_Feedback.GetComponent<Image>();
+        var child = player_SPEED_Feedback.transform.GetChild(0);
         if (unit == "player")
         {
-            player_SPEED_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => player_SPEED_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
-            player_SPEED_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+            playerImgSpeed.DOFade(1, 0);
+            player_SPEED_Feedback.transform.DOLocalMoveY(65, 0);
+            player_SPEED_Feedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(() => playerImgSpeed.DOFade(0, 0.5f));
 
-            player_SPEED_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => player_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
-            player_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+            child.transform.DOLocalMoveY(0, 0.8f).OnComplete(() => child.GetComponent<Image>().DOFade(0, 0.5f));
+            child.GetComponent<Image>().DOFade(1, 0.5f);
         } else if (unit == "enemy")
         {
             enemy_SPEED_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => enemy_SPEED_Feedback.GetComponent<Image>().DOFade(0, 0.5f));

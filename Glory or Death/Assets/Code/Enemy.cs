@@ -111,13 +111,13 @@ public class Enemy : MonoBehaviour
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         timeManager.enemyTimer.fillAmount = 1;
         timeManager.fadeInUnitTimer();
-        timeManager.continueTimer();
+        timeManager.continueUnitTimer();
         GetComponent<Animator>().SetBool("attack", false);
     }
     public void stopHurt()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
-        timeManager.continueTimer();
+        timeManager.continueUnitTimer();
         backToIdle();
     }
 
@@ -126,7 +126,7 @@ public class Enemy : MonoBehaviour
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         timeManager.enemyTimer.fillAmount = 1;
         timeManager.fadeInUnitTimer();
-        timeManager.continueTimer();
+        timeManager.continueUnitTimer();
         backToIdle();
     }
 
@@ -160,7 +160,7 @@ public class Enemy : MonoBehaviour
     {
         returnCameraZoom();
         FindObjectOfType<Combat_UI>().move_UI_in();
-        timeManager.continueTimer();
+        timeManager.continueUnitTimer();
         timeManager.fadeInUnitTimer();
     }
     public void executeCameraZoom()

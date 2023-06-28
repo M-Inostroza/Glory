@@ -9,22 +9,25 @@ public class restManager : MonoBehaviour
     [SerializeField] Slider restSlider;
 
     Player player;
+    timeManager timeManager;
 
     bool canRest = false;
-    private void Start()
+    private void Awake()
     {
         player = FindObjectOfType<Player>();
+        timeManager = FindObjectOfType<timeManager>();
     }
     private void Update()
     {
-        reduceValueOverTime(35);
+        reduceValueOverTime(25);
         keyStroke(4);
     }
 
     private void OnEnable()
     {
+        player.GetComponent<Animator>().Play("restSkill");
         canRest = true;
-        StartCoroutine(setMinigameOff(5));
+        StartCoroutine(setMinigameOff(4));
     }
 
     void reduceValueOverTime(float timeFactor)
@@ -50,6 +53,9 @@ public class restManager : MonoBehaviour
     {
         canRest = false;
         player.currentStamina = restSlider.value;
+        timeManager.continueUnitTimer();
+        timeManager.fadeInUnitTimer();
+        player.backToIdle();
     }
 
     IEnumerator setMinigameOff(int seconds)

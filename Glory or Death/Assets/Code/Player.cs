@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
     {
         GetComponent<Animator>().Play("Idle");
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.continueTimer();
+        timeManager.continueUnitTimer();
         timeManager.defaultAction();
     }
     public void returnCamera()
@@ -109,14 +109,14 @@ public class Player : MonoBehaviour
     public void stopDefendSkill()
     {
         gameObject.GetComponent<Animator>().SetBool("DF_Skill", false);
-        timeManager.continueTimer();
+        timeManager.continueUnitTimer();
         timeManager.defaultAction();
     }
     public void stopDodgeSkill()
     {
         gameObject.GetComponent<Animator>().SetBool("evadeSuccess", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.continueTimer();
+        timeManager.continueUnitTimer();
         timeManager.defaultAction();
     }
     public void stopDodgeSkillFail()
@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("skillShieldSuccess", false);
         FindObjectOfType<Combat_UI>().shieldFeed();
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.continueTimer();
+        timeManager.continueUnitTimer();
         timeManager.defaultAction();
     }
     public void stopRest()

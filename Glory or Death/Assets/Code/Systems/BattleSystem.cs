@@ -17,6 +17,7 @@ public class BattleSystem : MonoBehaviour
     // Systems
     public GameObject dodgeManager;
     public GameObject focusManager;
+    public GameObject restManager;
 
     // Scores
     public int targetHit;
@@ -108,13 +109,10 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayRest()
     {
-        playerUnit.GetComponent<Animator>().Play("Cheer");
-        playerUnit.currentStamina += 50; // Mejorable
+        restManager.SetActive(true);
         Input_Manager.SetPlayerAction("none");
         timeManager.selectIcon("Default");
     }
-
-
 
 
     // ------------------------Enemy turn------------------------

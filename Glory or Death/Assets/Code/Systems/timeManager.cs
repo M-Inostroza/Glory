@@ -115,7 +115,7 @@ public class timeManager : MonoBehaviour
                         fadeOutUnitTimer();
                     } else
                     {
-                        continueTimer();
+                        continueUnitTimer();
                         combarUI.alarmStamina();
                     }
                     break;
@@ -129,7 +129,7 @@ public class timeManager : MonoBehaviour
                         fadeOutUnitTimer();
                     } else
                     {
-                        continueTimer();
+                        continueUnitTimer();
                         combarUI.alarmStamina();
                     }
                     break;
@@ -143,7 +143,7 @@ public class timeManager : MonoBehaviour
                         fadeOutUnitTimer();
                     } else
                     {
-                        continueTimer();
+                        continueUnitTimer();
                         combarUI.alarmStamina();
                     }
                     break;
@@ -157,22 +157,24 @@ public class timeManager : MonoBehaviour
                         fadeOutUnitTimer();
                     } else
                     {
-                        continueTimer();
+                        continueUnitTimer();
                         combarUI.alarmStamina();
                     }
                     break;
 
                 case "RST":
                     BS.PlayRest();
+                    stopUnitTimer();
+                    fadeOutUnitTimer();
                     break;
 
                 case "none":
-                    continueTimer();
+                    continueUnitTimer();
                     break;
             }
         }
     }
-    public void continueTimer()
+    public void continueUnitTimer()
     {
         playerTimerControl = true;
         enemyTimerControl = true;

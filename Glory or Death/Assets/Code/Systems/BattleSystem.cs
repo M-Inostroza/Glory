@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class BattleSystem : MonoBehaviour
     Input_Manager Input_Manager;
     timeManager timeManager;
     Combat_UI combat_UI;
+
+    [SerializeField]
+    Toggle testMode;
 
     //private bool canEvade = false;
     private float evadeTimer;
@@ -66,6 +70,7 @@ public class BattleSystem : MonoBehaviour
     {
         updateUI();
         checkEndFight();
+        testModeActivation();
     }
 
     void SetupBattle()
@@ -212,6 +217,19 @@ public class BattleSystem : MonoBehaviour
         } else if (enemyUnit.currentHP <= 0)
         {
             Debug.Log("Win!");
+        }
+    }
+
+
+    public void testModeActivation()
+    {
+        if (testMode.isOn)
+        {
+            timeManager.stopUnitTimer();
+        }
+        else
+        {
+            timeManager.continueUnitTimer();
         }
     }
 }

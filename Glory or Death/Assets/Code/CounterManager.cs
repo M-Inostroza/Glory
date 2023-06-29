@@ -8,6 +8,7 @@ public class CounterManager : MonoBehaviour
 {
     [SerializeField] GameObject shieldImage, counterBullet, counterTarget, overlay;
     [SerializeField] Camera mainCamera;
+    [SerializeField] Combat_UI combatUI;
 
     float rotationSpeed = 100;
 
@@ -50,6 +51,7 @@ public class CounterManager : MonoBehaviour
         mainCamera.transform.DOLocalMoveY(-2.5f, 1);
         overlay.GetComponent<Image>().DOFade(0.85f, 1);
         counterBullet.transform.DOLocalMoveX(-3.25f, 8.5f).SetEase(Ease.OutBack).OnComplete(()=> counterBullet.transform.DOLocalMoveX(12, 0));
+        combatUI.activateX();
     }
 
     public void closeMinigame()

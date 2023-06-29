@@ -20,11 +20,14 @@ public class Combat_UI : MonoBehaviour
     [SerializeField]
     private GameObject inputManager, globalTimer, staminaAlarm, shieldFeedback;
 
+    [SerializeField] private Transform xKey;
+
     //Unit sliders
     [SerializeField]
     private Player playerUnit;
     [SerializeField]
     private Enemy enemyUnit;
+
 
     private void Start()
     {
@@ -214,7 +217,16 @@ public class Combat_UI : MonoBehaviour
             enemy_SPEED_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => enemy_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
             enemy_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
         }
-        
+    }
+
+    // Keys
+    public void activateX()
+    {
+        if (xKey.gameObject.activeInHierarchy)
+        {
+            xKey.DOScale(0.8f, 0.1f).SetDelay(1f);
+            xKey.DOScale(1, 0.1f).SetDelay(3f).OnComplete(() => activateX());
+        }
     }
 
     // Stamina

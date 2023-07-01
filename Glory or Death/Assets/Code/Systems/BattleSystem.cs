@@ -70,7 +70,7 @@ public class BattleSystem : MonoBehaviour
     {
         updateUI();
         checkEndFight();
-        testModeActivation();
+        //testModeActivation();
     }
 
     void SetupBattle()

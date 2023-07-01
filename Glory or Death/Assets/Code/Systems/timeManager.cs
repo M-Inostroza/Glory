@@ -89,20 +89,13 @@ public class timeManager : MonoBehaviour
     {
         if (playerTimerControl)
         {
-            if (devMode)
-            {
-                playerTimer.fillAmount -= Time.deltaTime * 1;
-            } 
-            else
-            {
-                playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.GetBaseSpeed());
-            }
+            playerTimer.fillAmount -= Time.deltaTime / (mainWaitTime - player.GetBaseSpeed());
         }
 
         //Execute selected action
         if (playerTimer.fillAmount == 0 && playerTimerControl)
         {
-            stopUnitTimer();
+            stopUnitTimer(); 
             playerTimer.fillAmount = 1;
             switch (Input_Manager.GetPlayerAction())
             {
@@ -191,6 +184,7 @@ public class timeManager : MonoBehaviour
         enemyActionIcon.sprite = iconSprites[0];
     }
 
+    
     void enemyAction()
     {
         if (enemyTimerControl)
@@ -200,11 +194,12 @@ public class timeManager : MonoBehaviour
 
         if (enemyTimer.fillAmount == 0 && enemyTimerControl)
         {
+            stopUnitTimer();
+            enemyTimer.fillAmount = 1;
             if (enemyActionIcon.color.a == 1)
             {
                 fadeOutUnitTimer();
             }
-            stopUnitTimer();
             
             // Select action
             if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)

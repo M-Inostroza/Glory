@@ -67,7 +67,6 @@ public class Enemy : MonoBehaviour
             {
                 GetComponent<Animator>().SetBool("attack", true);
                 Player.GetComponent<Animator>().SetBool("HURT", true);
-                Player.TakeDamage(nativeDamage);
             }
         }
         else

@@ -30,14 +30,10 @@ public class counterSword : MonoBehaviour
         }
         else if (collision.name == "Counter Target")
         {
-            heart.transform.DOShakePosition(0.4f, 0.5f, 40).OnComplete(()=> setInactive());
-            void setInactive()
-            {
-                enemy.GetComponent<Animator>().SetBool("attack", true);
-                player.GetComponent<Animator>().SetBool("HURT", true);
-                player.TakeDamage(enemy.nativeDamage);
-                counterManager.SetActive(false);
-            }
+            enemy.GetComponent<Animator>().SetBool("attack", true);
+            player.GetComponent<Animator>().SetBool("HURT", true);
+            player.TakeDamage(enemy.nativeDamage);
+            counterManager.SetActive(false);
         }
     }
 }

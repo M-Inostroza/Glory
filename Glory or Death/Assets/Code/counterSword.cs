@@ -9,11 +9,15 @@ public class counterSword : MonoBehaviour
 
     Player player;
     Enemy enemy;
+    Combat_UI combatUI;
+    SoundPlayer soundPlayer;
 
     private void Start()
     {
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
+        combatUI = FindObjectOfType<Combat_UI>();
+        soundPlayer = FindObjectOfType<SoundPlayer>();
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -22,7 +26,8 @@ public class counterSword : MonoBehaviour
         if (collision.name == "Shield Image")
         {
             player.decreaseCurrentShield();
-            FindObjectOfType<Combat_UI>().shakeShieldBar();
+            combatUI.shakeShieldBar();
+            soundPlayer.shield_metal();
             enemy.GetComponent<Animator>().Play("Attack_Blocked");
             player.GetComponent<Animator>().Play("blockAttack");
             player.TakeDamage(enemy.nativeDamage - 2);

@@ -60,7 +60,7 @@ public class DodgeManager : MonoBehaviour
         Transform fillArea = evadeSlider.transform.GetChild(0);
 
         // Set target position
-        float newRandom = Random.Range(0, 80);
+        float newRandom = Random.Range(40, 85);
         evadeTarget.transform.DOLocalMoveX(newRandom, 0.1f);
 
         // Animates bar

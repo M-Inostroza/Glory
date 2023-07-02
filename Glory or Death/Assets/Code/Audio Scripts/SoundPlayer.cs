@@ -5,7 +5,6 @@ using UnityEngine;
 public class SoundPlayer : MonoBehaviour
 {
     private AudioManager audioManager;
-    // Start is called before the first frame update
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -40,8 +39,7 @@ public class SoundPlayer : MonoBehaviour
         audioManager.Play("Audience_boo");
     }
 
-    // -----Attack----- //
-    // Targets
+    // -----Targets-----
     public void targetSounds()
     {
         int random = Random.Range(1, 5);
@@ -88,7 +86,6 @@ public class SoundPlayer : MonoBehaviour
     }
 
     // ------Jump----- //
-
     public void jumpSounds()
     {
         int random = Random.Range(1, 4);
@@ -141,9 +138,26 @@ public class SoundPlayer : MonoBehaviour
         }
     }
 
-    // -----Defend----- //
-
-    //Defend(Success)
+    // -----Hits----- //
+    public void shield_metal()
+    {
+        int random = Random.Range(1, 4);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("Shield_metal_1");
+                break;
+            case 2:
+                audioManager.Play("Shield_metal_2");
+                break;
+            case 3:
+                audioManager.Play("Shield_metal_3");
+                break;
+            case 4:
+                audioManager.Play("Shield_metal_4");
+                break;
+        }
+    }
     public void sword_shield_hit()
     {
         int random = Random.Range(1, 3);
@@ -160,7 +174,6 @@ public class SoundPlayer : MonoBehaviour
                 break;
         }
     }
-
     public void blunt_hit()
     {
         int random = Random.Range(1, 4);
@@ -180,9 +193,6 @@ public class SoundPlayer : MonoBehaviour
                 break;
         }
     }
-
-    
-
     public void swordGrab()
     {
         audioManager.Play("sword_grab");
@@ -191,7 +201,6 @@ public class SoundPlayer : MonoBehaviour
     {
         audioManager.Play("Focus_Buff");
     }
-
     public void metalStone()
     {
         int random = Random.Range(1, 3);

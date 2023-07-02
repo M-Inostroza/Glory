@@ -28,12 +28,15 @@ public class Enemy : MonoBehaviour
     timeManager timeManager;
     Player Player;
 
+    Animator myAnimator;
+
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
         BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
         Player = FindObjectOfType<Player>();
+        myAnimator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -61,11 +64,12 @@ public class Enemy : MonoBehaviour
             adrenaline += 2;
             if (Player.getCurrentShield() > 0 && !dirtManager.isDirtyActive())
             {
+                audioManager.Play("activateCounterMinigame");
                 counterManager.gameObject.SetActive(true);
             }
             else
             {
-                GetComponent<Animator>().SetBool("attack", true);
+                myAnimator.SetBool("attack", true);
                 Player.GetComponent<Animator>().SetBool("HURT", true);
             }
         }
@@ -90,21 +94,22 @@ public class Enemy : MonoBehaviour
         nativeDamage += 3;
         GetComponent<Animator>().Play("Rage");
     }
-    
-    
+
+
+
+    // Utilities
     public void playAttack()
     {
         if (FindObjectOfType<Player>().missed)
         {
             FindObjectOfType<SoundPlayer>().jumpSounds();
             FindObjectOfType<Player>().GetComponent<Animator>().SetBool("evadeJump", true);
-        } else
+        }
+        else
         {
             FindObjectOfType<SoundPlayer>().blunt_hit();
         }
     }
-
-    // Utilities
     public void stopAttack()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];

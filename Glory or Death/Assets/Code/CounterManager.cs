@@ -44,20 +44,33 @@ public class CounterManager : MonoBehaviour
 
     public void startMinigame()
     {
-        float randomRotation = Random.Range(0, 360);
-        shieldImage.transform.DORotate(new Vector3(0, 0, randomRotation), 0);
-        counterTarget.transform.DOPunchScale(new Vector3(0.05f,0.05f,0.05f), 1, 6, 3).SetLoops(-1, LoopType.Restart);
-        mainCamera.DOFieldOfView(20, 1);
-        mainCamera.transform.DOLocalMoveY(-2.5f, 1);
-        overlay.GetComponent<Image>().DOFade(0.85f, 1);
+        setRandomRotation();
+        moveCameraIn();
+        
         counterBullet.transform.DOLocalMoveX(-3.25f, 8.5f).SetEase(Ease.OutBack).OnComplete(()=> counterBullet.transform.DOLocalMoveX(12, 0));
         combatUI.activateX();
     }
 
     public void closeMinigame()
     {
+        moveCameraOut();
+    }
+    void setRandomRotation()
+    {
+        float randomRotation = Random.Range(0, 360);
+        shieldImage.transform.DORotate(new Vector3(0, 0, randomRotation), 0);
+        counterTarget.transform.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 1, 6, 3).SetLoops(-1, LoopType.Restart);
+    }
+    void moveCameraIn()
+    {
+        mainCamera.DOFieldOfView(20, 0.7f);
+        mainCamera.transform.DOLocalMoveY(-2.5f, 0.7f);
+        overlay.GetComponent<Image>().DOFade(0.85f, 0.5f);
+    }
+    void moveCameraOut()
+    {
         mainCamera.DOFieldOfView(50, 0.5f);
         mainCamera.transform.DOLocalMoveY(0, 0.5f);
-        overlay.GetComponent<Image>().DOFade(0, 0.5f);
+        overlay.GetComponent<Image>().DOFade(0, 0.6f);
     }
 }

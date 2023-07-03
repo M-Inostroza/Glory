@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class counterSword : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class counterSword : MonoBehaviour
     Combat_UI combatUI;
     SoundPlayer soundPlayer;
 
+    Material heartMaterial;
+    [SerializeField] Image heartImage;
+
+    private void Awake()
+    {
+        heartMaterial = heartImage.material;
+    }
     private void Start()
     {
         player = FindObjectOfType<Player>();
@@ -35,10 +43,17 @@ public class counterSword : MonoBehaviour
         }
         else if (collision.name == "Counter Target")
         {
+            soundPlayer.stabSounds();
             enemy.GetComponent<Animator>().SetBool("attack", true);
             player.GetComponent<Animator>().SetBool("HURT", true);
             player.TakeDamage(enemy.nativeDamage);
-            counterManager.SetActive(false);
+            meltHeart();
         }
+    }
+
+    void meltHeart()
+    {
+        DOTween.To(() => heartMaterial.GetFloat("_FadeAmount"), x => heartMaterial.SetFloat("_FadeAmount", x), 1, 1)
+            .OnComplete(()=> counterManager.SetActive(false));
     }
 }

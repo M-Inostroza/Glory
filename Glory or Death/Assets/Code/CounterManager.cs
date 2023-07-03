@@ -11,6 +11,12 @@ public class CounterManager : MonoBehaviour
     [SerializeField] Combat_UI combatUI;
 
     float rotationSpeed = 100;
+    Material heartMaterial;
+
+    private void Awake()
+    {
+        heartMaterial = counterTarget.GetComponent<Image>().GetComponent<Material>();
+    }
 
     private void Update()
     {
@@ -46,7 +52,8 @@ public class CounterManager : MonoBehaviour
     {
         setRandomRotation();
         moveCameraIn();
-        
+
+        heartMaterial.SetFloat("_FadeAmount", 0);
         counterBullet.transform.DOLocalMoveX(-3.25f, 8.5f).SetEase(Ease.OutBack).OnComplete(()=> counterBullet.transform.DOLocalMoveX(12, 0));
         combatUI.activateX();
     }

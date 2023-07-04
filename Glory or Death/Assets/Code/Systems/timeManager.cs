@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -383,5 +385,17 @@ public class timeManager : MonoBehaviour
 
         playerRing.DOFade(1, fadeTime);
         EnemyRing.DOFade(1, fadeTime);
+    }
+
+    public void executeSlowMotion(float seconds, float scale)
+    {
+        StartCoroutine(slowMotion(seconds, scale));
+    }
+
+    IEnumerator slowMotion(float seconds, float timeScale)
+    {
+        Time.timeScale = timeScale;
+        yield return new WaitForSeconds(seconds);
+        Time.timeScale = 1;
     }
 }

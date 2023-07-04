@@ -11,12 +11,8 @@ public class CounterManager : MonoBehaviour
     [SerializeField] Combat_UI combatUI;
 
     float rotationSpeed = 100;
-    Material heartMaterial;
 
-    private void Awake()
-    {
-        heartMaterial = counterTarget.GetComponent<Image>().GetComponent<Material>();
-    }
+    [SerializeField] Material heartMaterial, swordMaterial;
 
     private void Update()
     {
@@ -54,6 +50,7 @@ public class CounterManager : MonoBehaviour
         moveCameraIn();
 
         heartMaterial.SetFloat("_FadeAmount", 0);
+        swordMaterial.SetFloat("_FadeAmount", 0);
         counterBullet.transform.DOLocalMoveX(-3.25f, 8.5f).SetEase(Ease.OutBack).OnComplete(()=> counterBullet.transform.DOLocalMoveX(12, 0));
         combatUI.activateX();
     }
@@ -66,7 +63,7 @@ public class CounterManager : MonoBehaviour
     {
         float randomRotation = Random.Range(0, 360);
         shieldImage.transform.DORotate(new Vector3(0, 0, randomRotation), 0);
-        counterTarget.transform.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 1, 6, 3).SetLoops(-1, LoopType.Restart);
+        counterTarget.transform.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 1, 6, 3).SetLoops(3, LoopType.Restart);
     }
     void moveCameraIn()
     {

@@ -18,15 +18,15 @@ public class BattleSystem : MonoBehaviour
     //private bool canEvade = false;
     private float evadeTimer;
 
-    // Systems
+    [Header ("Mechanics")]
     public GameObject dodgeManager;
     public GameObject focusManager;
     public GameObject restManager;
 
-    // Scores
+    [Header("Scores")]
     public int targetHit;
 
-    // Units
+    [Header("Units")]
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     private Player playerUnit;
@@ -38,12 +38,11 @@ public class BattleSystem : MonoBehaviour
     // UI
     public EnemyHUD enemyHUD;
 
-    // Text elements
+    [Header("Text elements")]
     public GameObject missText;
     public GameObject hitText_Enemy;
     public GameObject hitText_Player;
     public GameObject missText_Player;
-    public GameObject thankYou;
 
     //Info Hud
     public GameObject infoHud;
@@ -220,16 +219,16 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-
     public void testModeActivation()
     {
+        bool loopCut = false; 
         if (testMode.isOn)
         {
             timeManager.stopUnitTimer();
-        }
-        else
+        } else if (!testMode.isOn && !loopCut)
         {
             timeManager.continueUnitTimer();
+            loopCut = true;
         }
     }
 }

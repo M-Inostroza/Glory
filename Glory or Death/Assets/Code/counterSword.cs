@@ -12,24 +12,23 @@ public class counterSword : MonoBehaviour
     Enemy enemy;
     Combat_UI combatUI;
     SoundPlayer soundPlayer;
+    AudioManager audioManager;
 
-    Material heartMaterial;
-    [SerializeField] Image heartImage;
+    [SerializeField] Material heartMaterial, swordMaterial;
 
-    private void Awake()
-    {
-        heartMaterial = heartImage.material;
-    }
     private void Start()
     {
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
         combatUI = FindObjectOfType<Combat_UI>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("create a stop for the shields rotation");
+        Debug.Log("and design a new one");
         transform.DOLocalMoveX(12, 0);
         if (collision.name == "Shield Image")
         {
@@ -43,17 +42,25 @@ public class counterSword : MonoBehaviour
         }
         else if (collision.name == "Counter Target")
         {
+            FindObjectOfType<cameraManager>().playChrome();
+            audioManager.Play("Counter_Fail");
             soundPlayer.stabSounds();
-            enemy.GetComponent<Animator>().SetBool("attack", true);
-            player.GetComponent<Animator>().SetBool("HURT", true);
-            player.TakeDamage(enemy.nativeDamage);
             meltHeart();
+            player.TakeDamage(enemy.nativeDamage);
         }
     }
 
     void meltHeart()
     {
-        DOTween.To(() => heartMaterial.GetFloat("_FadeAmount"), x => heartMaterial.SetFloat("_FadeAmount", x), 1, 1)
-            .OnComplete(()=> counterManager.SetActive(false));
+        FindObjectOfType<timeManager>().executeSlowMotion(0.6f, 0.3f);
+        DOTween.To(() => heartMaterial.GetFloat("_FadeAmount"), x => heartMaterial.SetFloat("_FadeAmount", x), 1, 0.5f)
+            .OnComplete(()=> playAnims_closeGame());
+        DOTween.To(() => swordMaterial.GetFloat("_FadeAmount"), x => swordMaterial.SetFloat("_FadeAmount", x), 1, 0.5f);
+    }
+    void playAnims_closeGame()
+    {
+        enemy.GetComponent<Animator>().SetBool("attack", true);
+        player.GetComponent<Animator>().SetBool("HURT", true);
+        counterManager.SetActive(false);
     }
 }

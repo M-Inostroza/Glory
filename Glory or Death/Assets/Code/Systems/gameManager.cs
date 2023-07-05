@@ -19,7 +19,7 @@ public class gameManager : MonoBehaviour
         battleSystem = FindObjectOfType<BattleSystem>();
         audioManager = FindObjectOfType<AudioManager>();
 
-        audioManager.Play("Combat-Theme");
+        audioManager.Play("Combat_Theme");
     }
 
     private void Update()

@@ -7,13 +7,16 @@ using DG.Tweening;
 public class restManager : MonoBehaviour
 {
     [SerializeField] Slider restSlider;
+    [SerializeField] Camera mainCamera;
 
     Player player;
     timeManager timeManager;
+    AudioManager audioManager;
 
     bool canRest = false;
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
         timeManager = FindObjectOfType<timeManager>();
     }
@@ -25,9 +28,11 @@ public class restManager : MonoBehaviour
 
     private void OnEnable()
     {
+        cameraZoom();
+        audioManager.Play("Rest_On");
         player.GetComponent<Animator>().Play("restSkill");
         canRest = true;
-        StartCoroutine(setMinigameOff(4));
+        StartCoroutine(setMinigameOff(4.5f));
     }
 
     void reduceValueOverTime(float timeFactor)
@@ -52,15 +57,27 @@ public class restManager : MonoBehaviour
     private void OnDisable()
     {
         canRest = false;
-        player.currentStamina = restSlider.value;
+        player.SetCurrentStamina(restSlider.value);
         timeManager.continueUnitTimer();
         timeManager.fadeInUnitTimer();
         player.backToIdle();
     }
 
-    IEnumerator setMinigameOff(int seconds)
+    // Utilities
+    IEnumerator setMinigameOff(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        returnCameraZoom();
         gameObject.SetActive(false);
+    }
+    private void cameraZoom()
+    {
+        mainCamera.DOFieldOfView(35, 1);
+        mainCamera.transform.DOLocalMove(new Vector3(-1.7f, -1.5f, -10), 1);
+    }
+    private void returnCameraZoom()
+    {
+        mainCamera.DOFieldOfView(50, 0.5f);
+        mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 1);
     }
 }

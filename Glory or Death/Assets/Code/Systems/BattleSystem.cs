@@ -69,7 +69,7 @@ public class BattleSystem : MonoBehaviour
     {
         updateUI();
         checkEndFight();
-        //testModeActivation();
+        testModeActivation();
     }
 
     void SetupBattle()
@@ -78,8 +78,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.currentHP = enemyUnit.maxHP;
 
         playerUnit.setCurrentShield(playerUnit.GetMaxShield());
-
-        playerUnit.currentStamina = playerUnit.maxStamina;
+        playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());
     }
 
     // ----------------- Actions -----------------
@@ -94,14 +93,14 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayerDefend()
     {
-        if (playerUnit.currentStamina >= 20)
+        if (playerUnit.GetCurrentStamina() >= 20)
         {
             defendManager.activateShieldMinigame();
         }
     }
     public void PlayDodge()
     {
-        if (playerUnit.currentStamina >= 20)
+        if (playerUnit.GetCurrentStamina() >= 20)
         {
             dodgeManager.SetActive(true);
         } 
@@ -174,7 +173,7 @@ public class BattleSystem : MonoBehaviour
         combat_UI.setPlayerHP(playerUnit.GetCurrentHP());
 
         // Update stamina
-        combat_UI.GetStaminaSlider().DOValue(playerUnit.currentStamina, 0.5f);
+        combat_UI.GetStaminaSlider().DOValue(playerUnit.GetCurrentStamina(), 0.5f);
 
         // Update adrenaline
         combat_UI.GetPlayerAdrenalineSlider().DOValue(playerUnit.GetAdrenaline(), 0.5f);
@@ -221,14 +220,9 @@ public class BattleSystem : MonoBehaviour
 
     public void testModeActivation()
     {
-        bool loopCut = false; 
         if (testMode.isOn)
         {
             timeManager.stopUnitTimer();
-        } else if (!testMode.isOn && !loopCut)
-        {
-            timeManager.continueUnitTimer();
-            loopCut = true;
         }
     }
 }

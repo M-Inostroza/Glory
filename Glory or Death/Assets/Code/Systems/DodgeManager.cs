@@ -150,14 +150,14 @@ public class DodgeManager : MonoBehaviour
 
     void killArrow(GameObject arrow)
     {
-        audioManager.Play("arrowEvadeWosh");
+        audioManager.Play("Evade_Arrow_Wosh");
         evadeSlider.DOValue(evadeSlider.value + 50, 0.08f);
         instantArrows.RemoveAt(0);
         arrow.transform.DOLocalJump(new Vector2(arrow.transform.localPosition.x, arrow.transform.localPosition.y + 10), 6, 1, 0.3f).OnComplete(() => Destroy(arrow.gameObject));
     }
     void failArrow(GameObject arrow)
     {
-        audioManager.Play("arrowFail");
+        audioManager.Play("Evade_Arrow_Fail");
         evadeSlider.DOValue(evadeSlider.value - 30, 0.08f);
         instantArrows.RemoveAt(0);
         arrow.transform.DOShakePosition(0.3f, 4, 20).OnComplete(() => Destroy(arrow.gameObject));

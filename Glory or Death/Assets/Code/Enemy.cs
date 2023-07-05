@@ -64,7 +64,7 @@ public class Enemy : MonoBehaviour
             adrenaline += 2;
             if (Player.getCurrentShield() > 0 && !dirtManager.isDirtyActive())
             {
-                audioManager.Play("activateCounterMinigame");
+                audioManager.Play("Counter_On");
                 counterManager.gameObject.SetActive(true);
             }
             else
@@ -137,12 +137,6 @@ public class Enemy : MonoBehaviour
     public void stopEnemyDefense()
     {
         GetComponent<Animator>().SetBool("Hurt", false);
-    }
-
-
-    public void attackStrong()
-    {
-        audioManager.Play("superStabEnemy");
     }
 
     public void shieldAttack()

@@ -92,12 +92,12 @@ public class Combat_UI : MonoBehaviour
     // Stamina
     void refillStamina()
     {
-        if (playerUnit.currentStamina < playerUnit.maxStamina)
+        if (playerUnit.GetCurrentStamina() < playerUnit.GetMaxStamina())
         {
-            playerUnit.currentStamina += 0.5f * Time.deltaTime; //Mejorable
+            playerUnit.IncrementCurrentStamina(0.5f * Time.deltaTime);  //Mejorable
         }
 
-        if (playerUnit.currentStamina < 30)
+        if (playerUnit.GetCurrentStamina() < 30)
         {
             inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(55, 0.7f);
         }
@@ -238,6 +238,6 @@ public class Combat_UI : MonoBehaviour
     // Test
     public void reduceStamina()
     {
-        playerUnit.currentStamina = 10;
+        playerUnit.SetCurrentStamina(10);
     }
 }

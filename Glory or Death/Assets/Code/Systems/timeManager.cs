@@ -102,11 +102,11 @@ public class timeManager : MonoBehaviour
             switch (Input_Manager.GetPlayerAction())
             {
                 case "ATK1":
-                    if (player.currentStamina > 25)
+                    if (player.GetCurrentStamina() > 25)
                     {
                         BS.PlayerAttack();
                         Input_Manager.GetAttackCD().fillAmount = 1;
-                        player.currentStamina -= 25;
+                        player.DecrementCurrentStamina(25);
                         fadeOutUnitTimer();
                     } else
                     {
@@ -116,11 +116,11 @@ public class timeManager : MonoBehaviour
                     break;
 
                 case "DF":
-                    if (player.currentStamina > 20)
+                    if (player.GetCurrentStamina() > 20)
                     {
                         BS.PlayerDefend();
                         Input_Manager.GetDefendCD().fillAmount = 1;
-                        player.currentStamina -= 20;
+                        player.DecrementCurrentStamina(20);
                         fadeOutUnitTimer();
                     } else
                     {
@@ -130,11 +130,11 @@ public class timeManager : MonoBehaviour
                     break;
 
                 case "DG":
-                    if (player.currentStamina > 30)
+                    if (player.GetCurrentStamina() > 30)
                     {
                         BS.PlayDodge();
                         Input_Manager.GetDodgeCD().fillAmount = 1;
-                        player.currentStamina -= 30;
+                        player.DecrementCurrentStamina(30);
                         fadeOutUnitTimer();
                     } else
                     {
@@ -144,11 +144,11 @@ public class timeManager : MonoBehaviour
                     break;
 
                 case "FC":
-                    if (player.currentStamina > 35)
+                    if (player.GetCurrentStamina() > 35)
                     {
                         BS.PlayFocus();
                         Input_Manager.GetFocusCD().fillAmount = 1;
-                        player.currentStamina -= 35;
+                        player.DecrementCurrentStamina(35);
                         fadeOutUnitTimer();
                     } else
                     {

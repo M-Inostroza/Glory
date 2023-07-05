@@ -55,7 +55,7 @@ public class startUI_Manager : MonoBehaviour
 
     public void startFaceOff()
     {
-        audioManager.Play("startGame");
+        audioManager.Play("Game_Start");
 
         play_button.transform.DOLocalMoveY(-500, 1f).SetEase(Ease.InOutSine);
         title_container.transform.DOLocalMoveY(500, 1.1f).SetEase(Ease.InOutSine);
@@ -71,7 +71,7 @@ public class startUI_Manager : MonoBehaviour
     void dissapearUI()
     {
         gameObject.SetActive(false);
-        audioManager.Stop("MainTheme");
+        audioManager.Stop("Main_Theme");
         audioManager.Play("Combat");
     }
 
@@ -80,13 +80,13 @@ public class startUI_Manager : MonoBehaviour
         player_image.transform.DOShakePosition(1f, 3f, 30);
         enemy_image.transform.DOShakePosition(1f, 3f, 30);
         faceOff_thunder.SetActive(true);
-        audioManager.Play("thunder");
+        audioManager.Play("Thunder");
     }
 
     void thunderIntro()
     {
         rayo_effect.Play();
-        audioManager.Play("thunder_title");
+        audioManager.Play("Thunder_Title");
     }
 
     void getUI_elements()

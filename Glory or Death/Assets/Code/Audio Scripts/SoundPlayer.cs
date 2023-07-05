@@ -217,4 +217,28 @@ public class SoundPlayer : MonoBehaviour
                 break;
         }
     }
+    public void playStomps()
+    {
+        int random = Random.Range(1, 3);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("Stomp_1");
+                break;
+            case 2:
+                audioManager.Play("Stomp_2");
+                break;
+            case 3:
+                audioManager.Play("Stomp_3");
+                break;
+        }
+    }
+    public void restCharge()
+    {
+        audioManager.Play("Rest_Charge");
+    }
+    public void restSuccess()
+    {
+        audioManager.Play("Rest_Success");
+    }
 }

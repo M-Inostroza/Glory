@@ -9,17 +9,16 @@ public class Player : MonoBehaviour
     private TargetManager targetManager;
     private BattleSystem BS;
     
-    [SerializeField] private int maxHP, currentHP;
+    [Header("Stats")]
     [SerializeField] private float maxSpeed, baseSpeed;
+    [SerializeField] private float maxStamina, currentStamina; 
+    [SerializeField] private int maxHP, currentHP;
     [SerializeField] private int adrenaline;
     [SerializeField] private int nativeDamage;
     [SerializeField] private int maxShield, currentShield;
     [SerializeField] private int critHits;
-    [SerializeField] private DodgeManager dodgeManager;
 
-    //Stamina
-    public float maxStamina;
-    public float currentStamina;
+    [SerializeField] private DodgeManager dodgeManager;
 
     //Agility (Dodging)
     public bool missed = false;
@@ -165,8 +164,6 @@ public class Player : MonoBehaviour
     {
         enemy_unit.GetComponent<Animator>().SetBool("hurt_basic", true);
     }
-
-
     public void hurtParts(int part)
     {
         switch (part)
@@ -182,11 +179,11 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-
     public void showEnemyDamage()
     {
         BS.showHit(nativeDamage, BS.hitText_Enemy.transform);
     }
+
 
     // ---------------- Getters and Setters ----------------
 
@@ -208,6 +205,27 @@ public class Player : MonoBehaviour
         currentHP = CurrentHP;
     }
 
+    // Stamina
+    public float GetMaxStamina()
+    {
+        return maxStamina;
+    }
+    public float GetCurrentStamina()
+    {
+        return currentStamina;
+    }
+    public void SetCurrentStamina(float newStamina)
+    {
+        currentStamina = newStamina;
+    }
+    public float IncrementCurrentStamina(float plusStamina)
+    {
+        return currentStamina += plusStamina;
+    }
+    public float DecrementCurrentStamina(float plusStamina)
+    {
+        return currentStamina -= plusStamina;
+    }
     // DMG
     public int getDamage()
     {

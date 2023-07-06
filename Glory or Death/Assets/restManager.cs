@@ -28,6 +28,7 @@ public class restManager : MonoBehaviour
 
     private void OnEnable()
     {
+        restSlider.value = 0;
         cameraZoom();
         audioManager.Play("Rest_On");
         player.GetComponent<Animator>().Play("restSkill");

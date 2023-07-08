@@ -22,13 +22,16 @@ public class superSword : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Shield Image")
+        if (collision.name == "shield")
         {
             Debug.Log("shield");
+            gameObject.transform.DOKill();
+            Destroy(gameObject);
         }
         else if (collision.name == "Heart")
         {
             Debug.Log("heart");
+            gameObject.transform.DOKill();
             Destroy(gameObject);
         }
     }

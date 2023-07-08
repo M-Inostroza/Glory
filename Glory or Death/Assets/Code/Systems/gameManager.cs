@@ -13,7 +13,7 @@ public class gameManager : MonoBehaviour
 
     private void Start()
     {
-        DOTween.SetTweensCapacity(1750, 500);
+        DOTween.SetTweensCapacity(5750, 500);
 
         timeManager = FindObjectOfType<timeManager>();
         battleSystem = FindObjectOfType<BattleSystem>();

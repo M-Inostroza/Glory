@@ -8,22 +8,29 @@ public class superAttackManager : MonoBehaviour
     [SerializeField] Transform[] swordSpawners;
     [SerializeField] GameObject swordProyectilePrefab, parentCanvas;
 
-    [SerializeField] Transform heartTarget;
+    [SerializeField] Transform heartTarget, shield;
+
+    timeManager timeManager;
 
     public float bulletSpeed;
     public int swordNumber;
+    public float rotationSpeed;
 
     private void Update()
     {
         rotateSpawners();
+        rotateOnKey();
     }
     private void Start()
     {
+        timeManager = FindObjectOfType<timeManager>();
         StartCoroutine(SpawnSwordsWithDelay(0.5f));
+        timeManager.executeSlowMotion(5, 0.6f);
     }
 
     IEnumerator SpawnSwordsWithDelay(float delay)
     {
+         
         for (int i = 0; i < swordNumber; i++)
         {
             var randomNumber = Random.Range(0, swordSpawners.Length);
@@ -45,5 +52,19 @@ public class superAttackManager : MonoBehaviour
         Vector3 direction = targetPosition - bullet.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         bullet.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
+    }
+
+    void rotateOnKey()
+    {
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            float rotationAmount = rotationSpeed * Time.deltaTime;
+            shield.transform.Rotate(0f, 0f, -rotationAmount);
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            float rotationAmount = rotationSpeed * Time.deltaTime;
+            shield.transform.Rotate(0f, 0f, rotationAmount);
+        }
     }
 }

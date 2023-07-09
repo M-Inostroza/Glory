@@ -42,7 +42,7 @@ public class startUI_Manager : MonoBehaviour
 
     void animateUI()
     {
-        glory_img.transform.DOLocalMoveY(145, .7f).SetEase(Ease.InOutSine).SetDelay(1.2f).OnComplete(()=>audioManager.Play("clash_glory"));
+        glory_img.transform.DOLocalMoveY(145, .7f).SetEase(Ease.InOutSine).SetDelay(1.2f).OnComplete(()=>audioManager.Play("Clash_Intro"));
         death_img.transform.DOLocalMoveY(67, .7f).SetEase(Ease.InOutSine).SetDelay(1.2f);
 
         howToPlay_button.transform.DOLocalMoveY(-230, 1f).SetEase(Ease.InOutSine).SetDelay(2.5f);

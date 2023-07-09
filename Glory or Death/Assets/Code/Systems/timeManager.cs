@@ -8,30 +8,19 @@ using DG.Tweening;
 
 public class timeManager : MonoBehaviour
 {
-    /*
-     * 0: Sword
-     * 1: Hourglass
-     * 2: Boot
-     * 3: Shield
-     */
     //Array of sprites for the icons & active Icon
     public Sprite[] iconSprites;
 
-    public Image actionIcon;
+    public Image actionPlayerIcon;
     public Image actionEnemyIcon;
 
     public Image playerRing;
     public Image EnemyRing;
 
-
     private BattleSystem BS;
     private Input_Manager Input_Manager;
     private gameManager GM;
     private Combat_UI combarUI;
-
-    //-----------------------------------------------------------------------------dev-----
-    private bool devMode = false;
-    //-----------------------------------------------------------------------------dev-----
 
     //Global time
     public TextMeshProUGUI timerText;
@@ -256,43 +245,16 @@ public class timeManager : MonoBehaviour
             switch (timer.gameObject.tag)
             {
                 case "AttackCD":
-                    if (devMode)
-                    {
-                        timer.fillAmount -= Time.deltaTime * 1;
-                    } else
-                    {
-                        timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
-                    }
+                    timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
                     break;
                 case "DefendCD":
-                    if (devMode)
-                    {
-                        timer.fillAmount -= Time.deltaTime * 1;
-                    }
-                    else
-                    {
-                        timer.fillAmount -= Time.deltaTime / (Shield_CD * 4.5f);
-                    }
+                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 4.5f);
                     break;
                 case "DodgeCD":
-                    if (devMode)
-                    {
-                        timer.fillAmount -= Time.deltaTime * 1;
-                    }
-                    else
-                    {
-                        timer.fillAmount -= Time.deltaTime / (Dodge_CD * 4.5f);
-                    }
+                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 4.5f);
                     break;
                 case "FocusCD":
-                    if (devMode)
-                    {
-                        timer.fillAmount -= Time.deltaTime * 1;
-                    }
-                    else
-                    {
-                        timer.fillAmount -= Time.deltaTime / (Focus_CD * 4);
-                    }
+                    timer.fillAmount -= Time.deltaTime / (Focus_CD * 4);
                     break;
             }
         }
@@ -312,28 +274,28 @@ public class timeManager : MonoBehaviour
         switch (icon)
         {
             case "ATK1":
-                actionIcon.sprite = iconSprites[0];
-                animateIcon(actionIcon.transform);
+                actionPlayerIcon.sprite = iconSprites[0];
+                animateIcon(actionPlayerIcon.transform);
                 break;
             case "DF":
-                actionIcon.sprite = iconSprites[3];
-                animateIcon(actionIcon.transform);
+                actionPlayerIcon.sprite = iconSprites[3];
+                animateIcon(actionPlayerIcon.transform);
                 break;
             case "DG":
-                actionIcon.sprite = iconSprites[2];
-                animateIcon(actionIcon.transform);
+                actionPlayerIcon.sprite = iconSprites[2];
+                animateIcon(actionPlayerIcon.transform);
                 break;
             case "FC":
-                actionIcon.sprite = iconSprites[4];
-                animateIcon(actionIcon.transform);
+                actionPlayerIcon.sprite = iconSprites[4];
+                animateIcon(actionPlayerIcon.transform);
                 break;
             case "RST":
-                actionIcon.sprite = iconSprites[5];
-                animateIcon(actionIcon.transform);
+                actionPlayerIcon.sprite = iconSprites[5];
+                animateIcon(actionPlayerIcon.transform);
                 break;
             case "Default":
-                actionIcon.sprite = iconSprites[1];
-                animateIcon(actionIcon.transform);
+                actionPlayerIcon.sprite = iconSprites[1];
+                animateIcon(actionPlayerIcon.transform);
                 break;
         }
     }
@@ -341,7 +303,7 @@ public class timeManager : MonoBehaviour
     public void defaultAction()
     {
         Input_Manager.SetPlayerAction("none");
-        actionIcon.sprite = iconSprites[1];
+        actionPlayerIcon.sprite = iconSprites[1];
 
         fadeInUnitTimer();
     }
@@ -370,7 +332,7 @@ public class timeManager : MonoBehaviour
     {
         float fadeTime = 0.05f;
 
-        actionIcon.DOFade(0, fadeTime);
+        actionPlayerIcon.DOFade(0, fadeTime);
         actionEnemyIcon.DOFade(0, fadeTime);
 
         playerRing.DOFade(0, fadeTime);
@@ -381,7 +343,7 @@ public class timeManager : MonoBehaviour
         float fadeTime = 0.05f;
 
         actionEnemyIcon.DOFade(1, fadeTime);
-        actionIcon.DOFade(1, fadeTime);
+        actionPlayerIcon.DOFade(1, fadeTime);
 
         playerRing.DOFade(1, fadeTime);
         EnemyRing.DOFade(1, fadeTime);

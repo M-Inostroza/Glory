@@ -123,6 +123,10 @@ public class BattleSystem : MonoBehaviour
     {
         enemyUnit.executeAttack();
     }
+    public void EnemyTurn_SuperAttack()
+    {
+        enemyUnit.executeSuperAttack();
+    }
     public void EnemyTurn_dirt()
     {
         enemyUnit.GetComponent<Animator>().Play("dirt_toss");
@@ -132,6 +136,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.executeRage();
     }
 
+    // UI
     public void showHit(int dmg, Transform jumper)
     {
         jumper.gameObject.SetActive(true);
@@ -165,7 +170,6 @@ public class BattleSystem : MonoBehaviour
             jumpTween.Play();
         }
     }
-
     public void updateUI()
     {
         // Update health
@@ -189,6 +193,8 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+
+    // FIX THIS
     IEnumerator waitForDamage(float delay)
     {
         //Delay

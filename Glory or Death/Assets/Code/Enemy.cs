@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] dirtToss dirtManager;
     [SerializeField] CounterManager counterManager;
+    [SerializeField] superAttackManager superAttackManager;
 
     [SerializeField]
     private Camera mainCamera;
@@ -79,12 +80,23 @@ public class Enemy : MonoBehaviour
             adrenaline++;
         }
     }
+    public void executeSuperAttack()
+    {
+        if (Player.getCurrentShield() > 0 && !dirtManager.isDirtyActive())
+        {
+            superAttackManager.gameObject.SetActive(true);
+        }
+        else
+        {
+            myAnimator.SetBool("attack", true);
+            Player.GetComponent<Animator>().SetBool("HURT", true);
+        }
+    }
     public void executeDirt()
     {
         dirtManager.gameObject.SetActive(true);
         adrenaline += 2;
     }
-
     public void executeRage()
     {
         executeCameraZoom();
@@ -94,7 +106,6 @@ public class Enemy : MonoBehaviour
         nativeDamage += 3;
         GetComponent<Animator>().Play("Rage");
     }
-
 
 
     // Utilities
@@ -124,7 +135,6 @@ public class Enemy : MonoBehaviour
         timeManager.continueUnitTimer();
         backToIdle();
     }
-
     public void stopDirt()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
@@ -133,12 +143,10 @@ public class Enemy : MonoBehaviour
         timeManager.continueUnitTimer();
         backToIdle();
     }
-
     public void stopEnemyDefense()
     {
         GetComponent<Animator>().SetBool("Hurt", false);
     }
-
     public void shieldAttack()
     {
         audioManager.Play("shieldHitEnemy");
@@ -148,12 +156,10 @@ public class Enemy : MonoBehaviour
         GetComponent<Animator>().SetBool("ATK2", false);
         adrenaline = 0;
     }
-
     public void backToIdle()
     {
         GetComponent<Animator>().Play("Idle");
     }
-
     public void returnFromRage()
     {
         returnCameraZoom();
@@ -171,7 +177,6 @@ public class Enemy : MonoBehaviour
         mainCamera.DOFieldOfView(50, 1f);
         mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.7f);
     }
-
     public void playAudience()
     {
         audioManager.Play("Audience_boo");
@@ -188,7 +193,6 @@ public class Enemy : MonoBehaviour
     {
         FindObjectOfType<Combat_UI>().speedBuff("enemy");
     }
-
     public void doCameraShake(int level)
     {
         if (level == 1)
@@ -210,7 +214,6 @@ public class Enemy : MonoBehaviour
     {
         isAngry = newState;
     }
-
 
     public void showDmgFeedbackPlayer()
     {

@@ -175,7 +175,6 @@ public class timeManager : MonoBehaviour
         enemyActionIcon.sprite = iconSprites[0];
     }
 
-    
     void enemyAction()
     {
         if (enemyTimerControl)
@@ -202,18 +201,24 @@ public class timeManager : MonoBehaviour
             } 
             else
             {
-                float attackRandom = Random.Range(0, 99);
-                if (attackRandom > dirtChance || dirtPrevious)
+                if (enemy.GetCurrentAdrenaline() >= 20)
                 {
-                    Input_Manager.SetEnemyAction("ATK1");
-                    dirtPrevious = false;
-                    dirtChance += 5;
-                }
-                else
+                    Input_Manager.SetEnemyAction("ATK2");
+                } else
                 {
-                    Input_Manager.SetEnemyAction("DIRT");
-                    dirtPrevious = true;
-                    dirtChance = 10;
+                    float attackRandom = Random.Range(0, 99);
+                    if (attackRandom > dirtChance || dirtPrevious)
+                    {
+                        Input_Manager.SetEnemyAction("ATK1");
+                        dirtPrevious = false;
+                        dirtChance += 5;
+                    }
+                    else
+                    {
+                        Input_Manager.SetEnemyAction("DIRT");
+                        dirtPrevious = true;
+                        dirtChance = 5;
+                    }
                 }
             }
 
@@ -223,6 +228,10 @@ public class timeManager : MonoBehaviour
             {
                 case "ATK1":
                     BS.EnemyTurn_attack();
+                    break;
+
+                case "ATK2":
+                    BS.EnemyTurn_SuperAttack();
                     break;
 
                 case "DIRT":

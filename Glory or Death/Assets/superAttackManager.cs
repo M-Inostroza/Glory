@@ -36,7 +36,7 @@ public class superAttackManager : MonoBehaviour
         audioManager.Play("Super_Attack_Enemy_On");
         cameraManager.playChrome();
         moveCameraIn();
-        StartCoroutine(MinigameTimer(7));
+        StartCoroutine(MinigameTimer(6));
         StartCoroutine(SpawnSwordsWithDelay(0.3f));
         StartCoroutine(slowMotion(6, 0.5f));
     }

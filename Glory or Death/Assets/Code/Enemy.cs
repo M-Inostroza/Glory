@@ -58,6 +58,12 @@ public class Enemy : MonoBehaviour
         currentHP -= dmg;
     }
 
+    // Getter Setters
+    public int GetCurrentAdrenaline()
+    {
+        return adrenaline;
+    }
+
     public void executeAttack()
     {
         if (!Player.missed)
@@ -82,7 +88,7 @@ public class Enemy : MonoBehaviour
     }
     public void executeSuperAttack()
     {
-        if (Player.getCurrentShield() > 0 && !dirtManager.isDirtyActive())
+        if (!dirtManager.isDirtyActive())
         {
             superAttackManager.gameObject.SetActive(true);
         }

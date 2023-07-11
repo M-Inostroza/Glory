@@ -18,11 +18,13 @@ public class superAttackManager : MonoBehaviour
 
     cameraManager cameraManager;
     AudioManager audioManager;
+    Enemy enemy;
 
     private void Awake()
     {
         cameraManager = FindObjectOfType<cameraManager>();
         audioManager = FindObjectOfType<AudioManager>();
+        enemy = FindObjectOfType<Enemy>();
     }
     private void Update()
     {
@@ -38,7 +40,7 @@ public class superAttackManager : MonoBehaviour
         moveCameraIn();
         StartCoroutine(MinigameTimer(6));
         StartCoroutine(SpawnSwordsWithDelay(0.3f));
-        StartCoroutine(slowMotion(6, 0.5f));
+        StartCoroutine(slowMotion(4, 0.5f));
     }
 
     IEnumerator SpawnSwordsWithDelay(float delay)
@@ -59,6 +61,7 @@ public class superAttackManager : MonoBehaviour
         yield return new WaitForSeconds(timer);
         moveCameraOut();
         gameObject.SetActive(false);
+        enemy.GetComponent<Animator>().Play("Attack_Strong");
     }
 
     // Tools

@@ -7940,7 +7940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
       propertyPath: sounds.Array.size
-      value: 73
+      value: 77
       objectReference: {fileID: 0}
     - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
       propertyPath: sounds.Array.data[0].name
@@ -8541,10 +8541,34 @@ PrefabInstance:
     - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
       propertyPath: sounds.Array.data[73].clip
       value: 
-      objectReference: {fileID: 8300000, guid: ce3182b08003aed4b85b8d9a625f9832, type: 3}
+      objectReference: {fileID: 8300000, guid: 856bb76f5ad097e448d63b648cffc8d8, type: 3}
     - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
       propertyPath: sounds.Array.data[73].name
-      value: Counter_Fail
+      value: Bone_Break
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[74].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0260006e09adeee41b189134a1673138, type: 3}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[74].name
+      value: Bone_Break_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[75].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6a03f314feff76d4599c13f302b6f61e, type: 3}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[75].name
+      value: Bone_Break_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[76].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3151badcea109164c93b8e818d47bab3, type: 3}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[76].name
+      value: Bone_Break_3
       objectReference: {fileID: 0}
     - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
       propertyPath: sounds.Array.data[7].pitch
@@ -8703,6 +8727,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[74].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[75].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[76].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
       propertyPath: sounds.Array.data[7].volume
       value: 0.3
       objectReference: {fileID: 0}
@@ -8808,6 +8844,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
       propertyPath: sounds.Array.data[73].volume
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[74].volume
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[75].volume
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187380131225476898, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: sounds.Array.data[76].volume
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7386268141726731369, guid: a11d6a54f65301747b220829962c0b93, type: 3}
@@ -9000,11 +9048,11 @@ PrefabInstance:
       objectReference: {fileID: 1602624260}
     - target: {fileID: 416981502473473670, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.9945868
+      value: 0.6989494
       objectReference: {fileID: 0}
     - target: {fileID: 416981502473473670, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.103908725
+      value: 0.7151711
       objectReference: {fileID: 0}
     - target: {fileID: 467337889071254185, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_Name
@@ -9108,11 +9156,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2363500038268324918, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.53322375
+      value: 0.9814985
       objectReference: {fileID: 0}
     - target: {fileID: 2363500038268324918, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.8459742
+      value: -0.19147022
       objectReference: {fileID: 0}
     - target: {fileID: 2458191287285092245, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_Name
@@ -9572,11 +9620,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6492296236807222348, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7490223
+      value: 0.49984738
       objectReference: {fileID: 0}
     - target: {fileID: 6492296236807222348, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.66254485
+      value: 0.8661135
       objectReference: {fileID: 0}
     - target: {fileID: 6926286103212910149, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: mainCam
@@ -9676,15 +9724,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8270538759351437022, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.97688746
+      value: -0.6738469
       objectReference: {fileID: 0}
     - target: {fileID: 8270538759351437022, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.21375433
+      value: -0.73887104
       objectReference: {fileID: 0}
     - target: {fileID: 8270538759438478553, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.8542762
+      value: -0.4289534
       objectReference: {fileID: 0}
     - target: {fileID: 8270538759438478553, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.y
@@ -9692,23 +9740,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8270538759438478553, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5198193
+      value: -0.9033267
       objectReference: {fileID: 0}
     - target: {fileID: 8270538759576131843, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.85419023
+      value: -0.49162355
       objectReference: {fileID: 0}
     - target: {fileID: 8270538759576131843, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5199607
+      value: -0.8708079
       objectReference: {fileID: 0}
     - target: {fileID: 8270538760105152032, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.90367216
+      value: 0.8230585
       objectReference: {fileID: 0}
     - target: {fileID: 8270538760105152032, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.42822495
+      value: 0.56795675
       objectReference: {fileID: 0}
     - target: {fileID: 8270538760191110017, guid: 424d1d5305cc1164ebdb630198e7708c, type: 3}
       propertyPath: m_LocalPosition.x

@@ -193,6 +193,25 @@ public class SoundPlayer : MonoBehaviour
                 break;
         }
     }
+    public void hardcore_hits()
+    {
+        int random = Random.Range(1, 4);
+        switch (random)
+        {
+            case 1:
+                audioManager.Play("Bone_Break");
+                break;
+            case 2:
+                audioManager.Play("Bone_Break_1");
+                break;
+            case 3:
+                audioManager.Play("Bone_Break_2");
+                break;
+            case 4:
+                audioManager.Play("Bone_Break_3");
+                break;
+        }
+    }
     public void swordGrab()
     {
         audioManager.Play("sword_grab");

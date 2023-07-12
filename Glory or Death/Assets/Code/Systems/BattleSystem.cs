@@ -8,12 +8,11 @@ public class BattleSystem : MonoBehaviour
 {
     TargetManager targetManager;
     defendManager defendManager;
-    Input_Manager Input_Manager;
     timeManager timeManager;
+    Input_Manager Input_Manager;
     Combat_UI combat_UI;
 
-    [SerializeField]
-    Toggle testMode;
+    [SerializeField] Toggle testMode;
 
     //private bool canEvade = false;
     private float evadeTimer;
@@ -51,11 +50,10 @@ public class BattleSystem : MonoBehaviour
     private void Start()
     {
         playerAnimator = playerPrefab.GetComponent<Animator>();
-
+        combat_UI = FindObjectOfType<Combat_UI>();
         targetManager = FindObjectOfType<TargetManager>();
         defendManager = FindObjectOfType<defendManager>();
         timeManager = FindObjectOfType<timeManager>();
-        combat_UI = FindObjectOfType<Combat_UI>();
 
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();

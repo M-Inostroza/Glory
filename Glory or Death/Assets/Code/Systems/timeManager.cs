@@ -65,8 +65,6 @@ public class timeManager : MonoBehaviour
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
         // timerIsRunning = true;
-
-        Input_Manager.SetPlayerAction("none");
     }
 
     private void Update()

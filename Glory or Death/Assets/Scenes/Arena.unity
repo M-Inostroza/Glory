@@ -5156,7 +5156,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &1694715250
 GameObject:
   m_ObjectHideFlags: 0
@@ -8894,6 +8894,10 @@ PrefabInstance:
       propertyPath: enemyActionIcon
       value: 
       objectReference: {fileID: 188464162}
+    - target: {fileID: 7386268141726731371, guid: a11d6a54f65301747b220829962c0b93, type: 3}
+      propertyPath: actionPlayerIcon
+      value: 
+      objectReference: {fileID: 1375940448}
     - target: {fileID: 7386268141726731371, guid: a11d6a54f65301747b220829962c0b93, type: 3}
       propertyPath: playerActionIcon
       value: 

@@ -34,6 +34,8 @@ public class Input_Manager : MonoBehaviour
         DefendButtonCD = GameObject.FindWithTag("DefendCD").GetComponent<Image>();
         DodgeButtonCD = GameObject.FindWithTag("DodgeCD").GetComponent<Image>();
         FocusButtonCD = GameObject.FindWithTag("FocusCD").GetComponent<Image>();
+
+        selectedPlayerAction = "none";
     }
 
     private void Update()

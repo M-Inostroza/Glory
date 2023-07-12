@@ -37,7 +37,7 @@ public class startUI_Manager : MonoBehaviour
     {
         getUI_elements();
         animateUI();
-        audioManager.Play("MainTheme");
+        audioManager.Play("Main_Theme");
     }
 
     void animateUI()

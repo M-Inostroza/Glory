@@ -92,11 +92,6 @@ public class Enemy : MonoBehaviour
         {
             superAttackManager.gameObject.SetActive(true);
         }
-        else
-        {
-            myAnimator.SetBool("attack", true);
-            Player.GetComponent<Animator>().SetBool("HURT", true);
-        }
     }
     public void executeDirt()
     {

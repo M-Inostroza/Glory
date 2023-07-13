@@ -7,7 +7,7 @@ public class dirtToss : MonoBehaviour
     private bool isDirty, speedReduced;
 
     [SerializeField]
-    private float speedDebuff = 7f;
+    private float speedDebuff;
 
     [SerializeField]
     private Camera mainCam;
@@ -50,7 +50,7 @@ public class dirtToss : MonoBehaviour
     }
     private void OnDisable()
     {
-        player.incrementBaseSpeed(speedDebuff);
+        player.incrementBaseSpeed(1000);
         speedReduced = false;
     }
     private void makeItDirt()
@@ -60,7 +60,7 @@ public class dirtToss : MonoBehaviour
 
         if (!speedReduced)
         {
-            player.reduceBaseSpeed(speedDebuff);
+            player.reduceBaseSpeed(1000);
             speedReduced = true;
         }
         

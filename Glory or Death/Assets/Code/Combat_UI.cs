@@ -21,12 +21,18 @@ public class Combat_UI : MonoBehaviour
     private GameObject inputManager, globalTimer, staminaAlarm, shieldFeedback;
 
     [SerializeField] private Transform xKey;
+    [SerializeField] private Transform sKey;
 
     //Unit sliders
     [SerializeField]
     private Player playerUnit;
     [SerializeField]
     private Enemy enemyUnit;
+
+    // Materials
+    [Header("Materials")]
+    [SerializeField] Material swordBuffMaterial;
+    [SerializeField] Material arrowBuffMaterial;
 
 
     private void Start()
@@ -147,7 +153,8 @@ public class Combat_UI : MonoBehaviour
         {
             fadeON();
             shieldFeedControl = true;
-            shieldFeedback.transform.DOLocalMoveY(140, 0.8f).OnComplete(()=> fadeOFF());
+            shineBuffs();
+            shieldFeedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(()=> fadeOFF());
         }
 
         void fadeON()
@@ -161,7 +168,7 @@ public class Combat_UI : MonoBehaviour
         {
             foreach (Transform child in shieldFeedback.transform)
             {
-                child.GetComponent<Image>().DOFade(0, 0.2f).OnComplete(()=> shieldFeedback.transform.DOLocalMoveY(110, 0));
+                child.GetComponent<Image>().DOFade(0, 0.2f).OnComplete(()=> shieldFeedback.transform.DOLocalMoveY(65, 0));
             }
             shieldFeedControl = false;
         }
@@ -184,6 +191,7 @@ public class Combat_UI : MonoBehaviour
         {
             playerImgDmg.DOFade(1, 0);
             player_DMG_Feedback.transform.DOLocalMoveY(65, 0);
+            shineBuffs();
             player_DMG_Feedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(() => playerImgDmg.DOFade(0, 0.5f));
 
             child.transform.DOLocalMoveY(0, 0.8f).OnComplete(() => child.GetComponent<Image>().DOFade(0, 0.5f));
@@ -205,6 +213,7 @@ public class Combat_UI : MonoBehaviour
         {
             playerImgSpeed.DOFade(1, 0);
             player_SPEED_Feedback.transform.DOLocalMoveY(65, 0);
+            shineBuffs();
             player_SPEED_Feedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(() => playerImgSpeed.DOFade(0, 0.5f));
 
             child.transform.DOLocalMoveY(0, 0.8f).OnComplete(() => child.GetComponent<Image>().DOFade(0, 0.5f));
@@ -228,6 +237,14 @@ public class Combat_UI : MonoBehaviour
             xKey.DOScale(1, 0.1f).SetDelay(2f).OnComplete(() => activateX());
         }
     }
+    public void activateS()
+    {
+        if (sKey.gameObject.activeInHierarchy)
+        {
+            sKey.DOScale(0.8f, 0.1f).SetDelay(0.3f);
+            sKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateS());
+        }
+    }
 
     // Stamina
     public Slider GetPlayerAdrenalineSlider()
@@ -239,5 +256,13 @@ public class Combat_UI : MonoBehaviour
     public void reduceStamina()
     {
         playerUnit.SetCurrentStamina(10);
+    }
+
+
+    // Shader UI
+    public void shineBuffs()
+    {
+        DOTween.To(() => swordBuffMaterial.GetFloat("_ShineLocation"), x => swordBuffMaterial.SetFloat("_ShineLocation", x), 0, 0.7f).OnComplete(() => swordBuffMaterial.SetFloat("_ShineLocation", 1)).SetDelay(0.3f);
+        DOTween.To(() => arrowBuffMaterial.GetFloat("_ShineLocation"), x => arrowBuffMaterial.SetFloat("_ShineLocation", x), 0, 0.7f).OnComplete(() => arrowBuffMaterial.SetFloat("_ShineLocation", 1)).SetDelay(0.3f);
     }
 }

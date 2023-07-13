@@ -286,13 +286,13 @@ public class Player : MonoBehaviour
     {
         return baseSpeed;
     }
-    public void incrementBaseSpeed(float BaseSpeed)
+    public void incrementBaseSpeed(float speedBuff)
     {
-        baseSpeed += BaseSpeed;
+        baseSpeed += speedBuff;
     }
-    public void reduceBaseSpeed(float BaseSpeed)
+    public void reduceBaseSpeed(float speedDebuff)
     {
-        baseSpeed -= BaseSpeed;
+        baseSpeed -= speedDebuff;
     }
 
     // Adrenaline

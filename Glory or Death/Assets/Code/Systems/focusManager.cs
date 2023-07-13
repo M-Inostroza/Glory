@@ -11,8 +11,8 @@ public class focusManager : MonoBehaviour
     public GameObject cursor;
     public GameObject target;
 
-    [SerializeField]
-    private GameObject playerUnit;
+    [SerializeField] private GameObject playerUnit;
+    [SerializeField] private Camera mainCamera;
 
     // Limits
     private float minX = -8.5f;
@@ -24,9 +24,11 @@ public class focusManager : MonoBehaviour
 
     timeManager timeManager;
     AudioManager audioManager;
+    Combat_UI combat_UI;
 
     private void Awake()
     {
+        combat_UI = FindObjectOfType<Combat_UI>();
         timeManager = FindObjectOfType<timeManager>();
         audioManager = FindObjectOfType<AudioManager>();
     }
@@ -41,10 +43,11 @@ public class focusManager : MonoBehaviour
 
     private void OnEnable()
     {
-        // Minigame timer
+        cameraZoomIn();
         StartCoroutine(focusTimer(5));
-
         audioManager.Play("Focus_On");
+
+        combat_UI.activateS();
 
         // Target's range and position
         targetRangeMin = Random.Range(minX + 1.2f, maxX - 1.2f);
@@ -64,7 +67,6 @@ public class focusManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         failFocus();
     }
-
     void checkFocus()
     {
         if (canFocus)
@@ -85,24 +87,23 @@ public class focusManager : MonoBehaviour
             }
         }
     }
-
     void successFocus()
     {
         audioManager.Play("Focus_Success");
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
+        cameraZoomOut();
         gameObject.SetActive(false);
         canFocus = false;
     }
-
     void failFocus()
     {
         audioManager.Play("Focus_Fail");
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         playerUnit.GetComponent<Animator>().SetBool("skillFail", true);
+        cameraZoomOut();
         gameObject.SetActive(false);
         canFocus = false;
     }
-
     void moveTarget()
     {
         // Move the cursor sprite from left to right
@@ -114,5 +115,16 @@ public class focusManager : MonoBehaviour
             // Reverse
             targetSpeed *= -1;
         }
+    }
+
+    void cameraZoomIn()
+    {
+        mainCamera.DOFieldOfView(30, 1);
+        mainCamera.transform.DOLocalMoveY(-2.5f, 1);
+    }
+    void cameraZoomOut()
+    {
+        mainCamera.DOFieldOfView(50, 0.5f);
+        mainCamera.transform.DOLocalMoveY(0, 0.5f);
     }
 }

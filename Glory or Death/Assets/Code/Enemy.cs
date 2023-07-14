@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     public bool hasHit = false;
 
     AudioManager audioManager;
+    SoundPlayer soundPlayer;
     
     BattleSystem BS;
     timeManager timeManager;
@@ -33,6 +34,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        soundPlayer = FindObjectOfType<SoundPlayer>();
         audioManager = FindObjectOfType<AudioManager>();
         BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
@@ -82,7 +84,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            GetComponent<Animator>().SetBool("attack", true);
+            myAnimator.SetBool("attack", true);
             adrenaline++;
         }
     }
@@ -112,14 +114,15 @@ public class Enemy : MonoBehaviour
     // Utilities
     public void playAttack()
     {
-        if (FindObjectOfType<Player>().missed)
+        if (Player.missed)
         {
-            FindObjectOfType<SoundPlayer>().jumpSounds();
-            FindObjectOfType<Player>().GetComponent<Animator>().SetBool("evadeJump", true);
+            soundPlayer.jumpSounds();
+            Player.GetComponent<Animator>().SetBool("evadeJump", true);
         }
         else
         {
-            FindObjectOfType<SoundPlayer>().blunt_hit();
+            Player.TakeDamage(nativeDamage);
+            soundPlayer.blunt_hit();
         }
     }
     public void stopAttack()

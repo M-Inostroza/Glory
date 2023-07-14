@@ -28,7 +28,6 @@ public class counterSword : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("create a stop for the shields rotation");
-        Debug.Log("and design a new one");
         transform.DOLocalMoveX(12, 0);
         if (collision.name == "Shield Image")
         {

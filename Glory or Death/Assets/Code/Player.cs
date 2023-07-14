@@ -246,12 +246,7 @@ public class Player : MonoBehaviour
         {
             if (child == transform)
                 continue;
-            child.transform.DOScale(0, 0.3f).SetEase(Ease.InBack).OnComplete(()=> deactivate(child.gameObject));
-        }
-        void deactivate(GameObject childGO)
-        {
-            childGO.gameObject.SetActive(false);
-            attackFeedback.SetActive(false);
+            child.transform.DOScale(0, 0.3f).SetEase(Ease.InBack).OnComplete(()=> attackFeedback.SetActive(false));
         }
     }
 

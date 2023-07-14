@@ -255,7 +255,7 @@ public class Combat_UI : MonoBehaviour
     // Test
     public void reduceStamina()
     {
-        playerUnit.SetCurrentStamina(10);
+        playerUnit.SetCurrentStamina(40);
     }
 
 

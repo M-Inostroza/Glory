@@ -30,7 +30,7 @@ public class DodgeManager : MonoBehaviour
     // Instantiated arrows
     List<GameObject> instantArrows = new List<GameObject>();
 
-    private void Start()
+    private void Awake()
     {
         playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();
@@ -39,6 +39,8 @@ public class DodgeManager : MonoBehaviour
 
     private void OnEnable()
     {
+        audioManager.Play("DG_On");
+
         hasStarJumped = false;
         isCritic = false;
 

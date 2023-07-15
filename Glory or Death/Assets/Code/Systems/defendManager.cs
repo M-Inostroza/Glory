@@ -3,22 +3,25 @@ using DG.Tweening;
 
 public class defendManager : MonoBehaviour
 {
-    [SerializeField] private Animator playerAnim;
+    [SerializeField] Animator playerAnim;
 
-    private AudioManager audioManager;
-    
     // Object that shows the total size of the target
-    [SerializeField] private GameObject shadow, playerUnit;
-    public GameObject enemyUnit;
+    [SerializeField] GameObject shadow;
+    [SerializeField] GameObject keyCanvas;
+    [SerializeField] Camera mainCamera;
 
     // Control
     bool transformControl;
     bool canDefend = false;
 
     Tween scaleUP;
+    AudioManager audioManager;
+    Player Player;
+    
 
     private void Awake()
     {
+        Player = FindObjectOfType<Player>();
         audioManager = FindObjectOfType<AudioManager>();
     }
     
@@ -29,6 +32,9 @@ public class defendManager : MonoBehaviour
 
     public void activateShieldMinigame()
     {
+        cameraZoomIn();
+        keyCanvas.SetActive(true);
+        FindObjectOfType<Combat_UI>().activateA();
         canDefend = true;
         scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(() => Fail());
         shadow.SetActive(true);
@@ -64,13 +70,12 @@ public class defendManager : MonoBehaviour
         {
             audioManager.Play("defend_success");
             scaleUP.Rewind();
-            playerUnit.GetComponent<Player>().increaseCurrentShield();
+            Player.increaseCurrentShield();
             playerAnim.SetBool("skillShieldSuccess", true);
         } 
         closeMinigame();
     }
 
-    // Method to handle enemy's defeat
     void Fail()
     {
         scaleUP.Rewind();
@@ -81,9 +86,22 @@ public class defendManager : MonoBehaviour
 
     void closeMinigame()
     {
+        cameraZoomOut();
         shadow.SetActive(false);
+        keyCanvas.SetActive(false);
         transformControl = false;
         canDefend = false;
+    }
+
+    void cameraZoomIn()
+    {
+        mainCamera.DOFieldOfView(35, 1);
+        mainCamera.transform.DOLocalMoveY(-1.7f, 1);
+    }
+    void cameraZoomOut()
+    {
+        mainCamera.DOFieldOfView(50, 0.5f);
+        mainCamera.transform.DOLocalMoveY(0, 0.5f);
     }
 }
 

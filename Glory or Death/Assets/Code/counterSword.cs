@@ -14,7 +14,10 @@ public class counterSword : MonoBehaviour
     SoundPlayer soundPlayer;
     AudioManager audioManager;
 
-    [SerializeField] Material heartMaterial, swordMaterial;
+    [Header("Materials")]
+    [SerializeField] Material heartMaterial;
+    [SerializeField] Material swordMaterial;
+    [SerializeField] Material shieldMaterial;
 
     private void Start()
     {
@@ -27,7 +30,7 @@ public class counterSword : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("create a stop for the shields rotation");
+        counterManager.GetComponent<CounterManager>().canRotateBool(false);
         transform.DOLocalMoveX(12, 0);
         if (collision.name == "Shield Image")
         {
@@ -36,7 +39,6 @@ public class counterSword : MonoBehaviour
             soundPlayer.shield_metal();
             enemy.GetComponent<Animator>().Play("Attack_Blocked");
             player.GetComponent<Animator>().Play("blockAttack");
-            player.TakeDamage(enemy.nativeDamage - 2);
             counterManager.SetActive(false);
         }
         else if (collision.name == "Counter Target")
@@ -45,7 +47,6 @@ public class counterSword : MonoBehaviour
             audioManager.Play("Counter_Fail");
             soundPlayer.stabSounds();
             meltHeart();
-            player.TakeDamage(enemy.nativeDamage);
         }
     }
 
@@ -55,6 +56,7 @@ public class counterSword : MonoBehaviour
         DOTween.To(() => heartMaterial.GetFloat("_FadeAmount"), x => heartMaterial.SetFloat("_FadeAmount", x), 1, 0.5f)
             .OnComplete(()=> playAnims_closeGame());
         DOTween.To(() => swordMaterial.GetFloat("_FadeAmount"), x => swordMaterial.SetFloat("_FadeAmount", x), 1, 0.5f);
+        DOTween.To(() => shieldMaterial.GetFloat("_FadeAmount"), x => shieldMaterial.SetFloat("_FadeAmount", x), 1, 0.5f);
     }
     void playAnims_closeGame()
     {

@@ -18,7 +18,6 @@ public class DodgeManager : MonoBehaviour
 
     public GameObject[] arrowPrefabs;
 
-    // Set evade state
     public GameObject dodgeBuffIcon;
 
     // Initial position of the arrows
@@ -56,7 +55,6 @@ public class DodgeManager : MonoBehaviour
         runCommands();
     }
 
-    // Main arrow mechanic
     void openMinigame()
     {
         Transform fillArea = evadeSlider.transform.GetChild(0);

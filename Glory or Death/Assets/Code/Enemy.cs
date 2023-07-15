@@ -4,15 +4,18 @@ using System;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Stats")]
     public int nativeDamage;
     public int maxHP;
     public int currentHP;
     public int adrenaline;
+    [SerializeField] int superDMG;
 
     //Speed
     public float maxSpeed;
     public float baseSpeed;
 
+    [Header("Systems")]
     [SerializeField] dirtToss dirtManager;
     [SerializeField] CounterManager counterManager;
     [SerializeField] superAttackManager superAttackManager;
@@ -112,6 +115,7 @@ public class Enemy : MonoBehaviour
 
 
     // Utilities
+    #region Combat Functions
     public void playAttack()
     {
         if (Player.missed)
@@ -125,13 +129,30 @@ public class Enemy : MonoBehaviour
             soundPlayer.blunt_hit();
         }
     }
+    public void doBlockedDMG()
+    {
+        Player.TakeDamage(nativeDamage - 2);
+    }
+    public void doSuperDMG()
+    {
+        Player.TakeDamage(superDMG);
+    }
     public void stopAttack()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         timeManager.enemyTimer.fillAmount = 1;
         timeManager.fadeInUnitTimer();
         timeManager.continueUnitTimer();
-        GetComponent<Animator>().SetBool("attack", false);
+        myAnimator.SetBool("attack", false);
+    }
+    public void stopSuperAttack()
+    {
+        adrenaline = 0;
+        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
+        timeManager.enemyTimer.fillAmount = 1;
+        timeManager.fadeInUnitTimer();
+        timeManager.continueUnitTimer();
+        backToIdle();
     }
     public void stopHurt()
     {
@@ -139,6 +160,8 @@ public class Enemy : MonoBehaviour
         timeManager.continueUnitTimer();
         backToIdle();
     }
+    #endregion
+
     public void stopDirt()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
@@ -149,20 +172,15 @@ public class Enemy : MonoBehaviour
     }
     public void stopEnemyDefense()
     {
-        GetComponent<Animator>().SetBool("Hurt", false);
+        myAnimator.SetBool("Hurt", false);
     }
     public void shieldAttack()
     {
         audioManager.Play("shieldHitEnemy");
     }
-    public void stopAttackStrong()
-    {
-        GetComponent<Animator>().SetBool("ATK2", false);
-        adrenaline = 0;
-    }
     public void backToIdle()
     {
-        GetComponent<Animator>().Play("Idle");
+        myAnimator.Play("Idle");
     }
     public void returnFromRage()
     {
@@ -210,14 +228,7 @@ public class Enemy : MonoBehaviour
     {
         currentHP -= 20;
     }
-    public bool getAngryState()
-    {
-        return isAngry;
-    }
-    public void setAngryState(bool newState)
-    {
-        isAngry = newState;
-    }
+    
 
     public void showDmgFeedbackPlayer()
     {
@@ -232,5 +243,24 @@ public class Enemy : MonoBehaviour
     public void showDmgFeedbackPlayerReduced()
     {
         BS.showHit(nativeDamage - 2, BS.hitText_Player.transform);
+    }
+    public void showDmgFeedbackPlayerSuper()
+    {
+        BS.showHit(superDMG, BS.hitText_Player.transform);
+    }
+
+    // G & S
+    public bool getAngryState()
+    {
+        return isAngry;
+    }
+    public void setAngryState(bool newState)
+    {
+        isAngry = newState;
+    }
+
+    public void setSuperDMG(int dmg)
+    {
+        superDMG = dmg;
     }
 }

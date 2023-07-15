@@ -11,8 +11,12 @@ public class CounterManager : MonoBehaviour
     [SerializeField] Combat_UI combatUI;
 
     float rotationSpeed = 100;
+    bool canRotate = false;
 
-    [SerializeField] Material heartMaterial, swordMaterial;
+    [Header("Materials")]
+    [SerializeField] Material heartMaterial;
+    [SerializeField] Material swordMaterial;
+    [SerializeField] Material shieldMaterial;
 
     private void Update()
     {
@@ -31,7 +35,7 @@ public class CounterManager : MonoBehaviour
 
     void rotateOnKey()
     {
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) && canRotate)
         {
             float rotationAmount = rotationSpeed * Time.deltaTime;
             shieldImage.transform.Rotate(0f, 0f, rotationAmount);
@@ -40,17 +44,22 @@ public class CounterManager : MonoBehaviour
 
     void rotateOnStart()
     {
-        float rotationAmount = 10 * Time.deltaTime;
-        shieldImage.transform.Rotate(0f, 0f, rotationAmount);
+        if (canRotate)
+        {
+            float rotationAmount = 10 * Time.deltaTime;
+            shieldImage.transform.Rotate(0f, 0f, rotationAmount);
+        }
     }
 
     public void startMinigame()
     {
+        canRotate = true;
         setRandomRotation();
         moveCameraIn();
 
         heartMaterial.SetFloat("_FadeAmount", 0);
         swordMaterial.SetFloat("_FadeAmount", 0);
+        shieldMaterial.SetFloat("_FadeAmount", 0);
         counterBullet.transform.DOLocalMoveX(-3.25f, 8.5f).SetEase(Ease.OutBack).OnComplete(()=> counterBullet.transform.DOLocalMoveX(12, 0));
         combatUI.activateX();
     }
@@ -58,6 +67,7 @@ public class CounterManager : MonoBehaviour
     public void closeMinigame()
     {
         moveCameraOut();
+        canRotate = false;
     }
     void setRandomRotation()
     {
@@ -76,5 +86,10 @@ public class CounterManager : MonoBehaviour
         mainCamera.DOFieldOfView(50, 0.5f);
         mainCamera.transform.DOLocalMoveY(0, 0.5f);
         overlay.GetComponent<Image>().DOFade(0, 0.6f);
+    }
+
+    public void canRotateBool(bool state)
+    {
+        canRotate = state;
     }
 }

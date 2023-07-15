@@ -3,36 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
 
 public class Combat_UI : MonoBehaviour
 {
-    [SerializeField]
-    private Transform player_stats, enemy_stats, player_stamina, player_timer, enemy_timer;
+    [Header("--Stats--")]
+    [SerializeField] Transform player_stats;
+    [SerializeField] Transform enemy_stats;
+    [SerializeField] Transform player_stamina;
 
-    [SerializeField]
-    private GameObject enemy_DMG_Feedback, enemy_SPEED_Feedback; // Enemy
-    [SerializeField]
-    private GameObject player_DMG_Feedback, player_SPEED_Feedback; // Player
+    [Header("--Timers--")]
+    [SerializeField] Transform player_timer;
+    [SerializeField] Transform enemy_timer;
+    [SerializeField] GameObject globalTimer;
 
-    [SerializeField] 
-    private Slider playerHpSlider, playerAdrenalineSlider, staminaSlider, shieldBar;
+    [Header("--Feedbacks--")]
+    [SerializeField] GameObject enemy_DMG_Feedback;
+    [SerializeField] GameObject enemy_SPEED_Feedback;
+    [SerializeField] GameObject player_DMG_Feedback;
+    [SerializeField] GameObject player_SPEED_Feedback;
+    [SerializeField] GameObject staminaAlarm;
+    [SerializeField] GameObject shieldFeedback;
 
-    [SerializeField]
-    private GameObject inputManager, globalTimer, staminaAlarm, shieldFeedback;
+    [Header("--Sliders--")]
+    [SerializeField] Slider playerHpSlider;
+    [SerializeField] Slider playerAdrenalineSlider;
+    [SerializeField] Slider staminaSlider;
+    [SerializeField] Slider shieldBar;
 
-    [SerializeField] private Transform xKey;
-    [SerializeField] private Transform sKey;
+    [Header("--Input--")]
+    [SerializeField] GameObject inputManager;
 
-    //Unit sliders
-    [SerializeField]
-    private Player playerUnit;
-    [SerializeField]
-    private Enemy enemyUnit;
+    [Header("--Input keys--")]
+    [SerializeField] Transform xKey;
+    [SerializeField] Transform sKey;
+    [SerializeField] Transform aKey;
 
-    // Materials
-    [Header("Materials")]
+    [Header("--Sliders--")]
+    [SerializeField] Player playerUnit;
+    [SerializeField] Enemy enemyUnit;
+
+    [Header("--Materials--")]
     [SerializeField] Material swordBuffMaterial;
     [SerializeField] Material arrowBuffMaterial;
+
+    [Header("--Debug--")]
+    [SerializeField] TMP_Text hpPlayerDebug;
 
 
     private void Start()
@@ -47,6 +63,7 @@ public class Combat_UI : MonoBehaviour
     {
         updateShieldBar();
         refillStamina();
+        hpPlayerDebug.text = "HP: " + playerUnit.GetCurrentHP();
     }
     public void setPlayerHP(int hp)
     {
@@ -243,6 +260,14 @@ public class Combat_UI : MonoBehaviour
         {
             sKey.DOScale(0.8f, 0.1f).SetDelay(0.3f);
             sKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateS());
+        }
+    }
+    public void activateA()
+    {
+        if (aKey.gameObject.activeInHierarchy)
+        {
+            aKey.DOScale(0.8f, 0.1f).SetDelay(0.3f);
+            aKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateA());
         }
     }
 

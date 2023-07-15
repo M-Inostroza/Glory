@@ -20,6 +20,8 @@ public class superAttackManager : MonoBehaviour
     AudioManager audioManager;
     Enemy enemy;
 
+    int swordCounter = 0;
+
     private void Awake()
     {
         cameraManager = FindObjectOfType<cameraManager>();
@@ -30,6 +32,7 @@ public class superAttackManager : MonoBehaviour
     {
         rotateSpawners();
         rotateOnKey();
+        setEnemySuperDMG();
     }
     
     private void OnEnable()
@@ -41,6 +44,11 @@ public class superAttackManager : MonoBehaviour
         StartCoroutine(MinigameTimer(6));
         StartCoroutine(SpawnSwordsWithDelay(0.3f));
         StartCoroutine(slowMotion(4, 0.5f));
+    }
+
+    private void OnDisable()
+    {
+        swordCounter = 0;
     }
 
     IEnumerator SpawnSwordsWithDelay(float delay)
@@ -62,6 +70,7 @@ public class superAttackManager : MonoBehaviour
         moveCameraOut();
         gameObject.SetActive(false);
         enemy.GetComponent<Animator>().Play("Attack_Strong");
+        FindObjectOfType<Player>().GetComponent<Animator>().Play("superDMG");
     }
 
     // Tools
@@ -89,7 +98,12 @@ public class superAttackManager : MonoBehaviour
         }
     }
 
-    int swordCounter = 0;
+    void setEnemySuperDMG()
+    {
+        enemy.setSuperDMG(swordCounter);
+    }
+
+    
     public void fillSword()
     {
         feedbackContainer.GetChild(swordCounter).GetComponent<Image>().DOFade(1, 0.4f);

@@ -25,11 +25,14 @@ public class Player : MonoBehaviour
 
     public Camera MainCamera;
 
+    Animator myAnim;
+
     // Current Enemy
     public GameObject enemy_unit;
 
     private void Start()
     {
+        myAnim = GetComponent<Animator>();
         BS = FindObjectOfType<BattleSystem>();
         targetManager = FindObjectOfType<TargetManager>();
         timeManager = FindObjectOfType<timeManager>();
@@ -59,11 +62,11 @@ public class Player : MonoBehaviour
     // ------- Anim Methods -------
     public void blockAttack()
     {
-        GetComponent<Animator>().Play("blockAttack");
+        myAnim.Play("blockAttack");
     }
     public void backToIdle()
     {
-        GetComponent<Animator>().Play("Idle");
+        myAnim.Play("Idle");
     }
     public void nextAttack()
     {
@@ -72,26 +75,26 @@ public class Player : MonoBehaviour
             switch (targetManager.attackOrder.First())
             {
                 case 0:
-                    GetComponent<Animator>().Play("ATK_head");
+                    myAnim.Play("ATK_head");
                     targetManager.attackOrder.Remove(targetManager.attackOrder.First());
                     break;
                 case 1:
-                    GetComponent<Animator>().Play("ATK_mid");
+                    myAnim.Play("ATK_mid");
                     targetManager.attackOrder.Remove(targetManager.attackOrder.First());
                     break;
                 case 2:
-                    GetComponent<Animator>().Play("ATK_bottom");
+                    myAnim.Play("ATK_bottom");
                     targetManager.attackOrder.Remove(targetManager.attackOrder.First());
                     break;
             }
         } else
         {
-            GetComponent<Animator>().Play("ATK_back");
+            myAnim.Play("ATK_back");
         }
     }
     public void stopAttack()
     {
-        GetComponent<Animator>().Play("Idle");
+        myAnim.Play("Idle");
         timeManager.playerTimer.fillAmount = 1;
         timeManager.continueUnitTimer();
         timeManager.defaultAction();
@@ -103,24 +106,24 @@ public class Player : MonoBehaviour
     }
     public void stopHurt()
     {
-        gameObject.GetComponent<Animator>().SetBool("HURT", false);
+        myAnim.SetBool("HURT", false);
     }
     public void stopDefendSkill()
     {
-        gameObject.GetComponent<Animator>().SetBool("DF_Skill", false);
+        myAnim.SetBool("DF_Skill", false);
         timeManager.continueUnitTimer();
         timeManager.defaultAction();
     }
     public void stopDodgeSkill()
     {
-        gameObject.GetComponent<Animator>().SetBool("evadeSuccess", false);
+        myAnim.SetBool("evadeSuccess", false);
         timeManager.playerTimer.fillAmount = 1;
         timeManager.continueUnitTimer();
         timeManager.defaultAction();
     }
     public void stopDodgeSkillFail()
     {
-        GetComponent<Animator>().SetBool("skillFail", false);
+        myAnim.SetBool("skillFail", false);
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
@@ -129,8 +132,8 @@ public class Player : MonoBehaviour
     public void stopEvadeJump()
     {
         missed = false;
-        GetComponent<Animator>().SetBool("evadeJump", false);
-        timeManager.defaultAction();
+        myAnim.SetBool("evadeJump", false);
+        timeManager.fadeInUnitTimer();
     }
     public void stopDodgeIcon()
     {
@@ -138,7 +141,7 @@ public class Player : MonoBehaviour
     }
     public void stopFocusSkill()
     {
-        gameObject.GetComponent<Animator>().SetBool("focusSuccess", false);
+        myAnim.SetBool("focusSuccess", false);
         timeManager.playerTimer.fillAmount = 1;
         timeManager.enemyTimerControl = true;
         timeManager.playerTimerControl = true;
@@ -146,7 +149,7 @@ public class Player : MonoBehaviour
     }
     public void stopShieldSuccess()
     {
-        gameObject.GetComponent<Animator>().SetBool("skillShieldSuccess", false);
+        myAnim.SetBool("skillShieldSuccess", false);
         FindObjectOfType<Combat_UI>().shieldFeed();
         timeManager.playerTimer.fillAmount = 1;
         timeManager.continueUnitTimer();
@@ -154,11 +157,11 @@ public class Player : MonoBehaviour
     }
     public void stopRest()
     {
-        gameObject.GetComponent<Animator>().SetBool("Resting", false);
+        myAnim.SetBool("Resting", false);
     }
     public void stopSuperDefend()
     {
-        gameObject.GetComponent<Animator>().SetBool("DF2", false);
+        myAnim.SetBool("DF2", false);
     }
     public void startEnemyDefense()
     {

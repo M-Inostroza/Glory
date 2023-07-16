@@ -4,19 +4,19 @@ using DG.Tweening;
 
 public class focusManager : MonoBehaviour
 {
-    private float cursorSpeed = 2.5f;
-    private float targetSpeed = 0.6f;
+    float cursorSpeed = 3.2f;
+    float targetSpeed = 0.8f;
 
-    // Elements
-    public GameObject cursor;
-    public GameObject target;
+    [SerializeField] GameObject cursor;
+    [SerializeField] GameObject target;
 
-    [SerializeField] private GameObject playerUnit;
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] Camera mainCamera;
 
+    Player playerUnit;
+    
     // Limits
-    private float minX = -8.5f;
-    private float maxX = 8.5f;
+    private float minX = -7.8f;
+    private float maxX = 7.8f;
     bool canFocus = false;
 
     // Range within which the target sprite should be when the "a" key is pressed
@@ -28,6 +28,7 @@ public class focusManager : MonoBehaviour
 
     private void Awake()
     {
+        playerUnit = FindObjectOfType<Player>();
         combat_UI = FindObjectOfType<Combat_UI>();
         timeManager = FindObjectOfType<timeManager>();
         audioManager = FindObjectOfType<AudioManager>();
@@ -58,7 +59,7 @@ public class focusManager : MonoBehaviour
 
     private void Update()
     {
-        //moveTarget();
+        moveTarget();
         checkFocus();
     }
 
@@ -109,10 +110,9 @@ public class focusManager : MonoBehaviour
         // Move the cursor sprite from left to right
         target.transform.Translate(targetSpeed * Time.deltaTime, 0, 0);
 
-        // Loop target
+        // Loop
         if (target.transform.localPosition.x > (maxX - 0.5f) || target.transform.localPosition.x < (minX + 0.5f))
         {
-            // Reverse
             targetSpeed *= -1;
         }
     }

@@ -397,6 +397,7 @@ MonoBehaviour:
   maxHP: 30
   currentHP: 0
   adrenaline: 0
+  superDMG: 0
   maxSpeed: 50
   baseSpeed: 13
   dirtManager: {fileID: 6926286103212910149}
@@ -2384,7 +2385,8 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6516016409715694546, guid: 2160155976fdc254284e99d3e24223e1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2160155976fdc254284e99d3e24223e1, type: 3}
 --- !u!4 &2565395501386253544 stripped
 Transform:

@@ -64,14 +64,14 @@ public class timeManager : MonoBehaviour
         combarUI = FindObjectOfType<Combat_UI>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
-        // timerIsRunning = true;
+        timerIsRunning = true;
     }
 
     private void Update()
     {
         playerAction();
         enemyAction();
-        //runTimer();
+        runTimer();
     }
 
     void playerAction()
@@ -326,10 +326,9 @@ public class timeManager : MonoBehaviour
             if (battleTimer <= 0)
             {
                 battleTimer = 0;
-
+                combarUI.showEndScreen();
                 timerIsRunning = false;
-                playerTimerControl = false;
-                enemyTimerControl = false;
+                stopUnitTimer();
             }
         }
     }

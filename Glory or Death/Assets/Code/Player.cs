@@ -251,6 +251,7 @@ public class Player : MonoBehaviour
                 continue;
             child.transform.DOScale(0, 0.3f).SetEase(Ease.InBack).OnComplete(()=> attackFeedback.SetActive(false));
         }
+        targetManager.checkCritic();
     }
 
     // Shield

@@ -11,11 +11,16 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Transform player_stats;
     [SerializeField] Transform enemy_stats;
     [SerializeField] Transform player_stamina;
+    [SerializeField] Transform star_counter;
+
+    [Header("--Stars--")]
+    [SerializeField] int stars;
+    [SerializeField] TMP_Text starsText;
 
     [Header("--Timers--")]
     [SerializeField] Transform player_timer;
     [SerializeField] Transform enemy_timer;
-    [SerializeField] GameObject globalTimer;
+    [SerializeField] Transform fightTimer;
 
     [Header("--Feedbacks--")]
     [SerializeField] GameObject enemy_DMG_Feedback;
@@ -32,7 +37,7 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Slider shieldBar;
 
     [Header("--Input--")]
-    [SerializeField] GameObject inputManager;
+    [SerializeField] Transform inputManager;
 
     [Header("--Input keys--")]
     [SerializeField] Transform xKey;
@@ -49,6 +54,13 @@ public class Combat_UI : MonoBehaviour
 
     [Header("--Debug--")]
     [SerializeField] TMP_Text hpPlayerDebug;
+
+
+    [Header("--End--")]
+    [SerializeField] Transform endScreen;
+    [SerializeField] Image endOverlay;
+    [SerializeField] TMP_Text endStarCount;
+
 
 
     private void Start()
@@ -81,9 +93,9 @@ public class Combat_UI : MonoBehaviour
 
         player_timer.DOLocalMoveY(player_timer.localPosition.y - 160, move_in_speed);
         enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y - 160, move_in_speed);
+        fightTimer.DOLocalMoveY(202, move_in_speed).SetEase(Ease.InOutSine);
 
-        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x + 80, move_in_speed).SetEase(Ease.InOutSine);
-        globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y - 80, move_in_speed).SetEase(Ease.InOutSine);
+        inputManager.transform.DOLocalMoveX(-435, move_in_speed).SetEase(Ease.InOutSine);
     }
     public void move_UI_out()
     {
@@ -96,9 +108,9 @@ public class Combat_UI : MonoBehaviour
 
         player_timer.DOLocalMoveY(player_timer.localPosition.y + 160, move_out_speed);
         enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y + 160, move_out_speed);
+        fightTimer.DOLocalMoveY(240, move_out_speed).SetEase(Ease.InOutSine);
 
         inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x - 80, move_out_speed).SetEase(Ease.InOutSine);
-        globalTimer.transform.DOLocalMoveY(globalTimer.transform.localPosition.y + 80, move_out_speed).SetEase(Ease.InOutSine);
     }
 
     public void move_Inputs_in()
@@ -129,7 +141,6 @@ public class Combat_UI : MonoBehaviour
             inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(-40, 0.7f);
         }
     }
-
     private bool hasPlayed = false;
     public void alarmStamina()
     {
@@ -271,6 +282,22 @@ public class Combat_UI : MonoBehaviour
         }
     }
 
+    // Critic
+    public void incrementStars()
+    {
+        stars++;
+        starsText.text = "= " + stars.ToString();
+        Invoke("hideStars", 1);
+    }
+    public void showStars()
+    {
+        star_counter.DOLocalMoveX(-350, 1);
+    }
+    public void hideStars()
+    {
+        star_counter.DOLocalMoveX(-500, 1);
+    }
+
     // Stamina
     public Slider GetPlayerAdrenalineSlider()
     {
@@ -280,14 +307,22 @@ public class Combat_UI : MonoBehaviour
     // Test
     public void reduceStamina()
     {
-        playerUnit.SetCurrentStamina(40);
+        playerUnit.SetCurrentStamina(80);
     }
-
 
     // Shader UI
     public void shineBuffs()
     {
         DOTween.To(() => swordBuffMaterial.GetFloat("_ShineLocation"), x => swordBuffMaterial.SetFloat("_ShineLocation", x), 0, 0.7f).OnComplete(() => swordBuffMaterial.SetFloat("_ShineLocation", 1)).SetDelay(0.3f);
         DOTween.To(() => arrowBuffMaterial.GetFloat("_ShineLocation"), x => arrowBuffMaterial.SetFloat("_ShineLocation", x), 0, 0.7f).OnComplete(() => arrowBuffMaterial.SetFloat("_ShineLocation", 1)).SetDelay(0.3f);
+    }
+
+    // End
+    public void showEndScreen()
+    {
+        int starNumber = 0;
+        endOverlay.DOFade(0.5f, 1);
+        endScreen.DOLocalMoveY(0, 1).OnComplete(()=> starNumber = FindObjectOfType<Combat_UI>().stars);
+        endStarCount.text = starNumber.ToString();
     }
 }

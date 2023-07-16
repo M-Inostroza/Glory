@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using AssetKits.ParticleImage;
 
 public class TargetManager : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class TargetManager : MonoBehaviour
     [SerializeField] SpriteRenderer courtain;
     [SerializeField] GameObject vFeedback;
     [SerializeField] float targetScale, wait_time;
+
+    [SerializeField] ParticleImage ATKstars;
     
     private void Start()
     {
@@ -68,7 +71,7 @@ public class TargetManager : MonoBehaviour
             {
                 targets[i].transform.localPosition = new Vector3(Random.Range(-1.1f, 2.4f), Random.Range(1.3f, -0.4f), 0);
             }
-            else
+            else if (i == 2)
             {
                 targets[i].transform.localPosition = new Vector3(Random.Range(-1, 2.6f), Random.Range(-1.4f, -2.2f), 0);
             }
@@ -80,14 +83,23 @@ public class TargetManager : MonoBehaviour
         // Deactivates after timer (Mejorable)!!
         yield return new WaitForSeconds(wait_time);
 
-        for (int i = 0; i < 3; i++)
+        foreach (var target in targets)
         {
-            targets[i].transform.DOKill();
-            targets[i].transform.DOScale(0, 0.3f).OnComplete(() => targets[i].gameObject.SetActive(false));
+            target.transform.DOKill();
+            target.transform.DOScale(0, 0.3f).OnComplete(() => target.SetActive(false));
         }
 
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
-        combat_UI.GetComponent<Combat_UI>().move_UI_in();
+        combat_UI.move_UI_in();
+    }
+
+    public void checkCritic()
+    {
+        if (BattleSystem.targetHit == 3)
+        {
+            combat_UI.showStars();
+            ATKstars.Play();
+        }
     }
 
     // Getters and Setters

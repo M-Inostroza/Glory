@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using AssetKits.ParticleImage;
 
 public class DodgeManager : MonoBehaviour
 {
-    private Player playerUnit;
+    Player playerUnit;
 
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] Camera mainCamera;
     [SerializeField] private Slider evadeSlider;
     [SerializeField] private GameObject evadeTarget, starFeedback;
     [SerializeField] private float Timer;
+    [SerializeField] ParticleImage DGCritic;
 
     bool hasStarJumped = false;
     bool isCritic = false;
@@ -25,6 +27,7 @@ public class DodgeManager : MonoBehaviour
 
     Animator playerAnimator;
     AudioManager audioManager;
+    Combat_UI combat_UI;
 
     // Instantiated arrows
     List<GameObject> instantArrows = new List<GameObject>();
@@ -34,6 +37,7 @@ public class DodgeManager : MonoBehaviour
         playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
+        combat_UI = FindObjectOfType<Combat_UI>();
     }
 
     private void OnEnable()
@@ -180,12 +184,9 @@ public class DodgeManager : MonoBehaviour
     }
     void doCritic()
     {
+        animateStars();
         playerUnit.missed = true;
         audioManager.Play("Audience_cheer_high");
-        starFeedback.transform.DOLocalJump(new Vector3(140, 28, 0), 18, 1, 0.6f).OnComplete(()=> starFeedback.transform.DOLocalMove(new Vector2(112,0), 0));
-        starFeedback.transform.DOLocalRotate(new Vector3(0, 0, -160), 0.6f).OnComplete(()=> starFeedback.transform.localRotation = Quaternion.identity);
-        starFeedback.GetComponent<Image>().DOFade(0, 0.6f).OnComplete(() => closeMinigame());
-        hasStarJumped = true;
         playerAnimator.SetBool("evadeSuccess", true);
         animateBuff();
     }
@@ -240,6 +241,15 @@ public class DodgeManager : MonoBehaviour
         mainCamera.DOFieldOfView(intensity, speed);
         Time.timeScale = timeScale;
         // 50, 0.5f, 1
+    }
+    void animateStars()
+    {
+        DGCritic.Play();
+        combat_UI.showStars();
+        starFeedback.transform.DOLocalJump(new Vector3(140, 28, 0), 18, 1, 0.6f).OnComplete(() => starFeedback.transform.DOLocalMove(new Vector2(112, 0), 0));
+        starFeedback.transform.DOLocalRotate(new Vector3(0, 0, -160), 0.6f).OnComplete(() => starFeedback.transform.localRotation = Quaternion.identity);
+        starFeedback.GetComponent<Image>().DOFade(0, 0.6f).OnComplete(() => closeMinigame());
+        hasStarJumped = true;
     }
     public void animateBuff()
     {

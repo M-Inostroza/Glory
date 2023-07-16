@@ -5,15 +5,15 @@ using DG.Tweening;
 
 public class gameManager : MonoBehaviour
 {
-    private timeManager timeManager;
-    private BattleSystem battleSystem;
-    private AudioManager audioManager;
+    timeManager timeManager;
+    BattleSystem battleSystem;
+    AudioManager audioManager;
 
-    public int turnCounter;
+    [SerializeField] int turnCounter;
 
     private void Start()
     {
-        DOTween.SetTweensCapacity(5750, 500);
+        DOTween.SetTweensCapacity(6000, 500);
 
         timeManager = FindObjectOfType<timeManager>();
         battleSystem = FindObjectOfType<BattleSystem>();

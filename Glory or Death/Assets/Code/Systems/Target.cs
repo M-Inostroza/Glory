@@ -9,9 +9,11 @@ public class Target : MonoBehaviour
     Animator anim;
     CircleCollider2D colider;
     BattleSystem BattleSystem;
+    TargetManager targetManager;
 
     private void Start()
     {
+        targetManager = FindObjectOfType<TargetManager>();
         BattleSystem = FindObjectOfType<BattleSystem>();
         anim = gameObject.GetComponent<Animator>();
         colider = gameObject.GetComponent<CircleCollider2D>();
@@ -23,15 +25,15 @@ public class Target : MonoBehaviour
         switch (tag)
         {
             case "target_0":
-                FindObjectOfType<TargetManager>().attackOrder.Add(0);
+                targetManager.attackOrder.Add(0);
                 animateFeedback(0);
                 break;
             case "target_1":
-                FindObjectOfType<TargetManager>().attackOrder.Add(1);
+                targetManager.attackOrder.Add(1);
                 animateFeedback(1);
                 break;
             case "target_2":
-                FindObjectOfType<TargetManager>().attackOrder.Add(2);
+                targetManager.attackOrder.Add(2);
                 animateFeedback(2);
                 break;
         }

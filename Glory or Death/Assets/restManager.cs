@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using AssetKits.ParticleImage;
 
 public class restManager : MonoBehaviour
 {
     [SerializeField] Slider restSlider;
     [SerializeField] Camera mainCamera;
+    [SerializeField] ParticleImage stars;
 
     Player player;
     timeManager timeManager;
@@ -69,7 +71,16 @@ public class restManager : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         returnCameraZoom();
+        checkCritic();
         gameObject.SetActive(false);
+    }
+    void checkCritic()
+    {
+        if (restSlider.value > 85)
+        {
+            stars.Play();
+            FindObjectOfType<Combat_UI>().showStars();
+        }
     }
     private void cameraZoom()
     {

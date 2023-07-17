@@ -4,8 +4,6 @@ using DG.Tweening;
 public class defendManager : MonoBehaviour
 {
     [SerializeField] Animator playerAnim;
-
-    // Object that shows the total size of the target
     [SerializeField] GameObject shadow;
     [SerializeField] GameObject keyCanvas;
     [SerializeField] Camera mainCamera;
@@ -36,7 +34,7 @@ public class defendManager : MonoBehaviour
         keyCanvas.SetActive(true);
         FindObjectOfType<Combat_UI>().activateA();
         canDefend = true;
-        scaleUP = transform.DOScale(1, 2f).SetEase(Ease.InOutQuad).OnComplete(() => Fail());
+        scaleUP = transform.DOScale(1, 1.5f).SetEase(Ease.InOutQuad).OnComplete(() => Fail());
         shadow.SetActive(true);
         transformControl = true;
         audioManager.Play("Shield_charge");

@@ -137,7 +137,6 @@ public class DodgeManager : MonoBehaviour
                         failArrow(instantArrows[0]);
                     }
                     break;
-                    
             }
         } else if (instantArrows.Count == 0)
         {
@@ -155,14 +154,14 @@ public class DodgeManager : MonoBehaviour
     void killArrow(GameObject arrow)
     {
         audioManager.Play("Evade_Arrow_Wosh");
-        evadeSlider.DOValue(evadeSlider.value + 50, 0.08f);
+        evadeSlider.value += 50;
         instantArrows.RemoveAt(0);
         arrow.transform.DOLocalJump(new Vector2(arrow.transform.localPosition.x, arrow.transform.localPosition.y + 10), 6, 1, 0.3f).OnComplete(() => Destroy(arrow.gameObject));
     }
     void failArrow(GameObject arrow)
     {
         audioManager.Play("Evade_Arrow_Fail");
-        evadeSlider.DOValue(evadeSlider.value - 30, 0.08f);
+        evadeSlider.value -= 30;
         instantArrows.RemoveAt(0);
         arrow.transform.DOShakePosition(0.3f, 4, 20).OnComplete(() => Destroy(arrow.gameObject));
     }
@@ -186,6 +185,7 @@ public class DodgeManager : MonoBehaviour
     {
         animateStars();
         playerUnit.missed = true;
+        audioManager.Play("DG_Off");
         audioManager.Play("Audience_cheer_high");
         playerAnimator.SetBool("evadeSuccess", true);
         animateBuff();
@@ -214,8 +214,8 @@ public class DodgeManager : MonoBehaviour
         evadeSlider.transform.DOLocalMoveY(-170, 0.4f);
         evadeSlider.transform.DOScale(1f, 0.4f);
 
-        gameObject.SetActive(false);
         evadeSlider.value = -100;
+        gameObject.SetActive(false);
     }
     void destroyArrows()
     {

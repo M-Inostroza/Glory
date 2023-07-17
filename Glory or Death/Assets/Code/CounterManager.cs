@@ -10,7 +10,7 @@ public class CounterManager : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [SerializeField] Combat_UI combatUI;
 
-    float rotationSpeed = 100;
+    float rotationSpeed = 10;
     bool canRotate = false;
 
     [Header("Materials")]
@@ -35,10 +35,9 @@ public class CounterManager : MonoBehaviour
 
     void rotateOnKey()
     {
-        if (Input.GetKey(KeyCode.X) && canRotate)
+        if (Input.GetKeyUp(KeyCode.X) && canRotate)
         {
-            float rotationAmount = rotationSpeed * Time.deltaTime;
-            shieldImage.transform.Rotate(0f, 0f, rotationAmount);
+            shieldImage.transform.Rotate(0f, 0f, rotationSpeed);
         }
     }
 

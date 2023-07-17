@@ -10,6 +10,8 @@ public class restManager : MonoBehaviour
     [SerializeField] Slider restSlider;
     [SerializeField] Camera mainCamera;
     [SerializeField] ParticleImage stars;
+    [SerializeField] Transform criticStar;
+    bool hasAnimatedStar = false;
 
     Player player;
     timeManager timeManager;
@@ -24,12 +26,14 @@ public class restManager : MonoBehaviour
     }
     private void Update()
     {
-        reduceValueOverTime(25);
+        reduceValueOverTime(26);
         keyStroke(4);
+        animateStar();
     }
 
     private void OnEnable()
     {
+        hasAnimatedStar = false;
         restSlider.value = 0;
         cameraZoom();
         audioManager.Play("Rest_On");
@@ -91,5 +95,14 @@ public class restManager : MonoBehaviour
     {
         mainCamera.DOFieldOfView(50, 0.5f);
         mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 1);
+    }
+    void animateStar()
+    {
+        if (!hasAnimatedStar && restSlider.value > 85)
+        {
+            audioManager.Play("Star_Hit");
+            criticStar.DOPunchScale(new Vector3(0.3f, 0.3f, 0.3f), 0.3f).OnComplete(()=> criticStar.DOScale(1,0));
+            hasAnimatedStar = true;
+        }
     }
 }

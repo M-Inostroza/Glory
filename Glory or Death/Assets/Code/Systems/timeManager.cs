@@ -84,7 +84,7 @@ public class timeManager : MonoBehaviour
         //Execute selected action
         if (playerTimer.fillAmount == 0 && playerTimerControl)
         {
-            stopUnitTimer(); 
+            stopUnitTimer();
             playerTimer.fillAmount = 1;
             switch (Input_Manager.GetPlayerAction())
             {
@@ -160,12 +160,14 @@ public class timeManager : MonoBehaviour
     {
         playerTimerControl = true;
         enemyTimerControl = true;
+        timerIsRunning = true;
     }
 
     public void stopUnitTimer()
     {
         playerTimerControl = false;
         enemyTimerControl = false;
+        timerIsRunning = false;
     }
 
     public void showEnemyAction()

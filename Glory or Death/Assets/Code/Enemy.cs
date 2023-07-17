@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
     BattleSystem BS;
     timeManager timeManager;
     Player Player;
+    Combat_UI combat_UI;
 
     Animator myAnimator;
 
@@ -43,6 +44,7 @@ public class Enemy : MonoBehaviour
         timeManager = FindObjectOfType<timeManager>();
         Player = FindObjectOfType<Player>();
         myAnimator = GetComponent<Animator>();
+        combat_UI = FindObjectOfType<Combat_UI>();
     }
 
     private void Update()
@@ -107,10 +109,10 @@ public class Enemy : MonoBehaviour
     {
         executeCameraZoom();
         timeManager.stopUnitTimer();
-        FindObjectOfType<Combat_UI>().move_UI_out();
-        baseSpeed += 5;
-        nativeDamage += 3;
-        GetComponent<Animator>().Play("Rage");
+        combat_UI.move_UI_out();
+        baseSpeed += 3;
+        nativeDamage += 2;
+        myAnimator.Play("Rage");
     }
 
 
@@ -185,7 +187,7 @@ public class Enemy : MonoBehaviour
     public void returnFromRage()
     {
         returnCameraZoom();
-        FindObjectOfType<Combat_UI>().move_UI_in();
+        combat_UI.move_UI_in();
         timeManager.continueUnitTimer();
         timeManager.fadeInUnitTimer();
     }

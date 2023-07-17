@@ -6,9 +6,11 @@ using DG.Tweening;
 public class superSword : MonoBehaviour
 {
     SoundPlayer soundPlayer;
+    superAttackManager superATK;
 
     private void Start()
     {
+        superATK = FindObjectOfType<superAttackManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
     }
 
@@ -16,15 +18,13 @@ public class superSword : MonoBehaviour
     {
         if (collision.name == "shield")
         {
-            Debug.Log("shield");
             soundPlayer.shield_metal();
             gameObject.transform.DOKill();
             Destroy(gameObject);
         }
         else if (collision.name == "Heart")
         {
-            Debug.Log("heart");
-            FindObjectOfType<superAttackManager>().fillSword();
+            superATK.fillSword();
             soundPlayer.stabSounds();
             gameObject.transform.DOKill();
             Destroy(gameObject);

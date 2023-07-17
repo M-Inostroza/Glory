@@ -6,7 +6,7 @@ using DG.Tweening;
 public class Player : MonoBehaviour
 {
     private timeManager timeManager;
-    private TargetManager targetManager;
+    private TargetManager targetManager; 
     private BattleSystem BS;
     
     [Header("Stats")]

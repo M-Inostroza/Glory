@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
+using AssetKits.ParticleImage;
 
 public class Combat_UI : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Combat_UI : MonoBehaviour
 
     [Header("--Stars--")]
     [SerializeField] int stars;
+    [SerializeField] Transform starsTransformSide;
     [SerializeField] TMP_Text starsText;
 
     [Header("--Timers--")]
@@ -60,8 +62,8 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Transform endScreen;
     [SerializeField] Image endOverlay;
     [SerializeField] TMP_Text endStarCount;
-
-
+    [SerializeField] ParticleImage starParticle;
+    [SerializeField] Transform endStarSymbol;
 
     private void Start()
     {
@@ -76,6 +78,7 @@ public class Combat_UI : MonoBehaviour
         updateShieldBar();
         refillStamina();
         hpPlayerDebug.text = "HP: " + playerUnit.GetCurrentHP();
+        starsText.text = "= " + stars.ToString();
     }
     public void setPlayerHP(int hp)
     {
@@ -101,16 +104,16 @@ public class Combat_UI : MonoBehaviour
     {
         float move_out_speed = 0.7f;
 
-        player_stats.DOLocalMoveX(player_stats.localPosition.x - 340, move_out_speed).SetEase(Ease.InOutSine);
-        enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x + 340, move_out_speed).SetEase(Ease.InOutSine);
+        player_stats.DOLocalMoveX(player_stats.localPosition.x - 350, move_out_speed).SetEase(Ease.InOutSine);
+        enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x + 350, move_out_speed).SetEase(Ease.InOutSine);
 
-        player_stamina.DOLocalMoveX(player_stamina.localPosition.x - 180, move_out_speed).SetEase(Ease.InOutSine);
+        player_stamina.DOLocalMoveX(player_stamina.localPosition.x - 200, move_out_speed).SetEase(Ease.InOutSine);
 
         player_timer.DOLocalMoveY(player_timer.localPosition.y + 160, move_out_speed);
         enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y + 160, move_out_speed);
         fightTimer.DOLocalMoveY(240, move_out_speed).SetEase(Ease.InOutSine);
 
-        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x - 80, move_out_speed).SetEase(Ease.InOutSine);
+        inputManager.transform.DOLocalMoveX(-500, move_out_speed).SetEase(Ease.InOutSine);
     }
 
     public void move_Inputs_in()
@@ -151,7 +154,7 @@ public class Combat_UI : MonoBehaviour
             staminaAlarm.transform.DOShakePosition(0.6f, 4, 50).OnComplete(() => fadeOFF());
             hasPlayed = true;
         }
-        
+
         void fadeON()
         {
             foreach (Transform child in staminaAlarm.transform)
@@ -182,7 +185,7 @@ public class Combat_UI : MonoBehaviour
             fadeON();
             shieldFeedControl = true;
             shineBuffs();
-            shieldFeedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(()=> fadeOFF());
+            shieldFeedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(() => fadeOFF());
         }
 
         void fadeON()
@@ -196,7 +199,7 @@ public class Combat_UI : MonoBehaviour
         {
             foreach (Transform child in shieldFeedback.transform)
             {
-                child.GetComponent<Image>().DOFade(0, 0.2f).OnComplete(()=> shieldFeedback.transform.DOLocalMoveY(65, 0));
+                child.GetComponent<Image>().DOFade(0, 0.2f).OnComplete(() => shieldFeedback.transform.DOLocalMoveY(65, 0));
             }
             shieldFeedControl = false;
         }
@@ -286,7 +289,6 @@ public class Combat_UI : MonoBehaviour
     public void incrementStars()
     {
         stars++;
-        starsText.text = "= " + stars.ToString();
         Invoke("hideStars", 1);
     }
     public void showStars()
@@ -296,6 +298,10 @@ public class Combat_UI : MonoBehaviour
     public void hideStars()
     {
         star_counter.DOLocalMoveX(-500, 1);
+    }
+    public void starPunchSide()
+    {
+        starsTransformSide.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.3f).OnComplete(() => starsTransformSide.DOScale(1, 0));
     }
 
     // Stamina
@@ -318,11 +324,26 @@ public class Combat_UI : MonoBehaviour
     }
 
     // End
+    public int starCounter = 0;
     public void showEndScreen()
     {
-        int starNumber = 0;
-        endOverlay.DOFade(0.5f, 1);
-        endScreen.DOLocalMoveY(0, 1).OnComplete(()=> starNumber = FindObjectOfType<Combat_UI>().stars);
-        endStarCount.text = starNumber.ToString();
+        endScreen.gameObject.SetActive(true);
+        endOverlay.gameObject.SetActive(true);
+        showStars();
+
+        endOverlay.DOFade(0.5f, 1.4f).OnComplete(() => starParticle.Play());
+        endScreen.DOLocalMoveY(0, 1.4f).SetEase(Ease.OutBounce);
+    }
+    public void addToStarCounter()
+    {
+        if (starCounter != stars)
+        {
+            starCounter++;
+            endStarCount.text = starCounter.ToString();
+        }
+    }
+    public void starPunchEnd()
+    {
+        endStarSymbol.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.3f).OnComplete(() => endStarSymbol.DOScale(1, 0));
     }
 }

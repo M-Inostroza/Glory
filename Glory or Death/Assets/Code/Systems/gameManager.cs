@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class gameManager : MonoBehaviour
     AudioManager audioManager;
 
     [SerializeField] int turnCounter;
+    [SerializeField] Image overlay;
 
+    bool isPaused = false;
     private void Start()
     {
         DOTween.SetTweensCapacity(6000, 500);
@@ -21,22 +24,33 @@ public class gameManager : MonoBehaviour
 
         audioManager.Play("Combat_Theme");
     }
-
     private void Update()
     {
-        quitGame();
-        if (timeManager.timeOut)
+        pauseGame();
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            timeManager.playerTimerControl = false;
-            timeManager.enemyTimerControl = false;
+            quitGame();
         }
     }
-
-    void quitGame()
+    public void quitGame()
     {
-        if (Input.GetKey("escape"))
+        Application.Quit();
+    }
+    public void pauseGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Application.Quit();
+            isPaused = !isPaused;
+            if (isPaused)
+            {
+                overlay.gameObject.SetActive(true);
+                Time.timeScale = 0f;
+            }
+            else
+            {
+                overlay.gameObject.SetActive(false);
+                Time.timeScale = 1f;
+            }
         }
     }
 }

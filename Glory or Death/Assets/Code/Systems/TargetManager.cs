@@ -22,7 +22,6 @@ public class TargetManager : MonoBehaviour
 
     [SerializeField] SpriteRenderer courtain;
     [SerializeField] GameObject vFeedback;
-    [SerializeField] float targetScale, wait_time;
 
     [SerializeField] ParticleImage ATKstars;
     
@@ -36,31 +35,23 @@ public class TargetManager : MonoBehaviour
     public void attack()
     {
         combat_UI.move_UI_out();
-        vFeedback.SetActive(true);
-        foreach (Transform child in vFeedback.transform)
-        {
-            child.transform.GetComponent<Image>().DOFade(.25f, 0);
-            child.transform.DOScale(1, 0.3f).SetEase(Ease.InBack);
-        }
+        activateFeedback();
+
         BattleSystem.targetHit = 0;
 
-        // Courtain
         courtain.DOColor(new Color(0, 0, 0, .5f), 1f);
         StartCoroutine(activateTargets());
-
-        // Camera
-        MainCamera.transform.DOLocalMove(new Vector3(3.3f, -1, -10), 3f);
-        MainCamera.DOFieldOfView(35, 3f);
+        zoomCameraIn();
     }
 
     IEnumerator activateTargets()
     {
         var targets = this.targets;
-        var targetScale = this.targetScale;
-        var wait_time = this.wait_time;
-
+        
         for (int i = 0; i < 3; i++)
         {
+            targets[i].transform.DOScale(1, 0.1f);
+            targets[i].GetComponent<SpriteRenderer>().DOFade(1, 0);
             targets[i].SetActive(true);
 
             if (i == 0)
@@ -75,18 +66,15 @@ public class TargetManager : MonoBehaviour
             {
                 targets[i].transform.localPosition = new Vector3(Random.Range(-1, 2.6f), Random.Range(-1.4f, -2.2f), 0);
             }
-
-            // Set target position & scale
-            targets[i].transform.DOScale(targetScale, 0.2f);
         }
 
         // Deactivates after timer (Mejorable)!!
-        yield return new WaitForSeconds(wait_time);
+        yield return new WaitForSeconds(1.5f);
 
         foreach (var target in targets)
         {
             target.transform.DOKill();
-            target.transform.DOScale(0, 0.3f).OnComplete(() => target.SetActive(false));
+            target.transform.DOScale(0, 0.05f).OnComplete(() => target.SetActive(false));
         }
 
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
@@ -100,6 +88,20 @@ public class TargetManager : MonoBehaviour
             combat_UI.showStars();
             ATKstars.Play();
         }
+    }
+    void activateFeedback()
+    {
+        vFeedback.SetActive(true);
+        foreach (Transform child in vFeedback.transform)
+        {
+            child.transform.GetComponent<Image>().DOFade(.25f, 0);
+            child.transform.DOScale(1, 0.3f).SetEase(Ease.InBack);
+        }
+    }
+    void zoomCameraIn()
+    {
+        MainCamera.transform.DOLocalMove(new Vector3(3.3f, -1, -10), 3f);
+        MainCamera.DOFieldOfView(35, 3f);
     }
 
     // Getters and Setters

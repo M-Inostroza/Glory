@@ -54,10 +54,25 @@ public class timeManager : MonoBehaviour
     private Player player;
     private Enemy enemy;
 
+    // Stamina Costs
+    int costATK = 25;
+    int costDF = 20;
+    int costDG = 30;
+    int costFC = 35;
+    [SerializeField] TMP_Text costATKText;
+    [SerializeField] TMP_Text costDFText;
+    [SerializeField] TMP_Text costDGText;
+    [SerializeField] TMP_Text costFCText;
+
 
     //Manages general timer
     private void Start()
     {
+        costATKText.text = costATK.ToString();
+        costDFText.text = costDF.ToString();
+        costDGText.text = costDG.ToString();
+        costFCText.text = costFC.ToString();
+
         BS = FindObjectOfType<BattleSystem>();
         GM = FindObjectOfType<gameManager>();
         Input_Manager = FindObjectOfType<Input_Manager>();
@@ -89,11 +104,12 @@ public class timeManager : MonoBehaviour
             switch (Input_Manager.GetPlayerAction())
             {
                 case "ATK1":
-                    if (player.GetCurrentStamina() > 25)
+                    if (player.GetCurrentStamina() > costATK)
                     {
+                        enemyTimer.fillAmount += 0.02f;
                         BS.PlayerAttack();
                         Input_Manager.GetAttackCD().fillAmount = 1;
-                        player.DecrementCurrentStamina(25);
+                        player.DecrementCurrentStamina(costATK);
                         fadeOutUnitTimer();
                     } else
                     {
@@ -103,11 +119,12 @@ public class timeManager : MonoBehaviour
                     break;
 
                 case "DF":
-                    if (player.GetCurrentStamina() > 20)
+                    if (player.GetCurrentStamina() > costDF)
                     {
+                        enemyTimer.fillAmount += 0.02f;
                         BS.PlayerDefend();
                         Input_Manager.GetDefendCD().fillAmount = 1;
-                        player.DecrementCurrentStamina(20);
+                        player.DecrementCurrentStamina(costDF);
                         fadeOutUnitTimer();
                     } else
                     {
@@ -117,11 +134,12 @@ public class timeManager : MonoBehaviour
                     break;
 
                 case "DG":
-                    if (player.GetCurrentStamina() > 30)
+                    if (player.GetCurrentStamina() > costDG)
                     {
+                        enemyTimer.fillAmount += 0.02f;
                         BS.PlayDodge();
                         Input_Manager.GetDodgeCD().fillAmount = 1;
-                        player.DecrementCurrentStamina(30);
+                        player.DecrementCurrentStamina(costDG);
                         fadeOutUnitTimer();
                     } else
                     {
@@ -131,11 +149,12 @@ public class timeManager : MonoBehaviour
                     break;
 
                 case "FC":
-                    if (player.GetCurrentStamina() > 35)
+                    if (player.GetCurrentStamina() > costFC)
                     {
+                        enemyTimer.fillAmount += 0.02f;
                         BS.PlayFocus();
                         Input_Manager.GetFocusCD().fillAmount = 1;
-                        player.DecrementCurrentStamina(35);
+                        player.DecrementCurrentStamina(costFC);
                         fadeOutUnitTimer();
                     } else
                     {
@@ -145,6 +164,7 @@ public class timeManager : MonoBehaviour
                     break;
 
                 case "RST":
+                    enemyTimer.fillAmount += 0.02f;
                     BS.PlayRest();
                     stopUnitTimer();
                     fadeOutUnitTimer();
@@ -186,6 +206,7 @@ public class timeManager : MonoBehaviour
         {
             stopUnitTimer();
             enemyTimer.fillAmount = 1;
+            playerTimer.fillAmount += 0.05f;
             if (enemyActionIcon.color.a == 1)
             {
                 fadeOutUnitTimer();
@@ -194,10 +215,10 @@ public class timeManager : MonoBehaviour
             // Select action
             if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)
             {
-                Input_Manager.SetEnemyAction("RAGE");
                 dirtPrevious = false;
                 dirtChance += 5;
                 enemy.setAngryState(true);
+                Input_Manager.SetEnemyAction("RAGE");
             } 
             else
             {
@@ -327,10 +348,13 @@ public class timeManager : MonoBehaviour
             
             if (battleTimer <= 0)
             {
-                battleTimer = 0;
-                combarUI.showEndScreen();
+                combarUI.move_UI_out();
                 timerIsRunning = false;
                 stopUnitTimer();
+                battleTimer = 0;
+                FindObjectOfType<cameraManager>().playChrome();
+                slowMotion(2, 0.1f);
+                combarUI.StartCoroutine(combarUI.showEndScreen(2));
             }
         }
     }
@@ -361,6 +385,7 @@ public class timeManager : MonoBehaviour
     {
         StartCoroutine(slowMotion(seconds, scale));
     }
+    
 
     IEnumerator slowMotion(float seconds, float timeScale)
     {

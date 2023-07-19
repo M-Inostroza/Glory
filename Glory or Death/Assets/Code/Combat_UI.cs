@@ -12,6 +12,7 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Transform player_stats;
     [SerializeField] Transform enemy_stats;
     [SerializeField] Transform player_stamina;
+    [SerializeField] TMP_Text staminaText;
     [SerializeField] Transform star_counter;
 
     [Header("--Stars--")]
@@ -45,6 +46,8 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Transform xKey;
     [SerializeField] Transform sKey;
     [SerializeField] Transform aKey;
+    [SerializeField] Transform leftKey;
+    [SerializeField] Transform rightKey;
 
     [Header("--Sliders--")]
     [SerializeField] Player playerUnit;
@@ -60,13 +63,22 @@ public class Combat_UI : MonoBehaviour
 
     [Header("--End--")]
     [SerializeField] Transform endScreen;
+    [SerializeField] Transform endStarSymbol;
     [SerializeField] Image endOverlay;
     [SerializeField] TMP_Text endStarCount;
+    [SerializeField] TMP_Text textBubbleContent;
     [SerializeField] ParticleImage starParticle;
-    [SerializeField] Transform endStarSymbol;
+    [SerializeField] ParticleImage confeti;
+    [SerializeField] Image playerAvatar;
+    [SerializeField] Image textBubble;
+
+    AudioManager audioManager;
+    SoundPlayer soundPlayer;
 
     private void Start()
     {
+        soundPlayer = FindObjectOfType<SoundPlayer>();
+        audioManager = FindObjectOfType<AudioManager>();
         staminaSlider.DOValue(staminaSlider.maxValue, 1.5f);
     }
     private void OnEnable()
@@ -87,7 +99,7 @@ public class Combat_UI : MonoBehaviour
 
     public void move_UI_in()
     {
-        float move_in_speed = 0.7f;
+        float move_in_speed = 0.5f;
 
         player_stats.DOLocalMoveX(player_stats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 350, move_in_speed).SetEase(Ease.InOutSine);
@@ -102,7 +114,7 @@ public class Combat_UI : MonoBehaviour
     }
     public void move_UI_out()
     {
-        float move_out_speed = 0.7f;
+        float move_out_speed = 0.5f;
 
         player_stats.DOLocalMoveX(player_stats.localPosition.x - 350, move_out_speed).SetEase(Ease.InOutSine);
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x + 350, move_out_speed).SetEase(Ease.InOutSine);
@@ -111,7 +123,7 @@ public class Combat_UI : MonoBehaviour
 
         player_timer.DOLocalMoveY(player_timer.localPosition.y + 160, move_out_speed);
         enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y + 160, move_out_speed);
-        fightTimer.DOLocalMoveY(240, move_out_speed).SetEase(Ease.InOutSine);
+        fightTimer.DOLocalMoveY(270, move_out_speed).SetEase(Ease.InOutSine);
 
         inputManager.transform.DOLocalMoveX(-500, move_out_speed).SetEase(Ease.InOutSine);
     }
@@ -130,6 +142,7 @@ public class Combat_UI : MonoBehaviour
     // Stamina
     void refillStamina()
     {
+        staminaText.text = ((int)playerUnit.GetCurrentStamina()).ToString() + " / " + ((int)playerUnit.GetMaxStamina()).ToString();
         if (playerUnit.GetCurrentStamina() < playerUnit.GetMaxStamina())
         {
             playerUnit.IncrementCurrentStamina(0.5f * Time.deltaTime);  //Mejorable
@@ -216,10 +229,11 @@ public class Combat_UI : MonoBehaviour
     // Buffs
     public void damageBuff(string unit)
     {
-        var playerImgDmg = player_DMG_Feedback.GetComponent<Image>();
-        var child = player_DMG_Feedback.transform.GetChild(0);
         if (unit == "player")
         {
+            var playerImgDmg = player_DMG_Feedback.GetComponent<Image>();
+            var child = player_DMG_Feedback.transform.GetChild(0);
+
             playerImgDmg.DOFade(1, 0);
             player_DMG_Feedback.transform.DOLocalMoveY(65, 0);
             shineBuffs();
@@ -229,20 +243,26 @@ public class Combat_UI : MonoBehaviour
             child.GetComponent<Image>().DOFade(1, 0.5f);
         } else if (unit == "enemy")
         {
-            enemy_DMG_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => enemy_DMG_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
-            enemy_DMG_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+            var enemyImgDmg =  enemy_DMG_Feedback.GetComponent<Image>();
+            var child = enemy_DMG_Feedback.transform.GetChild(0);
 
-            enemy_DMG_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => enemy_DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
-            enemy_DMG_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+            enemyImgDmg.DOFade(1, 0);
+            enemy_DMG_Feedback.transform.DOLocalMoveY(65, 0);
+            shineBuffs();
+            enemy_DMG_Feedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(() => enemyImgDmg.DOFade(0, 0.5f));
+
+            child.transform.DOLocalMoveY(0, 0.8f).OnComplete(() => child.GetComponent<Image>().DOFade(0, 0.5f));
+            child.GetComponent<Image>().DOFade(1, 0.5f);
         }
     }
     public void speedBuff(string unit)
     {
-        var playerImgSpeed = player_SPEED_Feedback.GetComponent<Image>();
-        var child = player_SPEED_Feedback.transform.GetChild(0);
         if (unit == "player")
         {
+            var playerImgSpeed = player_SPEED_Feedback.GetComponent<Image>();
+            var child = player_SPEED_Feedback.transform.GetChild(0);
             playerImgSpeed.DOFade(1, 0);
+
             player_SPEED_Feedback.transform.DOLocalMoveY(65, 0);
             shineBuffs();
             player_SPEED_Feedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(() => playerImgSpeed.DOFade(0, 0.5f));
@@ -251,11 +271,16 @@ public class Combat_UI : MonoBehaviour
             child.GetComponent<Image>().DOFade(1, 0.5f);
         } else if (unit == "enemy")
         {
-            enemy_SPEED_Feedback.transform.DOLocalMoveY(150, 0.8f).OnComplete(() => enemy_SPEED_Feedback.GetComponent<Image>().DOFade(0, 0.5f));
-            enemy_SPEED_Feedback.GetComponent<Image>().DOFade(1, 0.3f);
+            var enemyImgSpeed = enemy_SPEED_Feedback.GetComponent<Image>();
+            var child = enemy_SPEED_Feedback.transform.GetChild(0);
 
-            enemy_SPEED_Feedback.transform.GetChild(0).transform.DOLocalMoveY(0, 1f).OnComplete(() => enemy_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.5f));
-            enemy_SPEED_Feedback.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+            enemyImgSpeed.DOFade(1, 0);
+            enemy_SPEED_Feedback.transform.DOLocalMoveY(65, 0);
+            shineBuffs();
+            enemy_SPEED_Feedback.transform.DOLocalMoveY(120, 0.8f).OnComplete(() => enemyImgSpeed.DOFade(0, 0.5f));
+
+            child.transform.DOLocalMoveY(0, 0.8f).OnComplete(() => child.GetComponent<Image>().DOFade(0, 0.5f));
+            child.GetComponent<Image>().DOFade(1, 0.5f);
         }
     }
 
@@ -284,6 +309,24 @@ public class Combat_UI : MonoBehaviour
             aKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateA());
         }
     }
+    public void activateLeftRight()
+    {
+        if (leftKey.gameObject.activeInHierarchy && rightKey.gameObject.activeInHierarchy)
+        {
+            animateLeft();
+            animateRight();
+            void animateLeft()
+            {
+                leftKey.DOScale(0.7f, 0.1f).OnComplete(animateRight);
+                rightKey.DOScale(0.8f, 0.1f);
+            }
+            void animateRight()
+            {
+                rightKey.DOScale(0.7f, 0.1f).OnComplete(animateLeft);
+                leftKey.DOScale(0.8f, 0.1f);
+            }
+        }
+    }
 
     // Critic
     public void incrementStars()
@@ -293,11 +336,12 @@ public class Combat_UI : MonoBehaviour
     }
     public void showStars()
     {
-        star_counter.DOLocalMoveX(-350, 1);
+        audioManager.Play("Star_Shimes_3");
+        star_counter.DOLocalMoveX(-350, 0.5f);
     }
     public void hideStars()
     {
-        star_counter.DOLocalMoveX(-500, 1);
+        star_counter.DOLocalMoveX(-500, 0.5f);
     }
     public void starPunchSide()
     {
@@ -324,26 +368,56 @@ public class Combat_UI : MonoBehaviour
     }
 
     // End
-    public int starCounter = 0;
-    public void showEndScreen()
+    int starCounter = 0;
+    public IEnumerator showEndScreen(float delay)
     {
+        activateEndElements();
+        audioManager.Play("End_Horn");
+        audioManager.Play("End_Drums");
+        endOverlay.DOFade(0.85f, 1f);
+        yield return new WaitForSeconds(delay);
+        showStars();
+        float threshholdValue = 2.5f;
+        endScreen.DOLocalMoveY(0, 2f).SetEase(Ease.OutBounce).OnUpdate(() =>
+        {
+            float curveY = endScreen.localPosition.y;
+            bool hasHitPlayed = false;
+            if (curveY < threshholdValue && !hasHitPlayed)
+            {
+                soundPlayer.metalStone();
+                hasHitPlayed = true;
+                threshholdValue -= 0.5f;
+            }
+        }).OnComplete(()=> starParticle.Play());
+    }
+    void activateEndElements()
+    {
+        playerAvatar.gameObject.SetActive(true);
+        textBubble.gameObject.SetActive(true);
         endScreen.gameObject.SetActive(true);
         endOverlay.gameObject.SetActive(true);
-        showStars();
-
-        endOverlay.DOFade(0.5f, 1.4f).OnComplete(() => starParticle.Play());
-        endScreen.DOLocalMoveY(0, 1.4f).SetEase(Ease.OutBounce);
+        confeti.gameObject.SetActive(true);
     }
     public void addToStarCounter()
     {
-        if (starCounter != stars)
+        if (stars != 0)
         {
             starCounter++;
             endStarCount.text = starCounter.ToString();
+            stars--;
+        }
+        else
+        {
+            playerAvatar.transform.DOLocalMoveX(-318, 1);
+            textBubble.transform.DOLocalMoveX(-190, 1);
+            textBubble.DOFade(1, 0.8f);
+            textBubbleContent.DOFade(1, 0.8f);
+            hideStars();
         }
     }
     public void starPunchEnd()
     {
-        endStarSymbol.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.3f).OnComplete(() => endStarSymbol.DOScale(1, 0));
+        audioManager.Play("Star_Shimes_2");
+        endStarSymbol.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f).OnComplete(() => endStarSymbol.DOScale(1, 0));
     }
 }

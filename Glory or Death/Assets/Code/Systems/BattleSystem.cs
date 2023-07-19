@@ -131,7 +131,7 @@ public class BattleSystem : MonoBehaviour
     }
     public void EnemyTurn_rage()
     {
-        enemyUnit.executeRage();
+        enemyUnit.executeRage(3, 2);
     }
 
     // UI

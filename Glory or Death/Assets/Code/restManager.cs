@@ -26,13 +26,14 @@ public class restManager : MonoBehaviour
     }
     private void Update()
     {
-        reduceValueOverTime(26);
+        reduceValueOverTime(24);
         keyStroke(4);
         animateStar();
     }
 
     private void OnEnable()
     {
+        FindObjectOfType<Combat_UI>().activateLeftRight();
         hasAnimatedStar = false;
         restSlider.value = 0;
         cameraZoom();
@@ -63,6 +64,7 @@ public class restManager : MonoBehaviour
 
     private void OnDisable()
     {
+        criticStar.GetComponent<Image>().DOFade(0.25f, 0);
         canRest = false;
         player.SetCurrentStamina(restSlider.value);
         timeManager.continueUnitTimer();
@@ -101,6 +103,7 @@ public class restManager : MonoBehaviour
         if (!hasAnimatedStar && restSlider.value > 85)
         {
             audioManager.Play("Star_Hit");
+            criticStar.GetComponent<Image>().DOFade(1, 0.3f);
             criticStar.DOPunchScale(new Vector3(0.3f, 0.3f, 0.3f), 0.3f).OnComplete(()=> criticStar.DOScale(1,0));
             hasAnimatedStar = true;
         }

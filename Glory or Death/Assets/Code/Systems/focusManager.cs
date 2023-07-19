@@ -4,8 +4,8 @@ using DG.Tweening;
 
 public class focusManager : MonoBehaviour
 {
-    float cursorSpeed = 3.2f;
-    float targetSpeed = 0.8f;
+    float cursorSpeed = 1.6f; // menos es más
+    float targetSpeed = 1.6f;
 
     [SerializeField] GameObject cursor;
     [SerializeField] GameObject target;

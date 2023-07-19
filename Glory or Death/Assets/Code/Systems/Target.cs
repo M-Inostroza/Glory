@@ -6,22 +6,23 @@ public class Target : MonoBehaviour
 {
     public GameObject vFeedback;
     
-    Animator anim;
     CircleCollider2D colider;
     BattleSystem BattleSystem;
     TargetManager targetManager;
+    SoundPlayer soundPlayer;
 
-    private void Start()
+    private void Awake()
     {
+        soundPlayer = FindObjectOfType<SoundPlayer>();
         targetManager = FindObjectOfType<TargetManager>();
         BattleSystem = FindObjectOfType<BattleSystem>();
-        anim = gameObject.GetComponent<Animator>();
         colider = gameObject.GetComponent<CircleCollider2D>();
     }
 
     private void OnMouseDown()
     {
-        FindObjectOfType<SoundPlayer>().targetSounds();
+        FindObjectOfType<timeManager>().enemyTimer.fillAmount += 0.06f;
+        soundPlayer.targetSounds();
         switch (tag)
         {
             case "target_0":
@@ -38,7 +39,8 @@ public class Target : MonoBehaviour
                 break;
         }
         colider.enabled = false;
-        anim.SetBool("hit", true);
+        transform.DOScale(1.2f, 0.1f);
+        GetComponent<SpriteRenderer>().DOFade(0, 0.1f).OnComplete(() => killTarget());
         BattleSystem.targetHit++;
         FindObjectOfType<Player>().incrementAdrenaline(1);
     }
@@ -51,7 +53,6 @@ public class Target : MonoBehaviour
 
     public void killTarget()
     {
-        anim.Rebind();
         gameObject.SetActive(false);
         colider.enabled = true;
     }

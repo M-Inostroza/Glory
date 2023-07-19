@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
     {
         if (!Player.missed)
         {
-            adrenaline += 2;
+            adrenaline += 4;
             if (Player.getCurrentShield() > 0 && !dirtManager.isDirtyActive())
             {
                 audioManager.Play("Counter_On");
@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
         else
         {
             myAnimator.SetBool("attack", true);
-            adrenaline++;
+            adrenaline+=2;
         }
     }
     public void executeSuperAttack()
@@ -103,16 +103,17 @@ public class Enemy : MonoBehaviour
     public void executeDirt()
     {
         dirtManager.gameObject.SetActive(true);
-        adrenaline += 2;
+        adrenaline += 3;
     }
-    public void executeRage()
+    public void executeRage(int speedBuff, int dmgBuff)
     {
-        executeCameraZoom();
         timeManager.stopUnitTimer();
+        executeCameraZoom();
         combat_UI.move_UI_out();
-        baseSpeed += 3;
-        nativeDamage += 2;
+        baseSpeed += speedBuff;
+        nativeDamage += dmgBuff;
         myAnimator.Play("Rage");
+        adrenaline += 3;
     }
 
 
@@ -159,7 +160,6 @@ public class Enemy : MonoBehaviour
     public void stopHurt()
     {
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
-        timeManager.continueUnitTimer();
         backToIdle();
     }
     #endregion
@@ -193,8 +193,8 @@ public class Enemy : MonoBehaviour
     }
     public void executeCameraZoom()
     {
-        mainCamera.DOFieldOfView(45, 1f);
-        mainCamera.transform.DOLocalMove(new Vector3(2.5f, -1, -10), 1f);
+        mainCamera.DOFieldOfView(40, 0.6f);
+        mainCamera.transform.DOLocalMove(new Vector3(3, -0.3f, -10), 0.6f);
     }
     public void returnCameraZoom()
     {
@@ -209,14 +209,18 @@ public class Enemy : MonoBehaviour
     {
         audioManager.Play("Enemy_charge");
     }
+
+    // Buffs
     public void doDamageBuff()
     {
-        FindObjectOfType<Combat_UI>().damageBuff("enemy");
+        combat_UI.damageBuff("enemy");
     }
     public void doSpeedBuff()
     {
         FindObjectOfType<Combat_UI>().speedBuff("enemy");
     }
+
+    // Camera
     public void doCameraShake(int level)
     {
         if (level == 1)
@@ -226,12 +230,36 @@ public class Enemy : MonoBehaviour
             mainCamera.DOShakePosition(0.6f, 0.5f, 20, 10);
         }
     }
-    public void testRage()
+    public void doChrome()
     {
-        currentHP -= 20;
+        FindObjectOfType<cameraManager>().playChrome();
     }
-    
+    public void doSlow()
+    {
+        FindObjectOfType<timeManager>().executeSlowMotion(0.2f, 0.2f);
+    }
+    public void doSuperATKzoom()
+    {
+        mainCamera.transform.DOLocalMoveX(-1.3f, 0.5f);
+        mainCamera.transform.DOLocalMoveY(-0.5f, 0.5f);
+        mainCamera.DOFieldOfView(40, 0.5f);
+    }
+    public void doSuperATKzoomReturn()
+    {
+        mainCamera.transform.DOLocalMoveX(0, 0.5f);
+        mainCamera.transform.DOLocalMoveY(0, 0.5f);
+        mainCamera.DOFieldOfView(50, 0.5f);
+    }
+    public void doUIOut()
+    {
+        combat_UI.move_UI_out();
+    }
+    public void doUIIn()
+    {
+        combat_UI.move_UI_in();
+    }
 
+    // DMG Feedbacks
     public void showDmgFeedbackPlayer()
     {
         if (!Player.missed)
@@ -260,7 +288,6 @@ public class Enemy : MonoBehaviour
     {
         isAngry = newState;
     }
-
     public void setSuperDMG(int dmg)
     {
         superDMG = dmg;

@@ -10,7 +10,7 @@ public class CounterManager : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [SerializeField] Combat_UI combatUI;
 
-    float rotationSpeed = 10;
+    float rotationSpeed = 13;
     bool canRotate = false;
 
     [Header("Materials")]

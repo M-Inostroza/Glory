@@ -5257,6 +5257,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0.16666667
+    functionName: doUIOut
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.3
     functionName: jumpSounds
     data: 
@@ -5273,6 +5280,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.0833334
     functionName: showDmgFeedbackPlayer
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2
+    functionName: doUIIn
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -27,14 +27,17 @@ public class counterSword : MonoBehaviour
         soundPlayer = FindObjectOfType<SoundPlayer>();
         audioManager = FindObjectOfType<AudioManager>();
     }
-    
+    private void OnEnable()
+    {
+        transform.DOLocalMoveX(12, 0);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         counterManager.GetComponent<CounterManager>().canRotateBool(false);
-        transform.DOLocalMoveX(12, 0);
+        
         if (collision.name == "Shield Image")
         {
-            player.decreaseCurrentShield();
             combatUI.shakeShieldBar();
             soundPlayer.shield_metal();
             enemy.GetComponent<Animator>().Play("Attack_Blocked");
@@ -47,6 +50,10 @@ public class counterSword : MonoBehaviour
             audioManager.Play("Counter_Fail");
             soundPlayer.stabSounds();
             meltHeart();
+        }
+        else if (collision.name == "shieldStop")
+        {
+            counterManager.GetComponent<CounterManager>().canRotateBool(false);
         }
     }
 

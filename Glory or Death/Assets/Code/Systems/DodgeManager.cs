@@ -169,7 +169,6 @@ public class DodgeManager : MonoBehaviour
     {
         if (evadeSlider.value < evadeTarget.transform.localPosition.x)
         {
-            audioManager.Play("Audience_boo");
             playerUnit.missed = false;
             playerAnimator.SetBool("skillFail", true);
         }

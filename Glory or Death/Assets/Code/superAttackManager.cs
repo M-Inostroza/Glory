@@ -17,6 +17,7 @@ public class superAttackManager : MonoBehaviour
     [SerializeField] Camera mainCamera;
 
     cameraManager cameraManager;
+    Combat_UI combat_UI;
     AudioManager audioManager;
     Enemy enemy;
 
@@ -24,6 +25,7 @@ public class superAttackManager : MonoBehaviour
 
     private void Awake()
     {
+        combat_UI = FindObjectOfType<Combat_UI>();
         cameraManager = FindObjectOfType<cameraManager>();
         audioManager = FindObjectOfType<AudioManager>();
         enemy = FindObjectOfType<Enemy>();
@@ -40,10 +42,11 @@ public class superAttackManager : MonoBehaviour
         feedbackContainer.DOLocalMoveY(10, 0.5f);
         audioManager.Play("Super_Attack_Enemy_On");
         cameraManager.playChrome();
+        combat_UI.move_UI_out();
         moveCameraIn();
-        StartCoroutine(MinigameTimer(6));
+        StartCoroutine(MinigameTimer(5f));
         StartCoroutine(SpawnSwordsWithDelay(0.3f));
-        StartCoroutine(slowMotion(4, 0.5f));
+        StartCoroutine(slowMotion(4.5f, 0.5f));
     }
 
     private void OnDisable()
@@ -59,7 +62,7 @@ public class superAttackManager : MonoBehaviour
             Transform randomSpawner = swordSpawners[randomNumber];
             var bullet = Instantiate(swordProyectilePrefab, new Vector3(randomSpawner.transform.localPosition.x, randomSpawner.transform.localPosition.y, 0), Quaternion.identity, parentCanvas.transform);
             PointSpriteTowards(heartTarget.localPosition, bullet.transform);
-            bullet.transform.DOMove(new Vector3(spawnRotator.transform.position.x, spawnRotator.transform.position.y, 0), 2);
+            bullet.transform.DOMove(new Vector3(spawnRotator.transform.position.x, spawnRotator.transform.position.y, 0), 1.4f);
 
             yield return new WaitForSeconds(delay);
         }
@@ -76,7 +79,7 @@ public class superAttackManager : MonoBehaviour
     // Tools
     void rotateSpawners()
     {
-        spawnRotator.DOLocalRotate(new Vector3(0, 0, 180), 5).SetEase(Ease.Linear);
+        spawnRotator.DOLocalRotate(new Vector3(0, 0, 180), 4).SetEase(Ease.Linear);
     }
     void PointSpriteTowards(Vector3 targetPosition, Transform bullet)
     {

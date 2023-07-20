@@ -30,13 +30,12 @@ public class defendManager : MonoBehaviour
 
     public void activateShieldMinigame()
     {
-        cameraZoomIn();
-        keyCanvas.SetActive(true);
-        FindObjectOfType<Combat_UI>().activateA();
         canDefend = true;
-        scaleUP = transform.DOScale(1, 1.5f).SetEase(Ease.InOutQuad).OnComplete(() => Fail());
-        shadow.SetActive(true);
         transformControl = true;
+        cameraAndKeyIn();
+        
+        scaleUP = transform.DOScale(1, 1.5f).SetEase(Ease.InOutQuad).OnComplete(Fail);
+        shadow.SetActive(true);
         audioManager.Play("Shield_charge");
     }
 
@@ -61,17 +60,18 @@ public class defendManager : MonoBehaviour
     {
         if (transform.localScale.x < scaleLimit )
         {
-            transform.DOShakePosition(0.4f, 0.05f, 40);
-            Fail();
+            audioManager.Play("UI_select_fail"); 
+            transform.DOShakePosition(0.2f, 0.05f, 40).OnComplete(Fail);
+            scaleUP.Kill();
+            transform.DOScale(0, 0);
         }
         else if (transform.localScale.x > scaleLimit && transform.localScale.x < 95)
         {
             audioManager.Play("defend_success");
             scaleUP.Rewind();
-            Player.increaseCurrentShield();
             playerAnim.SetBool("skillShieldSuccess", true);
+            closeMinigame();
         } 
-        closeMinigame();
     }
 
     void Fail()
@@ -100,6 +100,12 @@ public class defendManager : MonoBehaviour
     {
         mainCamera.DOFieldOfView(50, 0.5f);
         mainCamera.transform.DOLocalMoveY(0, 0.5f);
+    }
+    void cameraAndKeyIn()
+    {
+        cameraZoomIn();
+        keyCanvas.SetActive(true);
+        FindObjectOfType<Combat_UI>().activateA();
     }
 }
 

@@ -32,6 +32,7 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] GameObject player_SPEED_Feedback;
     [SerializeField] GameObject staminaAlarm;
     [SerializeField] GameObject shieldFeedback;
+    [SerializeField] TMP_Text shieldNumber;
 
     [Header("--Sliders--")]
     [SerializeField] Slider playerHpSlider;
@@ -49,35 +50,23 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Transform leftKey;
     [SerializeField] Transform rightKey;
 
-    [Header("--Sliders--")]
-    [SerializeField] Player playerUnit;
-    [SerializeField] Enemy enemyUnit;
-
     [Header("--Materials--")]
     [SerializeField] Material swordBuffMaterial;
     [SerializeField] Material arrowBuffMaterial;
 
-    [Header("--Debug--")]
+    [Header("--HP--")]
     [SerializeField] TMP_Text hpPlayerDebug;
+    [SerializeField] TMP_Text hpEnemyDebug;
 
-
-    [Header("--End--")]
-    [SerializeField] Transform endScreen;
-    [SerializeField] Transform endStarSymbol;
-    [SerializeField] Image endOverlay;
-    [SerializeField] TMP_Text endStarCount;
-    [SerializeField] TMP_Text textBubbleContent;
-    [SerializeField] ParticleImage starParticle;
-    [SerializeField] ParticleImage confeti;
-    [SerializeField] Image playerAvatar;
-    [SerializeField] Image textBubble;
 
     AudioManager audioManager;
-    SoundPlayer soundPlayer;
+    Player playerUnit;
+    Enemy enemyUnit;
 
     private void Start()
     {
-        soundPlayer = FindObjectOfType<SoundPlayer>();
+        playerUnit = FindObjectOfType<Player>();
+        enemyUnit = FindObjectOfType<Enemy>();
         audioManager = FindObjectOfType<AudioManager>();
         staminaSlider.DOValue(staminaSlider.maxValue, 1.5f);
     }
@@ -89,7 +78,7 @@ public class Combat_UI : MonoBehaviour
     {
         updateShieldBar();
         refillStamina();
-        hpPlayerDebug.text = "HP: " + playerUnit.GetCurrentHP();
+        hpTextUpdate();
         starsText.text = "= " + stars.ToString();
     }
     public void setPlayerHP(int hp)
@@ -190,7 +179,7 @@ public class Combat_UI : MonoBehaviour
     }
 
     // Shield
-    private bool shieldFeedControl = false;
+    bool shieldFeedControl = false;
     public void shieldFeed()
     {
         if (!shieldFeedControl)
@@ -219,11 +208,19 @@ public class Combat_UI : MonoBehaviour
     }
     void updateShieldBar()
     {
-        shieldBar.DOValue(playerUnit.getCurrentShield(), .5f);
+        shieldBar.DOValue(playerUnit.getCurrentShield(), .3f);
+        shieldNumber.text = playerUnit.getCurrentShield().ToString();
     }
     public void shakeShieldBar()
     {
         shieldBar.transform.DOShakePosition(0.5f, 2.5f, 50, 90);
+    }
+
+    //HP
+    void hpTextUpdate()
+    {
+        hpPlayerDebug.text = playerUnit.GetCurrentHP().ToString() + " / " + playerUnit.GetMaxHP().ToString();
+        hpEnemyDebug.text = enemyUnit.currentHP + " / " + enemyUnit.maxHP;
     }
 
     // Buffs
@@ -367,57 +364,13 @@ public class Combat_UI : MonoBehaviour
         DOTween.To(() => arrowBuffMaterial.GetFloat("_ShineLocation"), x => arrowBuffMaterial.SetFloat("_ShineLocation", x), 0, 0.7f).OnComplete(() => arrowBuffMaterial.SetFloat("_ShineLocation", 1)).SetDelay(0.3f);
     }
 
-    // End
-    int starCounter = 0;
-    public IEnumerator showEndScreen(float delay)
+    // G & S 
+    public int GetStars()
     {
-        activateEndElements();
-        audioManager.Play("End_Horn");
-        audioManager.Play("End_Drums");
-        endOverlay.DOFade(0.85f, 1f);
-        yield return new WaitForSeconds(delay);
-        showStars();
-        float threshholdValue = 2.5f;
-        endScreen.DOLocalMoveY(0, 2f).SetEase(Ease.OutBounce).OnUpdate(() =>
-        {
-            float curveY = endScreen.localPosition.y;
-            bool hasHitPlayed = false;
-            if (curveY < threshholdValue && !hasHitPlayed)
-            {
-                soundPlayer.metalStone();
-                hasHitPlayed = true;
-                threshholdValue -= 0.5f;
-            }
-        }).OnComplete(()=> starParticle.Play());
+        return stars;
     }
-    void activateEndElements()
+    public void removeStar()
     {
-        playerAvatar.gameObject.SetActive(true);
-        textBubble.gameObject.SetActive(true);
-        endScreen.gameObject.SetActive(true);
-        endOverlay.gameObject.SetActive(true);
-        confeti.gameObject.SetActive(true);
-    }
-    public void addToStarCounter()
-    {
-        if (stars != 0)
-        {
-            starCounter++;
-            endStarCount.text = starCounter.ToString();
-            stars--;
-        }
-        else
-        {
-            playerAvatar.transform.DOLocalMoveX(-318, 1);
-            textBubble.transform.DOLocalMoveX(-190, 1);
-            textBubble.DOFade(1, 0.8f);
-            textBubbleContent.DOFade(1, 0.8f);
-            hideStars();
-        }
-    }
-    public void starPunchEnd()
-    {
-        audioManager.Play("Star_Shimes_2");
-        endStarSymbol.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f).OnComplete(() => endStarSymbol.DOScale(1, 0));
+        stars--;
     }
 }

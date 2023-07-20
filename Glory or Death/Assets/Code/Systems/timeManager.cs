@@ -19,8 +19,8 @@ public class timeManager : MonoBehaviour
 
     private BattleSystem BS;
     private Input_Manager Input_Manager;
-    private gameManager GM;
     private Combat_UI combarUI;
+    private endManager endManager;
 
     //Global time
     public TextMeshProUGUI timerText;
@@ -74,11 +74,11 @@ public class timeManager : MonoBehaviour
         costFCText.text = costFC.ToString();
 
         BS = FindObjectOfType<BattleSystem>();
-        GM = FindObjectOfType<gameManager>();
         Input_Manager = FindObjectOfType<Input_Manager>();
         combarUI = FindObjectOfType<Combat_UI>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
+        endManager = FindObjectOfType<endManager>();
         timerIsRunning = true;
     }
 
@@ -354,7 +354,7 @@ public class timeManager : MonoBehaviour
                 battleTimer = 0;
                 FindObjectOfType<cameraManager>().playChrome();
                 slowMotion(2, 0.1f);
-                combarUI.StartCoroutine(combarUI.showEndScreen(2));
+                endManager.StartCoroutine(endManager.showEndScreen(2));
             }
         }
     }

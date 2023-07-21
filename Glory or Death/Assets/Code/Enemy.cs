@@ -142,11 +142,17 @@ public class Enemy : MonoBehaviour
     }
     public void stopAttack()
     {
-        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
-        timeManager.enemyTimer.fillAmount = 1;
-        timeManager.fadeInUnitTimer();
-        timeManager.continueUnitTimer();
-        myAnimator.SetBool("attack", false);
+        if (!BS.GetDeadPlayer())
+        {
+            timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
+            timeManager.enemyTimer.fillAmount = 1;
+            timeManager.fadeInUnitTimer();
+            timeManager.continueUnitTimer();
+            myAnimator.SetBool("attack", false);
+        } else
+        {
+            backToIdle();
+        }
     }
     public void stopSuperAttack()
     {
@@ -182,6 +188,7 @@ public class Enemy : MonoBehaviour
     }
     public void backToIdle()
     {
+        myAnimator.SetBool("attack", false);
         myAnimator.Play("Idle");
     }
     public void returnFromRage()
@@ -256,7 +263,10 @@ public class Enemy : MonoBehaviour
     }
     public void doUIIn()
     {
-        combat_UI.move_UI_in();
+        if (!BS.GetDeadPlayer())
+        {
+            combat_UI.move_UI_in();
+        }
     }
 
     // DMG Feedbacks

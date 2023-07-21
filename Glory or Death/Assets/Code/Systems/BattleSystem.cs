@@ -11,11 +11,10 @@ public class BattleSystem : MonoBehaviour
     timeManager timeManager;
     Input_Manager Input_Manager;
     Combat_UI combat_UI;
+    endManager endManager;
+    cameraManager cameraManager;
 
     [SerializeField] Toggle testMode;
-
-    //private bool canEvade = false;
-    private float evadeTimer;
 
     [Header ("Mechanics")]
     public GameObject dodgeManager;
@@ -30,6 +29,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject enemyPrefab;
     private Player playerUnit;
     private Enemy enemyUnit;
+    bool deadPlayer = false;
+    bool deadEnemy = false;
 
     // Animators
     private Animator playerAnimator;
@@ -54,6 +55,8 @@ public class BattleSystem : MonoBehaviour
         targetManager = FindObjectOfType<TargetManager>();
         defendManager = FindObjectOfType<defendManager>();
         timeManager = FindObjectOfType<timeManager>();
+        endManager = FindObjectOfType<endManager>();
+        cameraManager = FindObjectOfType<cameraManager>();
 
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
@@ -213,12 +216,29 @@ public class BattleSystem : MonoBehaviour
 
     public void checkEndFight()
     {
-        if (playerUnit.GetCurrentHP() <= 0)
+        if (playerUnit.GetCurrentHP() <= 0 && deadPlayer == false) 
         {
-            Debug.Log("Defeat!");
-        } else if (enemyUnit.currentHP <= 0)
+            combat_UI.move_UI_out();
+            cameraManager.playChrome();
+            FindObjectOfType<AudioManager>().Play("Defeat_Sound");
+            timeControlDefeatVictory();
+            
+            endManager.activateEndElements(true, 1);
+            endManager.defeatScreen();
+
+            deadPlayer = true;
+        } 
+        else if (enemyUnit.currentHP <= 0)
         {
-            Debug.Log("Win!");
+            combat_UI.move_UI_out();
+            cameraManager.playChrome();
+            FindObjectOfType<AudioManager>().Play("Victory_Sound");
+            timeControlDefeatVictory();
+
+            endManager.activateEndElements(true, 2);
+            endManager.defeatScreen();
+
+            deadPlayer = true;
         }
     }
 
@@ -228,6 +248,34 @@ public class BattleSystem : MonoBehaviour
         {
             timeManager.stopUnitTimer();
         }
+    }
+
+    public void resetBattle()
+    {
+        combat_UI.move_UI_in();
+        timeManager.resetFightTimer();
+        timeManager.activateFightTimer();
+        timeManager.resetPlayerTimer();
+        timeManager.resetEnemyTimer();
+        timeManager.continueUnitTimer();
+        endManager.resetFight();
+    }
+
+    void timeControlDefeatVictory()
+    {
+        timeManager.executeSlowMotion(0.7f, 0.2f);
+        timeManager.stopUnitTimer();
+        timeManager.fadeOutUnitTimer();
+    }
+
+    // G & S
+    public bool GetDeadPlayer()
+    {
+        return deadPlayer;
+    }
+    public bool GetDeadEnemy()
+    {
+        return deadEnemy;
     }
 }
 

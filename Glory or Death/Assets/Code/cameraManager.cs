@@ -15,6 +15,5 @@ public class cameraManager : MonoBehaviour
     public void playChrome()
     {   
         chromaticBeat.Play(transform.position);
-        chromaticBeat.Play(transform.position);
     }
 }

@@ -21,9 +21,21 @@ public class endManager : MonoBehaviour
 
     [SerializeField] Transform endStarSymbol;
     [SerializeField] Transform summeryWindow;
+    [SerializeField] Transform quitButton;
 
     [SerializeField] TMP_Text endStarCount;
     [SerializeField] TMP_Text dialogueText;
+
+    [SerializeField] ParticleSystem[] defeatEffects;
+
+    // Defeat
+    [Header("Defeat")]
+    [SerializeField] Transform enemyContainer;
+    [SerializeField] Transform defeatLabelContainer;
+
+    // Victory
+    [Header("Victory")]
+    [SerializeField] Transform victoryLabelContainer;
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -35,7 +47,7 @@ public class endManager : MonoBehaviour
     int starCounter = 0;
     public IEnumerator showEndScreen(float delay)
     {
-        activateEndElements();
+        activateEndElements(true, 0);
         audioManager.Play("End_Horn");
         audioManager.Play("End_Drums");
         endOverlay.DOFade(0.85f, 1f);
@@ -54,17 +66,28 @@ public class endManager : MonoBehaviour
             }
         }).OnComplete(() => starParticle.Play());
     }
-    void activateEndElements()
+    public void activateEndElements(bool state, int condition)
     {
-        summeryWindow.gameObject.SetActive(true);
-        playerAvatar.gameObject.SetActive(true);
-        dialogueBubble.gameObject.SetActive(true);
-        endOverlay.gameObject.SetActive(true);
-        endConfeti.gameObject.SetActive(true);
+        switch (condition)
+        {
+            case 0: // Time Out
+                summeryWindow.gameObject.SetActive(state);
+                playerAvatar.gameObject.SetActive(state);
+                dialogueBubble.gameObject.SetActive(state);
+                endOverlay.gameObject.SetActive(state);
+                endConfeti.gameObject.SetActive(state);
+                break;
+            case 1: // Defeat
+                endOverlay.gameObject.SetActive(state);
+                defeatLabelContainer.gameObject.SetActive(true);
+                break;
+            case 2: // Victory
+                endOverlay.gameObject.SetActive(state);
+                break;
+        }
     }
     public void addToStarCounter()
     {
-        Debug.Log("Stars from cui: " + combat_UI.GetStars());
         if (combat_UI.GetStars() != 0)
         {
             starCounter++;
@@ -84,5 +107,37 @@ public class endManager : MonoBehaviour
     {
         audioManager.Play("Star_Shimes_2");
         endStarSymbol.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f).OnComplete(() => endStarSymbol.DOScale(1, 0));
+    }
+
+    public void resetFight()
+    {
+        summeryWindow.transform.DOLocalMoveY(455, 0.4f).OnComplete(()=> activateEndElements(false, 0));
+        starCounter = 0;
+        endOverlay.DOFade(0, 0.3f);
+        playerAvatar.transform.DOLocalMoveX(-540, 0.3f);
+        dialogueBubble.transform.DOLocalMoveX(-300, 0.3f);
+        dialogueBubble.DOFade(0, 0.2f);
+        dialogueText.DOFade(0, 0.2f);
+    }
+
+    public void defeatScreen()
+    {
+        endOverlay.DOFade(0.85f, 1f);
+        enemyContainer.DOLocalMoveX(0, 0.3f).SetDelay(2.5f);
+        defeatLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
+        quitButton.DOLocalMoveY(-250, 1).SetDelay(3.5f);
+        foreach (var effect in defeatEffects)
+        {
+            effect.gameObject.SetActive(true);
+        }
+        defeatEffects[2].transform.DOLocalMoveY(-320, 1);
+        defeatEffects[1].transform.DOLocalMoveY(-1200, 1);
+    }
+
+    public void victoryScreen()
+    {
+        endOverlay.DOFade(0.85f, 1f);
+        victoryLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
+        quitButton.DOLocalMoveY(-250, 1).SetDelay(3.5f);
     }
 }

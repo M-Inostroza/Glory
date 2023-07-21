@@ -354,7 +354,7 @@ public class timeManager : MonoBehaviour
                 battleTimer = 0;
                 FindObjectOfType<cameraManager>().playChrome();
                 slowMotion(2, 0.1f);
-                endManager.StartCoroutine(endManager.showEndScreen(2));
+                endManager.StartCoroutine(endManager.showEndScreen(1));
             }
         }
     }
@@ -392,5 +392,27 @@ public class timeManager : MonoBehaviour
         Time.timeScale = timeScale;
         yield return new WaitForSeconds(seconds);
         Time.timeScale = 1;
+    }
+
+    // G & S
+    public void activateFightTimer()
+    {
+        timerIsRunning = true;
+    }
+    public void deactivateFightTimer()
+    {
+        timerIsRunning = false;
+    }
+    public void resetFightTimer()
+    {
+        battleTimer = 90;
+    }
+    public void resetPlayerTimer()
+    {
+        playerTimer.fillAmount = 1;
+    }
+    public void resetEnemyTimer()
+    {
+        enemyTimer.fillAmount = 1;
     }
 }

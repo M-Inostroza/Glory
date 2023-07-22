@@ -94,10 +94,17 @@ public class Player : MonoBehaviour
     }
     public void stopAttack()
     {
-        myAnim.Play("Idle");
-        timeManager.playerTimer.fillAmount = 1;
-        timeManager.continueUnitTimer();
-        timeManager.defaultAction();
+        if (!BS.GetDeadEnemy())
+        {
+            timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
+            timeManager.enemyTimer.fillAmount = 1;
+            timeManager.fadeInUnitTimer();
+            timeManager.continueUnitTimer();
+            myAnim.Play("Idle");
+        } else
+        {
+            backToIdle();
+        }
     }
     public void returnCamera()
     {
@@ -252,6 +259,10 @@ public class Player : MonoBehaviour
             child.transform.DOScale(0, 0.3f).SetEase(Ease.InBack).OnComplete(()=> attackFeedback.SetActive(false));
         }
         targetManager.checkCritic();
+    }
+    public void doDMG()
+    {
+        enemy_unit.GetComponent<Enemy>().TakeDamage(nativeDamage);
     }
 
     // Shield

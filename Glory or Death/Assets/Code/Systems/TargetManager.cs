@@ -83,7 +83,7 @@ public class TargetManager : MonoBehaviour
 
     public void checkCritic()
     {
-        if (BattleSystem.targetHit == 3)
+        if (BattleSystem.targetHit == 3 && !BattleSystem.GetDeadEnemy())
         {
             combat_UI.showStars();
             ATKstars.Play();

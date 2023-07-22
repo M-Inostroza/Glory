@@ -89,7 +89,6 @@ public class BattleSystem : MonoBehaviour
         targetManager.attack();
         playerAnimator.Play("ATK_jump");
         playerUnit.incrementAdrenaline(1);
-        StartCoroutine(waitForDamage(3.6f));
     }
 
     public void PlayerDefend()
@@ -194,26 +193,6 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-
-    // FIX THIS
-    IEnumerator waitForDamage(float delay)
-    {
-        //Delay
-        yield return new WaitForSeconds(delay);
-
-        //Do DMG
-        enemyUnit.TakeDamage(targetHit);
-        enemyHUD.setHP(enemyUnit.currentHP);
-    }
-    
-    public void checkCritics()
-    {
-        if (targetHit == 3)
-        {
-            playerUnit.increaseCritHits(1);
-        }
-    }
-
     public void checkEndFight()
     {
         if (playerUnit.GetCurrentHP() <= 0 && deadPlayer == false) 
@@ -228,7 +207,7 @@ public class BattleSystem : MonoBehaviour
 
             deadPlayer = true;
         } 
-        else if (enemyUnit.currentHP <= 0)
+        else if (enemyUnit.currentHP <= 0 && deadEnemy == false)
         {
             combat_UI.move_UI_out();
             cameraManager.playChrome();
@@ -236,9 +215,9 @@ public class BattleSystem : MonoBehaviour
             timeControlDefeatVictory();
 
             endManager.activateEndElements(true, 2);
-            endManager.defeatScreen();
+            endManager.victoryScreen();
 
-            deadPlayer = true;
+            deadEnemy = true;
         }
     }
 

@@ -27,6 +27,7 @@ public class endManager : MonoBehaviour
     [SerializeField] TMP_Text dialogueText;
 
     [SerializeField] ParticleSystem[] defeatEffects;
+    [SerializeField] ParticleSystem[] victoryEffects;
 
     // Defeat
     [Header("Defeat")]
@@ -79,10 +80,11 @@ public class endManager : MonoBehaviour
                 break;
             case 1: // Defeat
                 endOverlay.gameObject.SetActive(state);
-                defeatLabelContainer.gameObject.SetActive(true);
+                defeatLabelContainer.gameObject.SetActive(state);
                 break;
             case 2: // Victory
                 endOverlay.gameObject.SetActive(state);
+                victoryLabelContainer.gameObject.SetActive(state);
                 break;
         }
     }
@@ -138,6 +140,12 @@ public class endManager : MonoBehaviour
     {
         endOverlay.DOFade(0.85f, 1f);
         victoryLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
-        quitButton.DOLocalMoveY(-250, 1).SetDelay(3.5f);
+        quitButton.DOLocalMoveY(-160, 1).SetDelay(3.5f);
+        foreach (var effect in victoryEffects)
+        {
+            effect.gameObject.SetActive(true);
+        }
+        victoryEffects[0].transform.DOLocalMoveY(-60, 1);
+        victoryEffects[1].transform.DOLocalMoveY(-70, 1);
     }
 }

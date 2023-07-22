@@ -58,6 +58,7 @@ public class Enemy : MonoBehaviour
         {
             currentHP = 0;
         }
+        FindObjectOfType<EnemyHUD>().setHP(currentHP);
     }
 
     public void TakeDamage(int dmg)

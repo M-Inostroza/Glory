@@ -40,10 +40,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (currentShield <= 0)
-        {
-            currentShield = 0;
-        }
+        capShield();
+        capHP();
+        checkVictoryCondition();
     }
 
     public void TakeDamage(int dmg)
@@ -94,10 +93,11 @@ public class Player : MonoBehaviour
     }
     public void stopAttack()
     {
-        if (!BS.GetDeadEnemy())
+        if (BS.GetDeadEnemy() == false)
         {
-            timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
-            timeManager.enemyTimer.fillAmount = 1;
+            timeManager.playerActionIcon.sprite = timeManager.iconSprites[1];
+            timeManager.playerTimer.fillAmount = 1;
+            FindObjectOfType<Input_Manager>().SetPlayerAction("none");
             timeManager.fadeInUnitTimer();
             timeManager.continueUnitTimer();
             myAnim.Play("Idle");
@@ -189,6 +189,11 @@ public class Player : MonoBehaviour
                 break;
         }
     }
+
+    public void checkVictoryCondition()
+    {
+        myAnim.SetInteger("Victory", enemy_unit.GetComponent<Enemy>().currentHP);
+    }
     public void showEnemyDamage()
     {
         BS.showHit(nativeDamage, BS.hitText_Enemy.transform);
@@ -236,6 +241,7 @@ public class Player : MonoBehaviour
     {
         return currentStamina -= plusStamina;
     }
+
     // DMG
     public int getDamage()
     {
@@ -341,6 +347,22 @@ public class Player : MonoBehaviour
         critHits -= newHit;
     }
 
+    // Caps
+    void capShield()
+    {
+        if (currentShield <= 0)
+        {
+            currentShield = 0;
+        }
+    }
+    void capHP()
+    {
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+        }
+        myAnim.SetInteger("Defeat", currentHP);
+    }
 
     // Buffs
     public void doDamageBuff()
@@ -357,6 +379,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         baseSpeed -= 3f;
     }
+    // -- Show enemy icon
 
     // Effects
     public void shakeHit()

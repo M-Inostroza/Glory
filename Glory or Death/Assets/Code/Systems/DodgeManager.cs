@@ -28,12 +28,14 @@ public class DodgeManager : MonoBehaviour
     Animator playerAnimator;
     AudioManager audioManager;
     Combat_UI combat_UI;
+    BattleSystem BS;
 
     // Instantiated arrows
     List<GameObject> instantArrows = new List<GameObject>();
 
     private void Awake()
     {
+        BS = FindObjectOfType<BattleSystem>();
         playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
@@ -94,7 +96,7 @@ public class DodgeManager : MonoBehaviour
     }
     void runCommands()
     {
-        if(instantArrows.Count > 0)
+        if(instantArrows.Count > 0 && !BS.GetGamePaused())
         {
             switch (instantArrows[0].name)
             {

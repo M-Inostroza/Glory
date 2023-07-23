@@ -49,16 +49,17 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        limitHP();
+        updateHP();
     }
 
-    private void limitHP()
+    private void updateHP()
     {
         if (currentHP <= 0)
         {
             currentHP = 0;
         }
         FindObjectOfType<EnemyHUD>().setHP(currentHP);
+        myAnimator.SetInteger("CurrentHP", currentHP);
     }
 
     public void TakeDamage(int dmg)
@@ -130,6 +131,11 @@ public class Enemy : MonoBehaviour
         else
         {
             Player.TakeDamage(nativeDamage);
+            if (Player.GetCurrentHP() <= 0)
+            {
+                Player.GetComponent<Animator>().SetBool("HURT", false);
+                Player.GetComponent<Animator>().Play("Defeat");
+            }
             soundPlayer.blunt_hit();
         }
     }
@@ -145,7 +151,6 @@ public class Enemy : MonoBehaviour
     {
         if (!BS.GetDeadPlayer())
         {
-            timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
             timeManager.enemyTimer.fillAmount = 1;
             timeManager.fadeInUnitTimer();
             timeManager.continueUnitTimer();
@@ -166,14 +171,16 @@ public class Enemy : MonoBehaviour
     }
     public void stopHurt()
     {
-        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         backToIdle();
+    }
+    public void playfanfare()
+    {
+        audioManager.Play("Victory_Sound");
     }
     #endregion
 
     public void stopDirt()
     {
-        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         timeManager.enemyTimer.fillAmount = 1;
         timeManager.fadeInUnitTimer();
         timeManager.continueUnitTimer();
@@ -216,6 +223,11 @@ public class Enemy : MonoBehaviour
     public void playGrunt()
     {
         audioManager.Play("Enemy_charge");
+    }
+
+    public void selectNextAction()
+    {
+        timeManager.selectEnemyAction();
     }
 
     // Buffs
@@ -303,4 +315,5 @@ public class Enemy : MonoBehaviour
     {
         superDMG = dmg;
     }
+
 }

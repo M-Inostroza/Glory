@@ -89,15 +89,18 @@ public class superAttackManager : MonoBehaviour
     }
     void rotateOnKey()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (!FindObjectOfType<BattleSystem>().GetGamePaused())
         {
-            float rotationAmount = rotationSpeed * Time.deltaTime;
-            shield.transform.Rotate(0f, 0f, -rotationAmount);
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            float rotationAmount = rotationSpeed * Time.deltaTime;
-            shield.transform.Rotate(0f, 0f, rotationAmount);
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                float rotationAmount = rotationSpeed * Time.deltaTime;
+                shield.transform.Rotate(0f, 0f, -rotationAmount);
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                float rotationAmount = rotationSpeed * Time.deltaTime;
+                shield.transform.Rotate(0f, 0f, rotationAmount);
+            }
         }
     }
 

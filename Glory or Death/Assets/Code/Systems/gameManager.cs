@@ -16,7 +16,7 @@ public class gameManager : MonoBehaviour
     bool isPaused = false;
     private void Start()
     {
-        DOTween.SetTweensCapacity(6000, 500);
+        DOTween.SetTweensCapacity(7000, 250);
 
         timeManager = FindObjectOfType<timeManager>();
         battleSystem = FindObjectOfType<BattleSystem>();
@@ -45,11 +45,13 @@ public class gameManager : MonoBehaviour
             {
                 overlay.gameObject.SetActive(true);
                 Time.timeScale = 0f;
+                battleSystem.SetGamePaused(true);
             }
             else
             {
                 overlay.gameObject.SetActive(false);
                 Time.timeScale = 1f;
+                battleSystem.SetGamePaused(false);
             }
         }
     }

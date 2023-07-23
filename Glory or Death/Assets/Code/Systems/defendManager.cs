@@ -14,12 +14,9 @@ public class defendManager : MonoBehaviour
 
     Tween scaleUP;
     AudioManager audioManager;
-    Player Player;
     
-
     private void Awake()
     {
-        Player = FindObjectOfType<Player>();
         audioManager = FindObjectOfType<AudioManager>();
     }
     
@@ -41,18 +38,21 @@ public class defendManager : MonoBehaviour
 
     void controlDefend()
     {
-        if (canDefend)
+        if (!FindObjectOfType<BattleSystem>().GetGamePaused())
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            if (canDefend)
             {
-                executeShield(0.8f);
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    executeShield(0.8f);
+                }
             }
-        }
 
-        if (transform.localScale.x == 1 && transformControl)
-        {
-            transform.DOScale(0, 0);
-            Fail();
+            if (transform.localScale.x == 1 && transformControl)
+            {
+                transform.DOScale(0, 0);
+                Fail();
+            }
         }
     }
 

@@ -86,6 +86,7 @@ public class Combat_UI : MonoBehaviour
         playerHpSlider.DOValue(hp, 0.5f);
     }
 
+    // UI
     public void move_UI_in()
     {
         float move_in_speed = 0.5f;
@@ -116,7 +117,6 @@ public class Combat_UI : MonoBehaviour
 
         inputManager.transform.DOLocalMoveX(-500, move_out_speed).SetEase(Ease.InOutSine);
     }
-
     public void move_Inputs_in()
     {
         float move_in_speed = 0.7f;
@@ -137,7 +137,7 @@ public class Combat_UI : MonoBehaviour
             playerUnit.IncrementCurrentStamina(0.5f * Time.deltaTime);  //Mejorable
         }
 
-        if (playerUnit.GetCurrentStamina() < 30)
+        if (playerUnit.GetCurrentStamina() < 40)
         {
             inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(55, 0.7f);
         }

@@ -53,7 +53,7 @@ public class restManager : MonoBehaviour
 
     void keyStroke(float addedValue)
     {
-        if (canRest)
+        if (canRest && !FindObjectOfType<BattleSystem>().GetGamePaused())
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
             {

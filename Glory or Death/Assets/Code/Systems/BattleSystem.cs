@@ -48,7 +48,10 @@ public class BattleSystem : MonoBehaviour
     public GameObject infoHud;
     public GameObject infoHud_EN;
 
-    private void Start()
+    // Pause control
+    bool isPaused = false;
+
+    private void Awake()
     {
         playerAnimator = playerPrefab.GetComponent<Animator>();
         combat_UI = FindObjectOfType<Combat_UI>();
@@ -70,13 +73,12 @@ public class BattleSystem : MonoBehaviour
     {
         updateUI();
         checkEndFight();
-        testModeActivation();
     }
 
     void SetupBattle()
     {
-        playerUnit.SetCurrentHP(playerUnit.GetMaxHP());
         enemyUnit.currentHP = enemyUnit.maxHP;
+        playerUnit.SetCurrentHP(playerUnit.GetMaxHP());
 
         playerUnit.setCurrentShield(playerUnit.GetMaxShield());
         playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());
@@ -192,42 +194,37 @@ public class BattleSystem : MonoBehaviour
             enemyUnit.adrenaline = 20;
         }
     }
-
+    /*-----------------------------------END FIGHT---------------------------------------------------------*/
     public void checkEndFight()
     {
-        if (playerUnit.GetCurrentHP() <= 0 && deadPlayer == false) 
+        if (playerUnit.GetCurrentHP() <= 0 && deadPlayer == false) // Defeat
         {
             combat_UI.move_UI_out();
             cameraManager.playChrome();
             FindObjectOfType<AudioManager>().Play("Defeat_Sound");
             timeControlDefeatVictory();
+            enemyUnit.GetComponent<Enemy>().GetComponent<Animator>().SetBool("Victory", true);
             
             endManager.activateEndElements(true, 1);
             endManager.defeatScreen();
 
             deadPlayer = true;
         } 
-        else if (enemyUnit.currentHP <= 0 && deadEnemy == false)
+        else if (enemyUnit.currentHP <= 0 && deadEnemy == false) // Victory
         {
             combat_UI.move_UI_out();
             cameraManager.playChrome();
-            FindObjectOfType<AudioManager>().Play("Victory_Sound");
+            FindObjectOfType<AudioManager>().Play("Last_Hit");
             timeControlDefeatVictory();
 
             endManager.activateEndElements(true, 2);
             endManager.victoryScreen();
+            StartCoroutine(endManager.animatePlayerAvatarIn("Thanks for playing!", 3));
 
             deadEnemy = true;
         }
     }
-
-    public void testModeActivation()
-    {
-        if (testMode.isOn)
-        {
-            timeManager.stopUnitTimer();
-        }
-    }
+    /*-----------------------------------END FIGHT---------------------------------------------------------*/
 
     public void resetBattle()
     {
@@ -255,6 +252,14 @@ public class BattleSystem : MonoBehaviour
     public bool GetDeadEnemy()
     {
         return deadEnemy;
+    }
+    public bool GetGamePaused()
+    {
+        return isPaused;
+    }
+    public void SetGamePaused(bool newState)
+    {
+        isPaused = newState;
     }
 }
 

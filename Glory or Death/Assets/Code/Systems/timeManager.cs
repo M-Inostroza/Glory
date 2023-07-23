@@ -11,9 +11,6 @@ public class timeManager : MonoBehaviour
     //Array of sprites for the icons & active Icon
     public Sprite[] iconSprites;
 
-    public Image actionPlayerIcon;
-    public Image actionEnemyIcon;
-
     public Image playerRing;
     public Image EnemyRing;
 
@@ -64,6 +61,7 @@ public class timeManager : MonoBehaviour
     [SerializeField] TMP_Text costDGText;
     [SerializeField] TMP_Text costFCText;
 
+    public bool enemyIconVisible = false;
 
     //Manages general timer
     private void Start()
@@ -80,6 +78,8 @@ public class timeManager : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
         endManager = FindObjectOfType<endManager>();
         timerIsRunning = true;
+
+        selectEnemyAction();
     }
 
     private void Update()
@@ -211,38 +211,6 @@ public class timeManager : MonoBehaviour
             {
                 fadeOutUnitTimer();
             }
-            
-            // Select action
-            if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)
-            {
-                dirtPrevious = false;
-                dirtChance += 5;
-                enemy.setAngryState(true);
-                Input_Manager.SetEnemyAction("RAGE");
-            } 
-            else
-            {
-                if (enemy.GetCurrentAdrenaline() >= 20)
-                {
-                    Input_Manager.SetEnemyAction("ATK2");
-                } else
-                {
-                    float attackRandom = Random.Range(0, 99);
-                    if (attackRandom > dirtChance || dirtPrevious)
-                    {
-                        Input_Manager.SetEnemyAction("ATK1");
-                        dirtPrevious = false;
-                        dirtChance += 5;
-                    }
-                    else
-                    {
-                        Input_Manager.SetEnemyAction("DIRT");
-                        dirtPrevious = true;
-                        dirtChance = 5;
-                    }
-                }
-            }
-
 
             // Execute action
             switch (Input_Manager.GetEnemyAction())
@@ -266,7 +234,43 @@ public class timeManager : MonoBehaviour
         }
     }
 
-
+    public void selectEnemyAction()
+    {
+        if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)
+        {
+            dirtPrevious = false;
+            dirtChance += 5;
+            enemy.setAngryState(true);
+            Input_Manager.SetEnemyAction("RAGE");
+            enemyActionIcon.sprite = iconSprites[7];
+        }
+        else
+        {
+            if (enemy.GetCurrentAdrenaline() >= 20)
+            {
+                Input_Manager.SetEnemyAction("ATK2");
+                enemyActionIcon.sprite = iconSprites[8];
+            }
+            else
+            {
+                float attackRandom = Random.Range(0, 99);
+                if (attackRandom > dirtChance || dirtPrevious)
+                {
+                    Input_Manager.SetEnemyAction("ATK1");
+                    enemyActionIcon.sprite = iconSprites[0];
+                    dirtPrevious = false;
+                    dirtChance += 5;
+                }
+                else
+                {
+                    Input_Manager.SetEnemyAction("DIRT");
+                    enemyActionIcon.sprite = iconSprites[6];
+                    dirtPrevious = true;
+                    dirtChance = 5;
+                }
+            }
+        }
+    }
     // Cooldown timer (Mejorable!!)
     public void ReduceCooldown(Image timer)
     {
@@ -304,28 +308,28 @@ public class timeManager : MonoBehaviour
         switch (icon)
         {
             case "ATK1":
-                actionPlayerIcon.sprite = iconSprites[0];
-                animateIcon(actionPlayerIcon.transform);
+                playerActionIcon.sprite = iconSprites[0];
+                animateIcon(playerActionIcon.transform);
                 break;
             case "DF":
-                actionPlayerIcon.sprite = iconSprites[3];
-                animateIcon(actionPlayerIcon.transform);
+                playerActionIcon.sprite = iconSprites[3];
+                animateIcon(playerActionIcon.transform);
                 break;
             case "DG":
-                actionPlayerIcon.sprite = iconSprites[2];
-                animateIcon(actionPlayerIcon.transform);
+                playerActionIcon.sprite = iconSprites[2];
+                animateIcon(playerActionIcon.transform);
                 break;
             case "FC":
-                actionPlayerIcon.sprite = iconSprites[4];
-                animateIcon(actionPlayerIcon.transform);
+                playerActionIcon.sprite = iconSprites[4];
+                animateIcon(playerActionIcon.transform);
                 break;
             case "RST":
-                actionPlayerIcon.sprite = iconSprites[5];
-                animateIcon(actionPlayerIcon.transform);
+                playerActionIcon.sprite = iconSprites[5];
+                animateIcon(playerActionIcon.transform);
                 break;
             case "Default":
-                actionPlayerIcon.sprite = iconSprites[1];
-                animateIcon(actionPlayerIcon.transform);
+                playerActionIcon.sprite = iconSprites[1];
+                animateIcon(playerActionIcon.transform);
                 break;
         }
     }
@@ -333,8 +337,7 @@ public class timeManager : MonoBehaviour
     public void defaultAction()
     {
         Input_Manager.SetPlayerAction("none");
-        actionPlayerIcon.sprite = iconSprites[1];
-
+        playerActionIcon.sprite = iconSprites[1];
         fadeInUnitTimer();
     }
 
@@ -345,7 +348,7 @@ public class timeManager : MonoBehaviour
             battleTimer -= Time.deltaTime;
             timerText.text = Mathf.RoundToInt(battleTimer).ToString("D2");
 
-            
+            // Time out
             if (battleTimer <= 0)
             {
                 combarUI.move_UI_out();
@@ -364,8 +367,8 @@ public class timeManager : MonoBehaviour
     {
         float fadeTime = 0.05f;
 
-        actionPlayerIcon.DOFade(0, fadeTime);
-        actionEnemyIcon.DOFade(0, fadeTime);
+        playerActionIcon.DOFade(0, fadeTime);
+        enemyActionIcon.DOFade(0, fadeTime);
 
         playerRing.DOFade(0, fadeTime);
         EnemyRing.DOFade(0, fadeTime);
@@ -374,8 +377,8 @@ public class timeManager : MonoBehaviour
     {
         float fadeTime = 0.05f;
 
-        actionEnemyIcon.DOFade(1, fadeTime);
-        actionPlayerIcon.DOFade(1, fadeTime);
+        enemyActionIcon.DOFade(1, fadeTime);
+        playerActionIcon.DOFade(1, fadeTime);
 
         playerRing.DOFade(1, fadeTime);
         EnemyRing.DOFade(1, fadeTime);

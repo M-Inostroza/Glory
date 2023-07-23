@@ -25,9 +25,11 @@ public class focusManager : MonoBehaviour
     timeManager timeManager;
     AudioManager audioManager;
     Combat_UI combat_UI;
+    BattleSystem BS;
 
     private void Awake()
     {
+        BS = FindObjectOfType<BattleSystem>();
         playerUnit = FindObjectOfType<Player>();
         combat_UI = FindObjectOfType<Combat_UI>();
         timeManager = FindObjectOfType<timeManager>();
@@ -70,7 +72,7 @@ public class focusManager : MonoBehaviour
     }
     void checkFocus()
     {
-        if (canFocus)
+        if (canFocus && !BS.GetGamePaused())
         {
             if (Input.GetKey(KeyCode.S))
             {

@@ -21,28 +21,31 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        FindObjectOfType<timeManager>().enemyTimer.fillAmount += 0.06f;
-        soundPlayer.targetSounds();
-        switch (tag)
+        if (!BattleSystem.GetGamePaused())
         {
-            case "target_0":
-                targetManager.attackOrder.Add(0);
-                animateFeedback(0);
-                break;
-            case "target_1":
-                targetManager.attackOrder.Add(1);
-                animateFeedback(1);
-                break;
-            case "target_2":
-                targetManager.attackOrder.Add(2);
-                animateFeedback(2);
-                break;
+            FindObjectOfType<timeManager>().enemyTimer.fillAmount += 0.06f;
+            soundPlayer.targetSounds();
+            switch (tag)
+            {
+                case "target_0":
+                    targetManager.attackOrder.Add(0);
+                    animateFeedback(0);
+                    break;
+                case "target_1":
+                    targetManager.attackOrder.Add(1);
+                    animateFeedback(1);
+                    break;
+                case "target_2":
+                    targetManager.attackOrder.Add(2);
+                    animateFeedback(2);
+                    break;
+            }
+            colider.enabled = false;
+            transform.DOScale(1.2f, 0.1f);
+            GetComponent<SpriteRenderer>().DOFade(0, 0.1f).OnComplete(() => killTarget());
+            BattleSystem.targetHit++;
+            FindObjectOfType<Player>().incrementAdrenaline(1);
         }
-        colider.enabled = false;
-        transform.DOScale(1.2f, 0.1f);
-        GetComponent<SpriteRenderer>().DOFade(0, 0.1f).OnComplete(() => killTarget());
-        BattleSystem.targetHit++;
-        FindObjectOfType<Player>().incrementAdrenaline(1);
     }
 
     void animateFeedback(int target)

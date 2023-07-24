@@ -37,7 +37,7 @@ public class dirtToss : MonoBehaviour
     private void OnEnable()
     {
         FindObjectOfType<Combat_UI>().move_Inputs_out();
-        mainCam.DOShakePosition(0.3f, 0.3f, 20, 10).OnComplete(() => Input_Manager.SetCanClick(false));
+        mainCam.DOShakePosition(0.3f, 0.3f, 20, 10);
         speedReduced = false;
         isDirty = true;
         opacity = maxOpacity;
@@ -91,7 +91,6 @@ public class dirtToss : MonoBehaviour
             {
                 isDirty = false;
                 gameObject.SetActive(false);
-                Input_Manager.SetCanClick(true);
                 FindObjectOfType<Combat_UI>().move_Inputs_in();
             }
         }

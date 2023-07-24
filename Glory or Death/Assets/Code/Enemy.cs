@@ -33,16 +33,20 @@ public class Enemy : MonoBehaviour
     timeManager timeManager;
     Player Player;
     Combat_UI combat_UI;
+    cameraManager cameraManager;
 
     Animator myAnimator;
+    Animator playerAnimator;
 
     private void Start()
     {
+        cameraManager = FindObjectOfType<cameraManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
         audioManager = FindObjectOfType<AudioManager>();
         BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
         Player = FindObjectOfType<Player>();
+        playerAnimator = Player.GetComponent<Animator>();
         myAnimator = GetComponent<Animator>();
         combat_UI = FindObjectOfType<Combat_UI>();
     }
@@ -126,15 +130,15 @@ public class Enemy : MonoBehaviour
         if (Player.missed)
         {
             soundPlayer.jumpSounds();
-            Player.GetComponent<Animator>().SetBool("evadeJump", true);
+            playerAnimator.SetBool("evadeJump", true);
         }
         else
         {
             Player.TakeDamage(nativeDamage);
             if (Player.GetCurrentHP() <= 0)
             {
-                Player.GetComponent<Animator>().SetBool("HURT", false);
-                Player.GetComponent<Animator>().Play("Defeat");
+                playerAnimator.SetBool("HURT", false);
+                playerAnimator.Play("Defeat");
             }
             soundPlayer.blunt_hit();
         }
@@ -162,12 +166,17 @@ public class Enemy : MonoBehaviour
     }
     public void stopSuperAttack()
     {
-        adrenaline = 0;
-        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
-        timeManager.enemyTimer.fillAmount = 1;
-        timeManager.fadeInUnitTimer();
-        timeManager.continueUnitTimer();
-        backToIdle();
+        if (!BS.GetDeadPlayer())
+        {
+            adrenaline = 0;
+            timeManager.enemyTimer.fillAmount = 1;
+            timeManager.fadeInUnitTimer();
+            timeManager.continueUnitTimer();
+        }
+        else
+        {
+            backToIdle();
+        }
     }
     public void stopHurt()
     {
@@ -237,7 +246,7 @@ public class Enemy : MonoBehaviour
     }
     public void doSpeedBuff()
     {
-        FindObjectOfType<Combat_UI>().speedBuff("enemy");
+        combat_UI.speedBuff("enemy");
     }
 
     // Camera
@@ -252,11 +261,11 @@ public class Enemy : MonoBehaviour
     }
     public void doChrome()
     {
-        FindObjectOfType<cameraManager>().playChrome();
+        cameraManager.playChrome();
     }
     public void doSlow()
-    {
-        FindObjectOfType<timeManager>().executeSlowMotion(0.2f, 0.2f);
+    {   
+        timeManager.executeSlowMotion(0.2f, 0.2f);
     }
     public void doSuperATKzoom()
     {

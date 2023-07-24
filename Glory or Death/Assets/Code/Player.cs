@@ -194,6 +194,13 @@ public class Player : MonoBehaviour
     {
         myAnim.SetInteger("Victory", enemy_unit.GetComponent<Enemy>().currentHP);
     }
+    public void checkDefeatCondition()
+    {
+        if (BS.GetDeadPlayer())
+        {
+            myAnim.Play("DefeatSuper");
+        }
+    }
     public void showEnemyDamage()
     {
         BS.showHit(nativeDamage, BS.hitText_Enemy.transform);
@@ -354,6 +361,10 @@ public class Player : MonoBehaviour
         {
             currentShield = 0;
         }
+        else if (currentShield >= maxShield)
+        {
+            currentShield = maxShield;
+        }
     }
     void capHP()
     {
@@ -379,7 +390,6 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         baseSpeed -= 3f;
     }
-    // -- Show enemy icon
 
     // Effects
     public void shakeHit()

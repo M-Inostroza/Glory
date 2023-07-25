@@ -60,6 +60,20 @@ public class Input_Manager : MonoBehaviour
             audioManager.Play("UI_select_fail");
         }
     }
+    public void OnSuperAttackButton()
+    {
+        if (canClick)
+        {
+            audioManager.Play("UI_select");
+            canClick = false;
+            selectedPlayerAction = "ATK2";
+            timeManager.selectIcon("ATK2");
+        }
+        else
+        {
+            audioManager.Play("UI_select_fail");
+        }
+    }
 
     public void OnDefendButton()
     {

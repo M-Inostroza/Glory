@@ -331,7 +331,7 @@ public class Player : MonoBehaviour
     {
        adrenaline  += newAdrenaline;
     }
-    public void reduceadrenaline(int newAdrenaline)
+    public void reduceAdrenaline(int newAdrenaline)
     {
         adrenaline -= newAdrenaline;
     }

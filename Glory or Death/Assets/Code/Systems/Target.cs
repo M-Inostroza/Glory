@@ -23,7 +23,7 @@ public class Target : MonoBehaviour
     {
         if (!BattleSystem.GetGamePaused())
         {
-            FindObjectOfType<timeManager>().enemyTimer.fillAmount += 0.06f;
+            FindObjectOfType<timeManager>().enemyTimer.fillAmount += 0.03f;
             soundPlayer.targetSounds();
             switch (tag)
             {

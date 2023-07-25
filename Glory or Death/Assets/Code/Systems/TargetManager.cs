@@ -7,12 +7,6 @@ using AssetKits.ParticleImage;
 
 public class TargetManager : MonoBehaviour
 {
-    /*
-     - 0 -> attack head
-     - 1 -> attack mid
-     - 2 -> attack bottom
-    */
-
     public GameObject[] targets;
     public List<int> attackOrder = new List<int>();
 

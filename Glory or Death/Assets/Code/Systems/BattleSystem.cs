@@ -13,6 +13,7 @@ public class BattleSystem : MonoBehaviour
     Combat_UI combat_UI;
     endManager endManager;
     cameraManager cameraManager;
+    superATKManager SAM;
 
     [SerializeField] Toggle testMode;
 
@@ -20,6 +21,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject dodgeManager;
     public GameObject focusManager;
     public GameObject restManager;
+    public GameObject superAttackManager;
 
     [Header("Scores")]
     public int targetHit;
@@ -65,6 +67,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit = FindObjectOfType<Enemy>();
 
         Input_Manager = FindObjectOfType<Input_Manager>();
+        SAM = FindObjectOfType<superATKManager>();
 
         SetupBattle();
     }
@@ -91,6 +94,11 @@ public class BattleSystem : MonoBehaviour
         targetManager.attack();
         playerAnimator.Play("ATK_jump");
         playerUnit.incrementAdrenaline(1);
+    }
+    public void PlayerSuperAttack()
+    {
+        superAttackManager.SetActive(true);
+        playerUnit.reduceAdrenaline(20);
     }
 
     public void PlayerDefend()

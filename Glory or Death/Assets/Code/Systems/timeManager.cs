@@ -53,6 +53,7 @@ public class timeManager : MonoBehaviour
 
     // Stamina Costs
     int costATK = 25;
+    int costATK2 = 40;
     int costDF = 20;
     int costDG = 30;
     int costFC = 35;
@@ -60,6 +61,7 @@ public class timeManager : MonoBehaviour
     [SerializeField] TMP_Text costDFText;
     [SerializeField] TMP_Text costDGText;
     [SerializeField] TMP_Text costFCText;
+    [SerializeField] TMP_Text costATK2Text;
 
     public bool enemyIconVisible = false;
 
@@ -70,6 +72,7 @@ public class timeManager : MonoBehaviour
         costDFText.text = costDF.ToString();
         costDGText.text = costDG.ToString();
         costFCText.text = costFC.ToString();
+        costATK2Text.text = costATK2.ToString();
 
         BS = FindObjectOfType<BattleSystem>();
         Input_Manager = FindObjectOfType<Input_Manager>();
@@ -112,6 +115,20 @@ public class timeManager : MonoBehaviour
                         player.DecrementCurrentStamina(costATK);
                         fadeOutUnitTimer();
                     } else
+                    {
+                        continueUnitTimer();
+                        combarUI.alarmStamina();
+                    }
+                    break;
+                case "ATK2":
+                    if (player.GetCurrentStamina() > costATK2)
+                    {
+                        enemyTimer.fillAmount += 0.02f;
+                        BS.PlayerSuperAttack();
+                        player.DecrementCurrentStamina(costATK2);
+                        fadeOutUnitTimer();
+                    }
+                    else
                     {
                         continueUnitTimer();
                         combarUI.alarmStamina();
@@ -309,6 +326,10 @@ public class timeManager : MonoBehaviour
         {
             case "ATK1":
                 playerActionIcon.sprite = iconSprites[0];
+                animateIcon(playerActionIcon.transform);
+                break;
+            case "ATK2":
+                playerActionIcon.sprite = iconSprites[8];
                 animateIcon(playerActionIcon.transform);
                 break;
             case "DF":

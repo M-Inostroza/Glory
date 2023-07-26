@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
     }
 
     // ------- Anim Methods -------
+    
     public void blockAttack()
     {
         myAnim.Play("blockAttack");

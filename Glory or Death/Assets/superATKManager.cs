@@ -10,6 +10,8 @@ public class superATKManager : MonoBehaviour
     Camera MainCamera;
     Combat_UI combat_UI;
     timeManager timeManager;
+    Player Player;
+
     int hits;
     int targetAmount;
     int spawnCounter = 0;
@@ -23,6 +25,7 @@ public class superATKManager : MonoBehaviour
 
     private void Awake()
     {
+        Player = FindObjectOfType<Player>();
         BattleSystem = FindObjectOfType<BattleSystem>();
         MainCamera = FindObjectOfType<Camera>();
         combat_UI = FindObjectOfType<Combat_UI>();
@@ -38,12 +41,12 @@ public class superATKManager : MonoBehaviour
     {
         if (spawnCounter == targetAmount)
         {
-            zoomCameraOut(); // Also deactivates GO and overlay
+            finishMinigame();
         }
     }
     void startMinigame()
     {
-        vFeedback.SetActive(true);
+        showFeedback();
         timeManager.stopUnitTimer();
         Overlay.DOFade(.9f, 0.5f);
         combat_UI.move_UI_out();
@@ -61,14 +64,20 @@ public class superATKManager : MonoBehaviour
 
     void zoomCameraIn()
     {
-        MainCamera.transform.DOLocalMove(new Vector3(3.3f, -0.5f, -10), 2f);
-        MainCamera.DOFieldOfView(40, 2f);
+        MainCamera.transform.DOLocalMove(new Vector3(3.3f, -0.5f, -10), 1f);
+        MainCamera.DOFieldOfView(40, 1f);
     }
-    void zoomCameraOut()
+    void finishMinigame()
     {
         Overlay.DOFade(0, 0.5f);
         MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.5f);
-        MainCamera.DOFieldOfView(50, 0.5f).OnComplete(()=> gameObject.SetActive(false));
+        MainCamera.DOFieldOfView(50, 0.5f).OnComplete(playAnim);
+        void playAnim()
+        {
+            hideFeedback();
+            Player.GetComponent<Animator>().Play("ATK2");
+            Invoke("deactivateATK2", 2);
+        }
     }
 
     IEnumerator generateTarget(float n)
@@ -87,6 +96,30 @@ public class superATKManager : MonoBehaviour
     public int GetHits()
     {
         return hits;
+    }
+
+    // Tools
+    public void deactivateATK2()
+    {
+        gameObject.SetActive(false);
+    }
+    public void showFeedback()
+    {
+        foreach (Image feed in swordFeeds)
+        {
+            feed.DOFade(.25f, 0.5f);
+        }
+    }
+    public void hideFeedback()
+    {
+        foreach (Image feed in swordFeeds)
+        {
+            feed.DOFade(0, 0.5f);
+        }
+    }
+    public void activateFeedSwords()
+    {
+        swordFeeds[spawnCounter].DOFade(1, 0.2f);
     }
     public void IncrementHits()
     {

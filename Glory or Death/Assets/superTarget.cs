@@ -49,6 +49,7 @@ public class superTarget : MonoBehaviour
             timeManager.enemyTimer.fillAmount += 0.02f;
             soundPlayer.targetSounds();
             transform.DOScale(1.2f, 0.1f);
+            SAM.activateFeedSwords();
             SAM.IncrementHits();
             GetComponent<Image>().DOFade(0, 0.1f).OnComplete(()=>Destroy(gameObject));
         }

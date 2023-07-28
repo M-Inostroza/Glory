@@ -3040,12 +3040,12 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 4.0333333
+    m_StopTime: 4
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -11954,6 +11954,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.0166667
+    functionName: doSlow
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.0166667
     functionName: blunt_hit
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -11974,13 +11981,6 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.0166667
-    functionName: doSlow
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 1.4333333
     functionName: jumpSounds
     data: 
@@ -11996,20 +11996,6 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.75
-    functionName: hardcore_hits
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.75
-    functionName: doSuperDMG
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.75
     functionName: doCameraShake
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -12017,7 +12003,21 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.75
+    functionName: hardcore_hits
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.75
     functionName: doSlow
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.75
+    functionName: doSuperDMG
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -12045,13 +12045,6 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 2.6
-    functionName: hardcore_hits
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 2.6
     functionName: doCameraShake
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -12060,6 +12053,13 @@ AnimationClip:
     messageOptions: 0
   - time: 2.6
     functionName: doSlow
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.6
+    functionName: hardcore_hits
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -12086,7 +12086,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 3.8333333
+  - time: 3.85
     functionName: doUIIn
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -12100,7 +12100,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 4.0333333
+  - time: 4
     functionName: selectNextAction
     data: 
     objectReferenceParameter: {fileID: 0}

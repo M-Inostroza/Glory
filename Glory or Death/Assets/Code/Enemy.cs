@@ -166,12 +166,14 @@ public class Enemy : MonoBehaviour
     }
     public void stopSuperAttack()
     {
+        adrenaline = 0;
+        Debug.Log("Adrenaline in stop super attack: " + adrenaline);
         if (!BS.GetDeadPlayer())
         {
-            adrenaline = 0;
             timeManager.enemyTimer.fillAmount = 1;
             timeManager.fadeInUnitTimer();
             timeManager.continueUnitTimer();
+            backToIdle();
         }
         else
         {

@@ -253,7 +253,6 @@ public class timeManager : MonoBehaviour
 
     public void selectEnemyAction()
     {
-        Debug.Log("adrenaline from select action: " + enemy.adrenaline);
         if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)
         {
             dirtPrevious = false;

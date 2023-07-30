@@ -76,6 +76,8 @@ public class superATKManager : MonoBehaviour
         {
             hideFeedback();
             Player.GetComponent<Animator>().Play("ATK2");
+            MainCamera.GetComponent<Animator>().enabled = true;
+            MainCamera.GetComponent<Animator>().Play("Cam_ATK2_Player");
             Invoke("deactivateATK2", 2);
         }
     }

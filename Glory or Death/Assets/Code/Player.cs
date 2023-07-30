@@ -397,6 +397,11 @@ public class Player : MonoBehaviour
     {
         transform.DOShakePosition(0.3f, 0.2f, 22, 10, false, true);
     }
+    public void ATK_SlowmoHit(float slowMo)
+    {
+        FindObjectOfType<cameraManager>().playChrome();
+        timeManager.executeSlowMotion(slowMo, 0.2f);
+    }
     public void blockHit()
     {
         FindObjectOfType<AudioManager>().Play("Shield_metal");
@@ -405,5 +410,9 @@ public class Player : MonoBehaviour
     public void returnTime()
     {
         Time.timeScale = 1;
+    }
+    public void Do_UI_in()
+    {
+        FindObjectOfType<Combat_UI>().move_UI_in();
     }
 }

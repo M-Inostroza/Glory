@@ -16,4 +16,8 @@ public class cameraManager : MonoBehaviour
     {   
         chromaticBeat.Play(transform.position);
     }
+    public void deactivateAnimator()
+    {
+        GetComponent<Animator>().enabled = false;
+    }
 }

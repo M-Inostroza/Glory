@@ -11,10 +11,11 @@ public class superATKManager : MonoBehaviour
     Combat_UI combat_UI;
     timeManager timeManager;
     Player Player;
+    Enemy Enemy;
 
     int hits;
     int targetAmount;
-    int spawnCounter = 0;
+    int spawnCounter;
 
     [SerializeField] Image Overlay;
     [SerializeField] Canvas Canvas;
@@ -26,6 +27,7 @@ public class superATKManager : MonoBehaviour
     private void Awake()
     {
         Player = FindObjectOfType<Player>();
+        Enemy = FindObjectOfType<Enemy>();
         BattleSystem = FindObjectOfType<BattleSystem>();
         MainCamera = FindObjectOfType<Camera>();
         combat_UI = FindObjectOfType<Combat_UI>();
@@ -46,6 +48,7 @@ public class superATKManager : MonoBehaviour
     }
     void startMinigame()
     {
+        spawnCounter = 0;
         showFeedback();
         timeManager.stopUnitTimer();
         Overlay.DOFade(.9f, 0.5f);
@@ -76,6 +79,7 @@ public class superATKManager : MonoBehaviour
         {
             hideFeedback();
             Player.GetComponent<Animator>().Play("ATK2");
+            Enemy.GetComponent<Animator>().Play("Super_Hurt");
             MainCamera.GetComponent<Animator>().enabled = true;
             MainCamera.GetComponent<Animator>().Play("Cam_ATK2_Player");
             Invoke("deactivateATK2", 2);

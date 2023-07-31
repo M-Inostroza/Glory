@@ -53,7 +53,7 @@ public class timeManager : MonoBehaviour
 
     // Stamina Costs
     int costATK = 25;
-    int costATK2 = 40;
+    int costATK2 = 60;
     int costDF = 20;
     int costDG = 30;
     int costFC = 35;

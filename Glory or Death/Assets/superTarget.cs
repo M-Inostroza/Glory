@@ -23,7 +23,7 @@ public class superTarget : MonoBehaviour
     private void OnEnable()
     {
         transform.DOScale(new Vector3(1, 1, 1), 0.1f);
-        StartCoroutine(deactivate(1.8f));
+        StartCoroutine(deactivate(1.6f));
     }
     IEnumerator deactivate(float n)
     {
@@ -46,7 +46,8 @@ public class superTarget : MonoBehaviour
     {
         if (!BS.GetGamePaused())
         {
-            timeManager.enemyTimer.fillAmount += 0.02f;
+            transform.DOKill();
+            timeManager.enemyTimer.fillAmount += 0.01f;
             soundPlayer.targetSounds();
             transform.DOScale(1.2f, 0.1f);
             SAM.activateFeedSwords();

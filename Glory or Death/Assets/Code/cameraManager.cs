@@ -7,10 +7,10 @@ public class cameraManager : MonoBehaviour
 {
     [SerializeField] MMFeedback chromaticBeat;
 
-    timeManager timeManager;
+    Animator myAnim;
     private void Start()
     {
-        timeManager = FindObjectOfType<timeManager>();
+        myAnim = GetComponent<Animator>();
     }
     public void playChrome()
     {   
@@ -18,6 +18,7 @@ public class cameraManager : MonoBehaviour
     }
     public void deactivateAnimator()
     {
-        GetComponent<Animator>().enabled = false;
+        myAnim.Play("Idle");
+        myAnim.enabled = false;
     }
 }

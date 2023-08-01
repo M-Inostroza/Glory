@@ -4,8 +4,8 @@ using DG.Tweening;
 
 public class focusManager : MonoBehaviour
 {
-    float cursorSpeed = 1.6f; // menos es más
-    float targetSpeed = 1.6f;
+    float cursorSpeed = 1.4f; // menos es más
+    float targetSpeed = 1.8f; 
 
     [SerializeField] GameObject cursor;
     [SerializeField] GameObject target;
@@ -109,7 +109,6 @@ public class focusManager : MonoBehaviour
     }
     void moveTarget()
     {
-        // Move the cursor sprite from left to right
         target.transform.Translate(targetSpeed * Time.deltaTime, 0, 0);
 
         // Loop

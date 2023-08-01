@@ -11,17 +11,18 @@ public class dirtToss : MonoBehaviour
 
     [SerializeField]
     private Camera mainCam;
+    [SerializeField]
+    Combat_UI Combat_UI;
 
     private Player player;
-    private Input_Manager Input_Manager;
     private SpriteRenderer dirtTexture;
 
     // Dirt texture opacity
-    public float maxOpacity = 0.5f;
+    public float maxOpacity = 0.8f;
     private float opacity;
 
     // Scratch's speed threshold
-    public float scratchSpeedThreshold = 9000f;
+    public float scratchSpeedThreshold = 10000f;
 
     // Percentage of maximum opacity to reduce per scratch
     public float opacityReductionPerScratch = 0.05f;
@@ -29,14 +30,13 @@ public class dirtToss : MonoBehaviour
 
     private void Start()
     {
-        Input_Manager = FindObjectOfType<Input_Manager>();
         dirtTexture = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<Player>();
     }
 
     private void OnEnable()
     {
-        FindObjectOfType<Combat_UI>().move_Inputs_out();
+        Combat_UI.move_Inputs_out();
         mainCam.DOShakePosition(0.3f, 0.3f, 20, 10);
         speedReduced = false;
         isDirty = true;
@@ -66,10 +66,10 @@ public class dirtToss : MonoBehaviour
         
         if (opacity > 0f && Input.GetMouseButton(0) && isDirty && !FindObjectOfType<BattleSystem>().GetGamePaused())
         {
-            // Convert the mouse position to world coordinates
+            // Mouse position to world coordinates
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            // Detect if the mouse is over the dirt texture by checking for a collider at the mouse position
+            // Detect if the mouse is over the dirt texture
             Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
 
             // Check if the collider belongs to the dirt texture
@@ -91,7 +91,7 @@ public class dirtToss : MonoBehaviour
             {
                 isDirty = false;
                 gameObject.SetActive(false);
-                FindObjectOfType<Combat_UI>().move_Inputs_in();
+                Combat_UI.move_Inputs_in();
             }
         }
     }
@@ -101,7 +101,7 @@ public class dirtToss : MonoBehaviour
         yield return new WaitForSeconds(time);
         DOTween.To(() => opacity, x => opacity = x, 0, 1);
         yield return new WaitForSeconds(1);
-        FindObjectOfType<Combat_UI>().move_Inputs_in();
+        Combat_UI.move_Inputs_in();
         gameObject.SetActive(false);
     }
 

@@ -42,7 +42,7 @@ public class timeManager : MonoBehaviour
     public Image enemyActionIcon;
 
     bool dirtPrevious = false;
-    private float dirtChance = 20;
+    private float dirtChance = 90;
 
     //Generic wait time for turns
     private float mainWaitTime = 20;

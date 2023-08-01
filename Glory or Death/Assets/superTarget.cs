@@ -23,7 +23,7 @@ public class superTarget : MonoBehaviour
     private void OnEnable()
     {
         transform.DOScale(new Vector3(1, 1, 1), 0.1f);
-        StartCoroutine(deactivate(1.6f));
+        StartCoroutine(deactivate(1));
     }
     IEnumerator deactivate(float n)
     {

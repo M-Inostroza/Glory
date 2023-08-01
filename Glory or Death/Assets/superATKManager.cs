@@ -36,7 +36,7 @@ public class superATKManager : MonoBehaviour
     private void OnEnable()
     {
         startMinigame();
-        StartCoroutine(generateTarget(0.4f));
+        StartCoroutine(generateTarget(0.3f));
     }
 
     private void Update()

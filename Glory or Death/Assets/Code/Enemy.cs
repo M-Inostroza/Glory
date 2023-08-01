@@ -54,6 +54,8 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         updateHP();
+        updateSpeed();
+        capHP();
     }
 
     private void updateHP()
@@ -64,6 +66,18 @@ public class Enemy : MonoBehaviour
         }
         FindObjectOfType<EnemyHUD>().setHP(currentHP);
         myAnimator.SetInteger("CurrentHP", currentHP);
+    }
+
+    void updateSpeed()
+    {
+        if (dirtManager.isDirtyActive())
+        {
+            baseSpeed = 15;
+        }
+        else
+        {
+            baseSpeed = 13;
+        }
     }
 
     public void TakeDamage(int dmg)
@@ -340,6 +354,15 @@ public class Enemy : MonoBehaviour
     public void setSuperDMG(int dmg)
     {
         superDMG = dmg;
+    }
+
+    // Caps
+    void capHP()
+    {
+        if(currentHP >= maxHP)
+        {
+            currentHP = maxHP;
+        }
     }
 
 }

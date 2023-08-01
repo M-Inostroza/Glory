@@ -33,7 +33,7 @@ public class TargetManager : MonoBehaviour
 
         BattleSystem.targetHit = 0;
 
-        courtain.DOColor(new Color(0, 0, 0, .5f), 1f);
+        courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
         StartCoroutine(activateTargets());
         zoomCameraIn();
     }
@@ -63,7 +63,7 @@ public class TargetManager : MonoBehaviour
         }
 
         // Deactivates after timer (Mejorable)!!
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.2f);
 
         foreach (var target in targets)
         {

@@ -76,6 +76,7 @@ public class Combat_UI : MonoBehaviour
     }
     private void Update()
     {
+        showSuperATKButton();
         updateShieldBar();
         refillStamina();
         hpTextUpdate();
@@ -89,7 +90,7 @@ public class Combat_UI : MonoBehaviour
     // UI
     public void move_UI_in()
     {
-        float move_in_speed = 0.5f;
+        float move_in_speed = 0.3f;
 
         player_stats.DOLocalMoveX(player_stats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
         enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 350, move_in_speed).SetEase(Ease.InOutSine);
@@ -137,7 +138,7 @@ public class Combat_UI : MonoBehaviour
             playerUnit.IncrementCurrentStamina(0.5f * Time.deltaTime);  //Mejorable
         }
 
-        if (playerUnit.GetCurrentStamina() < 40)
+        if (playerUnit.GetCurrentStamina() < 50)
         {
             inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(55, 0.7f);
         }
@@ -176,6 +177,19 @@ public class Combat_UI : MonoBehaviour
     public Slider GetStaminaSlider()
     {
         return staminaSlider;
+    }
+
+    // Adrenaline
+    void showSuperATKButton()
+    {
+        if (playerUnit.GetAdrenaline() == 20)
+        {
+            inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(55, 0.7f);
+        }
+        else
+        {
+            inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(-40, 0.7f);
+        }
     }
 
     // Shield

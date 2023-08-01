@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int critHits;
 
     [SerializeField] private DodgeManager dodgeManager;
+    [SerializeField] private superATKManager SAM;
 
     //Agility (Dodging)
     public bool missed = false;
@@ -133,8 +134,7 @@ public class Player : MonoBehaviour
     {
         myAnim.SetBool("skillFail", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.enemyTimerControl = true;
-        timeManager.playerTimerControl = true;
+        timeManager.continueUnitTimer();
         timeManager.defaultAction();
     }
     public void stopEvadeJump()
@@ -151,8 +151,7 @@ public class Player : MonoBehaviour
     {
         myAnim.SetBool("focusSuccess", false);
         timeManager.playerTimer.fillAmount = 1;
-        timeManager.enemyTimerControl = true;
-        timeManager.playerTimerControl = true;
+        timeManager.continueUnitTimer();
         timeManager.defaultAction();
     }
     public void stopShieldSuccess()
@@ -205,6 +204,10 @@ public class Player : MonoBehaviour
     public void showEnemyDamage()
     {
         BS.showHit(nativeDamage, BS.hitText_Enemy.transform);
+    }
+    public void showEnemySuperDamage()
+    {
+        BS.showHit(SAM.GetHits(), BS.hitText_Enemy.transform);
     }
 
 
@@ -277,6 +280,10 @@ public class Player : MonoBehaviour
     public void doDMG()
     {
         enemy_unit.GetComponent<Enemy>().TakeDamage(nativeDamage);
+    }
+    public void doSuperDMG()
+    {
+        enemy_unit.GetComponent<Enemy>().TakeDamage(SAM.GetHits());
     }
 
     // Shield

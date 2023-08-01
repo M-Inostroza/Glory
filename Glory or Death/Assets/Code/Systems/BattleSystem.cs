@@ -93,7 +93,6 @@ public class BattleSystem : MonoBehaviour
     {
         targetManager.attack();
         playerAnimator.Play("ATK_jump");
-        playerUnit.incrementAdrenaline(1);
     }
     public void PlayerSuperAttack()
     {
@@ -103,21 +102,18 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayerDefend()
     {
-        if (playerUnit.GetCurrentStamina() >= 20)
-        {
-            defendManager.activateShieldMinigame();
-        }
+        defendManager.activateShieldMinigame();
+        playerUnit.incrementAdrenaline(1);
     }
     public void PlayDodge()
     {
-        if (playerUnit.GetCurrentStamina() >= 20)
-        {
-            dodgeManager.SetActive(true);
-        } 
+        dodgeManager.SetActive(true);
+        playerUnit.incrementAdrenaline(1);
     }
     public void PlayFocus()
     {
         focusManager.SetActive(true);
+        playerUnit.incrementAdrenaline(1);
     }
 
     public void PlayRest()
@@ -237,11 +233,10 @@ public class BattleSystem : MonoBehaviour
     public void resetBattle()
     {
         combat_UI.move_UI_in();
-        timeManager.resetFightTimer();
-        timeManager.activateFightTimer();
-        timeManager.resetPlayerTimer();
-        timeManager.resetEnemyTimer();
-        timeManager.continueUnitTimer();
+        resetTimers();
+        playerUnit.SetAdrenaline(0);
+        enemyUnit.adrenaline = 0;
+        
         endManager.resetFight();
     }
 
@@ -250,6 +245,15 @@ public class BattleSystem : MonoBehaviour
         timeManager.executeSlowMotion(0.7f, 0.2f);
         timeManager.stopUnitTimer();
         timeManager.fadeOutUnitTimer();
+    }
+    void resetTimers()
+    {
+        timeManager.resetFightTimer();
+        timeManager.activateFightTimer();
+
+        timeManager.resetPlayerTimer();
+        timeManager.resetEnemyTimer();
+        timeManager.continueUnitTimer();
     }
 
     // G & S

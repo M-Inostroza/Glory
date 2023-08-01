@@ -48,6 +48,7 @@ public class superATKManager : MonoBehaviour
     }
     void startMinigame()
     {
+        hits = 0;
         spawnCounter = 0;
         showFeedback();
         timeManager.stopUnitTimer();
@@ -55,14 +56,6 @@ public class superATKManager : MonoBehaviour
         combat_UI.move_UI_out();
         zoomCameraIn();
         targetAmount = 10;
-    }
-
-    public void checkCritic()
-    {
-        if (hits == 7 && !BattleSystem.GetDeadEnemy())
-        {
-            combat_UI.showStars();
-        }
     }
 
     void zoomCameraIn()

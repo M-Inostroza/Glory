@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Input_Manager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject ATK, DF, DG, FC, RST;
+    private GameObject ATK, DF, DG, FC, RST, SATK;
 
     //Selected actions
     private string selectedPlayerAction;
@@ -163,6 +163,10 @@ public class Input_Manager : MonoBehaviour
     public GameObject GetRestButton()
     {
         return RST;
+    }
+    public GameObject GetSATKButton()
+    {
+        return SATK;
     }
 
     public Image GetAttackCD()

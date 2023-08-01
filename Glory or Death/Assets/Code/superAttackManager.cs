@@ -12,7 +12,7 @@ public class superAttackManager : MonoBehaviour
 
     [SerializeField] GameObject swordProyectilePrefab, parentCanvas;
     [SerializeField] Transform heartTarget, shield, feedbackContainer;
-    [SerializeField] float bulletSpeed, rotationSpeed;
+    [SerializeField] float rotationSpeed;
     [SerializeField] int swordNumber;
     [SerializeField] Camera mainCamera;
 
@@ -44,14 +44,14 @@ public class superAttackManager : MonoBehaviour
         cameraManager.playChrome();
         combat_UI.move_UI_out();
         moveCameraIn();
-        StartCoroutine(MinigameTimer(5f));
-        StartCoroutine(SpawnSwordsWithDelay(0.3f));
-        StartCoroutine(slowMotion(4.5f, 0.5f));
+        StartCoroutine(MinigameTimer(7));
+        StartCoroutine(SpawnSwordsWithDelay(0.4f));
     }
 
     private void OnDisable()
     {
         swordCounter = 0;
+        resetFeedback();
     }
 
     IEnumerator SpawnSwordsWithDelay(float delay)
@@ -62,7 +62,7 @@ public class superAttackManager : MonoBehaviour
             Transform randomSpawner = swordSpawners[randomNumber];
             var bullet = Instantiate(swordProyectilePrefab, new Vector3(randomSpawner.transform.localPosition.x, randomSpawner.transform.localPosition.y, 0), Quaternion.identity, parentCanvas.transform);
             PointSpriteTowards(heartTarget.localPosition, bullet.transform);
-            bullet.transform.DOMove(new Vector3(spawnRotator.transform.position.x, spawnRotator.transform.position.y, 0), 1.4f);
+            bullet.transform.DOMove(new Vector3(spawnRotator.transform.position.x, spawnRotator.transform.position.y, 0), 2.2f).SetEase(Ease.OutCirc);
 
             yield return new WaitForSeconds(delay);
         }
@@ -79,7 +79,7 @@ public class superAttackManager : MonoBehaviour
     // Tools
     void rotateSpawners()
     {
-        spawnRotator.DOLocalRotate(new Vector3(0, 0, 180), 4).SetEase(Ease.Linear);
+        spawnRotator.DOLocalRotate(new Vector3(0, 0, -360), 3);
     }
     void PointSpriteTowards(Vector3 targetPosition, Transform bullet)
     {
@@ -113,11 +113,17 @@ public class superAttackManager : MonoBehaviour
     public void fillSword()
     {
         feedbackContainer.GetChild(swordCounter).GetComponent<Image>().DOFade(1, 0.4f);
-        feedbackContainer.GetChild(swordCounter).DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f);
+        feedbackContainer.GetChild(swordCounter).DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f);
         swordCounter++;
     }
+    public void resetFeedback()
+    {
+        foreach (Transform sword in feedbackContainer.transform)
+        {
+            sword.GetComponent<Image>().DOFade(0.2f, 0);
+        }
+    }
 
-    
 
     // Effects
     void moveCameraIn()
@@ -127,12 +133,5 @@ public class superAttackManager : MonoBehaviour
     void moveCameraOut()
     {
         mainCamera.DOFieldOfView(50, 0.8f);
-    }
-
-    IEnumerator slowMotion(float seconds, float timeScale)
-    {
-        Time.timeScale = timeScale;
-        yield return new WaitForSeconds(seconds);
-        Time.timeScale = 1;
     }
 }

@@ -167,7 +167,6 @@ public class Enemy : MonoBehaviour
     public void stopSuperAttack()
     {
         adrenaline = 0;
-        Debug.Log("Adrenaline in stop super attack: " + adrenaline);
         if (!BS.GetDeadPlayer())
         {
             timeManager.enemyTimer.fillAmount = 1;
@@ -308,9 +307,25 @@ public class Enemy : MonoBehaviour
     {
         BS.showHit(nativeDamage - 2, BS.hitText_Player.transform);
     }
-    public void showDmgFeedbackPlayerSuper()
+    public void showDmgFeedbackPlayerSuper(int step)
     {
-        BS.showHit(superDMG, BS.hitText_Player.transform);
+        int quotient = superDMG / 3;
+        int remainder = superDMG % 3;
+        int firstATK = quotient + (remainder >= 1 ? 1 : 0);
+        int secondATK = quotient + (remainder >= 2 ? 1 : 0);
+        int thirdATK = quotient;
+        switch (step)
+        {
+            case 1:
+                BS.showHit(firstATK, BS.hitText_Player.transform);
+                break;
+            case 2:
+                BS.showHit(secondATK, BS.hitText_Player.transform);
+                break;
+            case 3:
+                BS.showHit(thirdATK, BS.hitText_Player.transform);
+                break;
+        }
     }
 
     // G & S

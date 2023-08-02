@@ -18,4 +18,9 @@ public class comicManager : MonoBehaviour
             comicEpisodes.Add(child.gameObject);
         }
     }
+
+    public void playNext(int next)
+    {
+        GetComponent<Animator>().Play("stripe_" + next);
+    }
 }

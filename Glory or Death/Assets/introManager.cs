@@ -10,7 +10,7 @@ public class introManager : MonoBehaviour
 
     public void closePanels()
     {
-        panelPlayer.DOMoveX(200, 1);
-        panelEnemy.DOMoveX(-200, 1);
+        panelPlayer.DOMoveX(308, 1);
+        panelEnemy.DOMoveX(-308, 1);
     }
 }

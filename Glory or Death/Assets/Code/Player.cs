@@ -258,6 +258,10 @@ public class Player : MonoBehaviour
     {
         return nativeDamage;
     }
+    public void resetDamage()
+    {
+        nativeDamage = 1;
+    }
     public void increaseDamage(int newDamage)
     {
         nativeDamage += newDamage;

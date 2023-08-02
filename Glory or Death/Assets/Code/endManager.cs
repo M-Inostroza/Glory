@@ -102,7 +102,7 @@ public class endManager : MonoBehaviour
     public void starPunchEnd()
     {
         audioManager.Play("Star_Shimes_2");
-        endStarSymbol.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f).OnComplete(() => endStarSymbol.DOScale(1, 0));
+        endStarSymbol.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 0.1f).OnComplete(() => endStarSymbol.DOScale(1, 0));
     }
 
     public void resetFight()

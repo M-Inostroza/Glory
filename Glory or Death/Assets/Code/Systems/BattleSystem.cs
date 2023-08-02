@@ -237,7 +237,8 @@ public class BattleSystem : MonoBehaviour
         playerUnit.SetAdrenaline(0);
         enemyUnit.adrenaline = 0;
 
-        enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.2f);
+        playerUnit.resetDamage();
+        enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
 
         endManager.resetFight();
     }

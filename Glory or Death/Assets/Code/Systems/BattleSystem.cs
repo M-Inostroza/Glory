@@ -13,7 +13,10 @@ public class BattleSystem : MonoBehaviour
     Combat_UI combat_UI;
     endManager endManager;
     cameraManager cameraManager;
-    superATKManager SAM;
+
+    [SerializeField] GameObject loadingScreen;
+    [SerializeField] Transform playerPanel;
+    [SerializeField] Transform enemyPanel;
 
     [SerializeField] Toggle testMode;
 
@@ -67,9 +70,11 @@ public class BattleSystem : MonoBehaviour
         enemyUnit = FindObjectOfType<Enemy>();
 
         Input_Manager = FindObjectOfType<Input_Manager>();
-        SAM = FindObjectOfType<superATKManager>();
 
         SetupBattle();
+
+        timeManager.stopUnitTimer();
+        openGame();
     }
 
     private void Update()
@@ -257,6 +262,12 @@ public class BattleSystem : MonoBehaviour
         timeManager.resetPlayerTimer();
         timeManager.resetEnemyTimer();
         timeManager.continueUnitTimer();
+    }
+
+    void openGame()
+    {
+        enemyPanel.DOLocalMoveX(900, 1).SetDelay(3);
+        playerPanel.DOLocalMoveX(-900, 1).SetDelay(3).OnComplete(()=> timeManager.continueUnitTimer());
     }
 
     // G & S

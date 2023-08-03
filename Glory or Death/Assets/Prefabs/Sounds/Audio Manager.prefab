@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2907543023692818451
+--- !u!1 &3155568890968107335
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2907543023692818453}
-  - component: {fileID: 2907543023692818450}
+  - component: {fileID: 4251774092260563268}
+  - component: {fileID: 4768875547352267866}
   m_Layer: 0
   m_Name: Audio Manager
   m_TagString: Untagged
@@ -17,61 +17,37 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2907543023692818453
+--- !u!4 &4251774092260563268
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2907543023692818451}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 3155568890968107335}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.0529659, y: -1.550342, z: -37.852985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2907543023692818450
+--- !u!114 &4768875547352267866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2907543023692818451}
+  m_GameObject: {fileID: 3155568890968107335}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43bd471c4fbe5747b5438cb2954bc30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: jumpWosh
-    clip: {fileID: 8300000, guid: db84b9de34e48bc4b9c399da1f017b1e, type: 3}
-    volume: 0.4
-    pitch: 1.4
-    loop: 0
-    source: {fileID: 0}
-  - name: evadeAttack
-    clip: {fileID: 8300000, guid: 7537f197b0fb5da4e8a19336ad2577c0, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Combat
-    clip: {fileID: 8300000, guid: 8d87d745b747fee45a3fe7b33d97e7b8, type: 3}
-    volume: 0.1
-    pitch: 0.9
-    loop: 1
-    source: {fileID: 0}
-  - name: targetHit
-    clip: {fileID: 8300000, guid: 82b346c20cb0fda40b5422c8f934e72e, type: 3}
-    volume: 0.3
-    pitch: 1.2
-    loop: 0
-    source: {fileID: 0}
-  - name: stab
-    clip: {fileID: 8300000, guid: 90ed52d86d898284095ea41631fdd692, type: 3}
-    volume: 0.3
+  - name: Combat-Theme
+    clip: {fileID: 8300000, guid: 1e8e201b09f55f244b046a4107405ebf, type: 3}
+    volume: 0
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -95,7 +71,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: MainTheme
     clip: {fileID: 8300000, guid: 80d5b0168f58a7f42a6464ddaecbf70f, type: 3}
-    volume: 0.1
+    volume: 0.08
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -150,6 +126,252 @@ MonoBehaviour:
   - name: shieldHitEnemy
     clip: {fileID: 8300000, guid: 592c8252da03bf043bd50c263189e2aa, type: 3}
     volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: defend_success
+    clip: {fileID: 8300000, guid: 6c32f30c5a744064ea7193c17ecfc1c6, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: defend_fail
+    clip: {fileID: 8300000, guid: 1a8bd00de52ffa74d93971f3446a9736, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DF_charge
+    clip: {fileID: 8300000, guid: 2811a2ce4bee99d409242ca611bf1dbe, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_jump_1
+    clip: {fileID: 8300000, guid: 000aba4fbfa6778449d3dcd87b17b3c3, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_jump_2
+    clip: {fileID: 8300000, guid: b7970fb57a901fe46be67903797017fc, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_jump_3
+    clip: {fileID: 8300000, guid: 35ff83cbb24ea31468d8ff22c216ffa0, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_jump_4
+    clip: {fileID: 8300000, guid: 34ac9a1941c364a43b97539879caa76f, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_land_1
+    clip: {fileID: 8300000, guid: 87ccd6f961f57a743a85393f33ce6346, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_land_2
+    clip: {fileID: 8300000, guid: 6b8a26cdc3484a041a8fabd81f286934, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_land_3
+    clip: {fileID: 8300000, guid: 53733935bd055e841a9165f6feaec4cd, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_land_4
+    clip: {fileID: 8300000, guid: 7cd52267210b22f458c66ec873553e7f, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_drop_1
+    clip: {fileID: 8300000, guid: 0543d980289967849914260ef0b0f74a, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_drop_2
+    clip: {fileID: 8300000, guid: 9176ab00f3b027c40b26666b9114ae6b, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: UI_select
+    clip: {fileID: 8300000, guid: a15b0ec9c60075a469a2c16d0638d852, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: UI_select_fail
+    clip: {fileID: 8300000, guid: 8ff7a2517ade6d2428374e47a438261e, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DF_sword_shield_1
+    clip: {fileID: 8300000, guid: 4e6b13481f87ec2479574de9a1fbb75f, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DF_sword_shield_2
+    clip: {fileID: 8300000, guid: 1bad1e3d4df521a498dec2275611e14f, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DF_sword_shield_3
+    clip: {fileID: 8300000, guid: bc1eaea76fea5ca49a663c904fa1835c, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_target_hit_1
+    clip: {fileID: 8300000, guid: 57e4e63346f744d4b86206cdc369090b, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_target_hit_2
+    clip: {fileID: 8300000, guid: 15eb370d9e54418409a3596b9c19855b, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_target_hit_3
+    clip: {fileID: 8300000, guid: d91a332f051a88f42ae5e695e6276d62, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_target_hit_4
+    clip: {fileID: 8300000, guid: 9ac4ff2a923a49b48b053be7419ce0c0, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_target_hit_5
+    clip: {fileID: 8300000, guid: ef6e4ad52b51a594d936c2b3b619a28d, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_blunt_1
+    clip: {fileID: 8300000, guid: 3c837bbdadc21744a8ec50f13edeb608, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_blunt_2
+    clip: {fileID: 8300000, guid: 67170dc03a78095498f89c0ee161a21f, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_blunt_3
+    clip: {fileID: 8300000, guid: 2f98e44604102c744a20b99701bf99cb, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_blunt_4
+    clip: {fileID: 8300000, guid: 1d9420b024f081b4cbab5fdc5f35b10c, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_stab_1
+    clip: {fileID: 8300000, guid: af28fef73f8510e498d32e8895e9f8df, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_stab_2
+    clip: {fileID: 8300000, guid: dca3d126b4a2f204ebecc7f33d274e54, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_stab_3
+    clip: {fileID: 8300000, guid: 837e5efd82fd9164785f4ac905aead3a, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_stab_4
+    clip: {fileID: 8300000, guid: ad499f553059fe240ba3faec5f3ad20a, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: ATK_stab_5
+    clip: {fileID: 8300000, guid: 284a9f2d6295b8e4db1d2363684c87a8, type: 3}
+    volume: 0.3
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: Audience_queen
+    clip: {fileID: 8300000, guid: 01c143155024f744dae19839ee8e3d1d, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Audience_cheer_high
+    clip: {fileID: 8300000, guid: 6d588f8673237bb4aa304d558ffbb1f2, type: 3}
+    volume: 0.4
+    pitch: 1.2
+    loop: 0
+    source: {fileID: 0}
+  - name: Audience_cheer_mid
+    clip: {fileID: 8300000, guid: 1b08533f62da9114a983e53d738f76fc, type: 3}
+    volume: 0.4
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: Audience_cheer_mid_2
+    clip: {fileID: 8300000, guid: 296174b2d21e68f42a414f1e0e2aaf3b, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Audience_cheer_mid_3
+    clip: {fileID: 8300000, guid: ae52b3253337ced46b3610507378f212, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Audience_cheer_mid_4
+    clip: {fileID: 8300000, guid: b9523639984fcf448ad4cab764a44b5f, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Audience_boo
+    clip: {fileID: 8300000, guid: 2bab8cc5f6111c84dbfd6a1728d75d53, type: 3}
+    volume: 0.4
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: Enemy_charge
+    clip: {fileID: 8300000, guid: f0012f5b7ee2c7c40a60d63f3de50b3a, type: 3}
+    volume: 0.4
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: Shield_charge
+    clip: {fileID: 8300000, guid: 7b9248b73f774574e821383f2ff1b6c8, type: 3}
+    volume: 0.4
     pitch: 0.8
     loop: 0
     source: {fileID: 0}

@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class comicManager : MonoBehaviour
 {
-    [SerializeField] GameObject comicContainer;
     [SerializeField] Image darkOverlay;
+
+    [SerializeField] Transform mainCamera;
 
     // Loading Screen
     [SerializeField] Transform enemyPanel;
@@ -15,6 +15,13 @@ public class comicManager : MonoBehaviour
 
     [SerializeField] GameObject loadingContainer;
     [SerializeField] GameObject thunder;
+
+    AudioManager audioManager;
+
+    private void Start()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
 
     public void playNext(int next)
     {
@@ -24,8 +31,36 @@ public class comicManager : MonoBehaviour
     public void activateLoadingScreen()
     {
         loadingContainer.SetActive(true);
-        enemyPanel.DOMoveX(308, 1);
-        playerPanel.DOMoveX(-308, 1);
+        enemyPanel.DOLocalMoveX(308, 1).SetEase(Ease.OutBounce);
+        playerPanel.DOLocalMoveX(-308, 1).SetEase(Ease.OutBounce);
+        Invoke("activateThunder", 0.4f);
+        Invoke("changeScene", 3);
+    }
+    void changeScene()
+    {
+        SceneManager.LoadScene("Arena");
+    }
+
+    public void activateThunder()
+    {
+        //loadingContainer.transform.DOShakePosition(0.5f, 10, 15, 20);
         thunder.GetComponent<Animator>().Play("thunder");
+        audioManager.Play("clash_glory");
+        audioManager.Play("thunder_title");
+    }
+
+
+    // Sounds
+    public void walkingSequence()
+    {
+        audioManager.Play("walk_" + Random.Range(1, 4));
+    }
+    public void keyOpen()
+    {
+        audioManager.Play("Key_open");
+    }
+    public void water()
+    {
+        audioManager.Play("water");
     }
 }

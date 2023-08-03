@@ -6,21 +6,26 @@ using UnityEngine.UI;
 
 public class comicManager : MonoBehaviour
 {
-    private List<GameObject> comicEpisodes = new List<GameObject>();
-
     [SerializeField] GameObject comicContainer;
     [SerializeField] Image darkOverlay;
 
-    void Start()
-    {
-        foreach (Transform child in comicContainer.transform)
-        {
-            comicEpisodes.Add(child.gameObject);
-        }
-    }
+    // Loading Screen
+    [SerializeField] Transform enemyPanel;
+    [SerializeField] Transform playerPanel;
+
+    [SerializeField] GameObject loadingContainer;
+    [SerializeField] GameObject thunder;
 
     public void playNext(int next)
     {
         GetComponent<Animator>().Play("stripe_" + next);
+    }
+
+    public void activateLoadingScreen()
+    {
+        loadingContainer.SetActive(true);
+        enemyPanel.DOMoveX(308, 1);
+        playerPanel.DOMoveX(-308, 1);
+        thunder.GetComponent<Animator>().Play("thunder");
     }
 }

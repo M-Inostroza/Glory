@@ -769,7 +769,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -308, y: 44}
+  m_AnchoredPosition: {x: -900, y: 44}
   m_SizeDelta: {x: 405.5398, y: 556.9935}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &670080378
@@ -1036,6 +1036,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   comicContainer: {fileID: 884551930}
   darkOverlay: {fileID: 1511918797}
+  enemyPanel: {fileID: 975468193}
+  playerPanel: {fileID: 670080377}
+  loadingContainer: {fileID: 1396458547}
+  thunder: {fileID: 2111104766}
 --- !u!1 &966520640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,7 +1154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 308, y: -28}
+  m_AnchoredPosition: {x: 900, y: -28}
   m_SizeDelta: {x: 405.5398, y: 556.9935}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &975468194
@@ -2828,7 +2832,6 @@ GameObject:
   - component: {fileID: 1396458551}
   - component: {fileID: 1396458550}
   - component: {fileID: 1396458549}
-  - component: {fileID: 1396458548}
   m_Layer: 5
   m_Name: Loading Canvas
   m_TagString: Untagged
@@ -2836,20 +2839,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1396458548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396458547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 898728410561f1440bc1fbd514c4750d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelPlayer: {fileID: 670080377}
-  panelEnemy: {fileID: 975468193}
 --- !u!114 &1396458549
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class BattleSystem : MonoBehaviour
     Combat_UI combat_UI;
     endManager endManager;
     cameraManager cameraManager;
+    AudioManager audioManager;
 
     [SerializeField] GameObject loadingScreen;
     [SerializeField] Transform playerPanel;
@@ -65,6 +66,7 @@ public class BattleSystem : MonoBehaviour
         timeManager = FindObjectOfType<timeManager>();
         endManager = FindObjectOfType<endManager>();
         cameraManager = FindObjectOfType<cameraManager>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
@@ -246,6 +248,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
 
         endManager.resetFight();
+        audioManager.Play("Combat_Theme");
     }
 
     void timeControlDefeatVictory()
@@ -267,7 +270,13 @@ public class BattleSystem : MonoBehaviour
     void openGame()
     {
         enemyPanel.DOLocalMoveX(900, 1).SetDelay(3);
-        playerPanel.DOLocalMoveX(-900, 1).SetDelay(3).OnComplete(()=> timeManager.continueUnitTimer());
+        playerPanel.DOLocalMoveX(-900, 1).SetDelay(3).OnComplete(complete);
+        void complete()
+        {
+            timeManager.continueUnitTimer();
+            audioManager.Play("Combat_Theme");
+            loadingScreen.SetActive(false);
+        }
     }
 
     // G & S

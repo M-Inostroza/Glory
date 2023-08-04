@@ -1392,6 +1392,10 @@ PrefabInstance:
       value: water
       objectReference: {fileID: 0}
     - target: {fileID: 4768875547352267866, guid: dda94c9e15d46fe4481f9c4d0287ab14, type: 3}
+      propertyPath: sounds.Array.data[0].volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768875547352267866, guid: dda94c9e15d46fe4481f9c4d0287ab14, type: 3}
       propertyPath: sounds.Array.data[55].pitch
       value: 0.8
       objectReference: {fileID: 0}
@@ -1705,6 +1709,14 @@ PrefabInstance:
     - target: {fileID: 2678510230173938336, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2678510230173938340, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
+      propertyPath: m_PixelPerfect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2678510230173938341, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2678510230173938347, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
       propertyPath: m_Pivot.x

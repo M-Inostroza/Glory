@@ -21,8 +21,6 @@ public class gameManager : MonoBehaviour
         timeManager = FindObjectOfType<timeManager>();
         battleSystem = FindObjectOfType<BattleSystem>();
         audioManager = FindObjectOfType<AudioManager>();
-
-        audioManager.Play("Combat_Theme");
     }
     private void Update()
     {

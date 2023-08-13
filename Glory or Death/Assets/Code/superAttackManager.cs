@@ -19,6 +19,7 @@ public class superAttackManager : MonoBehaviour
     cameraManager cameraManager;
     Combat_UI combat_UI;
     Enemy enemy;
+    AudioManager audioManager;
 
     int swordCounter = 0;
 
@@ -38,7 +39,7 @@ public class superAttackManager : MonoBehaviour
     private void OnEnable()
     {
         feedbackContainer.DOLocalMoveY(10, 0.5f);
-        AudioManager.Play("Super_Attack_Enemy_On");
+        audioManager.Play("Super_Attack_Enemy_On");
         cameraManager.playChrome();
         Combat_UI.move_UI_out();
         moveCameraIn();

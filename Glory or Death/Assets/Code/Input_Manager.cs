@@ -12,8 +12,9 @@ public class Input_Manager : MonoBehaviour
     private string selectedPlayerAction;
     private string selectedEnemyAction;
 
-    // Custom classes
-    private timeManager timeManager;
+    
+    timeManager timeManager;
+    AudioManager audioManager;
 
     // Avoid click spam
     private bool canClick = true;
@@ -26,6 +27,7 @@ public class Input_Manager : MonoBehaviour
 
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         timeManager = FindObjectOfType<timeManager>();
 
         AttackButtonCD = GameObject.FindWithTag("AttackCD").GetComponent<Image>();
@@ -48,28 +50,28 @@ public class Input_Manager : MonoBehaviour
     {
         if (AttackButtonCD.fillAmount == 0 && canClick)
         {
-            AudioManager.Play("UI_select");
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "ATK1";
             timeManager.selectIcon("ATK1");
         }
         else
         {
-            AudioManager.Play("UI_select_fail");
+            audioManager.Play("UI_select_fail");
         }
     }
     public void OnSuperAttackButton()
     {
         if (canClick)
         {
-            AudioManager.Play("UI_select");
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "ATK2";
             timeManager.selectIcon("ATK2");
         }
         else
         {
-            AudioManager.Play("UI_select_fail");
+            audioManager.Play("UI_select_fail");
         }
     }
 
@@ -77,14 +79,14 @@ public class Input_Manager : MonoBehaviour
     {
         if (DefendButtonCD.fillAmount == 0 && canClick)
         {
-            AudioManager.Play("UI_select");
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "DF";
             timeManager.selectIcon("DF");
         }
         else
         {
-            AudioManager.Play("UI_select_fail");
+            audioManager.Play("UI_select_fail");
         }
     }
 
@@ -92,14 +94,14 @@ public class Input_Manager : MonoBehaviour
     {
         if (DodgeButtonCD.fillAmount == 0 && canClick)
         {
-            AudioManager.Play("UI_select");
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "DG";
             timeManager.selectIcon("DG");
         }
         else
         {
-            AudioManager.Play("UI_select_fail");
+            audioManager.Play("UI_select_fail");
         }
     }
 
@@ -107,14 +109,14 @@ public class Input_Manager : MonoBehaviour
     {
         if (FocusButtonCD.fillAmount == 0 && canClick)
         {
-            AudioManager.Play("UI_select");
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "FC";
             timeManager.selectIcon("FC");
         }
         else
         {
-            AudioManager.Play("UI_select_fail");
+            audioManager.Play("UI_select_fail");
         }
     }
 
@@ -122,14 +124,14 @@ public class Input_Manager : MonoBehaviour
     {
         if (canClick)
         {
-            AudioManager.Play("UI_select");
+            audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "RST";
             timeManager.selectIcon("RST");
         }
         else
         {
-            AudioManager.Play("UI_select_fail");
+            audioManager.Play("UI_select_fail");
         }
     }
 

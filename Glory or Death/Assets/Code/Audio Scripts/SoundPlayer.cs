@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour
 {
+    AudioManager audioManager;
+    private void Awake()
+    {
+        
+    }
     // ----- Audience ----- //
     public void cheerSounds()
     {
@@ -11,26 +16,26 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("Audience_cheer_mid");
+                audioManager.Play("Audience_cheer_mid");
                 break;
             case 2:
-                AudioManager.Play("Audience_cheer_mid_2");
+                audioManager.Play("Audience_cheer_mid_2");
                 break;
             case 3:
-                AudioManager.Play("Audience_cheer_mid_3");
+                audioManager.Play("Audience_cheer_mid_3");
                 break;
             case 4:
-                AudioManager.Play("Audience_cheer_mid_4");
+                audioManager.Play("Audience_cheer_mid_4");
                 break;
         }
     }
     public void audienceQueen()
     {
-        AudioManager.Play("Audience_queen");
+        audioManager.Play("Audience_queen");
     }
     public void audienceBoo()
     {
-        AudioManager.Play("Audience_boo");
+        audioManager.Play("Audience_boo");
     }
 
     // -----Targets-----
@@ -40,19 +45,19 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("ATK_target_hit_1");
+                audioManager.Play("ATK_target_hit_1");
                 break;
             case 2:
-                AudioManager.Play("ATK_target_hit_2");
+                audioManager.Play("ATK_target_hit_2");
                 break;
             case 3:
-                AudioManager.Play("ATK_target_hit_3");
+                audioManager.Play("ATK_target_hit_3");
                 break;
             case 4:
-                AudioManager.Play("ATK_target_hit_4");
+                audioManager.Play("ATK_target_hit_4");
                 break;
             case 5:
-                AudioManager.Play("ATK_target_hit_5");
+                audioManager.Play("ATK_target_hit_5");
                 break;
         }
     }
@@ -62,19 +67,19 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("ATK_stab_1");
+                audioManager.Play("ATK_stab_1");
                 break;
             case 2:
-                AudioManager.Play("ATK_stab_2");
+                audioManager.Play("ATK_stab_2");
                 break;
             case 3:
-                AudioManager.Play("ATK_stab_3");
+                audioManager.Play("ATK_stab_3");
                 break;
             case 4:
-                AudioManager.Play("ATK_stab_4");
+                audioManager.Play("ATK_stab_4");
                 break;
             case 5:
-                AudioManager.Play("ATK_stab_5");
+                audioManager.Play("ATK_stab_5");
                 break;
         }
     }
@@ -86,16 +91,16 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("DG_jump_1");
+                audioManager.Play("DG_jump_1");
                 break;
             case 2:
-                AudioManager.Play("DG_jump_2");
+                audioManager.Play("DG_jump_2");
                 break;
             case 3:
-                AudioManager.Play("DG_jump_3");
+                audioManager.Play("DG_jump_3");
                 break;
             case 4:
-                AudioManager.Play("DG_jump_4");
+                audioManager.Play("DG_jump_4");
                 break;
         } 
     }
@@ -105,16 +110,16 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("DG_land_1");
+                audioManager.Play("DG_land_1");
                 break;
             case 2:
-                AudioManager.Play("DG_land_2");
+                audioManager.Play("DG_land_2");
                 break;
             case 3:
-                AudioManager.Play("DG_land_3");
+                audioManager.Play("DG_land_3");
                 break;
             case 4:
-                AudioManager.Play("DG_land_4");
+                audioManager.Play("DG_land_4");
                 break;
         }
     }
@@ -124,10 +129,10 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("DG_drop_1");
+                audioManager.Play("DG_drop_1");
                 break;
             case 2:
-                AudioManager.Play("DG_drop_2");
+                audioManager.Play("DG_drop_2");
                 break;
         }
     }
@@ -139,16 +144,16 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("Shield_metal_1");
+                audioManager.Play("Shield_metal_1");
                 break;
             case 2:
-                AudioManager.Play("Shield_metal_2");
+                audioManager.Play("Shield_metal_2");
                 break;
             case 3:
-                AudioManager.Play("Shield_metal_3");
+                audioManager.Play("Shield_metal_3");
                 break;
             case 4:
-                AudioManager.Play("Shield_metal_4");
+                audioManager.Play("Shield_metal_4");
                 break;
         }
     }
@@ -158,13 +163,13 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("DF_sword_shield_1");
+                audioManager.Play("DF_sword_shield_1");
                 break;
             case 2:
-                AudioManager.Play("DF_sword_shield_2");
+                audioManager.Play("DF_sword_shield_2");
                 break;
             case 3:
-                AudioManager.Play("DF_sword_shield_3");
+                audioManager.Play("DF_sword_shield_3");
                 break;
         }
     }
@@ -174,16 +179,16 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("ATK_blunt_1");
+                audioManager.Play("ATK_blunt_1");
                 break;
             case 2:
-                AudioManager.Play("ATK_blunt_2");
+                audioManager.Play("ATK_blunt_2");
                 break;
             case 3:
-                AudioManager.Play("ATK_blunt_3");
+                audioManager.Play("ATK_blunt_3");
                 break;
             case 4:
-                AudioManager.Play("ATK_blunt_4");
+                audioManager.Play("ATK_blunt_4");
                 break;
         }
     }
@@ -193,26 +198,26 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("Bone_Break");
+                audioManager.Play("Bone_Break");
                 break;
             case 2:
-                AudioManager.Play("Bone_Break_1");
+                audioManager.Play("Bone_Break_1");
                 break;
             case 3:
-                AudioManager.Play("Bone_Break_2");
+                audioManager.Play("Bone_Break_2");
                 break;
             case 4:
-                AudioManager.Play("Bone_Break_3");
+                audioManager.Play("Bone_Break_3");
                 break;
         }
     }
     public void swordGrab()
     {
-        AudioManager.Play("sword_grab");
+        audioManager.Play("sword_grab");
     }
     public void focusBuff()
     {
-        AudioManager.Play("Focus_Buff");
+        audioManager.Play("Focus_Buff");
     }
     public void metalStone()
     {
@@ -220,13 +225,13 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("Metal_Stone");
+                audioManager.Play("Metal_Stone");
                 break;
             case 2:
-                AudioManager.Play("Metal_Stone_2");
+                audioManager.Play("Metal_Stone_2");
                 break;
             case 3:
-                AudioManager.Play("Metal_Stone_3");
+                audioManager.Play("Metal_Stone_3");
                 break;
         }
     }
@@ -236,22 +241,22 @@ public class SoundPlayer : MonoBehaviour
         switch (random)
         {
             case 1:
-                AudioManager.Play("Stomp_1");
+                audioManager.Play("Stomp_1");
                 break;
             case 2:
-                AudioManager.Play("Stomp_2");
+                audioManager.Play("Stomp_2");
                 break;
             case 3:
-                AudioManager.Play("Stomp_3");
+                audioManager.Play("Stomp_3");
                 break;
         }
     }
     public void restCharge()
     {
-        AudioManager.Play("Rest_Charge");
+        audioManager.Play("Rest_Charge");
     }
     public void restSuccess()
     {
-        AudioManager.Play("Rest_Success");
+        audioManager.Play("Rest_Success");
     }
 }

@@ -13,6 +13,7 @@ public class BattleSystem : MonoBehaviour
     Combat_UI combat_UI;
     endManager endManager;
     cameraManager cameraManager;
+    AudioManager audioManager;
 
     [SerializeField] GameObject loadingScreen;
     [SerializeField] Transform playerPanel;
@@ -58,6 +59,7 @@ public class BattleSystem : MonoBehaviour
 
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         playerAnimator = playerPrefab.GetComponent<Animator>();
         combat_UI = FindObjectOfType<Combat_UI>();
         targetManager = FindObjectOfType<TargetManager>();
@@ -210,7 +212,7 @@ public class BattleSystem : MonoBehaviour
         {
             Combat_UI.move_UI_out();
             cameraManager.playChrome();
-            AudioManager.Play("Defeat_Sound");
+            audioManager.Play("Defeat_Sound");
             timeControlDefeatVictory();
             enemyUnit.GetComponent<Enemy>().GetComponent<Animator>().SetBool("Victory", true);
             
@@ -223,7 +225,7 @@ public class BattleSystem : MonoBehaviour
         {
             Combat_UI.move_UI_out();
             cameraManager.playChrome();
-            AudioManager.Play("Last_Hit");
+            audioManager.Play("Last_Hit");
             timeControlDefeatVictory();
 
             endManager.activateEndElements(true, 2);
@@ -246,7 +248,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
 
         endManager.resetFight();
-        AudioManager.Play("Combat_Theme");
+        audioManager.Play("Combat_Theme");
     }
 
     void timeControlDefeatVictory()
@@ -272,7 +274,7 @@ public class BattleSystem : MonoBehaviour
         void complete()
         {
             timeManager.continueUnitTimer();
-            AudioManager.Play("Combat_Theme");
+            audioManager.Play("Combat_Theme");
             loadingScreen.SetActive(false);
         }
     }

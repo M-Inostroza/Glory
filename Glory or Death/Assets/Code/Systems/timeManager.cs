@@ -80,7 +80,7 @@ public class timeManager : MonoBehaviour
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
         endManager = FindObjectOfType<endManager>();
-        timerIsRunning = true;
+        timerIsRunning = false;
 
         selectEnemyAction();
     }

@@ -33,12 +33,14 @@ public class Enemy : MonoBehaviour
     Player Player;
     Combat_UI combat_UI;
     cameraManager cameraManager;
+    AudioManager audioManager;
 
     Animator myAnimator;
     Animator playerAnimator;
 
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         cameraManager = FindObjectOfType<cameraManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
         BS = FindObjectOfType<BattleSystem>();
@@ -96,7 +98,7 @@ public class Enemy : MonoBehaviour
             adrenaline += 4;
             if (Player.getCurrentShield() > 0 && !dirtManager.IsDirty)
             {
-                AudioManager.Play("Counter_On");
+                audioManager.Play("Counter_On");
                 counterManager.gameObject.SetActive(true);
             }
             else
@@ -197,7 +199,7 @@ public class Enemy : MonoBehaviour
     }
     public void playfanfare()
     {
-        AudioManager.Play("Victory_Sound");
+        audioManager.Play("Victory_Sound");
     }
     #endregion
 
@@ -214,7 +216,7 @@ public class Enemy : MonoBehaviour
     }
     public void shieldAttack()
     {
-        AudioManager.Play("shieldHitEnemy");
+        audioManager.Play("shieldHitEnemy");
     }
     public void backToIdle()
     {
@@ -240,11 +242,11 @@ public class Enemy : MonoBehaviour
     }
     public void playAudience()
     {
-        AudioManager.Play("Audience_boo");
+        audioManager.Play("Audience_boo");
     }
     public void playGrunt()
     {
-        AudioManager.Play("Enemy_charge");
+        audioManager.Play("Enemy_charge");
     }
 
     public void selectNextAction()

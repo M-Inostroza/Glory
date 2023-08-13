@@ -62,6 +62,7 @@ public class Combat_UI : MonoBehaviour
 
     Player playerUnit;
     Enemy enemyUnit;
+    AudioManager audioManager;
 
     private void Awake()
     {
@@ -77,6 +78,7 @@ public class Combat_UI : MonoBehaviour
     }
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
         staminaSlider.DOValue(staminaSlider.maxValue, 1.5f);
@@ -361,7 +363,7 @@ public class Combat_UI : MonoBehaviour
     }
     public void showStars()
     {
-        AudioManager.Play("Star_Shimes_3");
+        audioManager.Play("Star_Shimes_3");
         star_counter.DOLocalMoveX(-350, 0.5f);
     }
     public void hideStars()

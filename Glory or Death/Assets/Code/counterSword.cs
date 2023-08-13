@@ -12,6 +12,7 @@ public class counterSword : MonoBehaviour
     Enemy enemy;
     Combat_UI combatUI;
     SoundPlayer soundPlayer;
+    AudioManager audioManager;
 
     [Header("Materials")]
     [SerializeField] Material heartMaterial;
@@ -20,6 +21,7 @@ public class counterSword : MonoBehaviour
 
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
         combatUI = FindObjectOfType<Combat_UI>();
@@ -45,7 +47,7 @@ public class counterSword : MonoBehaviour
         else if (collision.name == "Counter Target")
         {
             FindObjectOfType<cameraManager>().playChrome();
-            AudioManager.Play("Counter_Fail");
+            audioManager.Play("Counter_Fail");
             soundPlayer.stabSounds();
             meltHeart();
         }

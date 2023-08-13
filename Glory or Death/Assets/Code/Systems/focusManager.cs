@@ -13,6 +13,7 @@ public class focusManager : MonoBehaviour
     [SerializeField] Camera mainCamera;
 
     Player playerUnit;
+    AudioManager audioManager;
     
     // Limits
     private float minX = -7.8f;
@@ -46,7 +47,7 @@ public class focusManager : MonoBehaviour
     {
         cameraZoomIn();
         StartCoroutine(focusTimer(5));
-        AudioManager.Play("Focus_On");
+        audioManager.Play("Focus_On");
 
         combat_UI.activateS();
 
@@ -90,7 +91,7 @@ public class focusManager : MonoBehaviour
     }
     void successFocus()
     {
-        AudioManager.Play("Focus_Success");
+        audioManager.Play("Focus_Success");
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
         cameraZoomOut();
         gameObject.SetActive(false);
@@ -98,7 +99,7 @@ public class focusManager : MonoBehaviour
     }
     void failFocus()
     {
-        AudioManager.Play("Focus_Fail");
+        audioManager.Play("Focus_Fail");
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         playerUnit.GetComponent<Animator>().SetBool("skillFail", true);
         cameraZoomOut();

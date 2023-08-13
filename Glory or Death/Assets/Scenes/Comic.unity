@@ -1702,6 +1702,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2678510229636599058, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
+      propertyPath: _startSpeed.m_ConstantMax
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2678510230173938336, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
       propertyPath: m_Name
       value: Loading Canvas
@@ -1801,6 +1805,10 @@ PrefabInstance:
     - target: {fileID: 2678510230173938347, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2678510230295838093, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
+      propertyPath: _startSpeed.m_ConstantMax
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}

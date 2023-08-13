@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private timeManager timeManager;
     private TargetManager targetManager; 
     private BattleSystem BS;
+    private AudioManager audioManager;
     
     [Header("Stats")]
     [SerializeField] private float maxSpeed, baseSpeed;
@@ -421,7 +422,7 @@ public class Player : MonoBehaviour
     }
     public void blockHit()
     {
-        AudioManager.Play("Shield_metal");
+        audioManager.Play("Shield_metal");
         Time.timeScale = 0.2f;
     }
     public void returnTime()

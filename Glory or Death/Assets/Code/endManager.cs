@@ -10,6 +10,7 @@ public class endManager : MonoBehaviour
 {
     Combat_UI combat_UI;
     SoundPlayer soundPlayer;
+    AudioManager audioManager;
 
     [SerializeField] Image endOverlay;
     [SerializeField] Image dialogueBubble;
@@ -40,6 +41,7 @@ public class endManager : MonoBehaviour
     [SerializeField] GameObject victoryScreenContainer;
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         combat_UI = FindObjectOfType<Combat_UI>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
     }
@@ -49,8 +51,8 @@ public class endManager : MonoBehaviour
     public IEnumerator showEndScreen(float delay)
     {
         activateEndElements(true, 0);
-        AudioManager.Play("End_Horn");
-        AudioManager.Play("End_Drums");
+        audioManager.Play("End_Horn");
+        audioManager.Play("End_Drums");
         endOverlay.DOFade(0.85f, 1f);
         yield return new WaitForSeconds(delay);
 
@@ -99,7 +101,7 @@ public class endManager : MonoBehaviour
     }
     public void starPunchEnd()
     {
-        AudioManager.Play("Star_Shimes_2");
+        audioManager.Play("Star_Shimes_2");
         endStarSymbol.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 0.1f).OnComplete(() => endStarSymbol.DOScale(1, 0));
     }
 

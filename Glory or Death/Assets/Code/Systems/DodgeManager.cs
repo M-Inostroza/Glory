@@ -35,7 +35,7 @@ public class DodgeManager : MonoBehaviour
 
     private void Awake()
     {
-        audioManager = FindObjectOfType(AudioManager);
+        audioManager = FindObjectOfType<AudioManager>();
         BS = FindObjectOfType<BattleSystem>();
         playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();

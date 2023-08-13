@@ -28,7 +28,7 @@ public class TargetManager : MonoBehaviour
 
     public void attack()
     {
-        combat_UI.move_UI_out();
+        Combat_UI.move_UI_out();
         activateFeedback();
 
         BattleSystem.targetHit = 0;
@@ -72,7 +72,7 @@ public class TargetManager : MonoBehaviour
         }
 
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
-        combat_UI.move_UI_in();
+        Combat_UI.move_UI_in();
     }
 
     public void checkCritic()

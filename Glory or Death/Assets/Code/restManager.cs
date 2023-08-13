@@ -15,12 +15,10 @@ public class restManager : MonoBehaviour
 
     Player player;
     timeManager timeManager;
-    AudioManager audioManager;
 
     bool canRest = false;
     private void Awake()
     {
-        audioManager = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
         timeManager = FindObjectOfType<timeManager>();
     }
@@ -37,7 +35,7 @@ public class restManager : MonoBehaviour
         hasAnimatedStar = false;
         restSlider.value = 0;
         cameraZoom();
-        audioManager.Play("Rest_On");
+        AudioManager.Play("Rest_On");
         player.GetComponent<Animator>().Play("restSkill");
         canRest = true;
         StartCoroutine(setMinigameOff(4.5f));
@@ -102,7 +100,7 @@ public class restManager : MonoBehaviour
     {
         if (!hasAnimatedStar && restSlider.value > 85)
         {
-            audioManager.Play("Star_Hit");
+            AudioManager.Play("Star_Hit");
             criticStar.GetComponent<Image>().DOFade(1, 0.3f);
             criticStar.DOPunchScale(new Vector3(0.3f, 0.3f, 0.3f), 0.3f).OnComplete(()=> criticStar.DOScale(1,0));
             hasAnimatedStar = true;

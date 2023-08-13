@@ -25,8 +25,8 @@ public class DodgeManager : MonoBehaviour
     // Initial position of the arrows
     float intPos;
 
-    Animator playerAnimator;
     AudioManager audioManager;
+    Animator playerAnimator;
     Combat_UI combat_UI;
     BattleSystem BS;
 
@@ -35,10 +35,10 @@ public class DodgeManager : MonoBehaviour
 
     private void Awake()
     {
+        audioManager = FindObjectOfType(AudioManager);
         BS = FindObjectOfType<BattleSystem>();
         playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();
-        audioManager = FindObjectOfType<AudioManager>();
         combat_UI = FindObjectOfType<Combat_UI>();
     }
 

@@ -23,7 +23,6 @@ public class focusManager : MonoBehaviour
     private float targetRangeMin;
 
     timeManager timeManager;
-    AudioManager audioManager;
     Combat_UI combat_UI;
     BattleSystem BS;
 
@@ -33,7 +32,6 @@ public class focusManager : MonoBehaviour
         playerUnit = FindObjectOfType<Player>();
         combat_UI = FindObjectOfType<Combat_UI>();
         timeManager = FindObjectOfType<timeManager>();
-        audioManager = FindObjectOfType<AudioManager>();
     }
     private void Start()
     {
@@ -48,7 +46,7 @@ public class focusManager : MonoBehaviour
     {
         cameraZoomIn();
         StartCoroutine(focusTimer(5));
-        audioManager.Play("Focus_On");
+        AudioManager.Play("Focus_On");
 
         combat_UI.activateS();
 
@@ -92,7 +90,7 @@ public class focusManager : MonoBehaviour
     }
     void successFocus()
     {
-        audioManager.Play("Focus_Success");
+        AudioManager.Play("Focus_Success");
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
         cameraZoomOut();
         gameObject.SetActive(false);
@@ -100,7 +98,7 @@ public class focusManager : MonoBehaviour
     }
     void failFocus()
     {
-        audioManager.Play("Focus_Fail");
+        AudioManager.Play("Focus_Fail");
         timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         playerUnit.GetComponent<Animator>().SetBool("skillFail", true);
         cameraZoomOut();

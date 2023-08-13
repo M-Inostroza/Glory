@@ -18,7 +18,6 @@ public class superAttackManager : MonoBehaviour
 
     cameraManager cameraManager;
     Combat_UI combat_UI;
-    AudioManager audioManager;
     Enemy enemy;
 
     int swordCounter = 0;
@@ -27,7 +26,6 @@ public class superAttackManager : MonoBehaviour
     {
         combat_UI = FindObjectOfType<Combat_UI>();
         cameraManager = FindObjectOfType<cameraManager>();
-        audioManager = FindObjectOfType<AudioManager>();
         enemy = FindObjectOfType<Enemy>();
     }
     private void Update()
@@ -40,9 +38,9 @@ public class superAttackManager : MonoBehaviour
     private void OnEnable()
     {
         feedbackContainer.DOLocalMoveY(10, 0.5f);
-        audioManager.Play("Super_Attack_Enemy_On");
+        AudioManager.Play("Super_Attack_Enemy_On");
         cameraManager.playChrome();
-        combat_UI.move_UI_out();
+        Combat_UI.move_UI_out();
         moveCameraIn();
         StartCoroutine(MinigameTimer(7));
         StartCoroutine(SpawnSwordsWithDelay(0.4f));

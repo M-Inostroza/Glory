@@ -26,7 +26,6 @@ public class Enemy : MonoBehaviour
     private bool isAngry = false;
     public bool hasHit = false;
 
-    AudioManager audioManager;
     SoundPlayer soundPlayer;
     
     BattleSystem BS;
@@ -42,7 +41,6 @@ public class Enemy : MonoBehaviour
     {
         cameraManager = FindObjectOfType<cameraManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
-        audioManager = FindObjectOfType<AudioManager>();
         BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
         Player = FindObjectOfType<Player>();
@@ -70,7 +68,7 @@ public class Enemy : MonoBehaviour
 
     void updateSpeed()
     {
-        if (dirtManager.isDirtyActive())
+        if (dirtManager.IsDirty)
         {
             baseSpeed = 15;
         }
@@ -96,9 +94,9 @@ public class Enemy : MonoBehaviour
         if (!Player.missed)
         {
             adrenaline += 4;
-            if (Player.getCurrentShield() > 0 && !dirtManager.isDirtyActive())
+            if (Player.getCurrentShield() > 0 && !dirtManager.IsDirty)
             {
-                audioManager.Play("Counter_On");
+                AudioManager.Play("Counter_On");
                 counterManager.gameObject.SetActive(true);
             }
             else
@@ -115,7 +113,7 @@ public class Enemy : MonoBehaviour
     }
     public void executeSuperAttack()
     {
-        if (!dirtManager.isDirtyActive())
+        if (!dirtManager.IsDirty)
         {
             superAttackManager.gameObject.SetActive(true);
         }
@@ -129,7 +127,7 @@ public class Enemy : MonoBehaviour
     {
         timeManager.stopUnitTimer();
         executeCameraZoom();
-        combat_UI.move_UI_out();
+        Combat_UI.move_UI_out();
         baseSpeed += speedBuff;
         nativeDamage += dmgBuff;
         myAnimator.Play("Rage");
@@ -199,7 +197,7 @@ public class Enemy : MonoBehaviour
     }
     public void playfanfare()
     {
-        audioManager.Play("Victory_Sound");
+        AudioManager.Play("Victory_Sound");
     }
     #endregion
 
@@ -216,7 +214,7 @@ public class Enemy : MonoBehaviour
     }
     public void shieldAttack()
     {
-        audioManager.Play("shieldHitEnemy");
+        AudioManager.Play("shieldHitEnemy");
     }
     public void backToIdle()
     {
@@ -226,7 +224,7 @@ public class Enemy : MonoBehaviour
     public void returnFromRage()
     {
         returnCameraZoom();
-        combat_UI.move_UI_in();
+        Combat_UI.move_UI_in();
         timeManager.continueUnitTimer();
         timeManager.fadeInUnitTimer();
     }
@@ -242,11 +240,11 @@ public class Enemy : MonoBehaviour
     }
     public void playAudience()
     {
-        audioManager.Play("Audience_boo");
+        AudioManager.Play("Audience_boo");
     }
     public void playGrunt()
     {
-        audioManager.Play("Enemy_charge");
+        AudioManager.Play("Enemy_charge");
     }
 
     public void selectNextAction()
@@ -296,13 +294,17 @@ public class Enemy : MonoBehaviour
     }
     public void doUIOut()
     {
-        combat_UI.move_UI_out();
+        Combat_UI.move_UI_out();
     }
     public void doUIIn()
     {
-        if (!BS.GetDeadPlayer())
+        if (!BS.GetDeadPlayer() && !dirtManager.IsDirty)
         {
-            combat_UI.move_UI_in();
+            Combat_UI.move_UI_in();
+        }
+        else if (dirtManager.IsDirty)
+        {
+            Combat_UI.move_UI_in(false);
         }
     }
 

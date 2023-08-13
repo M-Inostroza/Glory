@@ -53,7 +53,7 @@ public class superATKManager : MonoBehaviour
         showFeedback();
         timeManager.stopUnitTimer();
         Overlay.DOFade(.9f, 0.5f);
-        combat_UI.move_UI_out();
+        Combat_UI.move_UI_out();
         zoomCameraIn();
         targetAmount = 10;
     }

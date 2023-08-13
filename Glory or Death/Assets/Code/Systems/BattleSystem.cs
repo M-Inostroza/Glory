@@ -13,7 +13,6 @@ public class BattleSystem : MonoBehaviour
     Combat_UI combat_UI;
     endManager endManager;
     cameraManager cameraManager;
-    AudioManager audioManager;
 
     [SerializeField] GameObject loadingScreen;
     [SerializeField] Transform playerPanel;
@@ -66,7 +65,6 @@ public class BattleSystem : MonoBehaviour
         timeManager = FindObjectOfType<timeManager>();
         endManager = FindObjectOfType<endManager>();
         cameraManager = FindObjectOfType<cameraManager>();
-        audioManager = FindObjectOfType<AudioManager>();
 
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
@@ -210,9 +208,9 @@ public class BattleSystem : MonoBehaviour
     {
         if (playerUnit.GetCurrentHP() <= 0 && deadPlayer == false) // Defeat
         {
-            combat_UI.move_UI_out();
+            Combat_UI.move_UI_out();
             cameraManager.playChrome();
-            FindObjectOfType<AudioManager>().Play("Defeat_Sound");
+            AudioManager.Play("Defeat_Sound");
             timeControlDefeatVictory();
             enemyUnit.GetComponent<Enemy>().GetComponent<Animator>().SetBool("Victory", true);
             
@@ -223,9 +221,9 @@ public class BattleSystem : MonoBehaviour
         } 
         else if (enemyUnit.currentHP <= 0 && deadEnemy == false) // Victory
         {
-            combat_UI.move_UI_out();
+            Combat_UI.move_UI_out();
             cameraManager.playChrome();
-            FindObjectOfType<AudioManager>().Play("Last_Hit");
+            AudioManager.Play("Last_Hit");
             timeControlDefeatVictory();
 
             endManager.activateEndElements(true, 2);
@@ -239,7 +237,7 @@ public class BattleSystem : MonoBehaviour
 
     public void resetBattle()
     {
-        combat_UI.move_UI_in();
+        Combat_UI.move_UI_in();
         resetTimers();
         playerUnit.SetAdrenaline(0);
         enemyUnit.adrenaline = 0;
@@ -248,7 +246,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
 
         endManager.resetFight();
-        audioManager.Play("Combat_Theme");
+        AudioManager.Play("Combat_Theme");
     }
 
     void timeControlDefeatVictory()
@@ -274,7 +272,7 @@ public class BattleSystem : MonoBehaviour
         void complete()
         {
             timeManager.continueUnitTimer();
-            audioManager.Play("Combat_Theme");
+            AudioManager.Play("Combat_Theme");
             loadingScreen.SetActive(false);
         }
     }

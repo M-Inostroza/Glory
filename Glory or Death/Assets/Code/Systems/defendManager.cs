@@ -13,12 +13,6 @@ public class defendManager : MonoBehaviour
     bool canDefend = false;
 
     Tween scaleUP;
-    AudioManager audioManager;
-    
-    private void Awake()
-    {
-        audioManager = FindObjectOfType<AudioManager>();
-    }
     
     private void Update()
     {
@@ -33,7 +27,7 @@ public class defendManager : MonoBehaviour
         
         scaleUP = transform.DOScale(1, 1.5f).SetEase(Ease.InOutQuad).OnComplete(Fail);
         shadow.SetActive(true);
-        audioManager.Play("Shield_charge");
+        AudioManager.Play("Shield_charge");
     }
 
     void controlDefend()
@@ -60,14 +54,14 @@ public class defendManager : MonoBehaviour
     {
         if (transform.localScale.x < scaleLimit )
         {
-            audioManager.Play("UI_select_fail"); 
+            AudioManager.Play("UI_select_fail"); 
             transform.DOShakePosition(0.2f, 0.05f, 40).OnComplete(Fail);
             scaleUP.Kill();
             transform.DOScale(0, 0);
         }
         else if (transform.localScale.x > scaleLimit && transform.localScale.x < 95)
         {
-            audioManager.Play("defend_success");
+            AudioManager.Play("defend_success");
             scaleUP.Rewind();
             playerAnim.SetBool("skillShieldSuccess", true);
             closeMinigame();
@@ -77,7 +71,7 @@ public class defendManager : MonoBehaviour
     void Fail()
     {
         scaleUP.Rewind();
-        audioManager.Play("defend_fail");
+        AudioManager.Play("defend_fail");
         playerAnim.SetBool("skillFail", true);
         closeMinigame();
     }

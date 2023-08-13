@@ -16,12 +16,7 @@ public class comicManager : MonoBehaviour
     [SerializeField] GameObject loadingContainer;
     [SerializeField] GameObject thunder;
 
-    AudioManager audioManager;
 
-    private void Start()
-    {
-        audioManager = FindObjectOfType<AudioManager>();
-    }
 
     public void playNext(int next)
     {
@@ -45,22 +40,22 @@ public class comicManager : MonoBehaviour
     {
         //loadingContainer.transform.DOShakePosition(0.5f, 10, 15, 20);
         thunder.GetComponent<Animator>().Play("thunder");
-        audioManager.Play("clash_glory");
-        audioManager.Play("thunder_title");
+        AudioManager.Play("clash_glory");
+        AudioManager.Play("thunder_title");
     }
 
 
     // Sounds
     public void walkingSequence()
     {
-        audioManager.Play("walk_" + Random.Range(1, 4));
+        AudioManager.Play("walk_" + Random.Range(1, 4));
     }
     public void keyOpen()
     {
-        audioManager.Play("Key_open");
+        AudioManager.Play("Key_open");
     }
     public void water()
     {
-        audioManager.Play("water");
+        AudioManager.Play("water");
     }
 }

@@ -14,7 +14,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxStamina, currentStamina; 
     [SerializeField] private int maxHP, currentHP;
     [SerializeField] private int adrenaline;
-    [SerializeField] private int nativeDamage;
+    [SerializeField] private int _nativeDamage;
+    
+
+
     [SerializeField] private int maxShield, currentShield;
     [SerializeField] private int critHits;
 
@@ -203,7 +206,7 @@ public class Player : MonoBehaviour
     }
     public void showEnemyDamage()
     {
-        BS.showHit(nativeDamage, BS.hitText_Enemy.transform);
+        BS.showHit(_nativeDamage, BS.hitText_Enemy.transform);
     }
     public void showEnemySuperDamage()
     {
@@ -254,22 +257,25 @@ public class Player : MonoBehaviour
     }
 
     // DMG
-    public int getDamage()
+    public int NativeDamage
     {
-        return nativeDamage;
+        get => _nativeDamage;
+        set => _nativeDamage = value;
     }
     public void resetDamage()
     {
-        nativeDamage = 1;
+        NativeDamage = 1;
     }
     public void increaseDamage(int newDamage)
     {
-        nativeDamage += newDamage;
+        _nativeDamage += newDamage;
     }
     public void decreaseDamage(int newDamage)
     {
-        nativeDamage -= newDamage;
+        _nativeDamage -= newDamage;
     }
+
+    // Anim ref
     public void deactivateAttackFeed()
     {
         GameObject attackFeedback = targetManager.GetAttackFeedback();
@@ -283,7 +289,7 @@ public class Player : MonoBehaviour
     }
     public void doDMG()
     {
-        enemy_unit.GetComponent<Enemy>().TakeDamage(nativeDamage);
+        enemy_unit.GetComponent<Enemy>().TakeDamage(NativeDamage);
     }
     public void doSuperDMG()
     {
@@ -415,7 +421,7 @@ public class Player : MonoBehaviour
     }
     public void blockHit()
     {
-        FindObjectOfType<AudioManager>().Play("Shield_metal");
+        AudioManager.Play("Shield_metal");
         Time.timeScale = 0.2f;
     }
     public void returnTime()
@@ -424,6 +430,6 @@ public class Player : MonoBehaviour
     }
     public void Do_UI_in()
     {
-        FindObjectOfType<Combat_UI>().move_UI_in();
+        Combat_UI.move_UI_in();
     }
 }

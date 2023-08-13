@@ -8,7 +8,6 @@ public class gameManager : MonoBehaviour
 {
     timeManager timeManager;
     BattleSystem battleSystem;
-    AudioManager audioManager;
 
     [SerializeField] int turnCounter;
     [SerializeField] Image overlay;
@@ -20,7 +19,6 @@ public class gameManager : MonoBehaviour
 
         timeManager = FindObjectOfType<timeManager>();
         battleSystem = FindObjectOfType<BattleSystem>();
-        audioManager = FindObjectOfType<AudioManager>();
     }
     private void Update()
     {

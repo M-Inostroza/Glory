@@ -8,10 +8,12 @@ using AssetKits.ParticleImage;
 
 public class Combat_UI : MonoBehaviour
 {
-    [Header("--Stats--")]
-    [SerializeField] Transform player_stats;
-    [SerializeField] Transform enemy_stats;
-    [SerializeField] Transform player_stamina;
+    // Stats
+    private static Transform _playerStats;
+    private static Transform _enemyStats;
+
+    [Header("--Stamina--")]
+    private static Transform _playerStamina;
     [SerializeField] TMP_Text staminaText;
     [SerializeField] Transform star_counter;
 
@@ -20,10 +22,10 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Transform starsTransformSide;
     [SerializeField] TMP_Text starsText;
 
-    [Header("--Timers--")]
-    [SerializeField] Transform player_timer;
-    [SerializeField] Transform enemy_timer;
-    [SerializeField] Transform fightTimer;
+    // Timers
+    private static Transform _playerTimer;
+    private static Transform _enemyTimer;
+    private static Transform _fightTimer;
 
     [Header("--Feedbacks--")]
     [SerializeField] GameObject enemy_DMG_Feedback;
@@ -40,8 +42,8 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Slider staminaSlider;
     [SerializeField] Slider shieldBar;
 
-    [Header("--Input--")]
-    [SerializeField] Transform inputManager;
+    // Input
+    private static Transform _inputManager;
 
     [Header("--Input keys--")]
     [SerializeField] Transform xKey;
@@ -58,16 +60,25 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] TMP_Text hpPlayerDebug;
     [SerializeField] TMP_Text hpEnemyDebug;
 
-
-    AudioManager audioManager;
     Player playerUnit;
     Enemy enemyUnit;
 
+    private void Awake()
+    {
+        _playerStats = transform.GetChild(0).Find("Player stat HUD");
+        _playerStamina = transform.GetChild(0).Find("Stamina");
+        _playerTimer = transform.GetChild(0).Find("Player Timer");
+
+        _enemyStats = transform.GetChild(1).Find("Enemy stat HUD");
+        _enemyTimer = transform.GetChild(1).Find("Enemy Timer");
+
+        _fightTimer = transform.Find("Fight Timer");
+        _inputManager = transform.Find("Input Manager");
+    }
     private void Start()
     {
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
-        audioManager = FindObjectOfType<AudioManager>();
         staminaSlider.DOValue(staminaSlider.maxValue, 1.5f);
     }
     private void OnEnable()
@@ -88,45 +99,48 @@ public class Combat_UI : MonoBehaviour
     }
 
     // UI
-    public void move_UI_in()
+    public static void move_UI_in(bool includeInput = true)
     {
         float move_in_speed = 0.3f;
 
-        player_stats.DOLocalMoveX(player_stats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
-        enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x - 350, move_in_speed).SetEase(Ease.InOutSine);
+        _playerStats.DOLocalMoveX(_playerStats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
+        _enemyStats.DOLocalMoveX(_enemyStats.localPosition.x - 350, move_in_speed).SetEase(Ease.InOutSine);
 
-        player_stamina.DOLocalMoveX(player_stamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
+        _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
 
-        player_timer.DOLocalMoveY(player_timer.localPosition.y - 160, move_in_speed);
-        enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y - 160, move_in_speed);
-        fightTimer.DOLocalMoveY(202, move_in_speed).SetEase(Ease.InOutSine);
+        _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y - 160, move_in_speed);
+        _enemyTimer.DOLocalMoveY(_enemyTimer.localPosition.y - 160, move_in_speed);
+        _fightTimer.DOLocalMoveY(202, move_in_speed).SetEase(Ease.InOutSine);
 
-        inputManager.transform.DOLocalMoveX(-435, move_in_speed).SetEase(Ease.InOutSine);
+        if (includeInput)
+        {
+            _inputManager.transform.DOLocalMoveX(-435, move_in_speed).SetEase(Ease.InOutSine);
+        }
     }
-    public void move_UI_out()
+    public static void move_UI_out()
+    {
+        float move_out_speed = 0.3f;
+
+        _playerStats.DOLocalMoveX(_playerStats.localPosition.x - 350, move_out_speed).SetEase(Ease.InOutSine);
+        _enemyStats.DOLocalMoveX(_enemyStats.localPosition.x + 350, move_out_speed).SetEase(Ease.InOutSine);
+
+        _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x - 200, move_out_speed).SetEase(Ease.InOutSine);
+
+        _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y + 160, move_out_speed);
+        _enemyTimer.DOLocalMoveY(_enemyTimer.localPosition.y + 160, move_out_speed);
+        _fightTimer.DOLocalMoveY(270, move_out_speed).SetEase(Ease.InOutSine);
+
+        _inputManager.transform.DOLocalMoveX(-500, move_out_speed).SetEase(Ease.InOutSine);
+    }
+    public static void move_Inputs_in()
+    {
+        float move_in_speed = 0.5f;
+        _inputManager.transform.DOLocalMoveX(_inputManager.transform.localPosition.x + 80, move_in_speed);
+    }
+    public static void move_Inputs_out()
     {
         float move_out_speed = 0.5f;
-
-        player_stats.DOLocalMoveX(player_stats.localPosition.x - 350, move_out_speed).SetEase(Ease.InOutSine);
-        enemy_stats.DOLocalMoveX(enemy_stats.localPosition.x + 350, move_out_speed).SetEase(Ease.InOutSine);
-
-        player_stamina.DOLocalMoveX(player_stamina.localPosition.x - 200, move_out_speed).SetEase(Ease.InOutSine);
-
-        player_timer.DOLocalMoveY(player_timer.localPosition.y + 160, move_out_speed);
-        enemy_timer.DOLocalMoveY(enemy_timer.localPosition.y + 160, move_out_speed);
-        fightTimer.DOLocalMoveY(270, move_out_speed).SetEase(Ease.InOutSine);
-
-        inputManager.transform.DOLocalMoveX(-500, move_out_speed).SetEase(Ease.InOutSine);
-    }
-    public void move_Inputs_in()
-    {
-        float move_in_speed = 0.7f;
-        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x + 80, move_in_speed);
-    }
-    public void move_Inputs_out()
-    {
-        float move_out_speed = 0.7f;
-        inputManager.transform.DOLocalMoveX(inputManager.transform.localPosition.x - 80, move_out_speed);
+        _inputManager.transform.DOLocalMoveX(_inputManager.transform.localPosition.x - 80, move_out_speed);
     }
 
     // Stamina
@@ -140,11 +154,11 @@ public class Combat_UI : MonoBehaviour
 
         if (playerUnit.GetCurrentStamina() < 50)
         {
-            inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(55, 0.7f);
+            _inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(55, 0.7f);
         }
         else
         {
-            inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(-40, 0.7f);
+            _inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(-40, 0.7f);
         }
     }
     private bool hasPlayed = false;
@@ -153,7 +167,7 @@ public class Combat_UI : MonoBehaviour
         if (!hasPlayed)
         {
             fadeON();
-            player_stamina.transform.DOShakePosition(0.6f, 4, 50);
+            _playerStamina.transform.DOShakePosition(0.6f, 4, 50);
             staminaAlarm.transform.DOShakePosition(0.6f, 4, 50).OnComplete(() => fadeOFF());
             hasPlayed = true;
         }
@@ -184,11 +198,11 @@ public class Combat_UI : MonoBehaviour
     {
         if (playerUnit.GetAdrenaline() == 20)
         {
-            inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(55, 0.7f);
+            _inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(55, 0.7f);
         }
         else
         {
-            inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(-40, 0.7f);
+            _inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(-40, 0.7f);
         }
     }
 
@@ -347,7 +361,7 @@ public class Combat_UI : MonoBehaviour
     }
     public void showStars()
     {
-        audioManager.Play("Star_Shimes_3");
+        AudioManager.Play("Star_Shimes_3");
         star_counter.DOLocalMoveX(-350, 0.5f);
     }
     public void hideStars()

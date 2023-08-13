@@ -4,15 +4,11 @@ using DG.Tweening;
 
 public class dirtToss : MonoBehaviour
 {
-    private bool isDirty, speedReduced;
-
-    [SerializeField]
-    private float speedDebuff;
+    private bool _isDirty, speedReduced;
+    public bool IsDirty { get; private set; }
 
     [SerializeField]
     private Camera mainCam;
-    [SerializeField]
-    Combat_UI Combat_UI;
 
     private Player player;
     private SpriteRenderer dirtTexture;
@@ -39,9 +35,9 @@ public class dirtToss : MonoBehaviour
         Combat_UI.move_Inputs_out();
         mainCam.DOShakePosition(0.3f, 0.3f, 20, 10);
         speedReduced = false;
-        isDirty = true;
+        IsDirty = true;
         opacity = maxOpacity;
-        StartCoroutine(deactivateTimer(7));
+        StartCoroutine(deactivateTimer(10));
     }
 
     private void Update()
@@ -64,7 +60,7 @@ public class dirtToss : MonoBehaviour
             speedReduced = true;
         }
         
-        if (opacity > 0f && Input.GetMouseButton(0) && isDirty && !FindObjectOfType<BattleSystem>().GetGamePaused())
+        if (opacity > 0f && Input.GetMouseButton(0) && IsDirty && !FindObjectOfType<BattleSystem>().GetGamePaused())
         {
             // Mouse position to world coordinates
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -89,7 +85,7 @@ public class dirtToss : MonoBehaviour
             }
             if (opacity <= 0)
             {
-                isDirty = false;
+                IsDirty = false;
                 gameObject.SetActive(false);
                 Combat_UI.move_Inputs_in();
             }
@@ -99,14 +95,10 @@ public class dirtToss : MonoBehaviour
     IEnumerator deactivateTimer(int time)
     {
         yield return new WaitForSeconds(time);
-        DOTween.To(() => opacity, x => opacity = x, 0, 1);
-        yield return new WaitForSeconds(1);
+        DOTween.To(() => opacity, x => opacity = x, 0, 0.5f);
+        IsDirty = false;
+        yield return new WaitForSeconds(0.5f);
         Combat_UI.move_Inputs_in();
         gameObject.SetActive(false);
-    }
-
-    public bool isDirtyActive()
-    {
-        return isDirty;
     }
 }

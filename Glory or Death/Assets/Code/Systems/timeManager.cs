@@ -372,7 +372,7 @@ public class timeManager : MonoBehaviour
             // Time out
             if (battleTimer <= 0)
             {
-                combarUI.move_UI_out();
+                Combat_UI.move_UI_out();
                 timerIsRunning = false;
                 stopUnitTimer();
                 battleTimer = 0;

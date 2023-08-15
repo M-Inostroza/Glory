@@ -37,7 +37,7 @@ public class defendManager : MonoBehaviour
 
     void controlDefend()
     {
-        if (!FindObjectOfType<BattleSystem>().GetGamePaused())
+        if (!BattleSystem.IsPaused)
         {
             if (canDefend)
             {

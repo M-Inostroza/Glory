@@ -96,7 +96,7 @@ public class DodgeManager : MonoBehaviour
     }
     void runCommands()
     {
-        if(instantArrows.Count > 0 && !BS.GetGamePaused())
+        if(instantArrows.Count > 0 && !BattleSystem.IsPaused)
         {
             switch (instantArrows[0].name)
             {

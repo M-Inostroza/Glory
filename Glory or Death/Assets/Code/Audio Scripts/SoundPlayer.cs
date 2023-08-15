@@ -7,7 +7,7 @@ public class SoundPlayer : MonoBehaviour
     AudioManager audioManager;
     private void Awake()
     {
-        
+        audioManager = FindObjectOfType<AudioManager>();
     }
     // ----- Audience ----- //
     public void cheerSounds()

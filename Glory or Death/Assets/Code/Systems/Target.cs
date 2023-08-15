@@ -7,21 +7,21 @@ public class Target : MonoBehaviour
     public GameObject vFeedback;
     
     CircleCollider2D colider;
-    BattleSystem BattleSystem;
     TargetManager targetManager;
     SoundPlayer soundPlayer;
+    BattleSystem BS;
 
     private void Awake()
     {
         soundPlayer = FindObjectOfType<SoundPlayer>();
         targetManager = FindObjectOfType<TargetManager>();
-        BattleSystem = FindObjectOfType<BattleSystem>();
         colider = gameObject.GetComponent<CircleCollider2D>();
+        BS = FindObjectOfType<BattleSystem>();
     }
 
     private void OnMouseDown()
     {
-        if (!BattleSystem.GetGamePaused())
+        if (!BattleSystem.IsPaused)
         {
             FindObjectOfType<timeManager>().enemyTimer.fillAmount += 0.03f;
             soundPlayer.targetSounds();
@@ -43,7 +43,7 @@ public class Target : MonoBehaviour
             colider.enabled = false;
             transform.DOScale(1.2f, 0.1f);
             GetComponent<SpriteRenderer>().DOFade(0, 0.1f).OnComplete(() => killTarget());
-            BattleSystem.targetHit++;
+            BS.targetHit++;
             FindObjectOfType<Player>().incrementAdrenaline(1);
         }
     }

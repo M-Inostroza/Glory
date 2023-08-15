@@ -41,6 +41,9 @@ public class Player : MonoBehaviour
         BS = FindObjectOfType<BattleSystem>();
         targetManager = FindObjectOfType<TargetManager>();
         timeManager = FindObjectOfType<timeManager>();
+        audioManager = FindObjectOfType<AudioManager>();
+
+        setStats();
     }
 
     private void Update()
@@ -48,6 +51,13 @@ public class Player : MonoBehaviour
         capShield();
         capHP();
         checkVictoryCondition();
+    }
+
+    void setStats()
+    {
+        currentStamina = maxStamina;
+        currentShield = maxShield;
+        currentHP = maxHP;
     }
 
     public void TakeDamage(int dmg)
@@ -196,7 +206,10 @@ public class Player : MonoBehaviour
 
     public void checkVictoryCondition()
     {
-        myAnim.SetInteger("Victory", enemy_unit.GetComponent<Enemy>().currentHP);
+        if (!gameManager.isTutorial() && enemy_unit != null)
+        {
+            myAnim.SetInteger("Victory", enemy_unit.GetComponent<Enemy>().currentHP);
+        }
     }
     public void checkDefeatCondition()
     {

@@ -60,7 +60,7 @@ public class dirtToss : MonoBehaviour
             speedReduced = true;
         }
         
-        if (opacity > 0f && Input.GetMouseButton(0) && IsDirty && !FindObjectOfType<BattleSystem>().GetGamePaused())
+        if (opacity > 0f && Input.GetMouseButton(0) && IsDirty && !BattleSystem.IsPaused)
         {
             // Mouse position to world coordinates
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

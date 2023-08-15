@@ -35,7 +35,7 @@ public class CounterManager : MonoBehaviour
 
     void rotateOnKey()
     {
-        if (Input.GetKeyUp(KeyCode.X) && canRotate && !FindObjectOfType<BattleSystem>().GetGamePaused())
+        if (Input.GetKeyUp(KeyCode.X) && canRotate && !BattleSystem.IsPaused)
         {
             shieldImage.transform.Rotate(0f, 0f, rotationSpeed);
         }

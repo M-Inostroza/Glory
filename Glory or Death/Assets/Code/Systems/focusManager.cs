@@ -33,6 +33,7 @@ public class focusManager : MonoBehaviour
         playerUnit = FindObjectOfType<Player>();
         combat_UI = FindObjectOfType<Combat_UI>();
         timeManager = FindObjectOfType<timeManager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
     private void Start()
     {
@@ -71,7 +72,7 @@ public class focusManager : MonoBehaviour
     }
     void checkFocus()
     {
-        if (canFocus && !BS.GetGamePaused())
+        if (canFocus && !BattleSystem.IsPaused)
         {
             if (Input.GetKey(KeyCode.S))
             {

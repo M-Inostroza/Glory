@@ -146,7 +146,7 @@ public class Combat_UI : MonoBehaviour
     }
 
     // Stamina
-    void refillStamina()
+    public void refillStamina()
     {
         staminaText.text = ((int)playerUnit.GetCurrentStamina()).ToString() + " / " + ((int)playerUnit.GetMaxStamina()).ToString();
         if (playerUnit.GetCurrentStamina() < playerUnit.GetMaxStamina())

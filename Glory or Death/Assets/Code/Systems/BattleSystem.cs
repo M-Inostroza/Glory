@@ -21,7 +21,7 @@ public class BattleSystem : MonoBehaviour
 
     [SerializeField] Toggle testMode;
 
-    [Header ("Mechanics")]
+    [Header("Mechanics")]
     public GameObject dodgeManager;
     public GameObject focusManager;
     public GameObject restManager;
@@ -55,7 +55,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject infoHud_EN;
 
     // Pause control
-    bool isPaused = false;
+    public static bool IsPaused { get; set; } = false;
 
     private void Awake()
     {
@@ -73,8 +73,6 @@ public class BattleSystem : MonoBehaviour
 
         Input_Manager = FindObjectOfType<Input_Manager>();
 
-        SetupBattle();
-
         timeManager.stopUnitTimer();
         openGame();
     }
@@ -83,15 +81,6 @@ public class BattleSystem : MonoBehaviour
     {
         updateUI();
         checkEndFight();
-    }
-
-    void SetupBattle()
-    {
-        enemyUnit.currentHP = enemyUnit.maxHP;
-        playerUnit.SetCurrentHP(playerUnit.GetMaxHP());
-
-        playerUnit.setCurrentShield(playerUnit.GetMaxShield());
-        playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());
     }
 
     // ----------------- Actions -----------------
@@ -119,6 +108,7 @@ public class BattleSystem : MonoBehaviour
     }
     public void PlayFocus()
     {
+        Debug.Log(focusManager);
         focusManager.SetActive(true);
         playerUnit.incrementAdrenaline(1);
     }
@@ -287,14 +277,6 @@ public class BattleSystem : MonoBehaviour
     public bool GetDeadEnemy()
     {
         return deadEnemy;
-    }
-    public bool GetGamePaused()
-    {
-        return isPaused;
-    }
-    public void SetGamePaused(bool newState)
-    {
-        isPaused = newState;
     }
 }
 

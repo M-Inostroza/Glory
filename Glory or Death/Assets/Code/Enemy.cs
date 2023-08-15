@@ -49,6 +49,8 @@ public class Enemy : MonoBehaviour
         playerAnimator = Player.GetComponent<Animator>();
         myAnimator = GetComponent<Animator>();
         combat_UI = FindObjectOfType<Combat_UI>();
+
+        currentHP = maxHP;
     }
 
     private void Update()

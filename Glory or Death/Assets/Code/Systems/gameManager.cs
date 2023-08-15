@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class gameManager : MonoBehaviour
 {
-    timeManager timeManager;
-    BattleSystem battleSystem;
-
     [SerializeField] int turnCounter;
     [SerializeField] Image overlay;
+    static string currentSceneName;
 
     bool isPaused = false;
     private void Start()
     {
-        DOTween.SetTweensCapacity(7000, 250);
-
-        timeManager = FindObjectOfType<timeManager>();
-        battleSystem = FindObjectOfType<BattleSystem>();
+        currentSceneName = SceneManager.GetActiveScene().name;
+        DOTween.SetTweensCapacity(7500, 150);
     }
     private void Update()
     {
@@ -41,14 +38,24 @@ public class gameManager : MonoBehaviour
             {
                 overlay.gameObject.SetActive(true);
                 Time.timeScale = 0f;
-                battleSystem.SetGamePaused(true);
+                BattleSystem.IsPaused = true;
             }
             else
             {
                 overlay.gameObject.SetActive(false);
                 Time.timeScale = 1f;
-                battleSystem.SetGamePaused(false);
+                BattleSystem.IsPaused = false;
             }
+        }
+    }
+    public static bool isTutorial()
+    {
+        if (currentSceneName == "Tutorial")
+        {
+            return true;
+        } else
+        {
+            return false;
         }
     }
 }

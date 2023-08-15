@@ -88,7 +88,7 @@ public class superAttackManager : MonoBehaviour
     }
     void rotateOnKey()
     {
-        if (!FindObjectOfType<BattleSystem>().GetGamePaused())
+        if (!BattleSystem.IsPaused)
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {

@@ -44,7 +44,7 @@ public class superTarget : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!BS.GetGamePaused())
+        if (!BattleSystem.IsPaused)
         {
             transform.DOKill();
             timeManager.enemyTimer.fillAmount += 0.01f;

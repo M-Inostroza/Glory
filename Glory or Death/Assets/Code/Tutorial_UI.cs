@@ -3,20 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
 
 public class Tutorial_UI : MonoBehaviour
 {
+    [SerializeField] Sprite[] iconSprites;
+
     [SerializeField] Transform _playerStamina;
     [SerializeField] Transform _playerTimer;
     [SerializeField] Transform _playerStats;
+
+    [SerializeField] Image _playerActionIcon;
+
     [SerializeField] TMP_Text staminaText;
     [SerializeField] TMP_Text hpText;
 
     [SerializeField] Transform[] _inputs;
 
+
     Player _player;
+    AudioManager _audioManager;
+
+    bool timerRunning = false;
+
     private void Awake()
     {
+        _audioManager = FindObjectOfType<AudioManager>();
         _player = FindObjectOfType<Player>();
     }
     private void Start()
@@ -25,6 +37,7 @@ public class Tutorial_UI : MonoBehaviour
     }
     private void Update()
     {
+        reduceTimer();
         textHP();
         refillStamina();
     }
@@ -48,5 +61,65 @@ public class Tutorial_UI : MonoBehaviour
     void textHP()
     {
         hpText.text = _player.GetCurrentHP().ToString() + " / " + _player.GetMaxHP().ToString();
+    }
+
+    public void showInput(int index)
+    {
+        _inputs[index].DOLocalMoveX(140, 0.7f);
+    }
+
+    public void OnAttackButton()
+    {
+        _audioManager.Play("UI_select");
+        selectIcon("ATK1");
+        timerRunning = true;
+    }
+
+    void reduceTimer()
+    {
+        Image timer = _playerTimer.GetComponent<Image>();
+        if (timerRunning)
+        {
+            timer.fillAmount -= Time.deltaTime / (20 - _player.GetBaseSpeed());
+            if (timer.fillAmount <= 0)
+            {
+                timerRunning = false;
+            }
+        }
+    }
+
+    public void selectIcon(string icon)
+    {
+        switch (icon)
+        {
+            case "ATK1":
+                _playerActionIcon.sprite = iconSprites[1];
+                timeManager.animateIcon(_playerActionIcon.transform);
+                break;
+            case "ATK2":
+                _playerActionIcon.sprite = iconSprites[6];
+                timeManager.animateIcon(_playerActionIcon.transform);
+                break;
+            case "DF":
+                _playerActionIcon.sprite = iconSprites[2];
+                timeManager.animateIcon(_playerActionIcon.transform);
+                break;
+            case "DG":
+                _playerActionIcon.sprite = iconSprites[3];
+                timeManager.animateIcon(_playerActionIcon.transform);
+                break;
+            case "FC":
+                _playerActionIcon.sprite = iconSprites[4];
+                timeManager.animateIcon(_playerActionIcon.transform);
+                break;
+            case "RST":
+                _playerActionIcon.sprite = iconSprites[5];
+                timeManager.animateIcon(_playerActionIcon.transform);
+                break;
+            case "Default":
+                _playerActionIcon.sprite = iconSprites[0];
+                timeManager.animateIcon(_playerActionIcon.transform);
+                break;
+        }
     }
 }

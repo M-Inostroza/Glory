@@ -17,7 +17,7 @@ public class Input_Manager : MonoBehaviour
     AudioManager audioManager;
 
     // Avoid click spam
-    private bool canClick = true;
+    private static bool canClick = true;
 
     // Cooldown images (radial fill)
     private Image AttackButtonCD;
@@ -137,7 +137,7 @@ public class Input_Manager : MonoBehaviour
 
 
     // Getters and Setters 
-    public void SetCanClick(bool newValue)
+    public static void SetCanClick(bool newValue)
     {
         canClick = newValue;
     }

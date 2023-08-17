@@ -8,7 +8,6 @@ using DG.Tweening;
 
 public class timeManager : MonoBehaviour
 {
-    //Array of sprites for the icons & active Icon
     public Sprite[] iconSprites;
 
     public Image playerRing;
@@ -311,7 +310,7 @@ public class timeManager : MonoBehaviour
         }
     }
 
-    void animateIcon(Transform icon)
+    public static void animateIcon(Transform icon)
     {
         Vector2 scale = new Vector2(0.2f, 0.2f);
         int vrb = 8;

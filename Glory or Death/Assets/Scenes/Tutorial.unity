@@ -14853,7 +14853,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -330.00003, y: 75}
+  m_AnchoredPosition: {x: -90, y: 75}
   m_SizeDelta: {x: 450, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1244790338
@@ -32756,7 +32756,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e522f2686fff5ab449fc94421ed6a605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines: []
+  lines:
+  - Hey rookie, I hope you know how to use a sword...
+  - ...
+  - Try to stick the enemy with the pointy end
+  - Damn that's hard...
+  - Focus rookie, each hit matters
+  _playerText: {fileID: 1299154110}
+  _guardText: {fileID: 2068504563}
+  _playerFrame: {fileID: 2095110746}
+  _guardFrame: {fileID: 1244790336}
+  _overlay: {fileID: 813289304}
 --- !u!114 &2128812806
 MonoBehaviour:
   m_ObjectHideFlags: 0

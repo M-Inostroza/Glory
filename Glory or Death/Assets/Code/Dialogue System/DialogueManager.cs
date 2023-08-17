@@ -1,26 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
-public class DialogueLine
-{
-    public string speaker;
-    public string text;
-}
+using UnityEngine.UI;
+using TMPro;
+using DG.Tweening;
 
 public class DialogueManager : MonoBehaviour
 {
-    public List<DialogueLine> dialogueLines;
+    [SerializeField] string[] lines;
+    [SerializeField] TMP_Text _playerText;
+    [SerializeField] TMP_Text _guardText;
 
-    private void Start()
+    [SerializeField] GameObject _playerFrame;
+    [SerializeField] GameObject _guardFrame;
+
+    [SerializeField] Image _overlay;
+
+    void Start()
     {
-        LoadDialogue("Assets/Code/Dialogue System/dialogue.json");
+        interactions(1);
     }
 
-    public void LoadDialogue(string jsonFilePath)
+    void interactions(int index)
     {
-        string json = System.IO.File.ReadAllText(jsonFilePath);
-        Debug.Log(dialogueLines.Count);
+        showDialogue();
+        switch (index)
+        {
+            case 1:
+                _guardFrame.SetActive(true);
+                _guardFrame.transform.DOLocalMoveX(70, 0.2f);
+                _guardText.text = lines[0];
+                _playerText.text = lines[1];
+                Debug.Log("First interaction");
+                break;
+        }
+    }
+    void showDialogue()
+    {
+        _overlay.gameObject.SetActive(true);
+        _overlay.DOFade(0.6f, 0.2f);
     }
 }

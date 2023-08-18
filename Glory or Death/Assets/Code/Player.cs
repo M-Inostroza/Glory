@@ -109,14 +109,21 @@ public class Player : MonoBehaviour
     }
     public void stopAttack()
     {
-        if (BS.GetDeadEnemy() == false)
+        if (!gameManager.isTutorial())
         {
-            timeManager.playerActionIcon.sprite = timeManager.iconSprites[1];
-            timeManager.playerTimer.fillAmount = 1;
-            FindObjectOfType<Input_Manager>().SetPlayerAction("none");
-            timeManager.fadeInUnitTimer();
-            timeManager.continueUnitTimer();
-            myAnim.Play("Idle");
+            if (BS.GetDeadEnemy() == false)
+            {
+                timeManager.playerActionIcon.sprite = timeManager.iconSprites[1];
+                timeManager.playerTimer.fillAmount = 1;
+                FindObjectOfType<Input_Manager>().SetPlayerAction("none");
+                timeManager.fadeInUnitTimer();
+                timeManager.continueUnitTimer();
+                myAnim.Play("Idle");
+            }
+            else
+            {
+                backToIdle();
+            }
         } else
         {
             backToIdle();
@@ -190,17 +197,20 @@ public class Player : MonoBehaviour
     }
     public void hurtParts(int part)
     {
-        switch (part)
+        if (!gameManager.isTutorial())
         {
-            case 0:
-                enemy_unit.GetComponent<Animator>().Play("head_hurt");
-                break;
-            case 1:
-                enemy_unit.GetComponent<Animator>().Play("mid_hurt");
-                break;
-            case 2:
-                enemy_unit.GetComponent<Animator>().Play("bottom_hurt");
-                break;
+            switch (part)
+            {
+                case 0:
+                    enemy_unit.GetComponent<Animator>().Play("head_hurt");
+                    break;
+                case 1:
+                    enemy_unit.GetComponent<Animator>().Play("mid_hurt");
+                    break;
+                case 2:
+                    enemy_unit.GetComponent<Animator>().Play("bottom_hurt");
+                    break;
+            }
         }
     }
 
@@ -299,7 +309,10 @@ public class Player : MonoBehaviour
                 continue;
             child.transform.DOScale(0, 0.3f).SetEase(Ease.InBack).OnComplete(()=> attackFeedback.SetActive(false));
         }
-        targetManager.checkCritic();
+        if (!gameManager.isTutorial())
+        {
+            targetManager.checkCritic();
+        }
     }
     public void doDMG()
     {

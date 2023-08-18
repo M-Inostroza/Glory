@@ -28,11 +28,12 @@ public class TargetManager : MonoBehaviour
 
     public void attack()
     {
-        Combat_UI.move_UI_out();
         activateFeedback();
-
-        BattleSystem.targetHit = 0;
-
+        if (!gameManager.isTutorial())
+        {
+            Combat_UI.move_UI_out();
+            BattleSystem.targetHit = 0;
+        }
         courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
         StartCoroutine(activateTargets());
         zoomCameraIn();
@@ -77,7 +78,7 @@ public class TargetManager : MonoBehaviour
 
     public void checkCritic()
     {
-        if (BattleSystem.targetHit == 3 && !BattleSystem.GetDeadEnemy())
+        if (BattleSystem.targetHit == 3 && !BattleSystem.GetDeadEnemy() && !gameManager.isTutorial())
         {
             combat_UI.showStars();
             ATKstars.Play();

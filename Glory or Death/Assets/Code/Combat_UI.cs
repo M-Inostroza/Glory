@@ -103,20 +103,23 @@ public class Combat_UI : MonoBehaviour
     // UI
     public static void move_UI_in(bool includeInput = true)
     {
-        float move_in_speed = 0.3f;
-
-        _playerStats.DOLocalMoveX(_playerStats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
-        _enemyStats.DOLocalMoveX(_enemyStats.localPosition.x - 350, move_in_speed).SetEase(Ease.InOutSine);
-
-        _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
-
-        _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y - 160, move_in_speed);
-        _enemyTimer.DOLocalMoveY(_enemyTimer.localPosition.y - 160, move_in_speed);
-        _fightTimer.DOLocalMoveY(202, move_in_speed).SetEase(Ease.InOutSine);
-
-        if (includeInput)
+        if (!gameManager.isTutorial())
         {
-            _inputManager.transform.DOLocalMoveX(-435, move_in_speed).SetEase(Ease.InOutSine);
+            float move_in_speed = 0.3f;
+
+            _playerStats.DOLocalMoveX(_playerStats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
+            _enemyStats.DOLocalMoveX(_enemyStats.localPosition.x - 350, move_in_speed).SetEase(Ease.InOutSine);
+
+            _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
+
+            _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y - 160, move_in_speed);
+            _enemyTimer.DOLocalMoveY(_enemyTimer.localPosition.y - 160, move_in_speed);
+            _fightTimer.DOLocalMoveY(202, move_in_speed).SetEase(Ease.InOutSine);
+
+            if (includeInput)
+            {
+                _inputManager.transform.DOLocalMoveX(-435, move_in_speed).SetEase(Ease.InOutSine);
+            }
         }
     }
     public static void move_UI_out()

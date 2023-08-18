@@ -20,14 +20,17 @@ public class Tutorial_UI : MonoBehaviour
 
     [SerializeField] Transform[] _inputs;
 
+    private string _slectedAction;
 
     Player _player;
+    TargetManager _targetManager;
     AudioManager _audioManager;
 
     bool timerRunning = false;
 
     private void Awake()
     {
+        _targetManager = FindObjectOfType<TargetManager>();
         _audioManager = FindObjectOfType<AudioManager>();
         _player = FindObjectOfType<Player>();
     }
@@ -80,9 +83,10 @@ public class Tutorial_UI : MonoBehaviour
         Image timer = _playerTimer.GetComponent<Image>();
         if (timerRunning)
         {
-            timer.fillAmount -= Time.deltaTime / (20 - _player.GetBaseSpeed());
+            timer.fillAmount -= Time.deltaTime / 2;
             if (timer.fillAmount <= 0)
             {
+                executeAction(_slectedAction);
                 timerRunning = false;
             }
         }
@@ -93,6 +97,7 @@ public class Tutorial_UI : MonoBehaviour
         switch (icon)
         {
             case "ATK1":
+                _slectedAction = "ATK1";
                 _playerActionIcon.sprite = iconSprites[1];
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
@@ -119,6 +124,17 @@ public class Tutorial_UI : MonoBehaviour
             case "Default":
                 _playerActionIcon.sprite = iconSprites[0];
                 timeManager.animateIcon(_playerActionIcon.transform);
+                break;
+        }
+    }
+
+    void executeAction(string action)
+    {
+        switch (action)
+        {
+            case "ATK1":
+                _player.GetComponent<Animator>().Play("ATK_jump");
+                _targetManager.attack();
                 break;
         }
     }

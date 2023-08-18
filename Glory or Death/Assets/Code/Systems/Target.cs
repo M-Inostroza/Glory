@@ -23,7 +23,11 @@ public class Target : MonoBehaviour
     {
         if (!BattleSystem.IsPaused)
         {
-            FindObjectOfType<timeManager>().enemyTimer.fillAmount += 0.03f;
+            if (!gameManager.isTutorial())
+            {
+                FindObjectOfType<timeManager>().enemyTimer.fillAmount += 0.03f;
+                BS.targetHit++;
+            }
             soundPlayer.targetSounds();
             switch (tag)
             {
@@ -43,7 +47,6 @@ public class Target : MonoBehaviour
             colider.enabled = false;
             transform.DOScale(1.2f, 0.1f);
             GetComponent<SpriteRenderer>().DOFade(0, 0.1f).OnComplete(() => killTarget());
-            BS.targetHit++;
             FindObjectOfType<Player>().incrementAdrenaline(1);
         }
     }

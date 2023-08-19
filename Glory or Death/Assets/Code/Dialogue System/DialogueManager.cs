@@ -21,11 +21,11 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        tutorial_UI.showInput(0);
+        tutorial_UI.toggleInput(0, 1);
         //StartCoroutine(interactions(1, 2));
     }
 
-    IEnumerator interactions(int index, float delay)
+    public IEnumerator interactions(int index, float delay)
     {
         float changeSpeakerTime = 0.4f;
         int In = 0;
@@ -50,7 +50,12 @@ public class DialogueManager : MonoBehaviour
                 yield return new WaitForSeconds(6);
                 moveGuardContainer(Out);
                 Overlay(0);
-                tutorial_UI.showInput(0);
+                tutorial_UI.toggleInput(0, 1);
+                break;
+            case 2:
+                Overlay(1);
+                movePlayerContainer(0);
+                _playerText.text = lines[3];
                 break;
         }
     }

@@ -143,7 +143,6 @@ public class BattleSystem : MonoBehaviour
     public void showHit(int dmg, Transform jumper)
     {
         jumper.gameObject.SetActive(true);
-
         jumper.transform.DOLocalMove(new Vector3(0, 0, 0), 0, true);
         jumper.GetComponent<TMP_Text>().DOFade(1, 0);
 

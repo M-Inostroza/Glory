@@ -109,6 +109,7 @@ public class Player : MonoBehaviour
     }
     public void stopAttack()
     {
+        Tutorial_UI Tutorial = FindObjectOfType<Tutorial_UI>();
         if (!gameManager.isTutorial())
         {
             if (BS.GetDeadEnemy() == false)
@@ -126,6 +127,8 @@ public class Player : MonoBehaviour
             }
         } else
         {
+            Tutorial.fadeTimer(1);
+            Tutorial.selectIcon("Default");
             backToIdle();
         }
     }
@@ -230,7 +233,10 @@ public class Player : MonoBehaviour
     }
     public void showEnemyDamage()
     {
-        BS.showHit(_nativeDamage, BS.hitText_Enemy.transform);
+        if (!gameManager.isTutorial())
+        {
+            BS.showHit(_nativeDamage, BS.hitText_Enemy.transform);
+        }
     }
     public void showEnemySuperDamage()
     {
@@ -316,7 +322,10 @@ public class Player : MonoBehaviour
     }
     public void doDMG()
     {
-        enemy_unit.GetComponent<Enemy>().TakeDamage(NativeDamage);
+        if (!gameManager.isTutorial())
+        {
+            enemy_unit.GetComponent<Enemy>().TakeDamage(NativeDamage);
+        }
     }
     public void doSuperDMG()
     {

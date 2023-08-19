@@ -67,11 +67,7 @@ public class timeManager : MonoBehaviour
     //Manages general timer
     private void Start()
     {
-        costATKText.text = costATK.ToString();
-        costDFText.text = costDF.ToString();
-        costDGText.text = costDG.ToString();
-        costFCText.text = costFC.ToString();
-        costATK2Text.text = costATK2.ToString();
+        setActionCost();
 
         BS = FindObjectOfType<BattleSystem>();
         Input_Manager = FindObjectOfType<Input_Manager>();
@@ -89,6 +85,15 @@ public class timeManager : MonoBehaviour
         playerAction();
         enemyAction();
         runTimer();
+    }
+
+    void setActionCost()
+    {
+        costATKText.text = costATK.ToString();
+        costDFText.text = costDF.ToString();
+        costDGText.text = costDG.ToString();
+        costFCText.text = costFC.ToString();
+        costATK2Text.text = costATK2.ToString();
     }
 
     void playerAction()

@@ -10,6 +10,8 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] Sprite[] iconSprites;
 
     [SerializeField] Transform _playerStamina;
+    [SerializeField] Slider _staminaSlider;
+
     [SerializeField] Transform _playerTimer;
     [SerializeField] Transform _playerStats;
 
@@ -21,15 +23,20 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] Transform[] _inputs;
 
     private string _slectedAction;
+    private int _numberOfTries;
 
     Player _player;
     TargetManager _targetManager;
     AudioManager _audioManager;
+    DialogueManager _dialogueManager;
 
     bool timerRunning = false;
 
     private void Awake()
     {
+        _numberOfTries = 0;
+        _dialogueManager = FindObjectOfType<DialogueManager>();
+        _staminaSlider.DOValue(_staminaSlider.maxValue, 1.5f);
         _targetManager = FindObjectOfType<TargetManager>();
         _audioManager = FindObjectOfType<AudioManager>();
         _player = FindObjectOfType<Player>();
@@ -55,6 +62,7 @@ public class Tutorial_UI : MonoBehaviour
     }
     void refillStamina()
     {
+        _staminaSlider.DOValue(_player.GetCurrentStamina(), 0.5f);
         staminaText.text = ((int)_player.GetCurrentStamina()).ToString() + " / " + ((int)_player.GetMaxStamina()).ToString();
         if (_player.GetCurrentStamina() < _player.GetMaxStamina())
         {
@@ -66,9 +74,15 @@ public class Tutorial_UI : MonoBehaviour
         hpText.text = _player.GetCurrentHP().ToString() + " / " + _player.GetMaxHP().ToString();
     }
 
-    public void showInput(int index)
-    {
-        _inputs[index].DOLocalMoveX(140, 0.7f);
+    public void toggleInput(int index, int inOut)
+    {   // 1 = in
+        if (inOut == 1)
+        {
+            _inputs[index].DOLocalMoveX(140, 0.7f);
+        } else
+        {
+            _inputs[index].DOLocalMoveX(0, 0.5f);
+        }
     }
 
     public void OnAttackButton()
@@ -130,12 +144,42 @@ public class Tutorial_UI : MonoBehaviour
 
     void executeAction(string action)
     {
+        _numberOfTries++;
+        fadeTimer(0);
         switch (action)
         {
             case "ATK1":
+                tryLimit(2, 4.5f);
+                _player.DecrementCurrentStamina(25);
                 _player.GetComponent<Animator>().Play("ATK_jump");
                 _targetManager.attack();
                 break;
+        }
+    }
+
+    void tryLimit(int interaction, float delay)
+    {
+        if (_numberOfTries == 1) 
+        {
+            toggleInput(0, 0);
+            StartCoroutine(_dialogueManager.interactions(interaction, delay));
+            _numberOfTries = 0;
+        } 
+    }
+
+    public void fadeTimer(int inOrOut)
+    {   // 0 = out - 1 = in
+        float fadeTime = 0.1f;
+        Image timer = _playerTimer.GetComponent<Image>();
+        if (inOrOut == 0)
+        {
+            _playerActionIcon.DOFade(0, fadeTime);
+            timer.DOFade(0, fadeTime);
+        } else if (inOrOut == 1)
+        {
+            timer.fillAmount = 1;
+            _playerActionIcon.DOFade(1, fadeTime);
+            timer.DOFade(1, fadeTime);
         }
     }
 }

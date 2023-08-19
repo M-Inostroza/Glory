@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class Input_Manager : MonoBehaviour
 {
     [SerializeField]
     private GameObject ATK, DF, DG, FC, RST, SATK;
+
+    [SerializeField] 
 
     //Selected actions
     private string selectedPlayerAction;
@@ -134,7 +137,6 @@ public class Input_Manager : MonoBehaviour
             audioManager.Play("UI_select_fail");
         }
     }
-
 
     // Getters and Setters 
     public static void SetCanClick(bool newValue)

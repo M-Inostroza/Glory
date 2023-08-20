@@ -27,6 +27,7 @@ public class Tutorial_UI : MonoBehaviour
 
     Player _player;
     TargetManager _targetManager;
+    defendManager _defendManager;
     AudioManager _audioManager;
     DialogueManager _dialogueManager;
 
@@ -40,6 +41,7 @@ public class Tutorial_UI : MonoBehaviour
         _targetManager = FindObjectOfType<TargetManager>();
         _audioManager = FindObjectOfType<AudioManager>();
         _player = FindObjectOfType<Player>();
+        _defendManager = FindObjectOfType<defendManager>();
     }
     private void Start()
     {
@@ -91,6 +93,12 @@ public class Tutorial_UI : MonoBehaviour
         selectIcon("ATK1");
         timerRunning = true;
     }
+    public void OnDefendButton()
+    {
+        _audioManager.Play("UI_select");
+        selectIcon("DF");
+        timerRunning = true;
+    }
 
     void reduceTimer()
     {
@@ -120,6 +128,7 @@ public class Tutorial_UI : MonoBehaviour
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "DF":
+                _slectedAction = "DF";
                 _playerActionIcon.sprite = iconSprites[2];
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
@@ -149,19 +158,23 @@ public class Tutorial_UI : MonoBehaviour
         switch (action)
         {
             case "ATK1":
-                tryLimit(2, 4.5f);
+                tryLimit(2, 4.5f, 0);
                 _player.DecrementCurrentStamina(25);
                 _player.GetComponent<Animator>().Play("ATK_jump");
                 _targetManager.attack();
                 break;
+            case "DF":
+                _player.DecrementCurrentStamina(20);
+                _defendManager.activateShieldMinigame();
+                break;
         }
     }
 
-    void tryLimit(int interaction, float delay)
+    void tryLimit(int interaction, float delay, int inputIndex)
     {
         if (_numberOfTries == 1) 
         {
-            toggleInput(0, 0);
+            toggleInput(inputIndex, 0);
             StartCoroutine(_dialogueManager.interactions(interaction, delay));
             _numberOfTries = 0;
         } 

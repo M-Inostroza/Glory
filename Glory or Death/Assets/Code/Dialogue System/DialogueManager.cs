@@ -54,8 +54,19 @@ public class DialogueManager : MonoBehaviour
                 break;
             case 2:
                 Overlay(1);
-                movePlayerContainer(0);
+                movePlayerContainer(In);
                 _playerText.text = lines[3];
+                yield return new WaitForSeconds(3);
+                movePlayerContainer(Out);
+                yield return new WaitForSeconds(changeSpeakerTime);
+                moveGuardContainer(In);
+                _guardText.text = lines[4];
+                yield return new WaitForSeconds(2);
+                _guardText.text = lines[5];
+                yield return new WaitForSeconds(3);
+                moveGuardContainer(Out);
+                Overlay(0);
+                tutorial_UI.toggleInput(1, 1);
                 break;
         }
     }

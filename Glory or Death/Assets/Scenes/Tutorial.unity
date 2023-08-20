@@ -15810,7 +15810,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Example
+  m_text: Damn, that's hard...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8946711a14d3d614f934a0fa635bb848, type: 2}
   m_sharedMaterial: {fileID: 2047135064560892596, guid: 8946711a14d3d614f934a0fa635bb848, type: 2}
@@ -32822,8 +32822,9 @@ MonoBehaviour:
   - ...
   - Select the attack button, then wait for the time to hit and click as many targets
     as you can
-  - Damn that's hard...
-  - Focus rookie, each hit matters
+  - Damn, that's hard...
+  - You'll get use to it, boy.
+  - 'Let''s try some defense: Press the A key when the circle is in the green area...'
   _playerText: {fileID: 1299154110}
   _guardText: {fileID: 2068504563}
   _playerFrame: {fileID: 2095110746}
@@ -69873,8 +69874,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Input_Manager, Assembly-CSharp
+      - m_Target: {fileID: 5363494248622084342}
+        m_TargetAssemblyTypeName: Tutorial_UI, Assembly-CSharp
         m_MethodName: OnDefendButton
         m_Mode: 1
         m_Arguments:

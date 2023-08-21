@@ -201,7 +201,6 @@ public class Tutorial_UI : MonoBehaviour
             timer.DOFade(1, fadeTime);
         }
     }
-
     // Keys 
     public void activateA()
     {

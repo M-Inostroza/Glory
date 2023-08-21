@@ -56,15 +56,15 @@ public class Player : MonoBehaviour
     void setStats()
     {
         currentStamina = maxStamina;
+        currentShield = 0;
+        currentHP = maxHP;
         if (gameManager.isTutorial())
         {
             currentShield = 0;
-            Debug.Log("Tut");
         } else
         {
             currentShield = maxShield;
         }
-        currentHP = maxHP;
     }
 
     public void TakeDamage(int dmg)

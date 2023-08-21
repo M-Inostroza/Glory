@@ -211,7 +211,7 @@ public class Combat_UI : MonoBehaviour
     }
 
     // Shield
-    bool shieldFeedControl = false;
+    private static bool shieldFeedControl = false;
     public void shieldFeed()
     {
         if (!shieldFeedControl)

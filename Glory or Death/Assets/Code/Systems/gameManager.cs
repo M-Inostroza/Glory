@@ -12,7 +12,7 @@ public class gameManager : MonoBehaviour
     static string currentSceneName;
 
     bool isPaused = false;
-    private void Start()
+    private void Awake()
     {
         currentSceneName = SceneManager.GetActiveScene().name;
         DOTween.SetTweensCapacity(7500, 150);

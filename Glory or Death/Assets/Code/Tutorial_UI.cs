@@ -21,6 +21,11 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] TMP_Text hpText;
 
     [SerializeField] Transform[] _inputs;
+    [SerializeField] Transform aKey;
+
+    // Shield
+    [SerializeField] Slider shieldBar;
+    [SerializeField] TMP_Text shieldNumber;
 
     private string _slectedAction;
     private int _numberOfTries;
@@ -52,6 +57,7 @@ public class Tutorial_UI : MonoBehaviour
         reduceTimer();
         textHP();
         refillStamina();
+        updateShield();
     }
     void showUI()
     {
@@ -194,5 +200,22 @@ public class Tutorial_UI : MonoBehaviour
             _playerActionIcon.DOFade(1, fadeTime);
             timer.DOFade(1, fadeTime);
         }
+    }
+
+    // Keys 
+    public void activateA()
+    {
+        if (aKey.gameObject.activeInHierarchy)
+        {
+            aKey.DOScale(0.8f, 0.1f).SetDelay(0.3f);
+            aKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateA());
+        }
+    }
+
+    // Shield
+    void updateShield()
+    {
+        shieldBar.DOValue(_player.getCurrentShield(), .3f);
+        shieldNumber.text = _player.getCurrentShield().ToString();
     }
 }

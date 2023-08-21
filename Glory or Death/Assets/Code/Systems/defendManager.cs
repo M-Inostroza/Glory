@@ -104,7 +104,13 @@ public class defendManager : MonoBehaviour
     {
         cameraZoomIn();
         keyCanvas.SetActive(true);
-        FindObjectOfType<Combat_UI>().activateA();
+        if (gameManager.isTutorial())
+        {
+            FindObjectOfType<Tutorial_UI>().activateA();
+        } else
+        {
+            FindObjectOfType<Combat_UI>().activateA();
+        }
     }
 }
 

@@ -69155,6 +69155,9 @@ MonoBehaviour:
   - {fileID: 5363494249929922285}
   - {fileID: 5363494248792986828}
   - {fileID: 4193061718608257131}
+  aKey: {fileID: 1799892409}
+  shieldBar: {fileID: 8292258599245075361}
+  shieldNumber: {fileID: 1928406604}
 --- !u!224 &5363494248697428680
 RectTransform:
   m_ObjectHideFlags: 0
@@ -106065,7 +106068,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 4
   m_WholeNumbers: 0
-  m_Value: 4
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

@@ -52,7 +52,7 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Transform rightKey;
 
     [Header("--Materials--")]
-    [SerializeField] Material swordBuffMaterial;
+    Material swordBuffMaterial;
     [SerializeField] Material arrowBuffMaterial;
 
     [Header("--HP--")]
@@ -77,6 +77,7 @@ public class Combat_UI : MonoBehaviour
     }
     private void Start()
     {
+        getMaterials();
         audioManager = FindObjectOfType<AudioManager>();
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
@@ -212,6 +213,7 @@ public class Combat_UI : MonoBehaviour
 
     // Shield
     private static bool shieldFeedControl = false;
+
     public void shieldFeed()
     {
         if (!shieldFeedControl)
@@ -404,5 +406,17 @@ public class Combat_UI : MonoBehaviour
     public void removeStar()
     {
         stars--;
+    }
+
+    private void getMaterials()
+    {
+        swordBuffMaterial = FindMaterial("UI_Feedback");
+        Debug.Log(swordBuffMaterial);
+    }
+
+    private Material FindMaterial(string materialName)
+    {
+        // Load the material from the "Materials" folder using Resources.Load
+        return Resources.Load<Material>("Materials/UI_Feedback");
     }
 }

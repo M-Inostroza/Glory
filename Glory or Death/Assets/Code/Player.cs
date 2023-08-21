@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     private TargetManager targetManager; 
     private BattleSystem BS;
     private AudioManager audioManager;
+    private Tutorial_UI _tutorial_UI;
     
     [Header("Stats")]
     [SerializeField] private float maxSpeed, baseSpeed;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
         myAnim = GetComponent<Animator>();
         BS = FindObjectOfType<BattleSystem>();
         targetManager = FindObjectOfType<TargetManager>();
@@ -116,7 +118,6 @@ public class Player : MonoBehaviour
     }
     public void stopAttack()
     {
-        Tutorial_UI Tutorial = FindObjectOfType<Tutorial_UI>();
         if (!gameManager.isTutorial())
         {
             if (BS.GetDeadEnemy() == false)
@@ -134,8 +135,8 @@ public class Player : MonoBehaviour
             }
         } else
         {
-            Tutorial.fadeTimer(1);
-            Tutorial.selectIcon("Default");
+            _tutorial_UI.fadeTimer(1);
+            _tutorial_UI.selectIcon("Default");
             backToIdle();
         }
     }
@@ -188,10 +189,17 @@ public class Player : MonoBehaviour
     public void stopShieldSuccess()
     {
         myAnim.SetBool("skillShieldSuccess", false);
-        FindObjectOfType<Combat_UI>().shieldFeed();
-        timeManager.playerTimer.fillAmount = 1;
-        timeManager.continueUnitTimer();
-        timeManager.defaultAction();
+        if (gameManager.isTutorial())
+        {
+            _tutorial_UI.fadeTimer(1);
+            _tutorial_UI.selectIcon("Default");
+        } else
+        {
+            FindObjectOfType<Combat_UI>().shieldFeed();
+            timeManager.playerTimer.fillAmount = 1;
+            timeManager.continueUnitTimer();
+            timeManager.defaultAction();
+        }
     }
     public void stopRest()
     {

@@ -66,7 +66,6 @@ public class Tutorial_UI : MonoBehaviour
         _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
         _playerStats.DOLocalMoveX(_playerStats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
         _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y - 160, move_in_speed);
-        //_inputManager.transform.DOLocalMoveX(-435, move_in_speed).SetEase(Ease.InOutSine);
     }
     void refillStamina()
     {
@@ -164,12 +163,13 @@ public class Tutorial_UI : MonoBehaviour
         switch (action)
         {
             case "ATK1":
-                tryLimit(2, 4.5f, 0);
+                tryLimit(2, 4f, 0);
                 _player.DecrementCurrentStamina(25);
                 _player.GetComponent<Animator>().Play("ATK_jump");
                 _targetManager.attack();
                 break;
             case "DF":
+                tryLimit(3, 4f, 1);
                 _player.DecrementCurrentStamina(20);
                 _defendManager.activateShieldMinigame();
                 break;
@@ -178,7 +178,7 @@ public class Tutorial_UI : MonoBehaviour
 
     void tryLimit(int interaction, float delay, int inputIndex)
     {
-        if (_numberOfTries == 1) 
+        if (_numberOfTries == 2) 
         {
             toggleInput(inputIndex, 0);
             StartCoroutine(_dialogueManager.interactions(interaction, delay));

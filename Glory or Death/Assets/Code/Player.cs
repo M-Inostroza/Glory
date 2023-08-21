@@ -165,9 +165,16 @@ public class Player : MonoBehaviour
     public void stopDodgeSkillFail()
     {
         myAnim.SetBool("skillFail", false);
-        timeManager.playerTimer.fillAmount = 1;
-        timeManager.continueUnitTimer();
-        timeManager.defaultAction();
+        if (gameManager.isTutorial())
+        {
+            _tutorial_UI.fadeTimer(1);
+            _tutorial_UI.selectIcon("Default");
+        } else
+        {
+            timeManager.playerTimer.fillAmount = 1;
+            timeManager.continueUnitTimer();
+            timeManager.defaultAction();
+        }
     }
     public void stopEvadeJump()
     {
@@ -195,7 +202,7 @@ public class Player : MonoBehaviour
             _tutorial_UI.selectIcon("Default");
         } else
         {
-            FindObjectOfType<Combat_UI>().shieldFeed();
+            Combat_UI.shieldFeed();
             timeManager.playerTimer.fillAmount = 1;
             timeManager.continueUnitTimer();
             timeManager.defaultAction();

@@ -50919,7 +50919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2678510230173938336, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2678510230173938341, guid: ec1c7d103fcee9c4e9db6607a955be3b, type: 3}
       propertyPath: m_UiScaleMode
@@ -92210,7 +92210,6 @@ MonoBehaviour:
   player_DMG_Feedback: {fileID: 1654245320}
   player_SPEED_Feedback: {fileID: 1354777719}
   staminaAlarm: {fileID: 8292258599494445620}
-  shieldFeedback: {fileID: 8292258600815178763}
   shieldNumber: {fileID: 1928406604}
   playerHpSlider: {fileID: 5363494249881478915}
   playerAdrenalineSlider: {fileID: 5363494248500830129}
@@ -92221,7 +92220,6 @@ MonoBehaviour:
   aKey: {fileID: 1799892409}
   leftKey: {fileID: 899637600}
   rightKey: {fileID: 1261367315}
-  arrowBuffMaterial: {fileID: 2100000, guid: f20088ef6445fc04b84fc4443060b722, type: 2}
   hpPlayerDebug: {fileID: 924544468}
   hpEnemyDebug: {fileID: 1311547124}
 --- !u!223 &5363494248622084340
@@ -129756,7 +129754,7 @@ GameObject:
   - component: {fileID: 8292258600940432544}
   - component: {fileID: 8292258600940432545}
   m_Layer: 5
-  m_Name: icon
+  m_Name: iconShielFeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -32,7 +32,7 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] GameObject player_DMG_Feedback;
     [SerializeField] GameObject player_SPEED_Feedback;
     [SerializeField] GameObject staminaAlarm;
-    [SerializeField] GameObject shieldFeedback;
+    
     [SerializeField] TMP_Text shieldNumber;
 
     [Header("--Sliders--")]
@@ -51,9 +51,10 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Transform leftKey;
     [SerializeField] Transform rightKey;
 
-    [Header("--Materials--")]
-    Material swordBuffMaterial;
-    [SerializeField] Material arrowBuffMaterial;
+    // Shield Feed Effect
+    private static GameObject shieldFeedback;
+    private static Material swordBuffMaterial;
+    private static Material arrowBuffMaterial;
 
     [Header("--HP--")]
     [SerializeField] TMP_Text hpPlayerDebug;
@@ -77,6 +78,7 @@ public class Combat_UI : MonoBehaviour
     }
     private void Start()
     {
+        getShieldFeedback();
         getMaterials();
         audioManager = FindObjectOfType<AudioManager>();
         playerUnit = FindObjectOfType<Player>();
@@ -214,7 +216,7 @@ public class Combat_UI : MonoBehaviour
     // Shield
     private static bool shieldFeedControl = false;
 
-    public void shieldFeed()
+    public static void shieldFeed()
     {
         if (!shieldFeedControl)
         {
@@ -392,7 +394,7 @@ public class Combat_UI : MonoBehaviour
     }
 
     // Shader UI
-    public void shineBuffs()
+    public static void shineBuffs()
     {
         DOTween.To(() => swordBuffMaterial.GetFloat("_ShineLocation"), x => swordBuffMaterial.SetFloat("_ShineLocation", x), 0, 0.7f).OnComplete(() => swordBuffMaterial.SetFloat("_ShineLocation", 1)).SetDelay(0.3f);
         DOTween.To(() => arrowBuffMaterial.GetFloat("_ShineLocation"), x => arrowBuffMaterial.SetFloat("_ShineLocation", x), 0, 0.7f).OnComplete(() => arrowBuffMaterial.SetFloat("_ShineLocation", 1)).SetDelay(0.3f);
@@ -408,15 +410,13 @@ public class Combat_UI : MonoBehaviour
         stars--;
     }
 
-    private void getMaterials()
+    void getMaterials()
     {
-        swordBuffMaterial = FindMaterial("UI_Feedback");
-        Debug.Log(swordBuffMaterial);
+        swordBuffMaterial = shieldFeedback.transform.GetChild(0).GetComponent<Image>().material;
+        arrowBuffMaterial = shieldFeedback.transform.GetChild(1).GetComponent<Image>().material;
     }
-
-    private Material FindMaterial(string materialName)
+    void getShieldFeedback()
     {
-        // Load the material from the "Materials" folder using Resources.Load
-        return Resources.Load<Material>("Materials/UI_Feedback");
+        shieldFeedback = transform.Find("Player HUD").transform.Find("Shield Feedback").gameObject;
     }
 }

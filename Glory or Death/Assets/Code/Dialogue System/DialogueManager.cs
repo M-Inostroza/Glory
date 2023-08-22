@@ -20,8 +20,8 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        tutorial_UI.toggleInput(2, 1);
-        //StartCoroutine(interactions(1, 2));
+        //tutorial_UI.toggleInput(2, 1);
+        StartCoroutine(interactions(4, 3));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -92,10 +92,12 @@ public class DialogueManager : MonoBehaviour
                 yield return new WaitForSeconds(changeSpeakerTime);
                 movePlayerContainer(In);
                 _playerText.text = "I won't die that easy...";
+                yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 yield return new WaitForSeconds(changeSpeakerTime);
                 moveGuardContainer(In);
-                _guardText.text = "We'll see that, let's try to focus now, click the focus command and press the S key right in the center";
+                _guardText.text = "I guess we'll see, try to focus now, click the focus command and press the S key right in the center";
+                yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(3, 1);
@@ -117,10 +119,12 @@ public class DialogueManager : MonoBehaviour
     {   // 0 = In - 1 = Out
         if (inOrOut == 0)
         {
+            Debug.Log("guard in");
             _guardFrame.SetActive(true);
             _guardFrame.transform.DOLocalMoveX(70, 0.4f);
         } else
         {
+            Debug.Log("guard out");
             _guardFrame.transform.DOLocalMoveX(600, 0.4f).OnComplete(()=> _guardFrame.SetActive(false));
         }
     }
@@ -129,11 +133,13 @@ public class DialogueManager : MonoBehaviour
         // 0 = In - 1 = Out
         if (inOrOut == 0)
         {
+            Debug.Log("player in");
             _playerFrame.SetActive(true);
             _playerFrame.transform.DOLocalMoveX(-70, 0.4f);
         }
         else
         {
+            Debug.Log("player out");
             _playerFrame.transform.DOLocalMoveX(-600, 0.4f).OnComplete(() => _playerFrame.SetActive(false));
         }
     }

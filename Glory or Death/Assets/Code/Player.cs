@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
     {
         capShield();
         capHP();
+        capStamina();
         checkVictoryCondition();
     }
 
@@ -158,9 +159,16 @@ public class Player : MonoBehaviour
     public void stopDodgeSkill()
     {
         myAnim.SetBool("evadeSuccess", false);
-        timeManager.playerTimer.fillAmount = 1;
-        timeManager.continueUnitTimer();
-        timeManager.defaultAction();
+        if (!gameManager.isTutorial())
+        {
+            timeManager.playerTimer.fillAmount = 1;
+            timeManager.continueUnitTimer();
+            timeManager.defaultAction();
+        } else
+        {
+            _tutorial_UI.fadeTimer(1);
+            _tutorial_UI.selectIcon("Default");
+        }
     }
     public void stopDodgeSkillFail()
     {
@@ -450,7 +458,13 @@ public class Player : MonoBehaviour
         }
         myAnim.SetInteger("Defeat", currentHP);
     }
-
+    void capStamina()
+    {
+        if (currentStamina <= 0)
+        {
+            currentStamina = 0;
+        }
+    }
     // Buffs
     public void doDamageBuff()
     {

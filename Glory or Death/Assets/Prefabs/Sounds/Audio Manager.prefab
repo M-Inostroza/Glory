@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3155568890968107335
+--- !u!1 &3960417604747559788
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4251774092260563268}
-  - component: {fileID: 4768875547352267866}
+  - component: {fileID: 2755563027815576431}
+  - component: {fileID: 6850710541124081265}
   m_Layer: 0
   m_Name: Audio Manager
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4251774092260563268
+--- !u!4 &2755563027815576431
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3155568890968107335}
+  m_GameObject: {fileID: 3960417604747559788}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.0529659, y: -1.550342, z: -37.852985}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,93 +32,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4768875547352267866
+--- !u!114 &6850710541124081265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3155568890968107335}
+  m_GameObject: {fileID: 3960417604747559788}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43bd471c4fbe5747b5438cb2954bc30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: Combat-Theme
+  - name: Combat_Theme
     clip: {fileID: 8300000, guid: 1e8e201b09f55f244b046a4107405ebf, type: 3}
-    volume: 0
+    volume: 0.2
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: evadeWosh
-    clip: {fileID: 8300000, guid: a69b28dd963e3454e9c753f5f1511ec2, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: arrowEvadeWosh
-    clip: {fileID: 8300000, guid: 000aba4fbfa6778449d3dcd87b17b3c3, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: arrowFail
-    clip: {fileID: 8300000, guid: 8ff7a2517ade6d2428374e47a438261e, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: MainTheme
+  - name: Main_Theme
     clip: {fileID: 8300000, guid: 80d5b0168f58a7f42a6464ddaecbf70f, type: 3}
     volume: 0.08
     pitch: 1
     loop: 1
     source: {fileID: 0}
-  - name: startGame
+  - name: Game_Start
     clip: {fileID: 8300000, guid: 5eaedf65d8d73d84db63cdc970c62e50, type: 3}
     volume: 0.1
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: thunder
+  - name: Evade_Arrow_Wosh
+    clip: {fileID: 8300000, guid: 000aba4fbfa6778449d3dcd87b17b3c3, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Evade_Arrow_Fail
+    clip: {fileID: 8300000, guid: 8ff7a2517ade6d2428374e47a438261e, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Thunder
     clip: {fileID: 8300000, guid: 223c923cc49a9c44eab02b168098dfeb, type: 3}
     volume: 0.1
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: fall
-    clip: {fileID: 8300000, guid: 2391e1e159e038844b5e3a997d2c5a70, type: 3}
-    volume: 0.1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: superJumpWosh
-    clip: {fileID: 8300000, guid: 9e1d74dd9ec7be744a420b744bf12d86, type: 3}
-    volume: 0.3
-    pitch: 0.8
-    loop: 0
-    source: {fileID: 0}
-  - name: superStab
-    clip: {fileID: 8300000, guid: e75e918b6caaf0d4881028ab30ceb0d8, type: 3}
-    volume: 0.3
-    pitch: 0.8
-    loop: 0
-    source: {fileID: 0}
-  - name: thunder_title
+  - name: Thunder_Title
     clip: {fileID: 8300000, guid: d127ddca041802040a48c4ecb4480cb9, type: 3}
     volume: 0.3
     pitch: 0.8
     loop: 0
     source: {fileID: 0}
-  - name: clash_glory
+  - name: Clash_Intro
     clip: {fileID: 8300000, guid: 9192ddeceb3c79940a9adbc193437313, type: 3}
-    volume: 0.3
-    pitch: 0.8
-    loop: 0
-    source: {fileID: 0}
-  - name: superStabEnemy
-    clip: {fileID: 8300000, guid: 5ec184d20cb57054fbd75f8f0d6ef35c, type: 3}
     volume: 0.3
     pitch: 0.8
     loop: 0
@@ -145,6 +115,18 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 2811a2ce4bee99d409242ca611bf1dbe, type: 3}
     volume: 0.3
     pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_On
+    clip: {fileID: 8300000, guid: 16befb40e3f5fea4b9ff71409e977a78, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DG_Off
+    clip: {fileID: 8300000, guid: 74a4a52e4a6aba24dac0c8cf9aadddd2, type: 3}
+    volume: 0.4
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: DG_jump_1
@@ -321,6 +303,42 @@ MonoBehaviour:
     pitch: 0.8
     loop: 0
     source: {fileID: 0}
+  - name: Shield_metal
+    clip: {fileID: 8300000, guid: f446ea76452eba843bbe2197237e025e, type: 3}
+    volume: 0.4
+    pitch: 0.9
+    loop: 0
+    source: {fileID: 0}
+  - name: Shield_metal_1
+    clip: {fileID: 8300000, guid: bfda9e90efd55a447a1486114bc83801, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Shield_metal_2
+    clip: {fileID: 8300000, guid: a2cb4a6018eb8da4a9f932e663589352, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Shield_metal_3
+    clip: {fileID: 8300000, guid: af7cab753a98a4a47ae8eee1cb0822d8, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Shield_metal_4
+    clip: {fileID: 8300000, guid: e97581158e5be3f4fb26e66b02b42fbd, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Shield_metal_5
+    clip: {fileID: 8300000, guid: 50b5c141f79b06c49a13ccdf21318f66, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   - name: Audience_queen
     clip: {fileID: 8300000, guid: 01c143155024f744dae19839ee8e3d1d, type: 3}
     volume: 0.4
@@ -371,6 +389,192 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Shield_charge
     clip: {fileID: 8300000, guid: 7b9248b73f774574e821383f2ff1b6c8, type: 3}
+    volume: 0.4
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: Metal_Stone
+    clip: {fileID: 8300000, guid: 4debd6da28565a540909c950a3d37c55, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Metal_Stone_2
+    clip: {fileID: 8300000, guid: 0543d980289967849914260ef0b0f74a, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Metal_Stone_3
+    clip: {fileID: 8300000, guid: 5ca2d816505d5504da0bd8792e82a9cc, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: sword_grab
+    clip: {fileID: 8300000, guid: ed2aef249fafd2d4a87cfdf396d56f40, type: 3}
+    volume: 0.3
+    pitch: 1.1
+    loop: 0
+    source: {fileID: 0}
+  - name: Focus_Buff
+    clip: {fileID: 8300000, guid: 4306229c5d4070641bb01c6ce3b0110d, type: 3}
+    volume: 0.3
+    pitch: 0.9
+    loop: 0
+    source: {fileID: 0}
+  - name: Focus_On
+    clip: {fileID: 8300000, guid: bc758deeeed453d4b8a7de5a829bc394, type: 3}
+    volume: 0.3
+    pitch: 0.9
+    loop: 0
+    source: {fileID: 0}
+  - name: Focus_Success
+    clip: {fileID: 8300000, guid: f30586109439d1d448f7a368e69d0e89, type: 3}
+    volume: 0.3
+    pitch: 1.2
+    loop: 0
+    source: {fileID: 0}
+  - name: Focus_Fail
+    clip: {fileID: 8300000, guid: c4792e98b71a9ea4da73ec668a9f03bb, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Stomp_1
+    clip: {fileID: 8300000, guid: 6c24f16cc2cbe0a44b312c90d5233fde, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Stomp_2
+    clip: {fileID: 8300000, guid: 6f74e5fc3387d9047b0721a2cfa4ee79, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Stomp_3
+    clip: {fileID: 8300000, guid: c9a9ffdc7bba5eb4fb5b9494ecb59f0f, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Counter_On
+    clip: {fileID: 8300000, guid: a050100ea8f326349981db72f73129d8, type: 3}
+    volume: 0.4
+    pitch: 1.1
+    loop: 0
+    source: {fileID: 0}
+  - name: Counter_Fail
+    clip: {fileID: 8300000, guid: ce3182b08003aed4b85b8d9a625f9832, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Rest_On
+    clip: {fileID: 8300000, guid: 844b80e46b56a2e4a9dd864c6b9f6534, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Rest_Success
+    clip: {fileID: 8300000, guid: f944391d46f6c7f4b9af684a5961e76b, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Rest_Charge
+    clip: {fileID: 8300000, guid: f0da06d6c5495c8449d72a3abd755363, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Super_Attack_Enemy_On
+    clip: {fileID: 8300000, guid: be2c75d44174aed4ba42108443ca856c, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Bone_Break
+    clip: {fileID: 8300000, guid: 856bb76f5ad097e448d63b648cffc8d8, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Bone_Break_1
+    clip: {fileID: 8300000, guid: 0260006e09adeee41b189134a1673138, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Bone_Break_2
+    clip: {fileID: 8300000, guid: 6a03f314feff76d4599c13f302b6f61e, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Bone_Break_3
+    clip: {fileID: 8300000, guid: 3151badcea109164c93b8e818d47bab3, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Star_Shimes
+    clip: {fileID: 8300000, guid: 1f8107d392e618a449d282018ba50a7d, type: 3}
+    volume: 0.4
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: Star_Shimes_2
+    clip: {fileID: 8300000, guid: 07dffccd26114244586aa96e44a32634, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Star_Shimes_3
+    clip: {fileID: 8300000, guid: 844b80e46b56a2e4a9dd864c6b9f6534, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Star_Hit
+    clip: {fileID: 8300000, guid: 844b80e46b56a2e4a9dd864c6b9f6534, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: End_Horn
+    clip: {fileID: 8300000, guid: 6971e9abd2ccbc649b8a2d05b6546fcb, type: 3}
+    volume: 0.3
+    pitch: 1.2
+    loop: 0
+    source: {fileID: 0}
+  - name: End_Drums
+    clip: {fileID: 8300000, guid: 0bb0f1609b882764c935099484ab58e2, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Defeat_Sound
+    clip: {fileID: 8300000, guid: 2603e7ab88548204c9e0423c8e32cd03, type: 3}
+    volume: 0.4
+    pitch: 0.6
+    loop: 0
+    source: {fileID: 0}
+  - name: Victory_Sound
+    clip: {fileID: 8300000, guid: c57c6ef4e5ce2784b81edf1c7e9b293c, type: 3}
+    volume: 0.4
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: Last_Hit
+    clip: {fileID: 8300000, guid: 30443da0f5f324d41bb497804958b913, type: 3}
+    volume: 0.4
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: Open_game
+    clip: {fileID: 8300000, guid: 000aba4fbfa6778449d3dcd87b17b3c3, type: 3}
     volume: 0.4
     pitch: 0.8
     loop: 0

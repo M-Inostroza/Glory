@@ -45,7 +45,6 @@ public class DodgeManager : MonoBehaviour
     private void OnEnable()
     {
         audioManager.Play("DG_On");
-
         hasStarJumped = false;
         isCritic = false;
 
@@ -245,8 +244,11 @@ public class DodgeManager : MonoBehaviour
     }
     void animateStars()
     {
-        DGCritic.Play();
-        combat_UI.showStars();
+        if (!gameManager.isTutorial())
+        {
+            DGCritic.Play();
+            combat_UI.showStars();
+        }
         starFeedback.transform.DOLocalJump(new Vector3(140, 28, 0), 18, 1, 0.6f).OnComplete(() => starFeedback.transform.DOLocalMove(new Vector2(112, 0), 0));
         starFeedback.transform.DOLocalRotate(new Vector3(0, 0, -160), 0.6f).OnComplete(() => starFeedback.transform.localRotation = Quaternion.identity);
         starFeedback.GetComponent<Image>().DOFade(0, 0.6f).OnComplete(() => closeMinigame());

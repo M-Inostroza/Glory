@@ -35,6 +35,7 @@ public class Tutorial_UI : MonoBehaviour
     defendManager _defendManager;
     AudioManager _audioManager;
     DialogueManager _dialogueManager;
+    [SerializeField] GameObject _dodgeManager;
 
     bool timerRunning = false;
 
@@ -104,6 +105,12 @@ public class Tutorial_UI : MonoBehaviour
         selectIcon("DF");
         timerRunning = true;
     }
+    public void OnDodgeButton()
+    {
+        _audioManager.Play("UI_select");
+        selectIcon("DG");
+        timerRunning = true;
+    }
 
     void reduceTimer()
     {
@@ -138,6 +145,7 @@ public class Tutorial_UI : MonoBehaviour
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "DG":
+                _slectedAction = "DG";
                 _playerActionIcon.sprite = iconSprites[3];
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
@@ -173,12 +181,17 @@ public class Tutorial_UI : MonoBehaviour
                 _player.DecrementCurrentStamina(20);
                 _defendManager.activateShieldMinigame();
                 break;
+            case "DG":
+                tryLimit(4, 4f, 2);
+                _player.DecrementCurrentStamina(30);
+                _dodgeManager.SetActive(true);
+                break;
         }
     }
 
     void tryLimit(int interaction, float delay, int inputIndex)
     {
-        if (_numberOfTries == 2) 
+        if (_numberOfTries == 1)
         {
             toggleInput(inputIndex, 0);
             StartCoroutine(_dialogueManager.interactions(interaction, delay));

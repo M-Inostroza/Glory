@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        tutorial_UI.toggleInput(1, 1);
+        tutorial_UI.toggleInput(2, 1);
         //StartCoroutine(interactions(1, 2));
     }
 
@@ -82,6 +82,23 @@ public class DialogueManager : MonoBehaviour
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(2, 1);
+                break;
+            case 4:
+                Overlay(1);
+                moveGuardContainer(In);
+                _guardText.text = "Nice moves!, I hope they are useful later in the arena";
+                yield return new WaitForSeconds(3);
+                moveGuardContainer(Out);
+                yield return new WaitForSeconds(changeSpeakerTime);
+                movePlayerContainer(In);
+                _playerText.text = "I won't die that easy...";
+                movePlayerContainer(Out);
+                yield return new WaitForSeconds(changeSpeakerTime);
+                moveGuardContainer(In);
+                _guardText.text = "We'll see that, let's try to focus now, click the focus command and press the S key right in the center";
+                moveGuardContainer(Out);
+                Overlay(0);
+                tutorial_UI.toggleInput(3, 1);
                 break;
         }
     }

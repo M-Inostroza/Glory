@@ -16,12 +16,15 @@ public class restManager : MonoBehaviour
     Player player;
     timeManager timeManager;
     AudioManager audioManager;
+    Tutorial_UI _tutorial_UI;
 
     bool canRest = false;
     private void Awake()
     {
+        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
         player = FindObjectOfType<Player>();
         timeManager = FindObjectOfType<timeManager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
     private void Update()
     {
@@ -32,8 +35,14 @@ public class restManager : MonoBehaviour
 
     private void OnEnable()
     {
-        FindObjectOfType<Combat_UI>().activateLeftRight();
-        hasAnimatedStar = false;
+        if (!gameManager.isTutorial())
+        {
+            FindObjectOfType<Combat_UI>().activateLeftRight();
+            hasAnimatedStar = false;
+        } else
+        {
+            _tutorial_UI.activateLeftRight();
+        }
         restSlider.value = 0;
         cameraZoom();
         audioManager.Play("Rest_On");
@@ -63,11 +72,14 @@ public class restManager : MonoBehaviour
 
     private void OnDisable()
     {
+        if (!gameManager.isTutorial())
+        {
+            timeManager.continueUnitTimer();
+            timeManager.fadeInUnitTimer();
+        }
         criticStar.GetComponent<Image>().DOFade(0.25f, 0);
         canRest = false;
         player.SetCurrentStamina(restSlider.value);
-        timeManager.continueUnitTimer();
-        timeManager.fadeInUnitTimer();
         player.backToIdle();
     }
 

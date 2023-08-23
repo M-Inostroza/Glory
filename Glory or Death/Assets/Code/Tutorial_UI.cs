@@ -23,6 +23,8 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] Transform[] _inputs;
     [SerializeField] Transform aKey;
     [SerializeField] Transform sKey;
+    [SerializeField] Transform leftKey;
+    [SerializeField] Transform rightKey;
 
     // Shield
     [SerializeField] Slider shieldBar;
@@ -38,6 +40,7 @@ public class Tutorial_UI : MonoBehaviour
     DialogueManager _dialogueManager;
     [SerializeField] GameObject _dodgeManager;
     [SerializeField] GameObject _focusManager;
+    [SerializeField] GameObject _restManager;
 
     bool timerRunning = false;
 
@@ -120,6 +123,12 @@ public class Tutorial_UI : MonoBehaviour
         selectIcon("FC");
         timerRunning = true;
     }
+    public void OnRestButton()
+    {
+        _audioManager.Play("UI_select");
+        selectIcon("RST");
+        timerRunning = true;
+    }
 
     void reduceTimer()
     {
@@ -164,6 +173,7 @@ public class Tutorial_UI : MonoBehaviour
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "RST":
+                _slectedAction = "RST";
                 _playerActionIcon.sprite = iconSprites[5];
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
@@ -197,9 +207,13 @@ public class Tutorial_UI : MonoBehaviour
                 _dodgeManager.SetActive(true);
                 break;
             case "FC":
-                tryLimit(5, 4f, 2);
+                tryLimit(5, 7f, 3);
                 _player.DecrementCurrentStamina(30);
                 _focusManager.SetActive(true);
+                break;
+            case "RST":
+                //tryLimit(5, 7f, 3);
+                _restManager.SetActive(true);
                 break;
         }
     }
@@ -246,7 +260,24 @@ public class Tutorial_UI : MonoBehaviour
             sKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateS());
         }
     }
-
+    public void activateLeftRight()
+    {
+        if (leftKey.gameObject.activeInHierarchy && rightKey.gameObject.activeInHierarchy)
+        {
+            animateLeft();
+            animateRight();
+            void animateLeft()
+            {
+                leftKey.DOScale(0.7f, 0.1f).OnComplete(animateRight);
+                rightKey.DOScale(0.8f, 0.1f);
+            }
+            void animateRight()
+            {
+                rightKey.DOScale(0.7f, 0.1f).OnComplete(animateLeft);
+                leftKey.DOScale(0.8f, 0.1f);
+            }
+        }
+    }
     // Shield
     void updateShield()
     {

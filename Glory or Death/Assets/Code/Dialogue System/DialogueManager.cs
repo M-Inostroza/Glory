@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        tutorial_UI.toggleInput(3, 1);
+        tutorial_UI.toggleInput(4, 1);
         //StartCoroutine(interactions(4, 3));
     }
 
@@ -52,7 +52,6 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.toggleInput(0, 1);
                 break;
             case 2:
-                Overlay(1);
                 movePlayerContainer(In);
                 _playerText.text = "Damn, that's hard...";
                 yield return new WaitForSeconds(3);
@@ -68,14 +67,11 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.toggleInput(1, 1);
                 break;
             case 3:
-                Overlay(1);
-                movePlayerContainer(In);
-                _playerText.text = "Well, that was better";
+                movePlayerContainer(In); _playerText.text = "Well, that was better";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 yield return new WaitForSeconds(changeSpeakerTime);
-                moveGuardContainer(In);
-                _guardText.text = "Don´t get too confident, let´s check your feet...";
+                moveGuardContainer(In); _guardText.text = "Don´t get too confident, let´s check your feet...";
                 yield return new WaitForSeconds(3);
                 _guardText.text = "Click the dodge command and press the arrow keys in the right order to evade the next enemy attack...";
                 yield return new WaitForSeconds(4);
@@ -84,23 +80,28 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.toggleInput(2, 1);
                 break;
             case 4:
-                Overlay(1);
-                moveGuardContainer(In);
-                _guardText.text = "Nice moves!, I hope they are useful later in the arena";
+                moveGuardContainer(In); _guardText.text = "Nice moves!, I hope they are useful later in the arena";
                 yield return new WaitForSeconds(3);
                 moveGuardContainer(Out);
                 yield return new WaitForSeconds(changeSpeakerTime);
-                movePlayerContainer(In);
-                _playerText.text = "I won't die that easy...";
+                movePlayerContainer(In); _playerText.text = "I won't die that easy...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 yield return new WaitForSeconds(changeSpeakerTime);
-                moveGuardContainer(In);
-                _guardText.text = "I guess we'll see, try to focus now, click the focus command and press the S key right in the center";
+                moveGuardContainer(In); _guardText.text = "I guess we'll see, try to focus now, click the focus command and press the S key right in the center";
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(3, 1);
+                break;
+            case 5:
+                moveGuardContainer(In); _guardText.text = "Look at you, no stamina left, how about some rest?";
+                yield return new WaitForSeconds(4);
+                _guardText.text = "Click the rest command and smash the arrow keys left and right to recover some stamina";
+                yield return new WaitForSeconds(5);
+                moveGuardContainer(Out);
+                Overlay(0);
+                tutorial_UI.toggleInput(4, 1);
                 break;
         }
     }

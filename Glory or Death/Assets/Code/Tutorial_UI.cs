@@ -22,6 +22,7 @@ public class Tutorial_UI : MonoBehaviour
 
     [SerializeField] Transform[] _inputs;
     [SerializeField] Transform aKey;
+    [SerializeField] Transform sKey;
 
     // Shield
     [SerializeField] Slider shieldBar;
@@ -36,6 +37,7 @@ public class Tutorial_UI : MonoBehaviour
     AudioManager _audioManager;
     DialogueManager _dialogueManager;
     [SerializeField] GameObject _dodgeManager;
+    [SerializeField] GameObject _focusManager;
 
     bool timerRunning = false;
 
@@ -112,6 +114,13 @@ public class Tutorial_UI : MonoBehaviour
         timerRunning = true;
     }
 
+    public void OnFocusButton()
+    {
+        _audioManager.Play("UI_select");
+        selectIcon("FC");
+        timerRunning = true;
+    }
+
     void reduceTimer()
     {
         Image timer = _playerTimer.GetComponent<Image>();
@@ -150,6 +159,7 @@ public class Tutorial_UI : MonoBehaviour
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "FC":
+                _slectedAction = "FC";
                 _playerActionIcon.sprite = iconSprites[4];
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
@@ -186,6 +196,11 @@ public class Tutorial_UI : MonoBehaviour
                 _player.DecrementCurrentStamina(30);
                 _dodgeManager.SetActive(true);
                 break;
+            case "FC":
+                tryLimit(5, 4f, 2);
+                _player.DecrementCurrentStamina(30);
+                _focusManager.SetActive(true);
+                break;
         }
     }
 
@@ -221,6 +236,14 @@ public class Tutorial_UI : MonoBehaviour
         {
             aKey.DOScale(0.8f, 0.1f).SetDelay(0.3f);
             aKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateA());
+        }
+    }
+    public void activateS()
+    {
+        if (sKey.gameObject.activeInHierarchy)
+        {
+            sKey.DOScale(0.8f, 0.1f).SetDelay(0.3f);
+            sKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateS());
         }
     }
 

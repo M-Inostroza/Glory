@@ -20,8 +20,8 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        //tutorial_UI.toggleInput(2, 1);
-        StartCoroutine(interactions(4, 3));
+        tutorial_UI.toggleInput(3, 1);
+        //StartCoroutine(interactions(4, 3));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -119,12 +119,10 @@ public class DialogueManager : MonoBehaviour
     {   // 0 = In - 1 = Out
         if (inOrOut == 0)
         {
-            Debug.Log("guard in");
             _guardFrame.SetActive(true);
             _guardFrame.transform.DOLocalMoveX(70, 0.4f);
         } else
         {
-            Debug.Log("guard out");
             _guardFrame.transform.DOLocalMoveX(600, 0.4f).OnComplete(()=> _guardFrame.SetActive(false));
         }
     }
@@ -133,13 +131,11 @@ public class DialogueManager : MonoBehaviour
         // 0 = In - 1 = Out
         if (inOrOut == 0)
         {
-            Debug.Log("player in");
             _playerFrame.SetActive(true);
             _playerFrame.transform.DOLocalMoveX(-70, 0.4f);
         }
         else
         {
-            Debug.Log("player out");
             _playerFrame.transform.DOLocalMoveX(-600, 0.4f).OnComplete(() => _playerFrame.SetActive(false));
         }
     }

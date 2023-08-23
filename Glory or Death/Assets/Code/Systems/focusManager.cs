@@ -4,8 +4,8 @@ using DG.Tweening;
 
 public class focusManager : MonoBehaviour
 {
-    float cursorSpeed = 1.4f; // menos es más
-    float targetSpeed = 1.8f; 
+    float cursorSpeed; // menos es más
+    float targetSpeed; 
 
     [SerializeField] GameObject cursor;
     [SerializeField] GameObject target;
@@ -25,11 +25,11 @@ public class focusManager : MonoBehaviour
 
     timeManager timeManager;
     Combat_UI combat_UI;
-    BattleSystem BS;
+    Tutorial_UI _tutorial_UI;
 
     private void Awake()
     {
-        BS = FindObjectOfType<BattleSystem>();
+        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
         playerUnit = FindObjectOfType<Player>();
         combat_UI = FindObjectOfType<Combat_UI>();
         timeManager = FindObjectOfType<timeManager>();
@@ -37,6 +37,7 @@ public class focusManager : MonoBehaviour
     }
     private void Start()
     {
+        setDificulty();
         // Cursor's initial position (right)
         cursor.transform.localPosition = new Vector2(maxX, cursor.transform.localPosition.y);
 
@@ -50,7 +51,14 @@ public class focusManager : MonoBehaviour
         StartCoroutine(focusTimer(5));
         audioManager.Play("Focus_On");
 
-        combat_UI.activateS();
+        if (gameManager.isTutorial())
+        {
+            _tutorial_UI.activateS();
+        } else
+        {
+            combat_UI.activateS();
+        }
+        
 
         // Target's range and position
         targetRangeMin = Random.Range(minX + 1.2f, maxX - 1.2f);
@@ -100,8 +108,11 @@ public class focusManager : MonoBehaviour
     }
     void failFocus()
     {
+        if (!gameManager.isTutorial())
+        {
+            timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
+        }
         audioManager.Play("Focus_Fail");
-        timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
         playerUnit.GetComponent<Animator>().SetBool("skillFail", true);
         cameraZoomOut();
         gameObject.SetActive(false);
@@ -115,6 +126,18 @@ public class focusManager : MonoBehaviour
         if (target.transform.localPosition.x > (maxX - 0.5f) || target.transform.localPosition.x < (minX + 0.5f))
         {
             targetSpeed *= -1;
+        }
+    }
+    private void setDificulty()
+    {
+        if (gameManager.isTutorial())
+        {
+            cursorSpeed = 2;
+            targetSpeed = 1.6f;
+        } else
+        {
+            cursorSpeed = 1.4f;
+            targetSpeed = 1.8f;
         }
     }
 

@@ -197,9 +197,16 @@ public class Player : MonoBehaviour
     public void stopFocusSkill()
     {
         myAnim.SetBool("focusSuccess", false);
-        timeManager.playerTimer.fillAmount = 1;
-        timeManager.continueUnitTimer();
-        timeManager.defaultAction();
+        if (!gameManager.isTutorial())
+        {
+            timeManager.playerTimer.fillAmount = 1;
+            timeManager.continueUnitTimer();
+            timeManager.defaultAction();
+        } else
+        {
+            _tutorial_UI.fadeTimer(1);
+            _tutorial_UI.selectIcon("Default");
+        }
     }
     public void stopShieldSuccess()
     {
@@ -468,11 +475,17 @@ public class Player : MonoBehaviour
     // Buffs
     public void doDamageBuff()
     {
-        FindObjectOfType<Combat_UI>().damageBuff("player");
+        if (!gameManager.isTutorial())
+        {
+            FindObjectOfType<Combat_UI>().damageBuff("player");
+        }
     }
     public void doSpeedBuff()
     {
-        FindObjectOfType<Combat_UI>().speedBuff("player");
+        if (!gameManager.isTutorial())
+        {
+            FindObjectOfType<Combat_UI>().speedBuff("player");
+        }
     }
     public IEnumerator boostSpeed()
     {

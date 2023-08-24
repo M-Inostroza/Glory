@@ -211,6 +211,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   counterManager: {fileID: 5532652445285347903}
+  heart: {fileID: 0}
+  heartMaterial: {fileID: 0}
+  swordMaterial: {fileID: 0}
+  shieldMaterial: {fileID: 0}
 --- !u!50 &5532652444564916680
 Rigidbody2D:
   serializedVersion: 4
@@ -483,8 +487,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shieldImage: {fileID: 5532652444959163392}
   counterBullet: {fileID: 5532652444564916686}
+  counterTarget: {fileID: 0}
   overlay: {fileID: 5532652445219206726}
   mainCamera: {fileID: 0}
+  combatUI: {fileID: 0}
+  heartMaterial: {fileID: 0}
+  swordMaterial: {fileID: 0}
+  shieldMaterial: {fileID: 0}
 --- !u!1 &5532652445301681502
 GameObject:
   m_ObjectHideFlags: 0

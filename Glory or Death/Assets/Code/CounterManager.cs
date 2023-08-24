@@ -8,7 +8,9 @@ public class CounterManager : MonoBehaviour
 {
     [SerializeField] GameObject shieldImage, counterBullet, counterTarget, overlay;
     [SerializeField] Camera mainCamera;
-    [SerializeField] Combat_UI combatUI;
+    
+    Combat_UI combatUI;
+    Tutorial_UI tutorial_UI;
 
     float rotationSpeed = 13;
     bool canRotate = false;
@@ -18,6 +20,11 @@ public class CounterManager : MonoBehaviour
     [SerializeField] Material swordMaterial;
     [SerializeField] Material shieldMaterial;
 
+    private void Start()
+    {
+        combatUI = FindObjectOfType<Combat_UI>();
+        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+    }
     private void Update()
     {
         rotateOnKey();
@@ -55,7 +62,6 @@ public class CounterManager : MonoBehaviour
         canRotate = true;
         setRandomRotation();
         moveCameraIn();
-
         heartMaterial.SetFloat("_FadeAmount", 0);
         swordMaterial.SetFloat("_FadeAmount", 0);
         shieldMaterial.SetFloat("_FadeAmount", 0);

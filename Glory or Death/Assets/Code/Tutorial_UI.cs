@@ -130,6 +130,12 @@ public class Tutorial_UI : MonoBehaviour
         timerRunning = true;
     }
 
+    public void OnCounterButton()
+    {
+        _audioManager.Play("UI_select");
+        fadeTimer(0);
+    }
+
     void reduceTimer()
     {
         Image timer = _playerTimer.GetComponent<Image>();
@@ -212,7 +218,7 @@ public class Tutorial_UI : MonoBehaviour
                 _focusManager.SetActive(true);
                 break;
             case "RST":
-                //tryLimit(5, 7f, 3);
+                tryLimit(6, 5f, 4);
                 _restManager.SetActive(true);
                 break;
         }

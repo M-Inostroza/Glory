@@ -29,7 +29,7 @@ public class restManager : MonoBehaviour
     private void Update()
     {
         reduceValueOverTime(24);
-        keyStroke(4);
+        keyStroke(4.5f);
         animateStar();
     }
 
@@ -38,11 +38,11 @@ public class restManager : MonoBehaviour
         if (!gameManager.isTutorial())
         {
             FindObjectOfType<Combat_UI>().activateLeftRight();
-            hasAnimatedStar = false;
         } else
         {
             _tutorial_UI.activateLeftRight();
         }
+        hasAnimatedStar = false;
         restSlider.value = 0;
         cameraZoom();
         audioManager.Play("Rest_On");
@@ -76,6 +76,10 @@ public class restManager : MonoBehaviour
         {
             timeManager.continueUnitTimer();
             timeManager.fadeInUnitTimer();
+        } else
+        {
+            _tutorial_UI.fadeTimer(1);
+            _tutorial_UI.selectIcon("Default");
         }
         criticStar.GetComponent<Image>().DOFade(0.25f, 0);
         canRest = false;
@@ -93,7 +97,7 @@ public class restManager : MonoBehaviour
     }
     void checkCritic()
     {
-        if (restSlider.value > 85)
+        if (restSlider.value > 85 && !gameManager.isTutorial())
         {
             stars.Play();
             FindObjectOfType<Combat_UI>().showStars();

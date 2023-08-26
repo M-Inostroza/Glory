@@ -242,7 +242,7 @@ public class BattleSystem : MonoBehaviour
 
     void timeControlDefeatVictory()
     {
-        timeManager.executeSlowMotion(0.7f, 0.2f);
+        StartCoroutine(timeManager.slowMotion(.7f, .2f));
         timeManager.stopUnitTimer();
         timeManager.fadeOutUnitTimer();
     }

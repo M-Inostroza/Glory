@@ -38,10 +38,13 @@ public class counterSword : MonoBehaviour
         
         if (collision.name == "Shield Image")
         {
-            combatUI.shakeShieldBar();
+            if (!gameManager.isTutorial())
+            {
+                combatUI.shakeShieldBar();
+                enemy.GetComponent<Animator>().Play("Attack_Blocked");
+                player.GetComponent<Animator>().Play("blockAttack");
+            }
             soundPlayer.shield_metal();
-            enemy.GetComponent<Animator>().Play("Attack_Blocked");
-            player.GetComponent<Animator>().Play("blockAttack");
             counterManager.SetActive(false);
         }
         else if (collision.name == "Counter Target")
@@ -59,7 +62,7 @@ public class counterSword : MonoBehaviour
 
     void meltHeart()
     {
-        FindObjectOfType<timeManager>().executeSlowMotion(0.6f, 0.3f);
+        StartCoroutine(timeManager.slowMotion(0.6f, 0.3f));
         DOTween.To(() => heartMaterial.GetFloat("_FadeAmount"), x => heartMaterial.SetFloat("_FadeAmount", x), 1, 0.5f)
             .OnComplete(()=> playAnims_closeGame());
         DOTween.To(() => swordMaterial.GetFloat("_FadeAmount"), x => swordMaterial.SetFloat("_FadeAmount", x), 1, 0.5f);
@@ -67,8 +70,11 @@ public class counterSword : MonoBehaviour
     }
     void playAnims_closeGame()
     {
-        enemy.GetComponent<Animator>().SetBool("attack", true);
-        player.GetComponent<Animator>().SetBool("HURT", true);
+        if (!gameManager.isTutorial())
+        {
+            enemy.GetComponent<Animator>().SetBool("attack", true);
+            player.GetComponent<Animator>().SetBool("HURT", true);
+        }
         counterManager.SetActive(false);
     }
 }

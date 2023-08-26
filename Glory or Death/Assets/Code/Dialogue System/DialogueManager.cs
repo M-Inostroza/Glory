@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        tutorial_UI.toggleInput(4, 1);
+        tutorial_UI.toggleInput(6, 1);
         //StartCoroutine(interactions(4, 3));
     }
 

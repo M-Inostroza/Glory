@@ -6,9 +6,10 @@ using DG.Tweening;
 
 public class CounterManager : MonoBehaviour
 {
-    [SerializeField] GameObject shieldImage, counterBullet, counterTarget, overlay;
+    [SerializeField] GameObject shieldImage, _sword, counterTarget;
     [SerializeField] Camera mainCamera;
-    
+
+    [SerializeField] Image _overlay;
     Combat_UI combatUI;
     Tutorial_UI tutorial_UI;
 
@@ -62,15 +63,19 @@ public class CounterManager : MonoBehaviour
         canRotate = true;
         setRandomRotation();
         moveCameraIn();
+        
         heartMaterial.SetFloat("_FadeAmount", 0);
         swordMaterial.SetFloat("_FadeAmount", 0);
         shieldMaterial.SetFloat("_FadeAmount", 0);
-        counterBullet.transform.DOLocalMoveX(-3.25f, 8.5f).SetEase(Ease.OutBack).OnComplete(()=> counterBullet.transform.DOLocalMoveX(12, 0));
-        combatUI.activateX();
+        //combatUI.activateX();
+        Debug.Log("Fix this issue with the ease");
+        _sword.transform.DOLocalMoveX(-3.25f, 8.5f).OnComplete(()=> _sword.transform.DOLocalMoveX(12, 0));
     }
 
     public void closeMinigame()
     {
+        _sword.transform.DOKill();
+        _sword.transform.DOLocalMoveX(12, 0);
         moveCameraOut();
         canRotate = false;
     }
@@ -84,13 +89,13 @@ public class CounterManager : MonoBehaviour
     {
         mainCamera.DOFieldOfView(20, 0.7f);
         mainCamera.transform.DOLocalMoveY(-2.5f, 0.7f);
-        overlay.GetComponent<Image>().DOFade(0.85f, 0.5f);
+        _overlay.DOFade(0.85f, 0.5f);
     }
     void moveCameraOut()
     {
         mainCamera.DOFieldOfView(50, 0.5f);
         mainCamera.transform.DOLocalMoveY(0, 0.5f);
-        overlay.GetComponent<Image>().DOFade(0, 0.6f);
+        _overlay.DOFade(0, 0.6f);
     }
 
     public void canRotateBool(bool state)

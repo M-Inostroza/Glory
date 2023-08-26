@@ -281,8 +281,8 @@ public class Enemy : MonoBehaviour
         cameraManager.playChrome();
     }
     public void doSlow()
-    {   
-        timeManager.executeSlowMotion(0.2f, 0.2f);
+    {
+        StartCoroutine(timeManager.slowMotion(.2f, .2f));
     }
     public void doSuperATKzoom()
     {

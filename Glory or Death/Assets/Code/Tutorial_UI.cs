@@ -41,6 +41,7 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] GameObject _dodgeManager;
     [SerializeField] GameObject _focusManager;
     [SerializeField] GameObject _restManager;
+    [SerializeField] GameObject _counterManager;
 
     bool timerRunning = false;
 
@@ -133,6 +134,7 @@ public class Tutorial_UI : MonoBehaviour
     public void OnCounterButton()
     {
         _audioManager.Play("UI_select");
+        _counterManager.SetActive(true);
         fadeTimer(0);
     }
 

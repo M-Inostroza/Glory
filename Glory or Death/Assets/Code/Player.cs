@@ -502,7 +502,7 @@ public class Player : MonoBehaviour
     public void ATK_SlowmoHit(float slowMo)
     {
         FindObjectOfType<cameraManager>().playChrome();
-        timeManager.executeSlowMotion(slowMo, 0.2f);
+        StartCoroutine(timeManager.slowMotion(slowMo, .2f));
     }
     public void blockHit()
     {

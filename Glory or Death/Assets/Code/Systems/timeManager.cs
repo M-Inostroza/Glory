@@ -409,13 +409,7 @@ public class timeManager : MonoBehaviour
         EnemyRing.DOFade(1, fadeTime);
     }
 
-    public void executeSlowMotion(float seconds, float scale)
-    {
-        StartCoroutine(slowMotion(seconds, scale));
-    }
-    
-
-    IEnumerator slowMotion(float seconds, float timeScale)
+    public static IEnumerator slowMotion(float seconds, float timeScale)
     {
         Time.timeScale = timeScale;
         yield return new WaitForSeconds(seconds);

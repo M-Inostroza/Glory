@@ -68,8 +68,7 @@ public class CounterManager : MonoBehaviour
         swordMaterial.SetFloat("_FadeAmount", 0);
         shieldMaterial.SetFloat("_FadeAmount", 0);
         //combatUI.activateX();
-        Debug.Log("Fix this issue with the ease");
-        _sword.transform.DOLocalMoveX(-3.25f, 8.5f).OnComplete(()=> _sword.transform.DOLocalMoveX(12, 0));
+        _sword.transform.DOLocalMoveX(-3.25f, 3).SetEase(Ease.Linear).OnComplete(()=> _sword.transform.DOLocalMoveX(12, 0));
     }
 
     public void closeMinigame()

@@ -62,7 +62,7 @@ public class counterSword : MonoBehaviour
 
     void meltHeart()
     {
-        StartCoroutine(timeManager.slowMotion(0.6f, 0.3f));
+        StartCoroutine(timeManager.slowMotion(0.4f, 0.3f));
         DOTween.To(() => heartMaterial.GetFloat("_FadeAmount"), x => heartMaterial.SetFloat("_FadeAmount", x), 1, 0.5f)
             .OnComplete(()=> playAnims_closeGame());
         DOTween.To(() => swordMaterial.GetFloat("_FadeAmount"), x => swordMaterial.SetFloat("_FadeAmount", x), 1, 0.5f);

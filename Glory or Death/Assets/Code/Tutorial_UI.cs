@@ -42,6 +42,7 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] GameObject _focusManager;
     [SerializeField] GameObject _restManager;
     [SerializeField] GameObject _counterManager;
+    [SerializeField] GameObject _superCounterManager;
 
     bool timerRunning = false;
 
@@ -133,8 +134,18 @@ public class Tutorial_UI : MonoBehaviour
 
     public void OnCounterButton()
     {
+        tryLimit(7, 4, 6);
         _audioManager.Play("UI_select");
         _counterManager.SetActive(true);
+        _numberOfTries++;
+        fadeTimer(0);
+    }
+
+    public void OnSuperCounterButton()
+    {
+        _audioManager.Play("UI_select");
+        _superCounterManager.SetActive(true);
+        _numberOfTries++;
         fadeTimer(0);
     }
 

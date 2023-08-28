@@ -414,7 +414,6 @@ public class timeManager : MonoBehaviour
         Time.timeScale = timeScale;
         yield return new WaitForSeconds(seconds);
         Time.timeScale = 1;
-        Debug.Log(Time.timeScale);
     }
 
     // G & S

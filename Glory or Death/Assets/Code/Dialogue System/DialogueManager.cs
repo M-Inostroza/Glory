@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        tutorial_UI.toggleInput(6, 1);
+        tutorial_UI.toggleInput(7, 1);
         //StartCoroutine(interactions(4, 3));
     }
 
@@ -127,6 +127,13 @@ public class DialogueManager : MonoBehaviour
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(6, 1);
+                break;
+            case 7:
+                movePlayerContainer(In); _playerText.text = "Test";
+                yield return new WaitForSeconds(4);
+                movePlayerContainer(Out);
+                Overlay(0);
+                tutorial_UI.toggleInput(7, 1);
                 break;
         }
     }

@@ -25,6 +25,7 @@ public class superAttackManager : MonoBehaviour
 
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         combat_UI = FindObjectOfType<Combat_UI>();
         cameraManager = FindObjectOfType<cameraManager>();
         enemy = FindObjectOfType<Enemy>();
@@ -38,10 +39,9 @@ public class superAttackManager : MonoBehaviour
     
     private void OnEnable()
     {
-        feedbackContainer.DOLocalMoveY(10, 0.5f);
+        moveFeedback();
         audioManager.Play("Super_Attack_Enemy_On");
         cameraManager.playChrome();
-        Combat_UI.move_UI_out();
         moveCameraIn();
         StartCoroutine(MinigameTimer(7));
         StartCoroutine(SpawnSwordsWithDelay(0.4f));
@@ -71,8 +71,11 @@ public class superAttackManager : MonoBehaviour
         yield return new WaitForSeconds(timer);
         moveCameraOut();
         gameObject.SetActive(false);
-        enemy.GetComponent<Animator>().Play("Attack_Strong");
-        FindObjectOfType<Player>().GetComponent<Animator>().Play("superDMG");
+        if (!gameManager.isTutorial())
+        {
+            enemy.GetComponent<Animator>().Play("Attack_Strong");
+            FindObjectOfType<Player>().GetComponent<Animator>().Play("superDMG");
+        }
     }
 
     // Tools
@@ -105,7 +108,10 @@ public class superAttackManager : MonoBehaviour
 
     void setEnemySuperDMG()
     {
-        enemy.setSuperDMG(swordCounter);
+        if (!gameManager.isTutorial())
+        {
+            enemy.setSuperDMG(swordCounter);
+        }
     }
 
     
@@ -125,6 +131,16 @@ public class superAttackManager : MonoBehaviour
 
 
     // Effects
+    void moveFeedback()
+    {
+        if (gameManager.isTutorial())
+        {
+            feedbackContainer.DOLocalMoveY(-2, 0.5f);
+        } else
+        {
+            feedbackContainer.DOLocalMoveY(10, 0.5f);
+        }
+    }
     void moveCameraIn()
     {
         mainCamera.DOFieldOfView(40, 0.8f);

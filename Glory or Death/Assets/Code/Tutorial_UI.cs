@@ -98,6 +98,7 @@ public class Tutorial_UI : MonoBehaviour
         {
             _inputs[index].DOLocalMoveX(0, 0.5f);
         }
+        
     }
 
     public void OnAttackButton()
@@ -134,18 +135,17 @@ public class Tutorial_UI : MonoBehaviour
 
     public void OnCounterButton()
     {
-        tryLimit(7, 4, 6);
+        tryLimit(7, 4, 6, 2);
         _audioManager.Play("UI_select");
         _counterManager.SetActive(true);
-        _numberOfTries++;
         fadeTimer(0);
     }
 
     public void OnSuperCounterButton()
     {
+        tryLimit(8, 8, 7, 2);
         _audioManager.Play("UI_select");
         _superCounterManager.SetActive(true);
-        _numberOfTries++;
         fadeTimer(0);
     }
 
@@ -205,43 +205,43 @@ public class Tutorial_UI : MonoBehaviour
 
     void executeAction(string action)
     {
-        _numberOfTries++;
         fadeTimer(0);
         switch (action)
         {
             case "ATK1":
-                tryLimit(2, 4f, 0);
-                _player.DecrementCurrentStamina(25);
+                tryLimit(2, 4, 0, 3);
+                _player.DecrementCurrentStamina(15);
                 _player.GetComponent<Animator>().Play("ATK_jump");
                 _targetManager.attack();
                 break;
             case "DF":
-                tryLimit(3, 4f, 1);
-                _player.DecrementCurrentStamina(20);
+                tryLimit(3, 4, 1, 2);
+                _player.DecrementCurrentStamina(10);
                 _defendManager.activateShieldMinigame();
                 break;
             case "DG":
-                tryLimit(4, 4f, 2);
-                _player.DecrementCurrentStamina(30);
+                tryLimit(4, 4, 2, 2);
+                _player.DecrementCurrentStamina(15);
                 _dodgeManager.SetActive(true);
                 break;
             case "FC":
-                tryLimit(5, 7f, 3);
-                _player.DecrementCurrentStamina(30);
+                tryLimit(5, 7, 3, 2);
+                _player.DecrementCurrentStamina(15);
                 _focusManager.SetActive(true);
                 break;
             case "RST":
-                tryLimit(6, 5f, 4);
+                tryLimit(6, 5, 4, 2);
                 _restManager.SetActive(true);
                 break;
         }
     }
 
-    void tryLimit(int interaction, float delay, int inputIndex)
+    void tryLimit(int interaction, float delay, int outInputIndex, int tries)
     {
-        if (_numberOfTries == 1)
+        _numberOfTries++;
+        if (_numberOfTries == tries)
         {
-            toggleInput(inputIndex, 0);
+            toggleInput(outInputIndex, 0);
             StartCoroutine(_dialogueManager.interactions(interaction, delay));
             _numberOfTries = 0;
         } 

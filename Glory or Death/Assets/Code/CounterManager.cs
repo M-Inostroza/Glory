@@ -67,6 +67,7 @@ public class CounterManager : MonoBehaviour
         heartMaterial.SetFloat("_FadeAmount", 0);
         swordMaterial.SetFloat("_FadeAmount", 0);
         shieldMaterial.SetFloat("_FadeAmount", 0);
+        Debug.Log("Fix activate X");
         //combatUI.activateX();
         _sword.transform.DOLocalMoveX(-3.25f, 3).SetEase(Ease.Linear).OnComplete(()=> _sword.transform.DOLocalMoveX(12, 0));
     }

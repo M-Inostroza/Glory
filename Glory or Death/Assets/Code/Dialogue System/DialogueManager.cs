@@ -20,8 +20,8 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        //tutorial_UI.toggleInput(7, 1);
-        StartCoroutine(interactions(1, 3));
+        tutorial_UI.toggleInput(5, 1);
+        //StartCoroutine(interactions(8, 3));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -156,6 +156,7 @@ public class DialogueManager : MonoBehaviour
                 yield return new WaitForSeconds(4);
                 movePlayerContainer(Out);
                 Overlay(0);
+                tutorial_UI.toggleInput(5, 1);
                 break;
         }
     }

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class superTarget : MonoBehaviour
 {
-    BattleSystem BS;
     superATKManager SAM;
     SoundPlayer soundPlayer;
     timeManager timeManager;
@@ -17,7 +16,6 @@ public class superTarget : MonoBehaviour
         colider = GetComponent<CircleCollider2D>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
         SAM = FindObjectOfType<superATKManager>();
-        BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
     }
     private void OnEnable()
@@ -47,7 +45,10 @@ public class superTarget : MonoBehaviour
         if (!BattleSystem.IsPaused)
         {
             transform.DOKill();
-            timeManager.enemyTimer.fillAmount += 0.01f;
+            if (!gameManager.isTutorial())
+            {
+                timeManager.enemyTimer.fillAmount += 0.01f;
+            }
             soundPlayer.targetSounds();
             transform.DOScale(1.2f, 0.1f);
             SAM.activateFeedSwords();

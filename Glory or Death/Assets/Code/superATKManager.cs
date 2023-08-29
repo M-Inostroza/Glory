@@ -6,31 +6,29 @@ using UnityEngine.UI;
 
 public class superATKManager : MonoBehaviour
 {
-    BattleSystem BattleSystem;
+    Tutorial_UI _tutorial_UI;
     Camera MainCamera;
-    Combat_UI combat_UI;
     timeManager timeManager;
     Player Player;
     Enemy Enemy;
 
     int hits;
-    int targetAmount;
+    int targetAmount = 10;
     int spawnCounter;
 
     [SerializeField] Image Overlay;
     [SerializeField] Canvas Canvas;
-    [SerializeField] GameObject vFeedback;
+    //[SerializeField] GameObject vFeedback;
     [SerializeField] Image[] swordFeeds;
 
     [SerializeField] GameObject targetPrefab;
 
     private void Awake()
     {
+        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
         Player = FindObjectOfType<Player>();
         Enemy = FindObjectOfType<Enemy>();
-        BattleSystem = FindObjectOfType<BattleSystem>();
         MainCamera = FindObjectOfType<Camera>();
-        combat_UI = FindObjectOfType<Combat_UI>();
         timeManager = FindObjectOfType<timeManager>();
     }
     private void OnEnable()
@@ -39,23 +37,22 @@ public class superATKManager : MonoBehaviour
         StartCoroutine(generateTarget(0.3f));
     }
 
-    private void Update()
-    {
-        if (spawnCounter == targetAmount)
-        {
-            finishMinigame();
-        }
-    }
     void startMinigame()
     {
-        hits = 0;
         spawnCounter = 0;
+        hits = 0;
         showFeedback();
-        timeManager.stopUnitTimer();
+        if (gameManager.isTutorial())
+        {
+            _tutorial_UI.fadeTimer(0);
+            _tutorial_UI.selectIcon("Default");
+        } else
+        {
+            Combat_UI.move_UI_out();
+            timeManager.stopUnitTimer();
+        }
         Overlay.DOFade(.9f, 0.5f);
-        Combat_UI.move_UI_out();
         zoomCameraIn();
-        targetAmount = 10;
     }
 
     void zoomCameraIn()
@@ -71,10 +68,16 @@ public class superATKManager : MonoBehaviour
         void playAnim()
         {
             hideFeedback();
-            Player.GetComponent<Animator>().Play("ATK2");
-            Enemy.GetComponent<Animator>().Play("Super_Hurt");
-            MainCamera.GetComponent<Animator>().enabled = true;
-            MainCamera.GetComponent<Animator>().Play("Cam_ATK2_Player");
+            if (!gameManager.isTutorial())
+            {
+                Player.GetComponent<Animator>().Play("ATK2");
+                Enemy.GetComponent<Animator>().Play("Super_Hurt");
+                MainCamera.GetComponent<Animator>().enabled = true;
+                MainCamera.GetComponent<Animator>().Play("Cam_ATK2_Player");
+            } else
+            {
+                _tutorial_UI.fadeTimer(1);
+            }
             Invoke("deactivateATK2", 2);
         }
     }
@@ -127,5 +130,14 @@ public class superATKManager : MonoBehaviour
     public void IncrementSpawnCounter()
     {
         spawnCounter++;
+        checkForLimit();
+    }
+
+    public void checkForLimit()
+    {
+        if (spawnCounter == targetAmount)
+        {
+            finishMinigame();
+        }
     }
 }

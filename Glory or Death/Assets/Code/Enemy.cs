@@ -37,7 +37,10 @@ public class Enemy : MonoBehaviour
 
     Animator myAnimator;
     Animator playerAnimator;
-
+    private void Awake()
+    {
+        currentHP = maxHP;
+    }
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -49,8 +52,6 @@ public class Enemy : MonoBehaviour
         playerAnimator = Player.GetComponent<Animator>();
         myAnimator = GetComponent<Animator>();
         combat_UI = FindObjectOfType<Combat_UI>();
-
-        currentHP = maxHP;
     }
 
     private void Update()

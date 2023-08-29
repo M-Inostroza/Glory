@@ -43,6 +43,7 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] GameObject _restManager;
     [SerializeField] GameObject _counterManager;
     [SerializeField] GameObject _superCounterManager;
+    [SerializeField] GameObject _superAttackManager;
 
     bool timerRunning = false;
 
@@ -132,6 +133,12 @@ public class Tutorial_UI : MonoBehaviour
         selectIcon("RST");
         timerRunning = true;
     }
+    public void OnSuperATKButton()
+    {
+        _audioManager.Play("UI_select");
+        selectIcon("ATK2");
+        timerRunning = true;
+    }
 
     public void OnCounterButton()
     {
@@ -148,6 +155,7 @@ public class Tutorial_UI : MonoBehaviour
         _superCounterManager.SetActive(true);
         fadeTimer(0);
     }
+
 
     void reduceTimer()
     {
@@ -173,6 +181,7 @@ public class Tutorial_UI : MonoBehaviour
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "ATK2":
+                _slectedAction = "ATK2";
                 _playerActionIcon.sprite = iconSprites[6];
                 timeManager.animateIcon(_playerActionIcon.transform);
                 break;
@@ -213,6 +222,11 @@ public class Tutorial_UI : MonoBehaviour
                 _player.DecrementCurrentStamina(15);
                 _player.GetComponent<Animator>().Play("ATK_jump");
                 _targetManager.attack();
+                break;
+            case "ATK2":
+                //tryLimit(2, 4, 0, 3);
+                _player.DecrementCurrentStamina(60);
+                _superAttackManager.SetActive(true);
                 break;
             case "DF":
                 tryLimit(3, 4, 1, 2);

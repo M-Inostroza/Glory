@@ -20,8 +20,8 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        tutorial_UI.toggleInput(5, 1);
-        //StartCoroutine(interactions(8, 3));
+        //tutorial_UI.toggleInput(8, 1);
+        StartCoroutine(interactions(1, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -157,6 +157,23 @@ public class DialogueManager : MonoBehaviour
                 movePlayerContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(5, 1);
+                break;
+            case 9:
+                moveGuardContainer(In); _guardText.text = "Good... but fights are not always fair";
+                yield return new WaitForSeconds(4);
+                _guardText.text = "Click and drag from side to side to clean the dirt";
+                yield return new WaitForSeconds(5);
+                moveGuardContainer(Out);
+                Overlay(0);
+                tutorial_UI.toggleInput(8, 1);
+                break;
+            case 10:
+                moveGuardContainer(In); _guardText.text = "Enough, it's all you need to know...";
+                yield return new WaitForSeconds(4);
+                _guardText.text = "Now go to your cell and get some sleep, your first fight will be soon";
+                yield return new WaitForSeconds(4);
+                moveGuardContainer(Out);
+                Overlay(0);
                 break;
         }
     }

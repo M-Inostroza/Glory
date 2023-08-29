@@ -44,6 +44,7 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] GameObject _counterManager;
     [SerializeField] GameObject _superCounterManager;
     [SerializeField] GameObject _superAttackManager;
+    [SerializeField] GameObject _dirtManager;
 
     bool timerRunning = false;
 
@@ -156,6 +157,15 @@ public class Tutorial_UI : MonoBehaviour
         fadeTimer(0);
     }
 
+    public void OnDirtButton()
+    {
+        tryLimit(10, 4, 8, 3);
+        toggleInput(8, 0);
+        _audioManager.Play("UI_select");
+        _dirtManager.SetActive(true);
+        fadeTimer(0);
+    }
+
 
     void reduceTimer()
     {
@@ -224,7 +234,7 @@ public class Tutorial_UI : MonoBehaviour
                 _targetManager.attack();
                 break;
             case "ATK2":
-                //tryLimit(2, 4, 0, 3);
+                tryLimit(2, 4, 0, 3);
                 _player.DecrementCurrentStamina(60);
                 _superAttackManager.SetActive(true);
                 break;

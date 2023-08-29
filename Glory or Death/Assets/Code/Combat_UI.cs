@@ -141,8 +141,11 @@ public class Combat_UI : MonoBehaviour
     }
     public static void move_Inputs_in()
     {
-        float move_in_speed = 0.5f;
-        _inputManager.transform.DOLocalMoveX(_inputManager.transform.localPosition.x + 80, move_in_speed);
+        if (!gameManager.isTutorial())
+        {
+            float move_in_speed = 0.5f;
+            _inputManager.transform.DOLocalMoveX(_inputManager.transform.localPosition.x + 80, move_in_speed);
+        }
     }
     public static void move_Inputs_out()
     {

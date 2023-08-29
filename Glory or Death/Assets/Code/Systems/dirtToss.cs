@@ -32,7 +32,10 @@ public class dirtToss : MonoBehaviour
 
     private void OnEnable()
     {
-        Combat_UI.move_Inputs_out();
+        if (!gameManager.isTutorial())
+        {
+            Combat_UI.move_Inputs_out();
+        }
         mainCam.DOShakePosition(0.3f, 0.3f, 20, 10);
         speedReduced = false;
         IsDirty = true;

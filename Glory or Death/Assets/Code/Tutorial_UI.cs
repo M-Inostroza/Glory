@@ -160,7 +160,6 @@ public class Tutorial_UI : MonoBehaviour
     public void OnDirtButton()
     {
         tryLimit(10, 4, 8, 3);
-        toggleInput(8, 0);
         _audioManager.Play("UI_select");
         _dirtManager.SetActive(true);
         fadeTimer(0);
@@ -234,7 +233,7 @@ public class Tutorial_UI : MonoBehaviour
                 _targetManager.attack();
                 break;
             case "ATK2":
-                tryLimit(2, 4, 0, 3);
+                tryLimit(9, 4, 5, 2);
                 _player.DecrementCurrentStamina(60);
                 _superAttackManager.SetActive(true);
                 break;

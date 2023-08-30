@@ -49,6 +49,7 @@ public class superAttackManager : MonoBehaviour
 
     private void OnDisable()
     {
+        
         swordCounter = 0;
         resetFeedback();
     }

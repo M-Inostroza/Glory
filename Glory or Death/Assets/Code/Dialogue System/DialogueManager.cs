@@ -20,8 +20,8 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        //tutorial_UI.toggleInput(8, 1);
-        StartCoroutine(interactions(1, 2));
+        tutorial_UI.toggleInput(8, 1);
+        //StartCoroutine(interactions(7, 1));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -51,7 +51,7 @@ public class DialogueManager : MonoBehaviour
                 change();
 
                 moveGuardContainer(In);
-                _guardText.text = "Click the attack command, wait for the timer and click as many targets as you can";
+                _guardText.text = "Select the attack command, wait for the timer and click as many targets as you can";
                 yield return new WaitForSeconds(6);
                 moveGuardContainer(Out);
                 Overlay(0);
@@ -59,7 +59,7 @@ public class DialogueManager : MonoBehaviour
                 break;
             case 2: // Defense tutorial
                 movePlayerContainer(In);
-                _playerText.text = "That's hard...";
+                _playerText.text = "I'ts harder than I thought...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 change();
@@ -68,51 +68,55 @@ public class DialogueManager : MonoBehaviour
                 _guardText.text = "You better get use to it... let's try some defense";
                 yield return new WaitForSeconds(3);
                 _guardText.text = "Click the defend command and press the A key in the green area...";
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(6);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(1, 1);
                 break;
             case 3:
-                movePlayerContainer(In); _playerText.text = "That was better";
+                movePlayerContainer(In); _playerText.text = "not bad...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 change();
 
-                moveGuardContainer(In); _guardText.text = "Don't get too confident, let's see your feet...";
+                moveGuardContainer(In); _guardText.text = "Don't get too confident, let's test your feet...";
                 yield return new WaitForSeconds(4);
-                _guardText.text = "Click the dodge command and press the arrow keys in the right order, this will avoid the next enemy attack...";
+                _guardText.text = "Select the dodge command and press the arrow keys in the right order, this will avoid the next enemy attack...";
                 yield return new WaitForSeconds(6);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(2, 1);
                 break;
             case 4:
-                moveGuardContainer(In); _guardText.text = "Decent enough, use them later in the arena";
-                yield return new WaitForSeconds(4);
+                moveGuardContainer(In); _guardText.text = "Decent enough, don't forget to use them later in the arena";
+                yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 change();
 
-                movePlayerContainer(In); _playerText.text = "I know how to move";
+                movePlayerContainer(In); _playerText.text = "I think i get it";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 change();
 
-                moveGuardContainer(In); _guardText.text = "We'll see... focus now, click the focus command and press the S key right in the center";
+                moveGuardContainer(In); _guardText.text = "We will see abou that...";
+                yield return new WaitForSeconds(3);
+                _guardText.text = "You need to focus now, focus will give you a speed boost in your timer and you will deal more damage";
                 yield return new WaitForSeconds(6);
+                _guardText.text = "Select the focus command and press the S key the the target is in the moving box";
+                yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(3, 1);
                 break;
             case 5:
-                movePlayerContainer(In); _playerText.text = "aghh...";
+                movePlayerContainer(In); _playerText.text = "I can't keep up...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 change();
 
                 moveGuardContainer(In); _guardText.text = "Look at you, all weak and tired, get some rest!";
                 yield return new WaitForSeconds(5);
-                _guardText.text = "Click the rest command and smash the arrow keys left and right to recover stamina";
+                _guardText.text = "Select the rest command and smash the arrow keys left and right to recover stamina";
                 yield return new WaitForSeconds(6);
                 moveGuardContainer(Out);
                 Overlay(0);
@@ -137,25 +141,36 @@ public class DialogueManager : MonoBehaviour
                 break;
             case 7:
                 movePlayerContainer(In); _playerText.text = "Easy...";
-                yield return new WaitForSeconds(4);
+                yield return new WaitForSeconds(2);
                 movePlayerContainer(Out);
                 change();
 
                 moveGuardContainer(In); _guardText.text = "Easy???";
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(2);
                 _guardText.text = "Let's see how easy is to block a super attack...";
                 yield return new WaitForSeconds(5);
-                _guardText.text = "Move the arrows left and right to control the shield and block the sowrds";
+                _guardText.text = "Move the arrows left and right to control the shield and block the swords";
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(7, 1);
                 break;
             case 8:
-                movePlayerContainer(In); _playerText.text = "Wow, I'd better be careful...";
+                movePlayerContainer(In); _playerText.text = "Wow, how can I even survive that??";
                 yield return new WaitForSeconds(4);
                 movePlayerContainer(Out);
+                change();
+
+                moveGuardContainer(In);
+                _guardText.text = "Complain less and train more, that's it";
+                yield return new WaitForSeconds(4);
+                _guardText.text = "Let's try your supper attack now";
+                yield return new WaitForSeconds(3);
+                _guardText.text = "Select the super attack command and click as many targets as you can";
+                yield return new WaitForSeconds(5);
+                moveGuardContainer(Out);
                 Overlay(0);
+                tutorial_UI.fadeTimer(1);
                 tutorial_UI.toggleInput(5, 1);
                 break;
             case 9:
@@ -165,6 +180,7 @@ public class DialogueManager : MonoBehaviour
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
+                tutorial_UI.fadeTimer(0);
                 tutorial_UI.toggleInput(8, 1);
                 break;
             case 10:

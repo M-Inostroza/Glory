@@ -14,6 +14,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject _guardFrame;
 
     [SerializeField] Image _overlay;
+    [SerializeField] Transform _fightButton;
+    [SerializeField] Transform _resetButton;
+    [SerializeField] Transform _readyText;
 
     Tutorial_UI tutorial_UI;
 
@@ -34,7 +37,7 @@ public class DialogueManager : MonoBehaviour
         int In = 0;
         int Out = 1;
         yield return new WaitForSeconds(delay);
-        Overlay(1);
+        Overlay(1, .6f);
         switch (index)
         {
             case 1: // Attack Tutorial
@@ -189,11 +192,12 @@ public class DialogueManager : MonoBehaviour
                 _guardText.text = "Now go to your cell and get some sleep, your first fight will be soon";
                 yield return new WaitForSeconds(4);
                 moveGuardContainer(Out);
-                Overlay(0);
+                showEndScreen();
+                Overlay(1, .8f);
                 break;
         }
     }
-    void Overlay(int showOrHide)
+    void Overlay(int showOrHide, float intensity = 0)
     {
         if (showOrHide == 0)
         {
@@ -201,7 +205,7 @@ public class DialogueManager : MonoBehaviour
         } else if (showOrHide == 1)
         {
             _overlay.gameObject.SetActive(true);
-            _overlay.DOFade(0.6f, 0.4f);
+            _overlay.DOFade(intensity, 0.4f);
         }
     }
     void moveGuardContainer(int inOrOut)
@@ -227,5 +231,17 @@ public class DialogueManager : MonoBehaviour
         {
             _playerFrame.transform.DOLocalMoveX(-600, 0.4f).OnComplete(() => _playerFrame.SetActive(false));
         }
+    }
+
+    void showEndScreen()
+    {
+        _readyText.gameObject.SetActive(true);
+        _readyText.DOLocalMoveY(100, 1);
+
+        _fightButton.gameObject.SetActive(true);
+        _fightButton.DOLocalMoveY(-110, 1);
+
+        _resetButton.gameObject.SetActive(true);
+        _resetButton.DOLocalMoveY(-110, 1);
     }
 }

@@ -47,6 +47,7 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] GameObject _dirtManager;
 
     bool timerRunning = false;
+    static bool _hasPlayedTutorial = false;
 
     private void Awake()
     {
@@ -61,6 +62,7 @@ public class Tutorial_UI : MonoBehaviour
     private void Start()
     {
         showUI();
+        repeatTutorial();
     }
     private void Update()
     {
@@ -100,7 +102,6 @@ public class Tutorial_UI : MonoBehaviour
         {
             _inputs[index].DOLocalMoveX(0, 0.5f);
         }
-        
     }
 
     public void OnAttackButton()
@@ -143,26 +144,29 @@ public class Tutorial_UI : MonoBehaviour
 
     public void OnCounterButton()
     {
-        tryLimit(7, 4, 6, 2);
         _audioManager.Play("UI_select");
         _counterManager.SetActive(true);
         fadeTimer(0);
+        if (!_hasPlayedTutorial)
+            tryLimit(7, 4, 6, 2);
     }
 
     public void OnSuperCounterButton()
     {
-        tryLimit(8, 8, 7, 2);
         _audioManager.Play("UI_select");
         _superCounterManager.SetActive(true);
         fadeTimer(0);
+        if (!_hasPlayedTutorial)
+            tryLimit(8, 8, 7, 2);
     }
 
     public void OnDirtButton()
     {
-        tryLimit(10, 4, 8, 3);
         _audioManager.Play("UI_select");
         _dirtManager.SetActive(true);
         fadeTimer(0);
+        if (!_hasPlayedTutorial)
+            tryLimit(10, 4, 8, 3);
     }
 
 
@@ -325,5 +329,24 @@ public class Tutorial_UI : MonoBehaviour
     {
         shieldBar.DOValue(_player.getCurrentShield(), .3f);
         shieldNumber.text = _player.getCurrentShield().ToString();
+    }
+
+    public void repeatTutorial()
+    {
+        _hasPlayedTutorial = true;
+        _dialogueManager.showEndScreen(false);
+        _dialogueManager.Overlay(0);
+        for (int i = 0; i < _inputs.Length; i++)
+        {
+            if (i <= 5)
+            {
+                toggleInput(i, 1);
+            } else
+            {
+                _inputs[6].DOLocalMoveX(200, 0.5f);
+                _inputs[7].DOLocalMoveX(200, 0.5f);
+                _inputs[8].DOLocalMoveX(200, 0.5f);
+            }
+        }
     }
 }

@@ -23,7 +23,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        tutorial_UI.toggleInput(8, 1);
+        //tutorial_UI.toggleInput(8, 1);
         //StartCoroutine(interactions(7, 1));
     }
 
@@ -192,12 +192,12 @@ public class DialogueManager : MonoBehaviour
                 _guardText.text = "Now go to your cell and get some sleep, your first fight will be soon";
                 yield return new WaitForSeconds(4);
                 moveGuardContainer(Out);
-                showEndScreen();
+                showEndScreen(true);
                 Overlay(1, .8f);
                 break;
         }
     }
-    void Overlay(int showOrHide, float intensity = 0)
+    public void Overlay(int showOrHide, float intensity = 0)
     {
         if (showOrHide == 0)
         {
@@ -233,15 +233,21 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void showEndScreen()
+    public void showEndScreen(bool InOut)
     {
-        _readyText.gameObject.SetActive(true);
-        _readyText.DOLocalMoveY(100, 1);
-
-        _fightButton.gameObject.SetActive(true);
-        _fightButton.DOLocalMoveY(-110, 1);
-
-        _resetButton.gameObject.SetActive(true);
-        _resetButton.DOLocalMoveY(-110, 1);
+        if (InOut == true)
+        {
+            _readyText.gameObject.SetActive(true);
+            _readyText.DOLocalMoveY(100, 1);
+            _fightButton.gameObject.SetActive(true);
+            _fightButton.DOLocalMoveY(-110, 1);
+            _resetButton.gameObject.SetActive(true);
+            _resetButton.DOLocalMoveY(-110, 1);
+        } else
+        {
+            _readyText.DOLocalMoveY(250, 1).OnComplete(()=> _readyText.gameObject.SetActive(false));
+            _fightButton.DOLocalMoveY(-300, 1).OnComplete(() => _fightButton.gameObject.SetActive(false));
+            _resetButton.DOLocalMoveY(-300, 1).OnComplete(() => _resetButton.gameObject.SetActive(false));
+        }
     }
 }

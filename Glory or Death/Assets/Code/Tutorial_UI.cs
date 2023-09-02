@@ -47,7 +47,8 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] GameObject _dirtManager;
 
     bool timerRunning = false;
-    static bool _hasPlayedTutorial = false;
+    public static bool _hasPlayedTutorial = false;
+    static bool _canClick = true;
 
     private void Awake()
     {
@@ -62,7 +63,6 @@ public class Tutorial_UI : MonoBehaviour
     private void Start()
     {
         showUI();
-        repeatTutorial();
     }
     private void Update()
     {
@@ -142,31 +142,47 @@ public class Tutorial_UI : MonoBehaviour
         timerRunning = true;
     }
 
+    // Enemy
     public void OnCounterButton()
     {
-        _audioManager.Play("UI_select");
-        _counterManager.SetActive(true);
-        fadeTimer(0);
-        if (!_hasPlayedTutorial)
-            tryLimit(7, 4, 6, 2);
+        if (_canClick)
+        {
+            if (_hasPlayedTutorial)
+                showAllInput(0);
+            _audioManager.Play("UI_select");
+            _counterManager.SetActive(true);
+            fadeTimer(0);
+            if (!_hasPlayedTutorial)
+                tryLimit(7, 4, 6, 2);
+        }
     }
 
     public void OnSuperCounterButton()
     {
-        _audioManager.Play("UI_select");
-        _superCounterManager.SetActive(true);
-        fadeTimer(0);
-        if (!_hasPlayedTutorial)
-            tryLimit(8, 8, 7, 2);
+        if (_canClick)
+        {
+            if (_hasPlayedTutorial)
+                showAllInput(0);
+            _audioManager.Play("UI_select");
+            _superCounterManager.SetActive(true);
+            fadeTimer(0);
+            if (!_hasPlayedTutorial)
+                tryLimit(8, 8, 7, 2);
+        }
     }
 
     public void OnDirtButton()
     {
-        _audioManager.Play("UI_select");
-        _dirtManager.SetActive(true);
-        fadeTimer(0);
-        if (!_hasPlayedTutorial)
-            tryLimit(10, 4, 8, 3);
+        if (_canClick)
+        {
+            if (_hasPlayedTutorial)
+                showAllInput(0);
+            _audioManager.Play("UI_select");
+            _dirtManager.SetActive(true);
+            fadeTimer(0);
+            if (!_hasPlayedTutorial)
+                tryLimit(10, 4, 8, 3);
+        }
     }
 
 
@@ -175,11 +191,13 @@ public class Tutorial_UI : MonoBehaviour
         Image timer = _playerTimer.GetComponent<Image>();
         if (timerRunning)
         {
+            _canClick = false;
             timer.fillAmount -= Time.deltaTime / 2;
             if (timer.fillAmount <= 0)
             {
                 executeAction(_slectedAction);
                 timerRunning = false;
+                _canClick = true;
             }
         }
     }
@@ -231,33 +249,39 @@ public class Tutorial_UI : MonoBehaviour
         switch (action)
         {
             case "ATK1":
-                tryLimit(2, 4, 0, 3);
+                if (!_hasPlayedTutorial)
+                    tryLimit(2, 4, 0, 3);
                 _player.DecrementCurrentStamina(15);
                 _player.GetComponent<Animator>().Play("ATK_jump");
                 _targetManager.attack();
                 break;
             case "ATK2":
-                tryLimit(9, 4, 5, 2);
+                if (!_hasPlayedTutorial)
+                    tryLimit(9, 4, 5, 2);
                 _player.DecrementCurrentStamina(60);
                 _superAttackManager.SetActive(true);
                 break;
             case "DF":
-                tryLimit(3, 4, 1, 2);
+                if (!_hasPlayedTutorial)
+                    tryLimit(3, 4, 1, 2);
                 _player.DecrementCurrentStamina(10);
                 _defendManager.activateShieldMinigame();
                 break;
             case "DG":
-                tryLimit(4, 4, 2, 2);
+                if (!_hasPlayedTutorial)
+                    tryLimit(4, 4, 2, 2);
                 _player.DecrementCurrentStamina(15);
                 _dodgeManager.SetActive(true);
                 break;
             case "FC":
-                tryLimit(5, 7, 3, 2);
+                if (!_hasPlayedTutorial)
+                    tryLimit(5, 7, 3, 2);
                 _player.DecrementCurrentStamina(15);
                 _focusManager.SetActive(true);
                 break;
             case "RST":
-                tryLimit(6, 5, 4, 2);
+                if (!_hasPlayedTutorial)
+                    tryLimit(6, 5, 4, 2);
                 _restManager.SetActive(true);
                 break;
         }
@@ -280,10 +304,18 @@ public class Tutorial_UI : MonoBehaviour
         Image timer = _playerTimer.GetComponent<Image>();
         if (inOrOut == 0)
         {
+            if (_hasPlayedTutorial)
+            {
+                showAllInput(0);
+            }
             _playerActionIcon.DOFade(0, fadeTime);
             timer.DOFade(0, fadeTime);
         } else if (inOrOut == 1)
         {
+            if (_hasPlayedTutorial)
+            {
+                showAllInput(1);
+            }
             timer.fillAmount = 1;
             _playerActionIcon.DOFade(1, fadeTime);
             timer.DOFade(1, fadeTime);
@@ -336,16 +368,32 @@ public class Tutorial_UI : MonoBehaviour
         _hasPlayedTutorial = true;
         _dialogueManager.showEndScreen(false);
         _dialogueManager.Overlay(0);
-        for (int i = 0; i < _inputs.Length; i++)
+        showAllInput(1);
+    }
+
+    public void showAllInput(int inOrOut)
+    {
+        // 1 = in
+        if (inOrOut == 1)
         {
-            if (i <= 5)
+            for (int i = 0; i < _inputs.Length; i++)
             {
-                toggleInput(i, 1);
-            } else
+                if (i <= 5)
+                {
+                    toggleInput(i, 1);
+                }
+                else
+                {
+                    _inputs[6].DOLocalMoveX(200, 0.5f);
+                    _inputs[7].DOLocalMoveX(200, 0.5f);
+                    _inputs[8].DOLocalMoveX(200, 0.5f);
+                }
+            }
+        } else
+        {
+            for (int i = 0; i < _inputs.Length; i++)
             {
-                _inputs[6].DOLocalMoveX(200, 0.5f);
-                _inputs[7].DOLocalMoveX(200, 0.5f);
-                _inputs[8].DOLocalMoveX(200, 0.5f);
+                toggleInput(i, 0);
             }
         }
     }

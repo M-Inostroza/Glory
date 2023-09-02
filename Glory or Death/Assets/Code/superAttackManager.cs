@@ -20,6 +20,7 @@ public class superAttackManager : MonoBehaviour
     Combat_UI combat_UI;
     Enemy enemy;
     AudioManager audioManager;
+    Tutorial_UI tutorial_UI;
 
     int swordCounter = 0;
 
@@ -29,6 +30,7 @@ public class superAttackManager : MonoBehaviour
         combat_UI = FindObjectOfType<Combat_UI>();
         cameraManager = FindObjectOfType<cameraManager>();
         enemy = FindObjectOfType<Enemy>();
+        tutorial_UI = FindObjectOfType<Tutorial_UI>();
     }
     private void Update()
     {
@@ -49,7 +51,14 @@ public class superAttackManager : MonoBehaviour
 
     private void OnDisable()
     {
-        
+        if (gameManager.isTutorial())
+        {
+            tutorial_UI.fadeTimer(1);
+            if (Tutorial_UI._hasPlayedTutorial)
+            {
+                tutorial_UI.showAllInput(1);
+            }
+        }
         swordCounter = 0;
         resetFeedback();
     }

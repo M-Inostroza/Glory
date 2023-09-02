@@ -74,6 +74,14 @@ public class CounterManager : MonoBehaviour
 
     public void closeMinigame()
     {
+        if (gameManager.isTutorial())
+        {
+            tutorial_UI.fadeTimer(1);
+            if (Tutorial_UI._hasPlayedTutorial)
+            {
+                tutorial_UI.showAllInput(1);
+            }
+        }
         _sword.transform.DOKill();
         _sword.transform.DOLocalMoveX(12, 0);
         moveCameraOut();

@@ -12,6 +12,7 @@ public class dirtToss : MonoBehaviour
 
     private Player player;
     private SpriteRenderer dirtTexture;
+    private Tutorial_UI tutorial_UI;
 
     // Dirt texture opacity
     public float maxOpacity = 0.8f;
@@ -28,6 +29,7 @@ public class dirtToss : MonoBehaviour
     {
         dirtTexture = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<Player>();
+        tutorial_UI = FindObjectOfType<Tutorial_UI>();
     }
 
     private void OnEnable()
@@ -49,6 +51,14 @@ public class dirtToss : MonoBehaviour
     }
     private void OnDisable()
     {
+        if (gameManager.isTutorial())
+        {
+            tutorial_UI.fadeTimer(1);
+            if (Tutorial_UI._hasPlayedTutorial)
+            {
+                tutorial_UI.showAllInput(1);
+            }
+        }
         player.incrementBaseSpeed(1000);
         speedReduced = false;
     }

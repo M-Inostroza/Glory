@@ -48,7 +48,7 @@ public class Tutorial_UI : MonoBehaviour
 
     bool timerRunning = false;
     public static bool _hasPlayedTutorial = false;
-    static bool _canClick = true;
+    public static bool _canClick = true;
 
     private void Awake()
     {
@@ -167,7 +167,9 @@ public class Tutorial_UI : MonoBehaviour
             _superCounterManager.SetActive(true);
             fadeTimer(0);
             if (!_hasPlayedTutorial)
+            {
                 tryLimit(8, 8, 7, 2);
+            }
         }
     }
 
@@ -175,6 +177,7 @@ public class Tutorial_UI : MonoBehaviour
     {
         if (_canClick)
         {
+            _canClick = false;
             if (_hasPlayedTutorial)
                 showAllInput(0);
             _audioManager.Play("UI_select");
@@ -368,6 +371,7 @@ public class Tutorial_UI : MonoBehaviour
         _hasPlayedTutorial = true;
         _dialogueManager.showEndScreen(false);
         _dialogueManager.Overlay(0);
+        _dialogueManager.toogleEndTutorial(1);
         showAllInput(1);
     }
 
@@ -376,6 +380,7 @@ public class Tutorial_UI : MonoBehaviour
         // 1 = in
         if (inOrOut == 1)
         {
+            _dialogueManager.toogleEndTutorial(1);
             for (int i = 0; i < _inputs.Length; i++)
             {
                 if (i <= 5)
@@ -391,6 +396,7 @@ public class Tutorial_UI : MonoBehaviour
             }
         } else
         {
+            _dialogueManager.toogleEndTutorial(0);
             for (int i = 0; i < _inputs.Length; i++)
             {
                 toggleInput(i, 0);

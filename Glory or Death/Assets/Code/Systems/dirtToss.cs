@@ -51,6 +51,7 @@ public class dirtToss : MonoBehaviour
     }
     private void OnDisable()
     {
+        Tutorial_UI._canClick = true;
         if (gameManager.isTutorial())
         {
             tutorial_UI.fadeTimer(1);

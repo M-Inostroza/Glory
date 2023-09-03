@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] Image _overlay;
     [SerializeField] Transform _fightButton;
     [SerializeField] Transform _resetButton;
+    [SerializeField] Transform _endTutButton;
     [SerializeField] Transform _readyText;
 
     Tutorial_UI tutorial_UI;
@@ -24,7 +25,7 @@ public class DialogueManager : MonoBehaviour
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
         //tutorial_UI.toggleInput(8, 1);
-        StartCoroutine(interactions(1, 1));
+        StartCoroutine(interactions(1, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -62,7 +63,7 @@ public class DialogueManager : MonoBehaviour
                 break;
             case 2: // Defense tutorial
                 movePlayerContainer(In);
-                _playerText.text = "I'ts harder than I thought...";
+                _playerText.text = "Not bad...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 change();
@@ -70,19 +71,21 @@ public class DialogueManager : MonoBehaviour
                 moveGuardContainer(In);
                 _guardText.text = "You better get use to it... let's try some defense";
                 yield return new WaitForSeconds(3);
-                _guardText.text = "Click the defend command and press the A key in the green area...";
+                _guardText.text = "Click the defend command and press the A key when the circle is in the green area...";
                 yield return new WaitForSeconds(6);
+                _guardText.text = "If you succeed you will get a shield point, which will allow you to counter the enemy attack";
+                yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(1, 1);
                 break;
             case 3:
-                movePlayerContainer(In); _playerText.text = "not bad...";
+                movePlayerContainer(In); _playerText.text = "I think I got this...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 change();
 
-                moveGuardContainer(In); _guardText.text = "Don't get too confident, let's test your feet...";
+                moveGuardContainer(In); _guardText.text = "Don't get too confident, let's see how you move...";
                 yield return new WaitForSeconds(4);
                 _guardText.text = "Select the dodge command and press the arrow keys in the right order, this will avoid the next enemy attack...";
                 yield return new WaitForSeconds(6);
@@ -96,16 +99,16 @@ public class DialogueManager : MonoBehaviour
                 moveGuardContainer(Out);
                 change();
 
-                movePlayerContainer(In); _playerText.text = "I think i get it";
+                movePlayerContainer(In); _playerText.text = "I will do my best...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 change();
 
                 moveGuardContainer(In); _guardText.text = "We will see abou that...";
                 yield return new WaitForSeconds(3);
-                _guardText.text = "You need to focus now, focus will give you a speed boost in your timer and you will deal more damage";
+                _guardText.text = "You need to focus, this will give you a speed boost in your timer and you will deal more damage";
                 yield return new WaitForSeconds(6);
-                _guardText.text = "Select the focus command and press the S key the the target is in the moving box";
+                _guardText.text = "Select the focus command and press the S key when the target is in the moving box";
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
@@ -117,9 +120,11 @@ public class DialogueManager : MonoBehaviour
                 movePlayerContainer(Out);
                 change();
 
-                moveGuardContainer(In); _guardText.text = "Look at you, all weak and tired, get some rest!";
+                moveGuardContainer(In); _guardText.text = "Look at you, no energy left, weak and tired, get some rest!";
                 yield return new WaitForSeconds(5);
                 _guardText.text = "Select the rest command and smash the arrow keys left and right to recover stamina";
+                yield return new WaitForSeconds(6);
+                _guardText.text = "Stamina allows you to execute commands, if your stamina is empty you won't do a thing!";
                 yield return new WaitForSeconds(6);
                 moveGuardContainer(Out);
                 Overlay(0);
@@ -132,11 +137,9 @@ public class DialogueManager : MonoBehaviour
                 change();
 
                 moveGuardContainer(In);
-                _guardText.text = "No no no, you still have much to learn.";
+                _guardText.text = "No no, you still have much to learn, you don't even know how to block...";
                 yield return new WaitForSeconds(4);
-                _guardText.text = "You don't even know how to block...";
-                yield return new WaitForSeconds(4);
-                _guardText.text = "Smash the X key to rotate the shield and block the opponent";
+                _guardText.text = "Smash the X key to rotate the shield and block the sword";
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
@@ -148,10 +151,10 @@ public class DialogueManager : MonoBehaviour
                 movePlayerContainer(Out);
                 change();
 
-                moveGuardContainer(In); _guardText.text = "Easy???";
+                moveGuardContainer(In); _guardText.text = "Easy??";
                 yield return new WaitForSeconds(2);
                 _guardText.text = "Let's see how easy is to block a super attack...";
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(4);
                 _guardText.text = "Move the arrows left and right to control the shield and block the swords";
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
@@ -159,13 +162,13 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.toggleInput(7, 1);
                 break;
             case 8:
-                movePlayerContainer(In); _playerText.text = "Wow, how can I even survive that??";
+                movePlayerContainer(In); _playerText.text = "How can I even survive that??";
                 yield return new WaitForSeconds(4);
                 movePlayerContainer(Out);
                 change();
 
                 moveGuardContainer(In);
-                _guardText.text = "Complain less and train more, that's it";
+                _guardText.text = "Less crying and more practice, that's it";
                 yield return new WaitForSeconds(4);
                 _guardText.text = "Let's try your supper attack now";
                 yield return new WaitForSeconds(3);
@@ -179,7 +182,9 @@ public class DialogueManager : MonoBehaviour
             case 9:
                 moveGuardContainer(In); _guardText.text = "Good... but fights are not always fair";
                 yield return new WaitForSeconds(4);
-                _guardText.text = "Click and drag from side to side to clean the dirt";
+                _guardText.text = "The enemy will try to blind you from time to time, you can't do anything if you don't see";
+                yield return new WaitForSeconds(5);
+                _guardText.text = "Hold the left click and drag from side to side to clean the dirt";
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
@@ -187,7 +192,7 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.toggleInput(8, 1);
                 break;
             case 10:
-                moveGuardContainer(In); _guardText.text = "Enough, it's all you need to know...";
+                moveGuardContainer(In); _guardText.text = "Enough, that's all you need to know...";
                 yield return new WaitForSeconds(4);
                 _guardText.text = "Now go to your cell and get some sleep, your first fight will be soon";
                 yield return new WaitForSeconds(4);
@@ -237,6 +242,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (InOut == true)
         {
+            Overlay(1, .8f);
             _readyText.gameObject.SetActive(true);
             _readyText.DOLocalMoveY(100, 1);
             _fightButton.gameObject.SetActive(true);
@@ -245,9 +251,25 @@ public class DialogueManager : MonoBehaviour
             _resetButton.DOLocalMoveY(-110, 1);
         } else
         {
+            Overlay(0);
             _readyText.DOLocalMoveY(250, 1).OnComplete(()=> _readyText.gameObject.SetActive(false));
             _fightButton.DOLocalMoveY(-300, 1).OnComplete(() => _fightButton.gameObject.SetActive(false));
             _resetButton.DOLocalMoveY(-300, 1).OnComplete(() => _resetButton.gameObject.SetActive(false));
+        }
+    }
+
+    public void toogleEndTutorial(int inOrOut)
+    {
+        int In = -250;
+        int Out = -190;
+        //in = 1
+        if (inOrOut == 1)
+        {
+            _endTutButton.gameObject.SetActive(true);
+            _endTutButton.DOLocalMoveY(Out, 1);
+        } else
+        {
+            _endTutButton.DOLocalMoveY(In, 1);
         }
     }
 }

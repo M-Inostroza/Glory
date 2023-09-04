@@ -66,9 +66,7 @@ public class Combat_UI : MonoBehaviour
 
     private void Awake()
     {
-        _playerStats = transform.GetChild(0).Find("Player stat HUD");
-        _playerStamina = transform.GetChild(0).Find("Stamina");
-        _playerTimer = transform.GetChild(0).Find("Player Timer");
+        GetPlayerElements();
 
         _enemyStats = transform.GetChild(1).Find("Enemy stat HUD");
         _enemyTimer = transform.GetChild(1).Find("Enemy Timer");
@@ -421,5 +419,12 @@ public class Combat_UI : MonoBehaviour
     void getShieldFeedback()
     {
         shieldFeedback = transform.Find("Player HUD").transform.Find("Shield Feedback").gameObject;
+    }
+
+    void GetPlayerElements()
+    {
+        _playerStats = transform.GetChild(0).Find("Player stat HUD");
+        _playerStamina = transform.GetChild(0).Find("Stamina");
+        _playerTimer = transform.GetChild(0).Find("Player Timer");
     }
 }

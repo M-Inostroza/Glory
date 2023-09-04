@@ -33,20 +33,14 @@ public class Input_Manager : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         timeManager = FindObjectOfType<timeManager>();
 
-        AttackButtonCD = GameObject.FindWithTag("AttackCD").GetComponent<Image>();
-        DefendButtonCD = GameObject.FindWithTag("DefendCD").GetComponent<Image>();
-        DodgeButtonCD = GameObject.FindWithTag("DodgeCD").GetComponent<Image>();
-        FocusButtonCD = GameObject.FindWithTag("FocusCD").GetComponent<Image>();
+        GetCooldownImages();
 
         selectedPlayerAction = "none";
     }
 
     private void Update()
     {
-        timeManager.ReduceCooldown(DefendButtonCD);
-        timeManager.ReduceCooldown(AttackButtonCD);
-        timeManager.ReduceCooldown(DodgeButtonCD);
-        timeManager.ReduceCooldown(FocusButtonCD);
+        UpdateCooldown();
     }
 
     public void OnAttackButton()
@@ -186,5 +180,20 @@ public class Input_Manager : MonoBehaviour
     public Image GetFocusCD()
     {
         return FocusButtonCD;
+    }
+
+    void GetCooldownImages()
+    {
+        AttackButtonCD = GameObject.FindWithTag("AttackCD").GetComponent<Image>();
+        DefendButtonCD = GameObject.FindWithTag("DefendCD").GetComponent<Image>();
+        DodgeButtonCD = GameObject.FindWithTag("DodgeCD").GetComponent<Image>();
+        FocusButtonCD = GameObject.FindWithTag("FocusCD").GetComponent<Image>();
+    }
+    void UpdateCooldown()
+    {
+        timeManager.ReduceCooldown(DefendButtonCD);
+        timeManager.ReduceCooldown(AttackButtonCD);
+        timeManager.ReduceCooldown(DodgeButtonCD);
+        timeManager.ReduceCooldown(FocusButtonCD);
     }
 }

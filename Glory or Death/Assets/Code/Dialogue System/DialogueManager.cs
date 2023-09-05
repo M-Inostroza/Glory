@@ -266,10 +266,19 @@ public class DialogueManager : MonoBehaviour
         if (inOrOut == 1)
         {
             _endTutButton.gameObject.SetActive(true);
-            _endTutButton.DOLocalMoveY(Out, 1);
+            _endTutButton.DOLocalMoveY(Out, .5f);
         } else
         {
-            _endTutButton.DOLocalMoveY(In, 1);
+            _endTutButton.DOLocalMoveY(In, .5f);
+        }
+    }
+
+    public void OnFinishTutorualButton()
+    {
+        if (!tutorial_UI.timerRunning)
+        {
+            toogleEndTutorial(0);
+            showEndScreen(true);
         }
     }
 }

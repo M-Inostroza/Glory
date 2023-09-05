@@ -47,10 +47,9 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] GameObject _superAttackManager;
     [SerializeField] GameObject _dirtManager;
 
-    bool timerRunning = false;
+    public bool timerRunning = false;
     public static bool _hasPlayedTutorial = false;
     public static bool _canClick = true;
-    public static bool _canSelectTimedSkill = true;
 
     private void Awake()
     {
@@ -109,13 +108,9 @@ public class Tutorial_UI : MonoBehaviour
 
     public void OnAttackButton()
     {
-        if (_canSelectTimedSkill)
-        {
-            _canSelectTimedSkill = false;
-            _audioManager.Play("UI_select");
-            selectIcon("ATK1");
-            timerRunning = true;
-        }
+        _audioManager.Play("UI_select");
+        selectIcon("ATK1");
+        timerRunning = true;
     }
     public void OnDefendButton()
     {

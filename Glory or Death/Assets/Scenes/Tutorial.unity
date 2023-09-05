@@ -2423,20 +2423,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2128812805}
         m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: toogleEndTutorial
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2128812805}
-        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: showEndScreen
-        m_Mode: 6
+        m_MethodName: OnFinishTutorualButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -71133,6 +71121,7 @@ MonoBehaviour:
   _superCounterManager: {fileID: 1651485074}
   _superAttackManager: {fileID: 493485408}
   _dirtManager: {fileID: 546708164}
+  timerRunning: 0
 --- !u!224 &5363494248697428680
 RectTransform:
   m_ObjectHideFlags: 0

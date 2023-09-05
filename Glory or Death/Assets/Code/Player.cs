@@ -50,7 +50,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        capShield();
         capHP();
         capStamina();
         checkVictoryCondition();
@@ -389,10 +388,12 @@ public class Player : MonoBehaviour
     public void increaseCurrentShield()
     {
         currentShield++;
+        capShield();
     }
     public void decreaseCurrentShield()
     {
         currentShield--;
+        capShield();
     }
 
     // Speed

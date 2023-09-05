@@ -10,6 +10,7 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] Sprite[] iconSprites;
 
     [SerializeField] Transform _playerStamina;
+    [SerializeField] Transform _staminaAlarm;
     [SerializeField] Slider _staminaSlider;
 
     [SerializeField] Transform _playerTimer;
@@ -250,41 +251,65 @@ public class Tutorial_UI : MonoBehaviour
 
     void executeAction(string action)
     {
-        fadeTimer(0);
+        Image timer = _playerTimer.GetComponent<Image>();
         switch (action)
         {
             case "ATK1":
-                if (!_hasPlayedTutorial)
+                if (_hasPlayedTutorial)
+                {
+                    if (_player.GetCurrentStamina() > 15)
+                    {
+                        fadeTimer(0);
+                        _player.DecrementCurrentStamina(15);
+                        attack();
+                    } else
+                    {
+                        alarmStamina();
+                        timer.fillAmount = 1;
+                        selectIcon("Default");
+                    }
+                } else
+                {
+                    fadeTimer(0);
+                    _player.DecrementCurrentStamina(15);
+                    attack();
                     tryLimit(2, 4, 0, 3);
-                _player.DecrementCurrentStamina(15);
-                _player.GetComponent<Animator>().Play("ATK_jump");
-                _targetManager.attack();
+                }
+                void attack() {
+                    _player.GetComponent<Animator>().Play("ATK_jump");
+                    _targetManager.attack();
+                }
                 break;
             case "ATK2":
+                fadeTimer(0);
                 if (!_hasPlayedTutorial)
                     tryLimit(9, 4, 5, 2);
                 _player.DecrementCurrentStamina(60);
                 _superAttackManager.SetActive(true);
                 break;
             case "DF":
+                fadeTimer(0);
                 if (!_hasPlayedTutorial)
                     tryLimit(3, 4, 1, 2);
                 _player.DecrementCurrentStamina(10);
                 _defendManager.activateShieldMinigame();
                 break;
             case "DG":
+                fadeTimer(0);
                 if (!_hasPlayedTutorial)
                     tryLimit(4, 4, 2, 2);
                 _player.DecrementCurrentStamina(15);
                 _dodgeManager.SetActive(true);
                 break;
             case "FC":
+                fadeTimer(0);
                 if (!_hasPlayedTutorial)
                     tryLimit(5, 7, 3, 2);
                 _player.DecrementCurrentStamina(15);
                 _focusManager.SetActive(true);
                 break;
             case "RST":
+                fadeTimer(0);
                 if (!_hasPlayedTutorial)
                     tryLimit(6, 5, 4, 2);
                 _restManager.SetActive(true);
@@ -412,6 +437,35 @@ public class Tutorial_UI : MonoBehaviour
             {
                 toggleInput(i, 0);
             }
+        }
+    }
+
+    // Stamina Alarm
+    private bool hasPlayed = false;
+    public void alarmStamina()
+    {
+        if (!hasPlayed)
+        {
+            fadeON();
+            _playerStamina.transform.DOShakePosition(0.6f, 4, 50);
+            _staminaAlarm.transform.DOShakePosition(0.6f, 4, 50).OnComplete(() => fadeOFF());
+            hasPlayed = true;
+        }
+
+        void fadeON()
+        {
+            foreach (Transform child in _staminaAlarm.transform)
+            {
+                child.GetComponent<Image>().DOFade(1, 0.2f);
+            }
+        }
+        void fadeOFF()
+        {
+            foreach (Transform child in _staminaAlarm.transform)
+            {
+                child.GetComponent<Image>().DOFade(0, 0.2f);
+            }
+            hasPlayed = false;
         }
     }
 }

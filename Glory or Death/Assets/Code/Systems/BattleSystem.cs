@@ -108,7 +108,6 @@ public class BattleSystem : MonoBehaviour
     }
     public void PlayFocus()
     {
-        Debug.Log(focusManager);
         focusManager.SetActive(true);
         playerUnit.incrementAdrenaline(1);
     }

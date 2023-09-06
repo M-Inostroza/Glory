@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxHP, currentHP;
     [SerializeField] private int adrenaline;
     [SerializeField] private int _nativeDamage;
-    
 
+    [SerializeField] Animator _dummyAnimator;
 
     [SerializeField] private int maxShield, currentShield;
     [SerializeField] private int critHits;
@@ -248,6 +248,20 @@ public class Player : MonoBehaviour
                     break;
                 case 2:
                     enemy_unit.GetComponent<Animator>().Play("bottom_hurt");
+                    break;
+            }
+        } else
+        {
+            switch (part)
+            {
+                case 0:
+                    _dummyAnimator.Play("dummy_hurt_up");
+                    break;
+                case 1:
+                    _dummyAnimator.Play("dummy_hurt_mid");
+                    break;
+                case 2:
+                    _dummyAnimator.Play("dummy_hurt_down");
                     break;
             }
         }

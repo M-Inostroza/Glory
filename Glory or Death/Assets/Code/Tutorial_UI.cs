@@ -48,6 +48,7 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] GameObject _superAttackManager;
     [SerializeField] GameObject _dirtManager;
 
+
     public bool timerRunning = false;
     public static bool _hasPlayedTutorial = false;
     public static bool _canClick = true;
@@ -252,6 +253,12 @@ public class Tutorial_UI : MonoBehaviour
     void executeAction(string action)
     {
         Image timer = _playerTimer.GetComponent<Image>();
+        void showAlarm()
+        {
+            alarmStamina();
+            timer.fillAmount = 1;
+            selectIcon("Default");
+        }
         switch (action)
         {
             case "ATK1":
@@ -264,9 +271,7 @@ public class Tutorial_UI : MonoBehaviour
                         attack();
                     } else
                     {
-                        alarmStamina();
-                        timer.fillAmount = 1;
-                        selectIcon("Default");
+                        showAlarm();
                     }
                 } else
                 {
@@ -281,32 +286,90 @@ public class Tutorial_UI : MonoBehaviour
                 }
                 break;
             case "ATK2":
-                fadeTimer(0);
-                if (!_hasPlayedTutorial)
+                if (_hasPlayedTutorial)
+                {
+                    if (_player.GetCurrentStamina() > 60)
+                    {
+                        fadeTimer(0);
+                        _player.DecrementCurrentStamina(60);
+                        _superAttackManager.SetActive(true);
+                    } else
+                    {
+                        showAlarm();
+                    }
+                } else
+                {
+                    fadeTimer(0);
                     tryLimit(9, 4, 5, 2);
-                _player.DecrementCurrentStamina(60);
-                _superAttackManager.SetActive(true);
+                    _player.DecrementCurrentStamina(60);
+                    _superAttackManager.SetActive(true);
+                }
                 break;
             case "DF":
-                fadeTimer(0);
-                if (!_hasPlayedTutorial)
+                if (_hasPlayedTutorial)
+                {
+                    if (_player.GetCurrentStamina() > 10)
+                    {
+                        fadeTimer(0);
+                        _player.DecrementCurrentStamina(10);
+                        _defendManager.activateShieldMinigame();
+                    }
+                    else
+                    {
+                        showAlarm();
+                    }
+                }
+                else
+                {
+                    fadeTimer(0);
                     tryLimit(3, 4, 1, 2);
-                _player.DecrementCurrentStamina(10);
-                _defendManager.activateShieldMinigame();
+                    _player.DecrementCurrentStamina(10);
+                    _defendManager.activateShieldMinigame();
+                }
                 break;
             case "DG":
-                fadeTimer(0);
-                if (!_hasPlayedTutorial)
+                if (_hasPlayedTutorial)
+                {
+                    if (_player.GetCurrentStamina() > 15)
+                    {
+                        fadeTimer(0);
+                        _player.DecrementCurrentStamina(15);
+                        _dodgeManager.SetActive(true);
+                    }
+                    else
+                    {
+                        showAlarm();
+                    }
+                }
+                else
+                {
+                    fadeTimer(0);
                     tryLimit(4, 4, 2, 2);
-                _player.DecrementCurrentStamina(15);
-                _dodgeManager.SetActive(true);
+                    _player.DecrementCurrentStamina(15);
+                    _dodgeManager.SetActive(true);
+                }
                 break;
             case "FC":
-                fadeTimer(0);
-                if (!_hasPlayedTutorial)
+                if (_hasPlayedTutorial)
+                {
+                    if (_player.GetCurrentStamina() > 15)
+                    {
+                        fadeTimer(0);
+                        _player.DecrementCurrentStamina(15);
+                        _focusManager.SetActive(true);
+                    }
+                    else
+                    {
+                        showAlarm();
+                    }
+                }
+                else
+                {
+                    fadeTimer(0);
                     tryLimit(5, 7, 3, 2);
-                _player.DecrementCurrentStamina(15);
-                _focusManager.SetActive(true);
+                    _player.DecrementCurrentStamina(15);
+                    _focusManager.SetActive(true);
+                }
                 break;
             case "RST":
                 fadeTimer(0);

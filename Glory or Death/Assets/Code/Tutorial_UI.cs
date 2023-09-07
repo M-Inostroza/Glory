@@ -66,7 +66,6 @@ public class Tutorial_UI : MonoBehaviour
     private void Start()
     {
         showUI();
-        repeatTutorial();
     }
     private void Update()
     {

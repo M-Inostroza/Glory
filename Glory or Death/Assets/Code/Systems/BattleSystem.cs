@@ -56,6 +56,7 @@ public class BattleSystem : MonoBehaviour
 
     // Pause control
     public static bool IsPaused { get; set; } = false;
+    public static bool OnSkill { get; set; } = false;
 
     private void Awake()
     {

@@ -202,13 +202,14 @@ public class timeManager : MonoBehaviour
         playerTimerControl = true;
         enemyTimerControl = true;
         timerIsRunning = true;
+        BattleSystem.OnSkill = false;
     }
 
     public void stopUnitTimer()
     {
         playerTimerControl = false;
         enemyTimerControl = false;
-        timerIsRunning = false;
+        BattleSystem.OnSkill = true;
     }
 
     public void showEnemyAction()
@@ -372,9 +373,12 @@ public class timeManager : MonoBehaviour
         {
             battleTimer -= Time.deltaTime;
             timerText.text = Mathf.RoundToInt(battleTimer).ToString("D2");
-
-            // Time out
             if (battleTimer <= 0)
+            {
+                battleTimer = 0;
+            }
+            // Time out
+            if (battleTimer <= 0 && !BattleSystem.OnSkill)
             {
                 Combat_UI.move_UI_out();
                 timerIsRunning = false;

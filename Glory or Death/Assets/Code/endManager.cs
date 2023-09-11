@@ -18,6 +18,7 @@ public class endManager : MonoBehaviour
 
     [SerializeField] GameObject playerAvatar;
     [SerializeField] GameObject endConfeti;
+    [SerializeField] GameObject _upgradeManager;
 
     [SerializeField] Transform endStarSymbol;
     [SerializeField] Transform summeryWindow;
@@ -64,24 +65,13 @@ public class endManager : MonoBehaviour
         switch (condition)
         {
             case 0: // Time Out
-                summeryWindow.gameObject.SetActive(state);
-                playerAvatar.gameObject.SetActive(state);
-                dialogueBubble.gameObject.SetActive(state);
-                endOverlay.gameObject.SetActive(state);
-                endConfeti.gameObject.SetActive(state);
+                activateTimeOutElements(state);
                 break;
             case 1: // Defeat
-                endOverlay.gameObject.SetActive(state);
-                defeatLabelContainer.gameObject.SetActive(state);
-                defeatScreenContainer.SetActive(state);
+                activateDefeatElements(state);
                 break;
             case 2: // Victory
-                victoryScreenContainer.SetActive(state);
-                endOverlay.gameObject.SetActive(state);
-                victoryLabelContainer.gameObject.SetActive(state);
-                playerAvatar.gameObject.SetActive(state);
-                dialogueBubble.gameObject.SetActive(state);
-                endConfeti.gameObject.SetActive(state);
+                activateVictoryElements(state);
                 break;
         }
     }
@@ -173,5 +163,35 @@ public class endManager : MonoBehaviour
                 threshholdValue -= 0.5f;
             }
         }).OnComplete(() => starParticle.Play());
+    }
+
+    public void showUpgradeScreen()
+    {
+        _upgradeManager.transform.DOLocalMoveX(200, 1);
+    }
+
+    void activateTimeOutElements(bool state)
+    {
+        summeryWindow.gameObject.SetActive(state);
+        playerAvatar.gameObject.SetActive(state);
+        dialogueBubble.gameObject.SetActive(state);
+        endOverlay.gameObject.SetActive(state);
+        endConfeti.gameObject.SetActive(state);
+        _upgradeManager.SetActive(state);
+    }
+    void activateDefeatElements(bool state)
+    {
+        endOverlay.gameObject.SetActive(state);
+        defeatLabelContainer.gameObject.SetActive(state);
+        defeatScreenContainer.SetActive(state);
+    }
+    void activateVictoryElements(bool state)
+    {
+        victoryScreenContainer.SetActive(state);
+        endOverlay.gameObject.SetActive(state);
+        victoryLabelContainer.gameObject.SetActive(state);
+        playerAvatar.gameObject.SetActive(state);
+        dialogueBubble.gameObject.SetActive(state);
+        endConfeti.gameObject.SetActive(state);
     }
 }

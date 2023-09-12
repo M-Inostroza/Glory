@@ -23,6 +23,7 @@ public class endManager : MonoBehaviour
     [SerializeField] Transform endStarSymbol;
     [SerializeField] Transform summeryWindow;
     [SerializeField] Transform quitButton;
+    [SerializeField] Transform upgradeButton;
 
     [SerializeField] TMP_Text endStarCount;
     [SerializeField] TMP_Text dialogueText;
@@ -163,6 +164,7 @@ public class endManager : MonoBehaviour
                 threshholdValue -= 0.5f;
             }
         }).OnComplete(() => starParticle.Play());
+        upgradeButton.DOLocalMoveX(200, 1).SetDelay(1);
     }
 
     public void showUpgradeScreen()

@@ -170,6 +170,12 @@ public class endManager : MonoBehaviour
     public void showUpgradeScreen()
     {
         _upgradeManager.transform.DOLocalMoveX(200, 1);
+        summeryWindow.transform.DOLocalMoveX(-200, 1);
+    }
+    public void hideUpgradeScreen()
+    {
+        _upgradeManager.transform.DOLocalMoveX(-500, 1);
+        summeryWindow.transform.DOLocalMoveX(0, 1);
     }
 
     void activateTimeOutElements(bool state)

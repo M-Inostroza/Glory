@@ -164,18 +164,30 @@ public class endManager : MonoBehaviour
                 threshholdValue -= 0.5f;
             }
         }).OnComplete(() => starParticle.Play());
-        upgradeButton.DOLocalMoveX(200, 1).SetDelay(1);
+        showUpgradeButton(1);
+    }
+
+    public void showUpgradeButton(int delay = 0)
+    {
+        upgradeButton.DOLocalMoveX(300, .6f).SetDelay(delay);
+    }
+    public void hideUpgradeButton()
+    {
+        upgradeButton.DOLocalMoveX(530, .6f);
     }
 
     public void showUpgradeScreen()
     {
-        _upgradeManager.transform.DOLocalMoveX(200, 1);
-        summeryWindow.transform.DOLocalMoveX(-200, 1);
+        animatePlayerAvatarOut();
+        _upgradeManager.transform.DOLocalMoveX(200, 0.6f);
+        summeryWindow.transform.DOLocalMoveX(-200, 0.6f);
+        hideUpgradeButton();
     }
     public void hideUpgradeScreen()
     {
-        _upgradeManager.transform.DOLocalMoveX(-500, 1);
-        summeryWindow.transform.DOLocalMoveX(0, 1);
+        _upgradeManager.transform.DOLocalMoveX(650, 0.6f);
+        summeryWindow.transform.DOLocalMoveX(0, 0.6f);
+        showUpgradeButton();
     }
 
     void activateTimeOutElements(bool state)

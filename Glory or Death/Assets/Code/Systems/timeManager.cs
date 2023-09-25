@@ -429,9 +429,9 @@ public class timeManager : MonoBehaviour
     {
         timerIsRunning = false;
     }
-    public void resetFightTimer()
+    public void resetFightTimer(int seconds)
     {
-        battleTimer = 90;
+        battleTimer = seconds;
     }
     public void resetPlayerTimer()
     {

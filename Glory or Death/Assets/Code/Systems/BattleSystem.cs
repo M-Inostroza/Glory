@@ -229,6 +229,8 @@ public class BattleSystem : MonoBehaviour
     public void resetBattle()
     {
         Combat_UI.move_UI_in();
+        endManager.hideUpgradeScreen();
+        endManager.hideUpgradeButton();
         resetTimers();
         playerUnit.SetAdrenaline(0);
         enemyUnit.adrenaline = 0;
@@ -248,7 +250,7 @@ public class BattleSystem : MonoBehaviour
     }
     void resetTimers()
     {
-        timeManager.resetFightTimer();
+        timeManager.resetFightTimer(2);
         timeManager.activateFightTimer();
 
         timeManager.resetPlayerTimer();

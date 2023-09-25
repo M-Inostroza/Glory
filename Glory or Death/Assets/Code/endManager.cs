@@ -23,6 +23,7 @@ public class endManager : MonoBehaviour
     [SerializeField] Transform endStarSymbol;
     [SerializeField] Transform summeryWindow;
     [SerializeField] Transform quitButton;
+    [SerializeField] Transform resetButton;
     [SerializeField] Transform upgradeButton;
 
     [SerializeField] TMP_Text endStarCount;
@@ -86,7 +87,7 @@ public class endManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(animatePlayerAvatarIn("Just a warm up...", 1));
+            StartCoroutine(animatePlayerAvatarIn("Just a warm up...",0));
             combat_UI.hideStars();
         }
     }
@@ -135,11 +136,12 @@ public class endManager : MonoBehaviour
     public IEnumerator animatePlayerAvatarIn(string BubbleText, float delay)
     {
         yield return new WaitForSeconds(delay);
-        playerAvatar.transform.DOLocalMoveX(-318, 1);
-        dialogueBubble.transform.DOLocalMoveX(-190, 1);
-        dialogueBubble.DOFade(1, 0.8f);
-        dialogueText.DOFade(1, 0.8f);
+        playerAvatar.transform.DOLocalMoveX(-318, .5f);
+        dialogueBubble.transform.DOLocalMoveX(-190, .5f);
+        dialogueBubble.DOFade(1, 0.6f);
+        dialogueText.DOFade(1, 0.6f);
         dialogueText.text = BubbleText;
+        resetButton.gameObject.SetActive(true);
     }
     public void animatePlayerAvatarOut()
     {
@@ -147,6 +149,7 @@ public class endManager : MonoBehaviour
         dialogueBubble.transform.DOLocalMoveX(-300, 0.3f);
         dialogueBubble.DOFade(0, 0.2f);
         dialogueText.DOFade(0, 0.2f);
+        resetButton.gameObject.SetActive(false);
     }
 
     // Summary window
@@ -169,11 +172,11 @@ public class endManager : MonoBehaviour
 
     public void showUpgradeButton(int delay = 0)
     {
-        upgradeButton.DOLocalMoveX(300, .6f).SetDelay(delay);
+        upgradeButton.DOLocalMoveX(300, .4f).SetDelay(delay);
     }
     public void hideUpgradeButton()
     {
-        upgradeButton.DOLocalMoveX(530, .6f);
+        upgradeButton.DOLocalMoveX(530, .4f);
     }
 
     public void showUpgradeScreen()

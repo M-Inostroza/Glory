@@ -294,6 +294,10 @@ public class timeManager : MonoBehaviour
         }
     }
     // Cooldown timer (Mejorable!!)
+    public float attackFactorCD = 2;
+    public float defendFactorCD = 4.5f;
+    public float dodgeFactorCD = 4.5f;
+    public float focusFactorCD = 4;
     public void ReduceCooldown(Image timer)
     {
         if (timer.fillAmount > 0)
@@ -301,16 +305,16 @@ public class timeManager : MonoBehaviour
             switch (timer.gameObject.tag)
             {
                 case "AttackCD":
-                    timer.fillAmount -= Time.deltaTime / (Attack_CD * 2);
+                    timer.fillAmount -= Time.deltaTime / (Attack_CD * attackFactorCD);
                     break;
                 case "DefendCD":
-                    timer.fillAmount -= Time.deltaTime / (Shield_CD * 4.5f);
+                    timer.fillAmount -= Time.deltaTime / (Shield_CD * defendFactorCD);
                     break;
                 case "DodgeCD":
-                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * 4.5f);
+                    timer.fillAmount -= Time.deltaTime / (Dodge_CD * dodgeFactorCD);
                     break;
                 case "FocusCD":
-                    timer.fillAmount -= Time.deltaTime / (Focus_CD * 4);
+                    timer.fillAmount -= Time.deltaTime / (Focus_CD * focusFactorCD);
                     break;
             }
         }

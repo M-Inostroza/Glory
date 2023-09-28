@@ -82,7 +82,7 @@ public class endManager : MonoBehaviour
         if (combat_UI.GetStars() != 0)
         {
             starCounter++;
-            endStarCount.text = starCounter.ToString();
+            updateStarUI();
             combat_UI.removeStar();
         }
         else
@@ -90,6 +90,10 @@ public class endManager : MonoBehaviour
             StartCoroutine(animatePlayerAvatarIn("Just a warm up...",0));
             combat_UI.hideStars();
         }
+    }
+    public void updateStarUI()
+    {
+        endStarCount.text = starCounter.ToString();
     }
     public void starPunchEnd()
     {
@@ -216,5 +220,14 @@ public class endManager : MonoBehaviour
         playerAvatar.gameObject.SetActive(state);
         dialogueBubble.gameObject.SetActive(state);
         endConfeti.gameObject.SetActive(state);
+    }
+
+    public int GetStars()
+    {
+        return starCounter;
+    }
+    public void reduceStars(int starsToReduce)
+    {
+        starCounter -= starsToReduce;
     }
 }

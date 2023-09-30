@@ -250,7 +250,7 @@ public class BattleSystem : MonoBehaviour
     }
     void resetTimers()
     {
-        timeManager.resetFightTimer(2);
+        timeManager.resetFightTimer(90);
         timeManager.activateFightTimer();
 
         timeManager.resetPlayerTimer();
@@ -265,7 +265,7 @@ public class BattleSystem : MonoBehaviour
         void complete()
         {
             timeManager.continueUnitTimer();
-            audioManager.Play("Combat_Theme");
+            //audioManager.Play("Combat_Theme");
             loadingScreen.SetActive(false);
         }
     }

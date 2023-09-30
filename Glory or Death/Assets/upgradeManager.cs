@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class upgradeManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class upgradeManager : MonoBehaviour
     Player _player;
     timeManager _timeManager;
     endManager _endManager;
+    AudioManager _audioManager;
 
     List<GameObject> blockList = new List<GameObject>();
 
@@ -19,7 +21,11 @@ public class upgradeManager : MonoBehaviour
         _player = FindObjectOfType<Player>();
         _timeManager = FindObjectOfType<timeManager>();
         _endManager = FindObjectOfType<endManager>();
+        _audioManager = FindObjectOfType<AudioManager>();
+    }
 
+    private void OnEnable()
+    {
         getBlocks();
         setRandomUpgrade();
     }
@@ -27,7 +33,7 @@ public class upgradeManager : MonoBehaviour
     {
         foreach (GameObject block in blockList)
         {
-            block.transform.GetChild(Random.Range(0, blockList.Count -1)).gameObject.SetActive(true);
+            block.transform.GetChild(Random.Range(0, block.transform.childCount)).gameObject.SetActive(true);
         }
     }
     void getBlocks()
@@ -35,6 +41,17 @@ public class upgradeManager : MonoBehaviour
         blockList.Add(_leftBlock);
         blockList.Add(_centerBlock);
         blockList.Add(_rightBlock);
+    }
+    public void buttonFeedback(bool hasStars, Transform button)
+    {
+        if (hasStars)
+        {
+            _audioManager.Play("Upgrade_Click");
+            button.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.1f).OnComplete(() => button.gameObject.SetActive(false));
+        } else
+        {
+            _audioManager.Play("Upgrade_Click_NO");
+        }
     }
 
     // Upgrades
@@ -45,11 +62,13 @@ public class upgradeManager : MonoBehaviour
             _timeManager.dodgeFactorCD -= 0.2f;
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
+            buttonFeedback(true, _rightBlock.transform);
         } else
         {
-            Debug.Log("not enough stars");
+            buttonFeedback(false, _rightBlock.transform);
         }
     }
+
     public void reduceATKCooldown()
     {
         if (_endManager.GetStars() >= 2)
@@ -57,9 +76,70 @@ public class upgradeManager : MonoBehaviour
             _timeManager.attackFactorCD -= 0.2f;
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
+            buttonFeedback(true, _rightBlock.transform);
         } else
         {
-            Debug.Log("not enough stars");
+            buttonFeedback(false, _rightBlock.transform);
+        }
+    }
+
+    public void incrementATK()
+    {
+        if (_endManager.GetStars() >= 3)
+        {
+            _player.NativeDamage++;
+            _endManager.reduceStars(3);
+            _endManager.updateStarUI();
+            buttonFeedback(true, _centerBlock.transform);
+        }
+        else
+        {
+            buttonFeedback(false, _centerBlock.transform);
+        }
+    }
+    public void incrementSpeed()
+    {
+        if (_endManager.GetStars() >= 4)
+        {
+            _player.incrementBaseSpeed(2);
+            _endManager.reduceStars(4);
+            _endManager.updateStarUI();
+            buttonFeedback(true, _centerBlock.transform);
+        }
+        else
+        {
+            buttonFeedback(false, _centerBlock.transform);
+        }
+    }
+
+    public void recoverHealth()
+    {
+        // calculate 30%
+        float lifeBack = _player.GetMaxHP() * .3f;
+        if (_endManager.GetStars() >= 1)
+        {
+            _player.SetCurrentHP(_player.GetCurrentHP() + (int)lifeBack);
+            _endManager.reduceStars(1);
+            _endManager.updateStarUI();
+            buttonFeedback(true, _leftBlock.transform);
+        }
+        else
+        {
+            buttonFeedback(false, _leftBlock.transform);
+        }
+    }
+    public void incrementMaxShield()
+    {
+        if (_endManager.GetStars() >= 2)
+        {
+            _player.setMaxShield(_player.GetMaxShield() + 1);
+            _endManager.reduceStars(2);
+            _endManager.updateStarUI();
+            buttonFeedback(true, _leftBlock.transform);
+        }
+        else
+        {
+            buttonFeedback(false, _leftBlock.transform);
         }
     }
 }

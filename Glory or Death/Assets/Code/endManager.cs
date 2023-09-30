@@ -87,7 +87,7 @@ public class endManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(animatePlayerAvatarIn("Just a warm up...",0));
+            StartCoroutine(animatePlayerAvatarIn("Just a warm up...", 0));
             combat_UI.hideStars();
         }
     }
@@ -107,6 +107,8 @@ public class endManager : MonoBehaviour
         starCounter = 0;
         endOverlay.DOFade(0, 0.3f);
         animatePlayerAvatarOut();
+        _upgradeManager.SetActive(false);
+        hideUpgradeButton();
     }
 
     public void defeatScreen()
@@ -140,20 +142,20 @@ public class endManager : MonoBehaviour
     public IEnumerator animatePlayerAvatarIn(string BubbleText, float delay)
     {
         yield return new WaitForSeconds(delay);
-        playerAvatar.transform.DOLocalMoveX(-318, .5f);
-        dialogueBubble.transform.DOLocalMoveX(-190, .5f);
-        dialogueBubble.DOFade(1, 0.6f);
-        dialogueText.DOFade(1, 0.6f);
+        playerAvatar.transform.DOLocalMoveX(-318, .2f);
+        dialogueBubble.transform.DOLocalMoveX(-190, .2f);
+        dialogueBubble.DOFade(1, 0.3f);
+        dialogueText.DOFade(1, 0.3f);
         dialogueText.text = BubbleText;
         resetButton.gameObject.SetActive(true);
+        showUpgradeButton(1);
     }
     public void animatePlayerAvatarOut()
     {
-        playerAvatar.transform.DOLocalMoveX(-540, 0.3f);
-        dialogueBubble.transform.DOLocalMoveX(-300, 0.3f);
-        dialogueBubble.DOFade(0, 0.2f);
-        dialogueText.DOFade(0, 0.2f);
-        resetButton.gameObject.SetActive(false);
+        playerAvatar.transform.DOLocalMoveX(-540, 0.2f);
+        dialogueBubble.transform.DOLocalMoveX(-300, 0.2f);
+        dialogueBubble.DOFade(0, 0.1f);
+        dialogueText.DOFade(0, 0.1f);
     }
 
     // Summary window
@@ -168,10 +170,9 @@ public class endManager : MonoBehaviour
             {
                 soundPlayer.metalStone();
                 hasHitPlayed = true;
-                threshholdValue -= 0.5f;
+                threshholdValue -= 0.6f;
             }
         }).OnComplete(() => starParticle.Play());
-        showUpgradeButton(1);
     }
 
     public void showUpgradeButton(int delay = 0)
@@ -180,21 +181,21 @@ public class endManager : MonoBehaviour
     }
     public void hideUpgradeButton()
     {
-        upgradeButton.DOLocalMoveX(530, .4f);
+        upgradeButton.DOLocalMoveX(530, .3f);
     }
 
     public void showUpgradeScreen()
     {
+        _upgradeManager.SetActive(true);
         animatePlayerAvatarOut();
-        _upgradeManager.transform.DOLocalMoveX(200, 0.6f);
-        summeryWindow.transform.DOLocalMoveX(-200, 0.6f);
+        _upgradeManager.transform.DOLocalMoveX(200, 0.3f);
+        summeryWindow.transform.DOLocalMoveX(-200, 0.3f);
         hideUpgradeButton();
     }
     public void hideUpgradeScreen()
     {
-        _upgradeManager.transform.DOLocalMoveX(650, 0.6f);
-        summeryWindow.transform.DOLocalMoveX(0, 0.6f);
-        showUpgradeButton();
+        _upgradeManager.transform.DOLocalMoveX(650, 0.3f);
+        summeryWindow.transform.DOLocalMoveX(0, 0.3f);
     }
 
     void activateTimeOutElements(bool state)

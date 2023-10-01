@@ -33,7 +33,12 @@ public class upgradeManager : MonoBehaviour
     {
         foreach (GameObject block in blockList)
         {
-            block.transform.GetChild(Random.Range(0, block.transform.childCount)).gameObject.SetActive(true);
+            foreach (Transform upgrade in block.transform)
+            {
+                upgrade.gameObject.SetActive(false);
+            }
+            int random = Random.Range(0, block.transform.childCount);
+            block.transform.GetChild(random).gameObject.SetActive(true);
         }
     }
     void getBlocks()
@@ -62,10 +67,10 @@ public class upgradeManager : MonoBehaviour
             _timeManager.dodgeFactorCD -= 0.2f;
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
-            buttonFeedback(true, _rightBlock.transform);
+            buttonFeedback(true, _rightBlock.transform.GetChild(0).transform);
         } else
         {
-            buttonFeedback(false, _rightBlock.transform);
+            buttonFeedback(false, _rightBlock.transform.GetChild(0).transform);
         }
     }
 
@@ -76,10 +81,10 @@ public class upgradeManager : MonoBehaviour
             _timeManager.attackFactorCD -= 0.2f;
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
-            buttonFeedback(true, _rightBlock.transform);
+            buttonFeedback(true, _rightBlock.transform.GetChild(1).transform);
         } else
         {
-            buttonFeedback(false, _rightBlock.transform);
+            buttonFeedback(false, _rightBlock.transform.GetChild(1).transform);
         }
     }
 
@@ -90,11 +95,11 @@ public class upgradeManager : MonoBehaviour
             _player.NativeDamage++;
             _endManager.reduceStars(3);
             _endManager.updateStarUI();
-            buttonFeedback(true, _centerBlock.transform);
+            buttonFeedback(true, _centerBlock.transform.GetChild(0).transform);
         }
         else
         {
-            buttonFeedback(false, _centerBlock.transform);
+            buttonFeedback(false, _centerBlock.transform.GetChild(0).transform);
         }
     }
     public void incrementSpeed()
@@ -104,11 +109,11 @@ public class upgradeManager : MonoBehaviour
             _player.incrementBaseSpeed(2);
             _endManager.reduceStars(4);
             _endManager.updateStarUI();
-            buttonFeedback(true, _centerBlock.transform);
+            buttonFeedback(true, _centerBlock.transform.GetChild(1).transform);
         }
         else
         {
-            buttonFeedback(false, _centerBlock.transform);
+            buttonFeedback(false, _centerBlock.transform.GetChild(1).transform);
         }
     }
 
@@ -121,11 +126,11 @@ public class upgradeManager : MonoBehaviour
             _player.SetCurrentHP(_player.GetCurrentHP() + (int)lifeBack);
             _endManager.reduceStars(1);
             _endManager.updateStarUI();
-            buttonFeedback(true, _leftBlock.transform);
+            buttonFeedback(true, _leftBlock.transform.GetChild(0).transform);
         }
         else
         {
-            buttonFeedback(false, _leftBlock.transform);
+            buttonFeedback(false, _leftBlock.transform.GetChild(0).transform);
         }
     }
     public void incrementMaxShield()
@@ -135,11 +140,11 @@ public class upgradeManager : MonoBehaviour
             _player.setMaxShield(_player.GetMaxShield() + 1);
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
-            buttonFeedback(true, _leftBlock.transform);
+            buttonFeedback(true, _leftBlock.transform.GetChild(1).transform);
         }
         else
         {
-            buttonFeedback(false, _leftBlock.transform);
+            buttonFeedback(false, _leftBlock.transform.GetChild(1).transform);
         }
     }
 }

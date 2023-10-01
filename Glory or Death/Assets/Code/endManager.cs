@@ -53,6 +53,7 @@ public class endManager : MonoBehaviour
     int starCounter = 0;
     public IEnumerator showEndScreen(float delay)
     {
+        updateStarUI();
         activateEndElements(true, 0);
         audioManager.Play("End_Horn");
         audioManager.Play("End_Drums");
@@ -104,7 +105,6 @@ public class endManager : MonoBehaviour
     public void resetFight()
     {
         summeryWindow.transform.DOLocalMoveY(455, 0.4f).OnComplete(()=> activateEndElements(false, 0));
-        starCounter = 0;
         endOverlay.DOFade(0, 0.3f);
         animatePlayerAvatarOut();
         _upgradeManager.SetActive(false);
@@ -192,10 +192,14 @@ public class endManager : MonoBehaviour
         summeryWindow.transform.DOLocalMoveX(-200, 0.3f);
         hideUpgradeButton();
     }
-    public void hideUpgradeScreen()
+    public void hideUpgradeScreen(bool isReset)
     {
         _upgradeManager.transform.DOLocalMoveX(650, 0.3f);
         summeryWindow.transform.DOLocalMoveX(0, 0.3f);
+        if (!isReset)
+        {
+            showUpgradeButton();
+        }
     }
 
     void activateTimeOutElements(bool state)

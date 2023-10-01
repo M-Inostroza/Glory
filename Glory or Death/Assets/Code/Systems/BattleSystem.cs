@@ -226,12 +226,12 @@ public class BattleSystem : MonoBehaviour
     }
     /*-----------------------------------END FIGHT---------------------------------------------------------*/
 
-    public void resetBattle()
+    public void resetBattle(int fightTime)
     {
         Combat_UI.move_UI_in();
-        endManager.hideUpgradeScreen();
+        endManager.hideUpgradeScreen(true);
         endManager.hideUpgradeButton();
-        resetTimers();
+        resetTimers(fightTime);
         playerUnit.SetAdrenaline(0);
         enemyUnit.adrenaline = 0;
 
@@ -248,9 +248,9 @@ public class BattleSystem : MonoBehaviour
         timeManager.stopUnitTimer();
         timeManager.fadeOutUnitTimer();
     }
-    void resetTimers()
+    void resetTimers(int mainTimer)
     {
-        timeManager.resetFightTimer(90);
+        timeManager.resetFightTimer(mainTimer);
         timeManager.activateFightTimer();
 
         timeManager.resetPlayerTimer();

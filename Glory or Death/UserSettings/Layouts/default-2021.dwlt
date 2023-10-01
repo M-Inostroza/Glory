@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Game
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 52
+  controlID: 85
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 455
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -94,8 +94,8 @@ MonoBehaviour:
     y: 0
     width: 363
     height: 560
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -120,8 +120,8 @@ MonoBehaviour:
     y: 560
     width: 1465
     height: 387
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 15}
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 53
+  controlID: 86
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 54
+  controlID: 87
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -425,7 +425,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 79846
+  m_LastSelectedObjectID: 29186
 --- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -467,22 +467,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Sounds FX/BONUS
+    - Assets/GUI PRO Kit - Fantasy RPG/ResourcesData/Sprites/Component/Popup
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 62
   m_LastFolders:
-  - Assets/Sounds FX/BONUS
+  - Assets/GUI PRO Kit - Fantasy RPG/ResourcesData/Sprites/Component/Popup
   m_LastFoldersGridSize: 62
   m_LastProjectPath: D:\Unity projects\Glory or Death\Glory\Glory or Death
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 266}
-    m_SelectedIDs: 24ee0000
-    m_LastClickedID: 60964
-    m_ExpandedIDs: 0000000040810000428100004481000046810000488100004a8100004c8100004e81000050810000bacb000000ca9a3b
+    scrollPos: {x: 0, y: 422}
+    m_SelectedIDs: f2190100
+    m_LastClickedID: 72178
+    m_ExpandedIDs: 000000004481000046810000488100004a8100004c8100004e8100005081000052810000548100003e92000012a6000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -510,7 +510,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000040810000428100004481000046810000488100004a8100004c8100004e81000050810000
+    m_ExpandedIDs: 000000004481000046810000488100004a8100004c8100004e81000050810000528100005481000056810000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -535,8 +535,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 2c360100
-    m_LastClickedInstanceID: 79404
+    m_SelectedInstanceIDs: 02720000
+    m_LastClickedInstanceID: 29186
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000742e0100ecc80000f44a0100
     m_RenameOverlay:
@@ -562,7 +562,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 66}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 62
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207
@@ -637,24 +637,24 @@ MonoBehaviour:
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 298}
-      m_SelectedIDs: e6370100
-      m_LastClickedID: 79846
-      m_ExpandedIDs: 78edfffff2f0fffffefaffff1c33010058330100e4330100e834010086360100e637010024380100f2380100
+      scrollPos: {x: 0, y: 106}
+      m_SelectedIDs: 02720000
+      m_LastClickedID: 29186
+      m_ExpandedIDs: 84f7fffffefafffffe6c00003a6d0000c66d0000ca6e000064700000c471000002720000d0720000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Star Particle
-        m_OriginalName: Star Particle
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 80058
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 4}
       m_SearchString: 
@@ -911,9 +911,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 124.6841, y: -10.808924, z: 105.10398}
+    m_Target: {x: 83.08638, y: 3.8726063, z: 216.23337}
     speed: 2
-    m_Value: {x: 124.6841, y: -10.808924, z: 105.10398}
+    m_Value: {x: 83.08638, y: 3.8726063, z: 216.23337}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -964,9 +964,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 15.958917
+    m_Target: 46.312016
     speed: 2
-    m_Value: 15.958917
+    m_Value: 46.312016
   m_Ortho:
     m_Target: 1
     speed: 2

@@ -82,6 +82,7 @@ public class endManager : MonoBehaviour
     {
         if (combat_UI.GetStars() != 0)
         {
+            combat_UI.removeStar();
             starCounter++;
             updateStarUI();
             combat_UI.removeStar();
@@ -172,7 +173,7 @@ public class endManager : MonoBehaviour
                 hasHitPlayed = true;
                 threshholdValue -= 0.6f;
             }
-        }).OnComplete(() => starParticle.Play());
+        }).OnComplete(()=> starParticle.Play());
     }
 
     public void showUpgradeButton(int delay = 0)

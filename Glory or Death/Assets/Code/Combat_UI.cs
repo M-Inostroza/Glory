@@ -370,12 +370,15 @@ public class Combat_UI : MonoBehaviour
     }
     public void showStars()
     {
-        audioManager.Play("Star_Shimes_3");
-        star_counter.DOLocalMoveX(-350, 0.5f);
+        if (stars > 0)
+        {
+            audioManager.Play("Star_Shimes_3");
+            star_counter.DOLocalMoveX(-350, 0.3f);
+        }
     }
     public void hideStars()
     {
-        star_counter.DOLocalMoveX(-500, 0.5f);
+        star_counter.DOLocalMoveX(-500, 0.3f);
     }
     public void starPunchSide()
     {

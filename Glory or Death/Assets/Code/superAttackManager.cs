@@ -145,10 +145,10 @@ public class superAttackManager : MonoBehaviour
     {
         if (gameManager.isTutorial())
         {
-            feedbackContainer.DOLocalMoveY(-2, 0.5f);
+            feedbackContainer.DOLocalMoveY(-2, 0.3f);
         } else
         {
-            feedbackContainer.DOLocalMoveY(10, 0.5f);
+            feedbackContainer.DOLocalMoveY(10, 0.3f);
         }
     }
     void moveCameraIn()

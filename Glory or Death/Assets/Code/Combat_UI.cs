@@ -107,13 +107,13 @@ public class Combat_UI : MonoBehaviour
         {
             float move_in_speed = 0.3f;
 
-            _playerStats.DOLocalMoveX(_playerStats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
-            _enemyStats.DOLocalMoveX(_enemyStats.localPosition.x - 350, move_in_speed).SetEase(Ease.InOutSine);
+            _playerStats.DOLocalMoveX(-230, move_in_speed).SetEase(Ease.InOutSine);
+            _enemyStats.DOLocalMoveX(230, move_in_speed).SetEase(Ease.InOutSine);
 
-            _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
+            _playerStamina.DOLocalMoveX(-305, move_in_speed).SetEase(Ease.InOutSine);
 
-            _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y - 160, move_in_speed);
-            _enemyTimer.DOLocalMoveY(_enemyTimer.localPosition.y - 160, move_in_speed);
+            _playerTimer.DOLocalMoveY(110, move_in_speed);
+            _enemyTimer.DOLocalMoveY(110, move_in_speed);
             _fightTimer.DOLocalMoveY(202, move_in_speed).SetEase(Ease.InOutSine);
 
             if (includeInput)
@@ -366,13 +366,13 @@ public class Combat_UI : MonoBehaviour
     public void incrementStars()
     {
         stars++;
-        Invoke("hideStars", 1);
+        Invoke("hideStars", 0.6f);
     }
     public void showStars()
     {
         if (stars > 0)
         {
-            audioManager.Play("Star_Shimes_3");
+            audioManager.Play("Star_Shimes");
             star_counter.DOLocalMoveX(-350, 0.3f);
         }
     }
@@ -382,7 +382,9 @@ public class Combat_UI : MonoBehaviour
     }
     public void starPunchSide()
     {
-        starsTransformSide.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.3f).OnComplete(() => starsTransformSide.DOScale(1, 0));
+        float scaleFactor = 0.08f;
+        float scaleTime = 0.02f;
+        starsTransformSide.DOPunchScale(new Vector3(scaleFactor, scaleFactor, scaleFactor), scaleTime).OnComplete(() => starsTransformSide.DOScale(1, 0));
     }
 
     // Stamina

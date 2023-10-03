@@ -23,7 +23,7 @@ public class BattleSystem : MonoBehaviour
 
     [Header("Mechanics")]
     public GameObject dodgeManager;
-    public GameObject focusManager;
+    public GameObject _focusManager;
     public GameObject restManager;
     public GameObject superAttackManager;
 
@@ -109,7 +109,7 @@ public class BattleSystem : MonoBehaviour
     }
     public void PlayFocus()
     {
-        focusManager.SetActive(true);
+        _focusManager.SetActive(true);
         playerUnit.incrementAdrenaline(1);
     }
 
@@ -235,11 +235,17 @@ public class BattleSystem : MonoBehaviour
         playerUnit.SetAdrenaline(0);
         enemyUnit.adrenaline = 0;
 
-        playerUnit.resetDamage();
+        setPlayerStats();
         enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
 
         endManager.resetFight();
         audioManager.Play("Combat_Theme");
+    }
+    void setPlayerStats()
+    {
+        playerUnit.NativeDamage -= focusManager.GetTotalATKBuff();
+        focusManager.ResetATKBuff();
+        playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());
     }
 
     void timeControlDefeatVictory()

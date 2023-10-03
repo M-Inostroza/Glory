@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private BattleSystem BS;
     private AudioManager audioManager;
     private Tutorial_UI _tutorial_UI;
+    private Combat_UI _combat_UI;
     
     [Header("Stats")]
     [SerializeField] private float maxSpeed, baseSpeed;
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        _combat_UI = FindObjectOfType<Combat_UI>();
+
         myAnim = GetComponent<Animator>();
         BS = FindObjectOfType<BattleSystem>();
         targetManager = FindObjectOfType<TargetManager>();
@@ -312,6 +315,10 @@ public class Player : MonoBehaviour
     public void SetCurrentHP(int CurrentHP)
     {
         currentHP = CurrentHP;
+        if (currentHP >= maxHP)
+        {
+            currentHP = maxHP;
+        }
     }
 
     // Stamina
@@ -492,14 +499,14 @@ public class Player : MonoBehaviour
     {
         if (!gameManager.isTutorial())
         {
-            FindObjectOfType<Combat_UI>().damageBuff("player");
+            _combat_UI.damageBuff("player");
         }
     }
     public void doSpeedBuff()
     {
         if (!gameManager.isTutorial())
         {
-            FindObjectOfType<Combat_UI>().speedBuff("player");
+            _combat_UI.speedBuff("player");
         }
     }
     public IEnumerator boostSpeed()

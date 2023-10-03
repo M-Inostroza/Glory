@@ -75,7 +75,7 @@ public class CounterManager : MonoBehaviour
         {
             tutorial_UI.activateX();
         }
-        _sword.transform.DOLocalMoveX(-3.25f, 3).SetEase(Ease.Linear).OnComplete(()=> _sword.transform.DOLocalMoveX(12, 0));
+        _sword.transform.DOLocalMoveX(-3.25f, 3).SetEase(Ease.Linear);
     }
 
     public void closeMinigame()

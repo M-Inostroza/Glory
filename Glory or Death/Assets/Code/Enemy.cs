@@ -303,6 +303,7 @@ public class Enemy : MonoBehaviour
     }
     public void doUIIn()
     {
+        // Calling from end animation super attack
         if (!BS.GetDeadPlayer() && !dirtManager.IsDirty)
         {
             Combat_UI.move_UI_in();

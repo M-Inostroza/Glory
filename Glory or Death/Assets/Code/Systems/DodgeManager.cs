@@ -214,7 +214,7 @@ public class DodgeManager : MonoBehaviour
         evadeSlider.transform.DOLocalMoveY(-170, 0.4f);
         evadeSlider.transform.DOScale(1f, 0.4f);
 
-        evadeSlider.value = -100;
+        evadeSlider.value = -90;
         gameObject.SetActive(false);
     }
     void destroyArrows()

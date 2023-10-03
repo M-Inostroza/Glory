@@ -11,6 +11,7 @@ public class endManager : MonoBehaviour
     Combat_UI combat_UI;
     SoundPlayer soundPlayer;
     AudioManager audioManager;
+    Player _player;
 
     [SerializeField] Image endOverlay;
     [SerializeField] Image dialogueBubble;
@@ -47,6 +48,8 @@ public class endManager : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         combat_UI = FindObjectOfType<Combat_UI>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
+
+        _player = FindObjectOfType<Player>();
     }
 
     // End
@@ -60,8 +63,7 @@ public class endManager : MonoBehaviour
         endOverlay.DOFade(0.85f, 1f);
         yield return new WaitForSeconds(delay);
 
-        showSummary(); 
-        combat_UI.showStars();
+        showSummary();
     }
     public void activateEndElements(bool state, int condition)
     {
@@ -82,7 +84,6 @@ public class endManager : MonoBehaviour
     {
         if (combat_UI.GetStars() != 0)
         {
-            combat_UI.removeStar();
             starCounter++;
             updateStarUI();
             combat_UI.removeStar();
@@ -99,7 +100,6 @@ public class endManager : MonoBehaviour
     }
     public void starPunchEnd()
     {
-        audioManager.Play("Star_Shimes_2");
         endStarSymbol.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 0.1f).OnComplete(() => endStarSymbol.DOScale(1, 0));
     }
 
@@ -173,7 +173,16 @@ public class endManager : MonoBehaviour
                 hasHitPlayed = true;
                 threshholdValue -= 0.6f;
             }
-        }).OnComplete(()=> starParticle.Play());
+        }).OnComplete(playStarAnimation);
+    }
+
+    void playStarAnimation()
+    {
+        combat_UI.showStars();
+        if (combat_UI.GetStars() > 0)
+        {
+            starParticle.Play();
+        }
     }
 
     public void showUpgradeButton(int delay = 0)
@@ -187,6 +196,8 @@ public class endManager : MonoBehaviour
 
     public void showUpgradeScreen()
     {
+        // onUpgradeButton
+        audioManager.Play("UI_select");
         _upgradeManager.SetActive(true);
         animatePlayerAvatarOut();
         _upgradeManager.transform.DOLocalMoveX(200, 0.3f);
@@ -199,6 +210,7 @@ public class endManager : MonoBehaviour
         summeryWindow.transform.DOLocalMoveX(0, 0.3f);
         if (!isReset)
         {
+            audioManager.Play("UI_select");
             showUpgradeButton();
         }
     }

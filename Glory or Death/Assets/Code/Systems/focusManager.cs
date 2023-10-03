@@ -14,6 +14,8 @@ public class focusManager : MonoBehaviour
 
     Player playerUnit;
     AudioManager audioManager;
+
+    static int _totalATKBuff;
     
     // Limits
     private float minX = -7.8f;
@@ -37,6 +39,7 @@ public class focusManager : MonoBehaviour
     }
     private void Start()
     {
+        _totalATKBuff = 0;
         setDificulty();
         // Cursor's initial position (right)
         cursor.transform.localPosition = new Vector2(maxX, cursor.transform.localPosition.y);
@@ -100,6 +103,7 @@ public class focusManager : MonoBehaviour
     }
     void successFocus()
     {
+        _totalATKBuff++;
         audioManager.Play("Focus_Success");
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
         cameraZoomOut();
@@ -150,5 +154,14 @@ public class focusManager : MonoBehaviour
     {
         mainCamera.DOFieldOfView(50, 0.5f);
         mainCamera.transform.DOLocalMoveY(0, 0.5f);
+    }
+
+    public static int GetTotalATKBuff()
+    {
+        return _totalATKBuff;
+    }
+    public static void ResetATKBuff()
+    {
+        _totalATKBuff = 0;
     }
 }

@@ -17,8 +17,13 @@ public class superAttackManager : MonoBehaviour
     [SerializeField] Camera mainCamera;
 
     cameraManager cameraManager;
-    Combat_UI combat_UI;
+
     Enemy enemy;
+    Animator _enemyAnimator;
+
+    Player _player;
+    Animator _playerAnimator;
+
     AudioManager audioManager;
     Tutorial_UI tutorial_UI;
 
@@ -27,10 +32,14 @@ public class superAttackManager : MonoBehaviour
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        combat_UI = FindObjectOfType<Combat_UI>();
         cameraManager = FindObjectOfType<cameraManager>();
-        enemy = FindObjectOfType<Enemy>();
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
+
+        _player = FindObjectOfType<Player>();
+        _playerAnimator = _player.GetComponent<Animator>();
+
+        enemy = FindObjectOfType<Enemy>();
+        _enemyAnimator = enemy.GetComponent<Animator>();
     }
     private void Update()
     {
@@ -83,8 +92,8 @@ public class superAttackManager : MonoBehaviour
         gameObject.SetActive(false);
         if (!gameManager.isTutorial())
         {
-            enemy.GetComponent<Animator>().Play("Attack_Strong");
-            FindObjectOfType<Player>().GetComponent<Animator>().Play("superDMG");
+            _enemyAnimator.Play("Attack_Strong");
+            _playerAnimator.Play("superDMG");
         }
     }
 

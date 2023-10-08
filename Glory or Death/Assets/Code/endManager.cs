@@ -162,7 +162,7 @@ public class endManager : MonoBehaviour
     // Summary window
     void showSummary()
     {
-        float threshholdValue = 2.7f;
+        float threshholdValue = 3;
         summeryWindow.transform.DOLocalMoveY(0, 2f).SetEase(Ease.OutBounce).OnUpdate(() =>
         {
             float curveY = summeryWindow.transform.localPosition.y;
@@ -191,6 +191,7 @@ public class endManager : MonoBehaviour
     }
     public void hideUpgradeButton()
     {
+        audioManager.Play("DG_jump_1");
         upgradeButton.DOLocalMoveX(530, .3f);
     }
 

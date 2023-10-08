@@ -243,8 +243,9 @@ public class Combat_UI : MonoBehaviour
             shieldFeedControl = false;
         }
     }
-    void updateShieldBar()
+    public void updateShieldBar()
     {
+        shieldBar.maxValue = playerUnit.GetMaxShield();
         shieldBar.DOValue(playerUnit.getCurrentShield(), .3f);
         shieldNumber.text = playerUnit.getCurrentShield().ToString();
     }

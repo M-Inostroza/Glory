@@ -237,9 +237,10 @@ public class BattleSystem : MonoBehaviour
 
         setPlayerStats();
         enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
+        enemyUnit.adrenaline = 0;
 
         endManager.resetFight();
-        audioManager.Play("Combat_Theme");
+        //audioManager.Play("Combat_Theme");
     }
     void setPlayerStats()
     {

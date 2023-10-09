@@ -219,7 +219,7 @@ public class BattleSystem : MonoBehaviour
 
             endManager.activateEndElements(true, 2);
             endManager.victoryScreen();
-            StartCoroutine(endManager.animatePlayerAvatarIn("Thanks for playing!", 3));
+            StartCoroutine(endManager.animatePlayerAvatarIn("Thanks for playing!", 3, true));
 
             deadEnemy = true;
         }

@@ -108,9 +108,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 4)
         {
-            Debug.Log(_player.GetBaseSpeed());
             _player.incrementBaseSpeed(1);
-            Debug.Log(_player.GetBaseSpeed());
             _endManager.reduceStars(4);
             _endManager.updateStarUI();
             buttonFeedback(true, _centerBlock.transform.GetChild(1).transform);
@@ -125,10 +123,10 @@ public class upgradeManager : MonoBehaviour
     {
         // calculate 30%
         float lifeBack = _player.GetMaxHP() * .3f;
-        if (_endManager.GetStars() >= 1)
+        if (_endManager.GetStars() >= 3)
         {
             _player.SetCurrentHP(_player.GetCurrentHP() + (int)lifeBack);
-            _endManager.reduceStars(1);
+            _endManager.reduceStars(3);
             _endManager.updateStarUI();
             buttonFeedback(true, _leftBlock.transform.GetChild(0).transform);
         }

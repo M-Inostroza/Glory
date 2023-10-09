@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
             currentShield = 0;
         } else
         {
-            currentShield = maxShield;
+            currentShield = maxShield / 2;
         }
     }
 

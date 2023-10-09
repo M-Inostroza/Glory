@@ -140,7 +140,7 @@ public class endManager : MonoBehaviour
     }
 
     // Avatar Anim
-    public IEnumerator animatePlayerAvatarIn(string BubbleText, float delay)
+    public IEnumerator animatePlayerAvatarIn(string BubbleText, float delay, bool isEnd = false)
     {
         yield return new WaitForSeconds(delay);
         playerAvatar.transform.DOLocalMoveX(-318, .2f);
@@ -149,7 +149,10 @@ public class endManager : MonoBehaviour
         dialogueText.DOFade(1, 0.3f);
         dialogueText.text = BubbleText;
         resetButton.gameObject.SetActive(true);
-        showUpgradeButton(1);
+        if (!isEnd)
+        {
+            showUpgradeButton(1);
+        }
     }
     public void animatePlayerAvatarOut()
     {

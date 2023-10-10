@@ -61,7 +61,7 @@ public class upgradeManager : MonoBehaviour
         }
     }
 
-    // Upgrades
+    // Upgrades right block
     public void reduceDodgeCooldown()
     {
         if (_endManager.GetStars() >= 2)
@@ -90,6 +90,7 @@ public class upgradeManager : MonoBehaviour
         }
     }
 
+    // Upgrades center block
     public void incrementATK()
     {
         if (_endManager.GetStars() >= 3)
@@ -119,6 +120,7 @@ public class upgradeManager : MonoBehaviour
         }
     }
 
+    // Upgrades left block
     public void recoverHealth()
     {
         // calculate 30%
@@ -148,6 +150,22 @@ public class upgradeManager : MonoBehaviour
         else
         {
             buttonFeedback(false, _leftBlock.transform.GetChild(1).transform);
+        }
+    }
+
+    public void incrementBlockSpeed()
+    {
+        if (_endManager.GetStars() >= 2)
+        {
+            _combat_UI.updateShieldBar();
+            CounterManager.SetRotationSpeed(CounterManager.GetRotationSpeed() + 1);
+            _endManager.reduceStars(2);
+            _endManager.updateStarUI();
+            buttonFeedback(true, _leftBlock.transform.GetChild(2).transform);
+        }
+        else
+        {
+            buttonFeedback(false, _leftBlock.transform.GetChild(2).transform);
         }
     }
 }

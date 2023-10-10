@@ -13,7 +13,7 @@ public class CounterManager : MonoBehaviour
     Combat_UI combatUI;
     Tutorial_UI tutorial_UI;
 
-    float rotationSpeed = 13;
+    static float rotationSpeed = 13;
     bool canRotate = false;
 
     [Header("Materials")]
@@ -115,5 +115,14 @@ public class CounterManager : MonoBehaviour
     public void canRotateBool(bool state)
     {
         canRotate = state;
+    }
+
+    public static float GetRotationSpeed()
+    {
+        return rotationSpeed;
+    }
+    public static void SetRotationSpeed(float newSpeed)
+    {
+        rotationSpeed = newSpeed;
     }
 }

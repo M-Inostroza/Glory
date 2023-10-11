@@ -18,8 +18,8 @@ public class focusManager : MonoBehaviour
     static int _totalATKBuff;
     
     // Limits
-    private float minX = -7.8f;
-    private float maxX = 7.8f;
+    private float minX = -7;
+    private float maxX = 7f;
     bool canFocus = false;
 
     // Range within which the target sprite should be when the "a" key is pressed

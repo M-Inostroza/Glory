@@ -50,6 +50,7 @@ public class superAttackManager : MonoBehaviour
     
     private void OnEnable()
     {
+        Combat_UI.move_UI_out();
         moveFeedback();
         audioManager.Play("Super_Attack_Enemy_On");
         cameraManager.playChrome();

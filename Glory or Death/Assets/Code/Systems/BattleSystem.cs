@@ -236,6 +236,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.adrenaline = 0;
 
         setPlayerStats();
+        Input_Manager.resetCooldown();
         enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
         enemyUnit.adrenaline = 0;
 

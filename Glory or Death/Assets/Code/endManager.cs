@@ -177,6 +177,7 @@ public class endManager : MonoBehaviour
                 threshholdValue -= 0.6f;
             }
         }).OnComplete(playStarAnimation);
+        showUpgradeButton(1);
     }
 
     void playStarAnimation()

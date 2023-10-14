@@ -196,4 +196,12 @@ public class Input_Manager : MonoBehaviour
         timeManager.ReduceCooldown(DodgeButtonCD);
         timeManager.ReduceCooldown(FocusButtonCD);
     }
+
+    public void resetCooldown()
+    {
+        AttackButtonCD.fillAmount = 0;
+        DefendButtonCD.fillAmount = 0;
+        DodgeButtonCD.fillAmount = 0;
+        FocusButtonCD.fillAmount = 0;
+    }
 }

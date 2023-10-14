@@ -190,6 +190,7 @@ public class Enemy : MonoBehaviour
             timeManager.fadeInUnitTimer();
             timeManager.continueUnitTimer();
             backToIdle();
+            Combat_UI.move_UI_in();
         }
         else
         {

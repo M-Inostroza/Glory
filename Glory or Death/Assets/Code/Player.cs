@@ -390,6 +390,15 @@ public class Player : MonoBehaviour
     }
 
     // Shield
+    private int shieldFactor = 1;
+    public int GetShieldFactor()
+    {
+        return shieldFactor;
+    }
+    public void SetShieldFactor(int newShieldFactor)
+    {
+        shieldFactor = newShieldFactor;
+    }
     public int GetMaxShield()
     {
         return maxShield;
@@ -408,7 +417,7 @@ public class Player : MonoBehaviour
     }
     public void increaseCurrentShield()
     {
-        currentShield++;
+        currentShield += shieldFactor;
         capShield();
     }
     public void decreaseCurrentShield()
@@ -432,6 +441,15 @@ public class Player : MonoBehaviour
     }
 
     // Adrenaline
+    private int adrenalineFactor = 1;
+    public int GetAdrenalineFactor()
+    {
+        return adrenalineFactor;
+    }
+    public void SetAdrenalineFactor(int newAdrenalineFactor)
+    {
+        adrenalineFactor = newAdrenalineFactor;
+    }
     public int GetAdrenaline()
     {
         return adrenaline;

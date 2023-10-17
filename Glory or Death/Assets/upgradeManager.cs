@@ -90,6 +90,21 @@ public class upgradeManager : MonoBehaviour
         }
     }
 
+    public void adrenalineEarning()
+    {
+        if (_endManager.GetStars() >= 3)
+        {
+            _player.SetAdrenalineFactor(_player.GetAdrenalineFactor() + 1);
+            _endManager.reduceStars(3);
+            _endManager.updateStarUI();
+            buttonFeedback(true, _rightBlock.transform.GetChild(2).transform);
+        }
+        else
+        {
+            buttonFeedback(false, _rightBlock.transform.GetChild(2).transform);
+        }
+    }
+
     // Upgrades center block
     public void incrementATK()
     {
@@ -117,6 +132,21 @@ public class upgradeManager : MonoBehaviour
         else
         {
             buttonFeedback(false, _centerBlock.transform.GetChild(1).transform);
+        }
+    }
+
+    public void shieldEarning()
+    {
+        if (_endManager.GetStars() >= 3)
+        {
+            _player.SetShieldFactor(_player.GetShieldFactor() + 1);
+            _endManager.reduceStars(3);
+            _endManager.updateStarUI();
+            buttonFeedback(true, _centerBlock.transform.GetChild(2).transform);
+        }
+        else
+        {
+            buttonFeedback(false, _centerBlock.transform.GetChild(2).transform);
         }
     }
 

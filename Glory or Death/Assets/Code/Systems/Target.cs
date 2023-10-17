@@ -10,6 +10,7 @@ public class Target : MonoBehaviour
     TargetManager targetManager;
     SoundPlayer soundPlayer;
     BattleSystem BS;
+    Player _player;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class Target : MonoBehaviour
         targetManager = FindObjectOfType<TargetManager>();
         colider = gameObject.GetComponent<CircleCollider2D>();
         BS = FindObjectOfType<BattleSystem>();
+        _player = FindObjectOfType<Player>();
     }
 
     private void OnMouseDown()
@@ -47,7 +49,7 @@ public class Target : MonoBehaviour
             colider.enabled = false;
             transform.DOScale(1.2f, 0.1f);
             GetComponent<SpriteRenderer>().DOFade(0, 0.1f).OnComplete(() => killTarget());
-            FindObjectOfType<Player>().incrementAdrenaline(1);
+            _player.incrementAdrenaline(_player.GetAdrenalineFactor());
         }
     }
 

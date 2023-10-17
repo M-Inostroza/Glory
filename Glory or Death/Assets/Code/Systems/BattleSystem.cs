@@ -100,17 +100,17 @@ public class BattleSystem : MonoBehaviour
     public void PlayerDefend()
     {
         defendManager.activateShieldMinigame();
-        playerUnit.incrementAdrenaline(1);
+        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
     }
     public void PlayDodge()
     {
         dodgeManager.SetActive(true);
-        playerUnit.incrementAdrenaline(1);
+        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
     }
     public void PlayFocus()
     {
         _focusManager.SetActive(true);
-        playerUnit.incrementAdrenaline(1);
+        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
     }
 
     public void PlayRest()
@@ -229,17 +229,17 @@ public class BattleSystem : MonoBehaviour
     public void resetBattle(int fightTime)
     {
         Combat_UI.move_UI_in();
+
         endManager.hideUpgradeScreen(true);
         endManager.hideUpgradeButton();
+
         resetTimers(fightTime);
-        playerUnit.SetAdrenaline(0);
-        enemyUnit.adrenaline = 0;
 
         setPlayerStats();
+        setEnemyStats();
+        timeManager.selectEnemyAction();
         Input_Manager.resetCooldown();
-        enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
-        enemyUnit.adrenaline = 0;
-
+        
         endManager.resetFight();
         //audioManager.Play("Combat_Theme");
     }
@@ -247,7 +247,13 @@ public class BattleSystem : MonoBehaviour
     {
         playerUnit.NativeDamage -= focusManager.GetTotalATKBuff();
         focusManager.ResetATKBuff();
+        playerUnit.SetAdrenaline(0);
         playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());
+    }
+    void setEnemyStats()
+    {
+        enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
+        enemyUnit.adrenaline = 0;
     }
 
     void timeControlDefeatVictory()

@@ -388,7 +388,8 @@ public class timeManager : MonoBehaviour
                 timerIsRunning = false;
                 stopUnitTimer();
                 battleTimer = 0;
-                FindObjectOfType<cameraManager>().playChrome();
+                cameraManager.playChrome();
+                //FindObjectOfType<cameraManager>().playChrome();
                 slowMotion(2, 0.1f);
                 endManager.StartCoroutine(endManager.showEndScreen(1));
             }

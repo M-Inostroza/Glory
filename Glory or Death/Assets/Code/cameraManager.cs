@@ -5,16 +5,19 @@ using MoreMountains.Feedbacks;
 
 public class cameraManager : MonoBehaviour
 {
-    [SerializeField] MMFeedback chromaticBeat;
+    private static MMFeedback chromaticBeat;
+    private static Transform _transformRef;
 
     Animator myAnim;
     private void Start()
     {
+        _transformRef = transform;
+        chromaticBeat = FindObjectOfType<MMFeedback>();
         myAnim = GetComponent<Animator>();
     }
-    public void playChrome()
+    public static void playChrome()
     {   
-        chromaticBeat.Play(transform.position);
+        chromaticBeat.Play(_transformRef.position);
     }
     public void deactivateAnimator()
     {

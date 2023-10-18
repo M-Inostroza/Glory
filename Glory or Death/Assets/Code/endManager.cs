@@ -106,7 +106,7 @@ public class endManager : MonoBehaviour
     public void resetFight()
     {
         summeryWindow.transform.DOLocalMoveY(455, 0.4f).OnComplete(()=> activateEndElements(false, 0));
-        endOverlay.DOFade(0, 0.3f);
+        //endOverlay.DOFade(0, 0.3f);
         animatePlayerAvatarOut();
         _upgradeManager.SetActive(false);
         hideUpgradeButton();
@@ -165,9 +165,14 @@ public class endManager : MonoBehaviour
     // Summary window
     void showSummary()
     {
-        float threshholdValue = 3;
+        playBounceSound();
+    }
+
+    void playBounceSound()
+    {
         summeryWindow.transform.DOLocalMoveY(0, 2f).SetEase(Ease.OutBounce).OnUpdate(() =>
         {
+            float threshholdValue = 3;
             float curveY = summeryWindow.transform.localPosition.y;
             bool hasHitPlayed = false;
             if (curveY < threshholdValue && !hasHitPlayed)
@@ -177,7 +182,6 @@ public class endManager : MonoBehaviour
                 threshholdValue -= 0.6f;
             }
         }).OnComplete(playStarAnimation);
-        showUpgradeButton(1);
     }
 
     void playStarAnimation()
@@ -186,9 +190,13 @@ public class endManager : MonoBehaviour
         if (combat_UI.GetStars() > 0)
         {
             starParticle.Play();
+        } else
+        {
+            showUpgradeButton();
         }
     }
 
+    // Upgrade Button
     public void showUpgradeButton(int delay = 0)
     {
         upgradeButton.DOLocalMoveX(300, .4f).SetDelay(delay);

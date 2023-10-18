@@ -49,7 +49,8 @@ public class counterSword : MonoBehaviour
         }
         else if (collision.name == "Counter Target")
         {
-            FindObjectOfType<cameraManager>().playChrome();
+            cameraManager.playChrome();
+            //FindObjectOfType<cameraManager>().playChrome();
             audioManager.Play("Counter_Fail");
             soundPlayer.stabSounds();
             meltHeart();

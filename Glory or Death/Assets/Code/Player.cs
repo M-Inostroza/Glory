@@ -541,7 +541,8 @@ public class Player : MonoBehaviour
     }
     public void ATK_SlowmoHit(float slowMo)
     {
-        FindObjectOfType<cameraManager>().playChrome();
+        cameraManager.playChrome();
+        //FindObjectOfType<cameraManager>().playChrome();
         StartCoroutine(timeManager.slowMotion(slowMo, .2f));
     }
     public void blockHit()

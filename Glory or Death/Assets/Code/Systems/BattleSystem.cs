@@ -15,7 +15,7 @@ public class BattleSystem : MonoBehaviour
     cameraManager cameraManager;
     AudioManager audioManager;
 
-    [SerializeField] GameObject loadingScreen;
+    [SerializeField] GameObject _loadingScreen;
     [SerializeField] Transform playerPanel;
     [SerializeField] Transform enemyPanel;
 
@@ -228,17 +228,18 @@ public class BattleSystem : MonoBehaviour
 
     public void resetBattle(int fightTime)
     {
-        Combat_UI.move_UI_in();
-
+        //Combat_UI.move_UI_in();
+        cameraManager.playChrome();
         endManager.hideUpgradeScreen(true);
         endManager.hideUpgradeButton();
+        loadingScreen.toggleLoadingScreen(1, 0.5f);
 
-        resetTimers(fightTime);
+        //resetTimers(fightTime);
 
         setPlayerStats();
         setEnemyStats();
-        timeManager.selectEnemyAction();
-        Input_Manager.resetCooldown();
+        //timeManager.selectEnemyAction();
+        //Input_Manager.resetCooldown();
         
         endManager.resetFight();
         //audioManager.Play("Combat_Theme");
@@ -280,7 +281,7 @@ public class BattleSystem : MonoBehaviour
         {
             timeManager.continueUnitTimer();
             //audioManager.Play("Combat_Theme");
-            loadingScreen.SetActive(false);
+            _loadingScreen.SetActive(false);
         }
     }
 

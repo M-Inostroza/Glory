@@ -232,8 +232,8 @@ public class BattleSystem : MonoBehaviour
         cameraManager.playChrome();
         endManager.hideUpgradeScreen(true);
         endManager.hideUpgradeButton();
-        loadingScreen.toggleLoadingScreen(1, 0.5f);
-        StartCoroutine(loadingScreen.fillLoadingSlider(2));
+        loadingScreen.toggleLoadingScreen(1, 0.3f);
+        StartCoroutine(loadingScreen.fillLoadingSlider(2, 3));
 
         //resetTimers(fightTime);
 

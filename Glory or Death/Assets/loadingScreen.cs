@@ -34,11 +34,13 @@ public class loadingScreen : MonoBehaviour
         }
     }
 
-    public static IEnumerator fillLoadingSlider(float delay)
+    public static IEnumerator fillLoadingSlider(float showDelay, float fillDelay)
     {
+        yield return new WaitForSeconds(showDelay);
         _loadingSlider.gameObject.SetActive(true);
-        yield return new WaitForSeconds(delay);
+
+        yield return new WaitForSeconds(fillDelay);
         _loadingSlider.value = 0;
-        _loadingSlider.DOValue(_loadingSlider.maxValue, 2);
+        _loadingSlider.DOValue(_loadingSlider.maxValue, 1.5f);
     }
 }

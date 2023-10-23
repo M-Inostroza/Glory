@@ -11,6 +11,8 @@ public class loadingScreen : MonoBehaviour
 
     private static Slider _loadingSlider;
 
+    [SerializeField] private Transform _startButton;
+    bool isActive = false;
     void Start()
     {
         _leftPanel = gameObject.transform.GetChild(0).gameObject;
@@ -42,5 +44,27 @@ public class loadingScreen : MonoBehaviour
         yield return new WaitForSeconds(fillDelay);
         _loadingSlider.value = 0;
         _loadingSlider.DOValue(_loadingSlider.maxValue, 1.5f);
+<<<<<<< Updated upstream
+=======
+    }
+
+    public void showButton()
+    {
+        if (!isActive)
+        {
+            _startButton.GetComponent<Image>().DOFade(1, 0.05f).OnComplete(()=> _startButton.GetChild(0).gameObject.SetActive(true));
+            _startButton.DOShakePosition(0.4f, 5, 80, 90);
+            isActive = true;
+        } else
+        {
+            _startButton.GetComponent<Image>().DOFade(0, 0.05f).OnComplete(() => _startButton.GetChild(0).gameObject.SetActive(false));
+            isActive = false;
+        }
+    }
+
+    public void openScreen()
+    {
+        loadingScreen.toggleLoadingScreen(0, 0.3f);
+>>>>>>> Stashed changes
     }
 }

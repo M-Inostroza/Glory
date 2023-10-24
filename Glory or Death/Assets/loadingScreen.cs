@@ -44,8 +44,6 @@ public class loadingScreen : MonoBehaviour
         yield return new WaitForSeconds(fillDelay);
         _loadingSlider.value = 0;
         _loadingSlider.DOValue(_loadingSlider.maxValue, 1.5f);
-<<<<<<< Updated upstream
-=======
     }
 
     public void showButton()
@@ -65,6 +63,5 @@ public class loadingScreen : MonoBehaviour
     public void openScreen()
     {
         loadingScreen.toggleLoadingScreen(0, 0.3f);
->>>>>>> Stashed changes
     }
 }

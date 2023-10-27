@@ -233,7 +233,7 @@ public class BattleSystem : MonoBehaviour
         endManager.hideUpgradeScreen(true);
         endManager.hideUpgradeButton();
         loadingScreen.toggleLoadingScreen(1, 0.3f);
-        StartCoroutine(loadingScreen.fillLoadingSlider(2, 3));
+        StartCoroutine(loadingScreen.fillLoadingSlider(1.5f, 1));
 
         //resetTimers(fightTime);
 

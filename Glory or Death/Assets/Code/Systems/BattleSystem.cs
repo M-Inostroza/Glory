@@ -14,6 +14,7 @@ public class BattleSystem : MonoBehaviour
     endManager endManager;
     cameraManager cameraManager;
     AudioManager audioManager;
+    loadingScreen _resetLoadingScreen;
 
     [SerializeField] GameObject _loadingScreen;
     [SerializeField] Transform playerPanel;
@@ -68,6 +69,7 @@ public class BattleSystem : MonoBehaviour
         timeManager = FindObjectOfType<timeManager>();
         endManager = FindObjectOfType<endManager>();
         cameraManager = FindObjectOfType<cameraManager>();
+        _resetLoadingScreen = FindObjectOfType<loadingScreen>();
 
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
@@ -226,24 +228,18 @@ public class BattleSystem : MonoBehaviour
     }
     /*-----------------------------------END FIGHT---------------------------------------------------------*/
 
-    public void resetBattle(int fightTime)
+    public void resetBattle()
     {
-        //Combat_UI.move_UI_in();
         cameraManager.playChrome();
         endManager.hideUpgradeScreen(true);
         endManager.hideUpgradeButton();
-        loadingScreen.toggleLoadingScreen(1, 0.3f);
-        StartCoroutine(loadingScreen.fillLoadingSlider(1.5f, 1));
-
-        //resetTimers(fightTime);
+        _resetLoadingScreen.toggleLoadingScreen(1, 0.3f);
+        StartCoroutine(_resetLoadingScreen.fillLoadingSlider(1.5f, 1));
 
         setPlayerStats();
         setEnemyStats();
-        //timeManager.selectEnemyAction();
-        //Input_Manager.resetCooldown();
         
         endManager.resetFight();
-        //audioManager.Play("Combat_Theme");
     }
     void setPlayerStats()
     {
@@ -264,7 +260,7 @@ public class BattleSystem : MonoBehaviour
         timeManager.stopUnitTimer();
         timeManager.fadeOutUnitTimer();
     }
-    void resetTimers(int mainTimer)
+    public void resetTimers(int mainTimer)
     {
         timeManager.resetFightTimer(mainTimer);
         timeManager.activateFightTimer();

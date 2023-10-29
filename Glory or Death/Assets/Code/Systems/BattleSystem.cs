@@ -234,7 +234,7 @@ public class BattleSystem : MonoBehaviour
         endManager.hideUpgradeScreen(true);
         endManager.hideUpgradeButton();
         _resetLoadingScreen.toggleLoadingScreen(1, 0.3f);
-        StartCoroutine(_resetLoadingScreen.fillLoadingSlider(1.5f, 1));
+        StartCoroutine(_resetLoadingScreen.fillLoadingSlider(1, 0.5f));
 
         setPlayerStats();
         setEnemyStats();

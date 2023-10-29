@@ -54,10 +54,10 @@ public class loadingScreen : MonoBehaviour
 
         yield return new WaitForSeconds(fillDelay);
         _loadingSlider.value = 0;
-        _loadingSlider.DOValue(_loadingSlider.maxValue, 1.5f).OnComplete(showButton);
+        _loadingSlider.DOValue(_loadingSlider.maxValue, 0.8f).OnComplete(showStartButton);
     }
 
-    public void showButton()
+    public void showStartButton()
     {
         if (!isActive)
         {
@@ -72,19 +72,26 @@ public class loadingScreen : MonoBehaviour
         }
     }
 
-    public void openScreen()
+    public void openScreen(int fightTime)
     {
         StartCoroutine(timeManager.slowMotion(0.5f, 0.2f));
         cameraManager.playChrome();
-        _loadingSlider.gameObject.SetActive(false); ;
+        resetLoadingBar();
+
         toggleLoadingScreen(0, 0.3f);
         _inputManager.resetCooldown();
 
         _timeManager.selectEnemyAction();
-        _BS.resetTimers(80);
+        _BS.resetTimers(fightTime);
 
         Combat_UI.move_UI_in();
-        showButton();
+        showStartButton();
         _audioManager.Play("Combat_Theme");
+    }
+
+    void resetLoadingBar()
+    {
+        _loadingSlider.gameObject.SetActive(false);
+        _loadingSlider.value = 0;
     }
 }

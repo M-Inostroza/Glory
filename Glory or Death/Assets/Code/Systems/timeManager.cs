@@ -56,6 +56,12 @@ public class timeManager : MonoBehaviour
     int costDF = 20;
     int costDG = 30;
     int costFC = 35;
+    public int CostFC
+    {
+        get { return costFC; }
+        set { costFC = value; }
+    }
+
     [SerializeField] TMP_Text costATKText;
     [SerializeField] TMP_Text costDFText;
     [SerializeField] TMP_Text costDGText;
@@ -87,7 +93,7 @@ public class timeManager : MonoBehaviour
         runTimer();
     }
 
-    void setActionCost()
+    public void setActionCost()
     {
         costATKText.text = costATK.ToString();
         costDFText.text = costDF.ToString();

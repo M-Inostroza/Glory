@@ -31,6 +31,9 @@ public class upgradeManager : MonoBehaviour
         getBlocks();
         setRandomUpgrade();
     }
+
+    private int previousRandom = -1;
+
     private void setRandomUpgrade()
     {
         foreach (GameObject block in blockList)
@@ -39,10 +42,22 @@ public class upgradeManager : MonoBehaviour
             {
                 upgrade.gameObject.SetActive(false);
             }
-            int random = Random.Range(0, block.transform.childCount);
+
+            int childCount = block.transform.childCount;
+            int random;
+
+            do
+            {
+                random = Random.Range(0, childCount);
+            } while (random == previousRandom);
+
+            previousRandom = random;
+
             block.transform.GetChild(random).gameObject.SetActive(true);
         }
     }
+
+
     void getBlocks()
     {
         blockList.Add(_leftBlock);
@@ -75,7 +90,6 @@ public class upgradeManager : MonoBehaviour
             buttonFeedback(false, _rightBlock.transform.GetChild(0).transform);
         }
     }
-
     public void reduceATKCooldown()
     {
         if (_endManager.GetStars() >= 2)
@@ -89,7 +103,6 @@ public class upgradeManager : MonoBehaviour
             buttonFeedback(false, _rightBlock.transform.GetChild(1).transform);
         }
     }
-
     public void adrenalineEarning()
     {
         if (_endManager.GetStars() >= 3)
@@ -102,6 +115,21 @@ public class upgradeManager : MonoBehaviour
         else
         {
             buttonFeedback(false, _rightBlock.transform.GetChild(2).transform);
+        }
+    }
+    public void reduceFocusCost()
+    {
+        if (_endManager.GetStars() >= 2)
+        {
+            _timeManager.CostFC = _timeManager.CostFC -= 5;
+            _timeManager.setActionCost();
+            _endManager.reduceStars(2);
+            _endManager.updateStarUI();
+            buttonFeedback(true, _rightBlock.transform.GetChild(3).transform);
+        }
+        else
+        {
+            buttonFeedback(false, _rightBlock.transform.GetChild(3).transform);
         }
     }
 
@@ -196,6 +224,20 @@ public class upgradeManager : MonoBehaviour
         else
         {
             buttonFeedback(false, _leftBlock.transform.GetChild(2).transform);
+        }
+    }
+
+    // Randomizer
+    public void randomizeUpgrades()
+    {
+        if (_endManager.GetStars() >= 1)
+        {
+            _endManager.reduceStars(1);
+            _endManager.updateStarUI();
+            setRandomUpgrade();
+        } else
+        {
+            Debug.Log("not enough stars");
         }
     }
 }

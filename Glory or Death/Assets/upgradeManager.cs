@@ -17,6 +17,8 @@ public class upgradeManager : MonoBehaviour
 
     List<GameObject> blockList = new List<GameObject>();
 
+    private bool upgradedSomehthing;
+
     private void Start()
     {
         _player = FindObjectOfType<Player>();
@@ -32,7 +34,13 @@ public class upgradeManager : MonoBehaviour
         setRandomUpgrade();
     }
 
+    private void OnDisable()
+    {
+        upgradedSomehthing = false;
+    }
+
     private int previousRandom = -1;
+    
 
     private void setRandomUpgrade()
     {
@@ -81,6 +89,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 2)
         {
+            upgradedSomehthing = true;
             _timeManager.dodgeFactorCD -= 0.2f;
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
@@ -94,6 +103,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 2)
         {
+            upgradedSomehthing = true;
             _timeManager.attackFactorCD -= 0.2f;
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
@@ -107,6 +117,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 3)
         {
+            upgradedSomehthing = true;
             _player.SetAdrenalineFactor(_player.GetAdrenalineFactor() + 1);
             _endManager.reduceStars(3);
             _endManager.updateStarUI();
@@ -121,6 +132,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 2)
         {
+            upgradedSomehthing = true;
             _timeManager.CostFC = _timeManager.CostFC -= 5;
             _timeManager.setActionCost();
             _endManager.reduceStars(2);
@@ -138,6 +150,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 3)
         {
+            upgradedSomehthing = true;
             _player.NativeDamage++;
             _endManager.reduceStars(3);
             _endManager.updateStarUI();
@@ -152,6 +165,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 4)
         {
+            upgradedSomehthing = true;
             _player.incrementBaseSpeed(1);
             _endManager.reduceStars(4);
             _endManager.updateStarUI();
@@ -167,6 +181,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 3)
         {
+            upgradedSomehthing = true;
             _player.SetShieldFactor(_player.GetShieldFactor() + 1);
             _endManager.reduceStars(3);
             _endManager.updateStarUI();
@@ -185,6 +200,7 @@ public class upgradeManager : MonoBehaviour
         float lifeBack = _player.GetMaxHP() * .3f;
         if (_endManager.GetStars() >= 3)
         {
+            upgradedSomehthing = true;
             _player.SetCurrentHP(_player.GetCurrentHP() + (int)lifeBack);
             _endManager.reduceStars(3);
             _endManager.updateStarUI();
@@ -199,6 +215,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 2)
         {
+            upgradedSomehthing = true;
             _combat_UI.updateShieldBar();
             _player.setMaxShield(_player.GetMaxShield() + 1);
             _endManager.reduceStars(2);
@@ -215,6 +232,7 @@ public class upgradeManager : MonoBehaviour
     {
         if (_endManager.GetStars() >= 2)
         {
+            upgradedSomehthing = true;
             _combat_UI.updateShieldBar();
             CounterManager.SetRotationSpeed(CounterManager.GetRotationSpeed() + 1);
             _endManager.reduceStars(2);
@@ -230,14 +248,15 @@ public class upgradeManager : MonoBehaviour
     // Randomizer
     public void randomizeUpgrades()
     {
-        if (_endManager.GetStars() >= 1)
+        if (_endManager.GetStars() >= 1 && !upgradedSomehthing)
         {
+            _audioManager.Play("Randomize");
             _endManager.reduceStars(1);
             _endManager.updateStarUI();
             setRandomUpgrade();
         } else
         {
-            Debug.Log("not enough stars");
+            _audioManager.Play("Shield_metal_4");
         }
     }
 }

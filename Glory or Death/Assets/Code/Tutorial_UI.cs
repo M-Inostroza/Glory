@@ -280,6 +280,7 @@ public class Tutorial_UI : MonoBehaviour
                     tryLimit(2, 4, 0, 3);
                 }
                 void attack() {
+                    StartCoroutine(timeManager.slowMotion(2, 0.4f));
                     _player.GetComponent<Animator>().Play("ATK_jump");
                     _targetManager.attack();
                 }

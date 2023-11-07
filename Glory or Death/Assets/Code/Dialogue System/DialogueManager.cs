@@ -19,6 +19,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] Transform _endTutButton;
     [SerializeField] Transform _readyText;
 
+    [SerializeField] Transform _symbols;
+
     Tutorial_UI tutorial_UI;
 
     void Start()
@@ -55,9 +57,13 @@ public class DialogueManager : MonoBehaviour
                 change();
 
                 moveGuardContainer(In);
-                _guardText.text = "Select the attack command, wait for the timer and click as many targets as you can";
+                toogleSymbols(0, true);
+                toogleSymbols(1, true);
+                _guardText.text = "Select the attack command (   ), wait for the timer and click as many targets (   ) as you can"; 
                 yield return new WaitForSeconds(6);
                 moveGuardContainer(Out);
+                toogleSymbols(0, false);
+                toogleSymbols(0, false);
                 Overlay(0);
                 tutorial_UI.toggleInput(0, 1);
                 break;
@@ -201,6 +207,11 @@ public class DialogueManager : MonoBehaviour
                 Overlay(1, .8f);
                 break;
         }
+    }
+
+    void toogleSymbols(int symbol, bool inOut)
+    {
+        _symbols.GetChild(symbol).gameObject.SetActive(inOut);
     }
     public void Overlay(int showOrHide, float intensity = 0)
     {

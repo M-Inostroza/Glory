@@ -32,6 +32,9 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] Slider shieldBar;
     [SerializeField] TMP_Text shieldNumber;
 
+    static GameObject _overlay;
+    static GameObject _cursorContainer;
+
     private string _slectedAction;
     private int _numberOfTries;
 
@@ -62,6 +65,9 @@ public class Tutorial_UI : MonoBehaviour
         _audioManager = FindObjectOfType<AudioManager>();
         _player = FindObjectOfType<Player>();
         _defendManager = FindObjectOfType<defendManager>();
+
+        _overlay = transform.GetChild(3).gameObject;
+        _cursorContainer = transform.GetChild(10).gameObject;
     }
     private void Start()
     {
@@ -280,7 +286,7 @@ public class Tutorial_UI : MonoBehaviour
                     tryLimit(2, 4, 0, 3);
                 }
                 void attack() {
-                    StartCoroutine(timeManager.slowMotion(2, 0.4f));
+                    StartCoroutine(timeManager.slowMotion(1.8f, 0.5f));
                     _player.GetComponent<Animator>().Play("ATK_jump");
                     _targetManager.attack();
                 }
@@ -530,5 +536,17 @@ public class Tutorial_UI : MonoBehaviour
             }
             hasPlayed = false;
         }
+    }
+
+    public static void attackDetailTutorial()
+    {
+        Image cursorImage = _cursorContainer.transform.GetChild(0).GetComponent<Image>();
+        Transform cursorTransform = _cursorContainer.transform.GetChild(0).transform;
+
+        _overlay.GetComponent<SpriteRenderer>().DOFade(.8f, 0.4f);
+
+        cursorTransform.gameObject.SetActive(true);
+        cursorImage.DOFade(1, 0.4f);
+        cursorTransform.DOLocalMove(new Vector2(-336, 13.3f), 0.8f).OnComplete(()=> Time.timeScale = 0.01f);
     }
 }

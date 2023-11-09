@@ -66,6 +66,8 @@ public class DialogueManager : MonoBehaviour
                 toogleSymbols(0, false);
                 Overlay(0);
                 tutorial_UI.toggleInput(0, 1);
+                yield return new WaitForSeconds(1);
+                Tutorial_UI.attackDetailTutorial();
                 break;
             case 2: // Defense tutorial
                 movePlayerContainer(In);

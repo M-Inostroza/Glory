@@ -538,15 +538,40 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
-    public static void attackDetailTutorial()
+    // Detail attack
+
+    public static bool hasShownDetail = false;
+    public static void attackDetailTutorial(int step)
     {
         Image cursorImage = _cursorContainer.transform.GetChild(0).GetComponent<Image>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(0).transform;
+        SpriteRenderer overlay = _overlay.GetComponent<SpriteRenderer>();
+        float cursorDelay = .7f;
+        switch (step)
+        {
+            case 1:
+                if (!hasShownDetail)
+                {
+                    overlay.DOFade(.8f, 0.4f);
+                    cursorTransform.gameObject.SetActive(true);
+                    cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
+                    cursorTransform.DOLocalMove(new Vector2(-336, 13.3f), 0.8f).SetDelay(cursorDelay).OnComplete(() => Time.timeScale = 0.01f);
+                }
+                break;
 
-        _overlay.GetComponent<SpriteRenderer>().DOFade(.8f, 0.4f);
-
-        cursorTransform.gameObject.SetActive(true);
-        cursorImage.DOFade(1, 0.4f);
-        cursorTransform.DOLocalMove(new Vector2(-336, 13.3f), 0.8f).OnComplete(()=> Time.timeScale = 0.01f);
+            case 2:
+                if (!hasShownDetail)
+                {
+                    Time.timeScale = 0.8f;
+                    cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
+                    overlay.DOFade(0, 0.4f);
+                }
+                break;
+            case 3:
+                Time.timeScale = 0.2f;
+                // Show cursor on targets
+                // Return time and hide arrows when 3 targets break
+                break;
+        }
     }
 }

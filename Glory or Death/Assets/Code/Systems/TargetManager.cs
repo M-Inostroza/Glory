@@ -41,6 +41,10 @@ public class TargetManager : MonoBehaviour
 
     IEnumerator activateTargets()
     {
+        if (!Tutorial_UI.hasShownDetail)
+        {
+            Tutorial_UI.attackDetailTutorial(3);
+        }
         var targets = this.targets;
         
         for (int i = 0; i < 3; i++)

@@ -13,6 +13,7 @@ public class TargetManager : MonoBehaviour
     private BattleSystem BattleSystem;
     private Camera MainCamera;
     private Combat_UI combat_UI;
+    private Tutorial_UI tutorial_UI;
 
     [SerializeField] SpriteRenderer courtain;
     [SerializeField] GameObject vFeedback;
@@ -24,6 +25,7 @@ public class TargetManager : MonoBehaviour
         BattleSystem = FindObjectOfType<BattleSystem>();
         MainCamera = FindObjectOfType<Camera>();
         combat_UI = FindObjectOfType<Combat_UI>();
+        tutorial_UI = FindObjectOfType<Tutorial_UI>();
     }
 
     public void attack()
@@ -33,6 +35,11 @@ public class TargetManager : MonoBehaviour
         {
             Combat_UI.move_UI_out();
             BattleSystem.targetHit = 0;
+            courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
+        }
+        if (!tutorial_UI.hasShownDetail)
+        {
+            courtain.DOColor(new Color(0, 0, 0, .5f), 0.1f);
         }
         courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
         StartCoroutine(activateTargets());
@@ -41,9 +48,9 @@ public class TargetManager : MonoBehaviour
 
     IEnumerator activateTargets()
     {
-        if (!Tutorial_UI.hasShownDetail)
+        if (!tutorial_UI.hasShownDetail)
         {
-            Tutorial_UI.attackDetailTutorial(3);
+            tutorial_UI.attackDetailTutorial(3);
         }
         var targets = this.targets;
         
@@ -52,6 +59,12 @@ public class TargetManager : MonoBehaviour
             targets[i].transform.DOScale(1, 0.1f);
             targets[i].GetComponent<SpriteRenderer>().DOFade(1, 0);
             targets[i].SetActive(true);
+
+            if (!tutorial_UI.hasShownDetail)
+            {
+                targets[i].transform.GetChild(0).gameObject.SetActive(true);
+                targets[i].transform.GetChild(0).transform.DOScale(new Vector2(.5f, .5f), .5f);
+            }
 
             if (i == 0)
             {
@@ -76,7 +89,7 @@ public class TargetManager : MonoBehaviour
             target.transform.DOScale(0, 0.05f).OnComplete(() => target.SetActive(false));
         }
 
-        courtain.DOColor(new Color(0, 0, 0, 0), .5f);
+        courtain.DOColor(new Color(0, 0, 0, 0), .5f).OnComplete(()=> tutorial_UI.hasShownDetail = true);
         Combat_UI.move_UI_in();
     }
 

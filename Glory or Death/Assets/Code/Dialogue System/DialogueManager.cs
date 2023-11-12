@@ -49,26 +49,29 @@ public class DialogueManager : MonoBehaviour
                 _playerText.text = "...";
                 yield return new WaitForSeconds(4);
                 moveGuardContainer(Out);
-                change();
+                StartCoroutine(change());
 
                 movePlayerContainer(In);
                 yield return new WaitForSeconds(2);
                 movePlayerContainer(Out);
-                change();
+                StartCoroutine(change());
 
                 moveGuardContainer(In);
                 toogleSymbols(0, true);
                 toogleSymbols(1, true);
                 _guardText.text = "Select the attack command (   ), wait for the timer and click as many targets (   ) as you can"; 
                 yield return new WaitForSeconds(6);
+                toogleSymbols(0, false);
+                toogleSymbols(1, false);
+                _guardText.text = "Try it a few times...";
+                yield return new WaitForSeconds(2);
                 moveGuardContainer(Out);
-                toogleSymbols(0, false);
-                toogleSymbols(0, false);
                 Overlay(0);
                 tutorial_UI.toggleInput(0, 1);
                 yield return new WaitForSeconds(1);
-                Tutorial_UI.attackDetailTutorial(1);
+                tutorial_UI.attackDetailTutorial(1);
                 break;
+
             case 2: // Defense tutorial
                 movePlayerContainer(In);
                 _playerText.text = "Not bad...";

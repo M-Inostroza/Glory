@@ -579,4 +579,14 @@ public class Tutorial_UI : MonoBehaviour
                 break;
         }
     }
+
+    public void defendDetailTutorial(int step)
+    {
+        switch (step)
+        {
+            case 1:
+                StartCoroutine(timeManager.slowMotion(2, 0.4f));
+                break;
+        }
+    }
 }

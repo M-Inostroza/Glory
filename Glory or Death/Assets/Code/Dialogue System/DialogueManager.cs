@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
         //tutorial_UI.toggleInput(8, 1);
-        StartCoroutine(interactions(1, 2));
+        StartCoroutine(interactions(2, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -82,14 +82,19 @@ public class DialogueManager : MonoBehaviour
                 moveGuardContainer(In);
                 _guardText.text = "You better get use to it... let's try some defense";
                 yield return new WaitForSeconds(3);
-                _guardText.text = "Click the defend command and press the A key when the circle is in the green area...";
+                toogleSymbols(2, true);
+                toogleSymbols(3, true);
+                _guardText.text = "Click the defend command (   ) and press     when the circle is \nin the green area...";
                 yield return new WaitForSeconds(6);
+                toogleSymbols(2, false);
+                toogleSymbols(3, false);
                 _guardText.text = "If you succeed you will get a shield point, which will allow you to counter the enemy attack";
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(1, 1);
                 break;
+
             case 3:
                 movePlayerContainer(In); _playerText.text = "I think I got this...";
                 yield return new WaitForSeconds(3);

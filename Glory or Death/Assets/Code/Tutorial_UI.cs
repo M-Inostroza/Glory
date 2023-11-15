@@ -540,7 +540,7 @@ public class Tutorial_UI : MonoBehaviour
 
     // Detail attack
 
-    public bool hasShownDetail = false;
+    public bool hasShownDetail_attack = false;
     public void attackDetailTutorial(int step)
     {
         Image cursorImage = _cursorContainer.transform.GetChild(0).GetComponent<Image>();
@@ -551,7 +551,7 @@ public class Tutorial_UI : MonoBehaviour
         switch (step)
         {
             case 1: // Shows cursor moving to command
-                if (!hasShownDetail)
+                if (!hasShownDetail_attack)
                 {
                     overlay.DOFade(.8f, 0.4f);
                     cursorTransform.gameObject.SetActive(true);
@@ -566,7 +566,7 @@ public class Tutorial_UI : MonoBehaviour
                 break;
 
             case 2: // On comand click
-                if (!hasShownDetail)
+                if (!hasShownDetail_attack)
                 {
                     Time.timeScale = 0.8f;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
@@ -580,12 +580,29 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
+    public bool hasShownDetail_defend = false;
     public void defendDetailTutorial(int step)
     {
+        Image cursorImage = _cursorContainer.transform.GetChild(1).GetComponent<Image>();
+        SpriteRenderer overlay = _overlay.GetComponent<SpriteRenderer>();
+        Transform cursorTransform = _cursorContainer.transform.GetChild(1).transform;
+        float cursorDelay = .8f;
+
         switch (step)
         {
-            case 1:
-                StartCoroutine(timeManager.slowMotion(2, 0.4f));
+            case 1: // Shows cursor moving to command
+                if (!hasShownDetail_defend)
+                {
+                    overlay.DOFade(.8f, 0.4f);
+                    cursorTransform.gameObject.SetActive(true);
+                    cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
+                    cursorTransform.DOLocalMove(new Vector2(-336, -30), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                }
+                void activateButton()
+                {
+                    _inputs[1].GetComponent<Button>().interactable = true;
+                    Time.timeScale = 0.01f;
+                }
                 break;
         }
     }

@@ -37,7 +37,7 @@ public class TargetManager : MonoBehaviour
             BattleSystem.targetHit = 0;
             courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
         }
-        if (!tutorial_UI.hasShownDetail)
+        if (!tutorial_UI.hasShownDetail_attack)
         {
             courtain.DOColor(new Color(0, 0, 0, .5f), 0.1f);
         }
@@ -48,7 +48,7 @@ public class TargetManager : MonoBehaviour
 
     IEnumerator activateTargets()
     {
-        if (!tutorial_UI.hasShownDetail)
+        if (!tutorial_UI.hasShownDetail_attack)
         {
             tutorial_UI.attackDetailTutorial(3);
         }
@@ -60,7 +60,7 @@ public class TargetManager : MonoBehaviour
             targets[i].GetComponent<SpriteRenderer>().DOFade(1, 0);
             targets[i].SetActive(true);
 
-            if (!tutorial_UI.hasShownDetail)
+            if (!tutorial_UI.hasShownDetail_attack)
             {
                 targets[i].transform.GetChild(0).gameObject.SetActive(true);
                 targets[i].transform.GetChild(0).transform.DOScale(new Vector2(.5f, .5f), .5f);
@@ -89,7 +89,7 @@ public class TargetManager : MonoBehaviour
             target.transform.DOScale(0, 0.05f).OnComplete(() => target.SetActive(false));
         }
 
-        courtain.DOColor(new Color(0, 0, 0, 0), .5f).OnComplete(()=> tutorial_UI.hasShownDetail = true);
+        courtain.DOColor(new Color(0, 0, 0, 0), .5f).OnComplete(()=> tutorial_UI.hasShownDetail_attack = true);
         Combat_UI.move_UI_in();
     }
 

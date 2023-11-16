@@ -77,7 +77,7 @@ public class DialogueManager : MonoBehaviour
                 _playerText.text = "Not bad...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
-                change();
+                StartCoroutine(change());
 
                 moveGuardContainer(In);
                 _guardText.text = "You better get use to it... let's try some defense";
@@ -93,6 +93,7 @@ public class DialogueManager : MonoBehaviour
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(1, 1);
+                tutorial_UI.defendDetailTutorial(1);
                 break;
 
             case 3:

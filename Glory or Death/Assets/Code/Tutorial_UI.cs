@@ -604,6 +604,15 @@ public class Tutorial_UI : MonoBehaviour
                     Time.timeScale = 0.01f;
                 }
                 break;
+
+            case 2: // Player clicks
+                if (!hasShownDetail_defend)
+                {
+                    Time.timeScale = 0.8f;
+                    cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
+                    overlay.DOFade(0, 0.4f);
+                }
+                break;
         }
     }
 }

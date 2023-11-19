@@ -8,7 +8,10 @@ public class defendManager : MonoBehaviour
     [SerializeField] GameObject keyCanvas;
     [SerializeField] Camera mainCamera;
 
+    SpriteRenderer shine;
+
     AudioManager audioManager;
+    Tutorial_UI tutorial_UI;
 
     // Control
     bool transformControl;
@@ -18,14 +21,18 @@ public class defendManager : MonoBehaviour
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        shine = shadow.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
         controlDefend();
+        colorFeedback();
     }
 
     public void activateShieldMinigame()
     {
+        tutorial_UI.defendDetailTutorial(3);
         canDefend = true;
         transformControl = true;
         cameraAndKeyIn();
@@ -70,7 +77,7 @@ public class defendManager : MonoBehaviour
             scaleUP.Rewind();
             playerAnim.SetBool("skillShieldSuccess", true);
             closeMinigame();
-        } 
+        }
     }
 
     void Fail()
@@ -88,6 +95,17 @@ public class defendManager : MonoBehaviour
         keyCanvas.SetActive(false);
         transformControl = false;
         canDefend = false;
+    }
+
+    void colorFeedback()
+    {
+        if (transform.localScale.x > 0.65f)
+        {
+            shine.DOFade(0.8f, 0.05f);
+        } else
+        {
+            shine.DOFade(0,0);
+        }
     }
 
     void cameraZoomIn()

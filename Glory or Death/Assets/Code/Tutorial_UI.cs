@@ -601,7 +601,7 @@ public class Tutorial_UI : MonoBehaviour
                 void activateButton()
                 {
                     _inputs[1].GetComponent<Button>().interactable = true;
-                    Time.timeScale = 0.01f;
+                    Time.timeScale = 0.05f;
                 }
                 break;
 
@@ -611,6 +611,20 @@ public class Tutorial_UI : MonoBehaviour
                     Time.timeScale = 0.8f;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
                     overlay.DOFade(0, 0.4f);
+                }
+                break;
+
+            case 3: // Minigame starts
+                if (!hasShownDetail_defend)
+                {
+                    overlay.DOFade(0.6f, 0.4f);
+                    StartCoroutine(timeManager.slowMotion(1.2f, 0.4f));
+                    StartCoroutine(fadeIn());
+                }
+                IEnumerator fadeIn()
+                {
+                    yield return new WaitForSeconds(1.2f);
+                    overlay.DOFade(0, 0.3f);
                 }
                 break;
         }

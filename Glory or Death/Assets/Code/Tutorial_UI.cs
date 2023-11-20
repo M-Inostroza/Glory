@@ -33,6 +33,7 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] TMP_Text shieldNumber;
 
     static GameObject _overlay;
+    private SpriteRenderer _overlaySprite;
     static GameObject _cursorContainer;
 
     private string _slectedAction;
@@ -67,6 +68,7 @@ public class Tutorial_UI : MonoBehaviour
         _defendManager = FindObjectOfType<defendManager>();
 
         _overlay = transform.GetChild(3).gameObject;
+        _overlaySprite = _overlay.GetComponent<SpriteRenderer>();
         _cursorContainer = transform.GetChild(10).gameObject;
     }
     private void Start()
@@ -538,6 +540,8 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
+    // Detailed tutorial section
+
     // Detail attack
 
     public bool hasShownDetail_attack = false;
@@ -545,7 +549,6 @@ public class Tutorial_UI : MonoBehaviour
     {
         Image cursorImage = _cursorContainer.transform.GetChild(0).GetComponent<Image>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(0).transform;
-        SpriteRenderer overlay = _overlay.GetComponent<SpriteRenderer>();
         float cursorDelay = .6f;
 
         switch (step)
@@ -553,7 +556,7 @@ public class Tutorial_UI : MonoBehaviour
             case 1: // Shows cursor moving to command
                 if (!hasShownDetail_attack)
                 {
-                    overlay.DOFade(.8f, 0.4f);
+                    _overlaySprite.DOFade(.8f, 0.4f);
                     cursorTransform.gameObject.SetActive(true);
                     cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
                     cursorTransform.DOLocalMove(new Vector2(-336, 13.3f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
@@ -570,7 +573,7 @@ public class Tutorial_UI : MonoBehaviour
                 {
                     Time.timeScale = 0.8f;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
-                    overlay.DOFade(0, 0.4f);
+                    _overlaySprite.DOFade(0, 0.4f);
                 }
                 break;
 
@@ -584,7 +587,6 @@ public class Tutorial_UI : MonoBehaviour
     public void defendDetailTutorial(int step)
     {
         Image cursorImage = _cursorContainer.transform.GetChild(1).GetComponent<Image>();
-        SpriteRenderer overlay = _overlay.GetComponent<SpriteRenderer>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(1).transform;
         float cursorDelay = .8f;
 
@@ -593,7 +595,7 @@ public class Tutorial_UI : MonoBehaviour
             case 1: // Shows cursor moving to command
                 if (!hasShownDetail_defend)
                 {
-                    overlay.DOFade(.8f, 0.4f);
+                    _overlaySprite.DOFade(.8f, 0.4f);
                     cursorTransform.gameObject.SetActive(true);
                     cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
                     cursorTransform.DOLocalMove(new Vector2(-336, -30), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
@@ -610,21 +612,70 @@ public class Tutorial_UI : MonoBehaviour
                 {
                     Time.timeScale = 0.8f;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
-                    overlay.DOFade(0, 0.4f);
+                    _overlaySprite.DOFade(0, 0.4f);
                 }
                 break;
 
             case 3: // Minigame starts
                 if (!hasShownDetail_defend)
                 {
-                    overlay.DOFade(0.6f, 0.4f);
+                    _overlaySprite.DOFade(0.6f, 0.4f);
                     StartCoroutine(timeManager.slowMotion(1.2f, 0.4f));
                     StartCoroutine(fadeIn());
                 }
                 IEnumerator fadeIn()
                 {
                     yield return new WaitForSeconds(1.2f);
-                    overlay.DOFade(0, 0.3f);
+                    _overlaySprite.DOFade(0, 0.3f);
+                }
+                break;
+        }
+    }
+
+    public bool hasShownDetail_dodge = false;
+    public void dodgeDetailTutorial(int step)
+    {
+        Image cursorImage = _cursorContainer.transform.GetChild(2).GetComponent<Image>();
+        Transform cursorTransform = _cursorContainer.transform.GetChild(2).transform;
+        float cursorDelay = .8f;
+
+        switch (step)
+        {
+            case 1: // Shows cursor moving to command
+                if (!hasShownDetail_dodge)
+                {
+                    _overlaySprite.DOFade(.8f, 0.4f);
+                    cursorTransform.gameObject.SetActive(true);
+                    cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
+                    cursorTransform.DOLocalMove(new Vector2(-337.6f, -70.5f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                }
+                void activateButton()
+                {
+                    _inputs[2].GetComponent<Button>().interactable = true;
+                    Time.timeScale = 0.05f;
+                }
+                break;
+
+            case 2: // Player clicks
+                if (!hasShownDetail_defend)
+                {
+                    Time.timeScale = 0.8f;
+                    cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
+                    _overlaySprite.DOFade(0, 0.4f);
+                }
+                break;
+
+            case 3: // Minigame starts
+                if (!hasShownDetail_defend)
+                {
+                    _overlaySprite.DOFade(0.6f, 0.4f);
+                    StartCoroutine(timeManager.slowMotion(1.2f, 0.4f));
+                    StartCoroutine(fadeIn());
+                }
+                IEnumerator fadeIn()
+                {
+                    yield return new WaitForSeconds(1.2f);
+                    _overlaySprite.DOFade(0, 0.3f);
                 }
                 break;
         }

@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
         //tutorial_UI.toggleInput(8, 1);
-        StartCoroutine(interactions(2, 2));
+        StartCoroutine(interactions(3, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -96,7 +96,7 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.defendDetailTutorial(1);
                 break;
 
-            case 3:
+            case 3: // Dodge tutorial
                 movePlayerContainer(In); _playerText.text = "I think I got this...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
@@ -104,13 +104,19 @@ public class DialogueManager : MonoBehaviour
 
                 moveGuardContainer(In); _guardText.text = "Don't get too confident, let's see how you move...";
                 yield return new WaitForSeconds(4);
-                _guardText.text = "Select the dodge command and press the arrow keys in the right order, this will avoid the next enemy attack...";
+                toogleSymbols(4, true);
+                _guardText.fontSize = 20;
+                _guardText.text = "Select the dodge command (    ), wait for the timer and press the arrow keys in the right order, this will avoid the next enemy attack...";
                 yield return new WaitForSeconds(6);
+                toogleSymbols(4, false);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(2, 1);
+                tutorial_UI.dodgeDetailTutorial(1);
                 break;
+
             case 4:
+                _guardText.fontSize = 22;
                 moveGuardContainer(In); _guardText.text = "Decent enough, don't forget to use them later in the arena";
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);

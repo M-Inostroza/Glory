@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
         //tutorial_UI.toggleInput(8, 1);
-        StartCoroutine(interactions(3, 2));
+        StartCoroutine(interactions(4, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -127,12 +127,14 @@ public class DialogueManager : MonoBehaviour
                 movePlayerContainer(Out);
                 change();
 
-                moveGuardContainer(In); _guardText.text = "We will see abou that...";
+                moveGuardContainer(In); _guardText.text = "We will see about that...";
                 yield return new WaitForSeconds(3);
-                _guardText.text = "You need to focus, this will give you a speed boost in your timer and you will deal more damage";
-                yield return new WaitForSeconds(6);
-                _guardText.text = "Select the focus command and press the S key when the target is in the moving box";
+                _guardText.text = "Let's learn to focus now, this will give you a speed boost and you will deal more damage for a moment";
+                yield return new WaitForSeconds(8);
+                for (int i = 5; i < 9; i++) { toogleSymbols(i, true); }
+                _guardText.text = "Select the focus command (   ) and press     when the \nblock (   ) is inside the \nmoving box (    )";
                 yield return new WaitForSeconds(5);
+                for (int i = 5; i < 9; i++) { toogleSymbols(i, false); }
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(3, 1);

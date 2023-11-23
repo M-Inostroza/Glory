@@ -288,6 +288,7 @@ public class Tutorial_UI : MonoBehaviour
                     tryLimit(2, 4, 0, 3);
                 }
                 void attack() {
+                    Debug.Log("Attack");
                     StartCoroutine(timeManager.slowMotion(1.8f, 0.5f));
                     _player.GetComponent<Animator>().Play("ATK_jump");
                     _targetManager.attack();
@@ -657,25 +658,74 @@ public class Tutorial_UI : MonoBehaviour
                 break;
 
             case 2: // Player clicks
-                if (!hasShownDetail_defend)
+                if (!hasShownDetail_dodge)
                 {
-                    Time.timeScale = 0.8f;
+                    Time.timeScale = 1;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
                     _overlaySprite.DOFade(0, 0.4f);
                 }
                 break;
 
             case 3: // Minigame starts
-                if (!hasShownDetail_defend)
+                if (!hasShownDetail_dodge)
                 {
-                    _overlaySprite.DOFade(0.6f, 0.4f);
-                    StartCoroutine(timeManager.slowMotion(1.2f, 0.4f));
+                    _overlaySprite.DOFade(0.6f, 0.6f);
                     StartCoroutine(fadeIn());
+                    hasShownDetail_dodge = true;
                 }
                 IEnumerator fadeIn()
                 {
-                    yield return new WaitForSeconds(1.2f);
-                    _overlaySprite.DOFade(0, 0.3f);
+                    yield return new WaitForSeconds(1);
+                    _overlaySprite.DOFade(0, 0.5f);
+                }
+                break;
+        }
+    }
+
+    public bool hasShownDetail_focus = false;
+    public void focusDetailTutorial(int step)
+    {
+        Image cursorImage = _cursorContainer.transform.GetChild(2).GetComponent<Image>();
+        Transform cursorTransform = _cursorContainer.transform.GetChild(2).transform;
+        float cursorDelay = .8f;
+
+        switch (step)
+        {
+            case 1: // Shows cursor moving to command
+                if (!hasShownDetail_focus)
+                {
+                    _overlaySprite.DOFade(.8f, 0.4f);
+                    cursorTransform.gameObject.SetActive(true);
+                    cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
+                    cursorTransform.DOLocalMove(new Vector2(-337.6f, -70.5f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                }
+                void activateButton()
+                {
+                    _inputs[2].GetComponent<Button>().interactable = true;
+                    Time.timeScale = 0.05f;
+                }
+                break;
+
+            case 2: // Player clicks
+                if (!hasShownDetail_focus)
+                {
+                    Time.timeScale = 1;
+                    cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
+                    _overlaySprite.DOFade(0, 0.4f);
+                }
+                break;
+
+            case 3: // Minigame starts
+                if (!hasShownDetail_focus)
+                {
+                    _overlaySprite.DOFade(0.6f, 0.6f);
+                    StartCoroutine(fadeIn());
+                    hasShownDetail_dodge = true;
+                }
+                IEnumerator fadeIn()
+                {
+                    yield return new WaitForSeconds(1);
+                    _overlaySprite.DOFade(0, 0.5f);
                 }
                 break;
         }

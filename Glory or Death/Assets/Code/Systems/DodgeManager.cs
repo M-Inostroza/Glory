@@ -28,6 +28,7 @@ public class DodgeManager : MonoBehaviour
     AudioManager audioManager;
     Animator playerAnimator;
     Combat_UI combat_UI;
+    Tutorial_UI tutorial_UI;
     BattleSystem BS;
 
     // Instantiated arrows
@@ -40,6 +41,7 @@ public class DodgeManager : MonoBehaviour
         playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();
         combat_UI = FindObjectOfType<Combat_UI>();
+        tutorial_UI = FindObjectOfType<Tutorial_UI>();
     }
 
     private void OnEnable()
@@ -49,7 +51,7 @@ public class DodgeManager : MonoBehaviour
         isCritic = false;
 
         spawnArrows();
-        doCameraSlow(35, 0.7f, 0.5f);
+        doCameraSlow();
         openMinigame();
         
         StartCoroutine(mainTimer(Timer)); // Normal 1.8
@@ -230,17 +232,22 @@ public class DodgeManager : MonoBehaviour
         }
     }
 
-    void doCameraSlow(float intensity, float speed, float timeScale)
+    void doCameraSlow()
     {
-        mainCamera.DOFieldOfView(intensity, speed);
-        Time.timeScale = timeScale;
-        //35, 0.7, 0.5
+        mainCamera.DOFieldOfView(35, .7f);
+        if (!tutorial_UI.hasShownDetail_dodge)
+        {
+            Time.timeScale = .2f;
+            tutorial_UI.dodgeDetailTutorial(3);
+        } else
+        {
+            Time.timeScale = .5f;
+        }
     }
     void returnCameraSlow(float intensity, float speed, float timeScale)
     {
         mainCamera.DOFieldOfView(intensity, speed);
         Time.timeScale = timeScale;
-        // 50, 0.5f, 1
     }
     void animateStars()
     {

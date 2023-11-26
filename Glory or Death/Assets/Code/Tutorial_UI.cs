@@ -685,8 +685,8 @@ public class Tutorial_UI : MonoBehaviour
     public bool hasShownDetail_focus = false;
     public void focusDetailTutorial(int step)
     {
-        Image cursorImage = _cursorContainer.transform.GetChild(2).GetComponent<Image>();
-        Transform cursorTransform = _cursorContainer.transform.GetChild(2).transform;
+        Image cursorImage = _cursorContainer.transform.GetChild(3).GetComponent<Image>();
+        Transform cursorTransform = _cursorContainer.transform.GetChild(3).transform;
         float cursorDelay = .8f;
 
         switch (step)
@@ -697,11 +697,11 @@ public class Tutorial_UI : MonoBehaviour
                     _overlaySprite.DOFade(.8f, 0.4f);
                     cursorTransform.gameObject.SetActive(true);
                     cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
-                    cursorTransform.DOLocalMove(new Vector2(-337.6f, -70.5f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                    cursorTransform.DOLocalMove(new Vector2(-339.7f, -87.9f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
                 }
                 void activateButton()
                 {
-                    _inputs[2].GetComponent<Button>().interactable = true;
+                    _inputs[3].GetComponent<Button>().interactable = true;
                     Time.timeScale = 0.05f;
                 }
                 break;
@@ -724,7 +724,7 @@ public class Tutorial_UI : MonoBehaviour
                 }
                 IEnumerator fadeIn()
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(3);
                     _overlaySprite.DOFade(0, 0.5f);
                 }
                 break;

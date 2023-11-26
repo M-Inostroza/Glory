@@ -137,6 +137,7 @@ public class DialogueManager : MonoBehaviour
                 for (int i = 5; i < 9; i++) { toogleSymbols(i, false); }
                 moveGuardContainer(Out);
                 Overlay(0);
+                tutorial_UI.focusDetailTutorial(1);
                 tutorial_UI.toggleInput(3, 1);
                 break;
             case 5:

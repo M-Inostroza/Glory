@@ -138,6 +138,12 @@ public class focusManager : MonoBehaviour
         {
             cursorSpeed = 2;
             targetSpeed = 1.6f;
+            if (!_tutorial_UI.hasShownDetail_focus)
+            {
+                cursorSpeed = 2.4f;
+                targetSpeed = 1;
+                _tutorial_UI.focusDetailTutorial(3);
+            }
         } else
         {
             cursorSpeed = 1.4f;

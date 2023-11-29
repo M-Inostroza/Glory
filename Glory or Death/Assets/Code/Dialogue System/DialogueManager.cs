@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
         //tutorial_UI.toggleInput(8, 1);
-        StartCoroutine(interactions(4, 2));
+        StartCoroutine(interactions(5, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -115,7 +115,7 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.dodgeDetailTutorial(1);
                 break;
 
-            case 4:
+            case 4: // Focus tutorial
                 _guardText.fontSize = 22;
                 moveGuardContainer(In); _guardText.text = "Decent enough, don't forget to use them later in the arena";
                 yield return new WaitForSeconds(5);
@@ -140,17 +140,20 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.focusDetailTutorial(1);
                 tutorial_UI.toggleInput(3, 1);
                 break;
-            case 5:
-                movePlayerContainer(In); _playerText.text = "I can't keep up...";
+
+            case 5: // Rest tutorial
+                movePlayerContainer(In); _playerText.text = "Can I have a break?";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
                 change();
 
-                moveGuardContainer(In); _guardText.text = "Look at you, no energy left, weak and tired, get some rest!";
+                moveGuardContainer(In); _guardText.text = "A break??, your oponent won't give you a break...";
                 yield return new WaitForSeconds(5);
-                _guardText.text = "Select the rest command and smash the arrow keys left and right to recover stamina";
+                for (int i = 9; i < 12; i++) { toogleSymbols(i, true); }
+                _guardText.text = "Select the rest command (   ) and smash the arrow keys \nleft (   ) and right (   ) to recover stamina";
                 yield return new WaitForSeconds(6);
-                _guardText.text = "Stamina allows you to execute commands, if your stamina is empty you won't do a thing!";
+                for (int i = 9; i < 12; i++) { toogleSymbols(i, false); }
+                _guardText.text = "Stamina allows you to execute commands, if your stamina is empty you won't be able to perform any action!";
                 yield return new WaitForSeconds(6);
                 moveGuardContainer(Out);
                 Overlay(0);

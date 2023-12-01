@@ -41,6 +41,7 @@ public class restManager : MonoBehaviour
         } else
         {
             _tutorial_UI.activateLeftRight();
+            _tutorial_UI.restDetailTutorial(3);
         }
         hasAnimatedStar = false;
         restSlider.value = 0;

@@ -769,11 +769,12 @@ public class Tutorial_UI : MonoBehaviour
                 {
                     _overlaySprite.DOFade(0.6f, 0.6f);
                     StartCoroutine(fadeIn());
+                    StartCoroutine(timeManager.slowMotion(1f, 0.6f));
                     hasShownDetail_rest = true;
                 }
                 IEnumerator fadeIn()
                 {
-                    yield return new WaitForSeconds(3);
+                    yield return new WaitForSeconds(4.5f);
                     _overlaySprite.DOFade(0, 0.5f);
                 }
                 break;

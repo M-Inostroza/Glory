@@ -144,6 +144,7 @@ public class DialogueManager : MonoBehaviour
             case 5: // Rest tutorial
                 movePlayerContainer(In); _playerText.text = "Can I have a break?";
                 yield return new WaitForSeconds(3);
+                FindObjectOfType<Player>().SetCurrentStamina(0);
                 movePlayerContainer(Out);
                 change();
 
@@ -160,6 +161,7 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.restDetailTutorial(1);
                 tutorial_UI.toggleInput(4, 1);
                 break;
+
             case 6:
                 movePlayerContainer(In); _playerText.text = "That feels good, I think I'm ready to fight...";
                 yield return new WaitForSeconds(4);

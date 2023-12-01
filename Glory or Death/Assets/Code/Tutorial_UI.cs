@@ -720,7 +720,56 @@ public class Tutorial_UI : MonoBehaviour
                 {
                     _overlaySprite.DOFade(0.6f, 0.6f);
                     StartCoroutine(fadeIn());
-                    hasShownDetail_dodge = true;
+                    hasShownDetail_focus = true;
+                }
+                IEnumerator fadeIn()
+                {
+                    yield return new WaitForSeconds(3);
+                    _overlaySprite.DOFade(0, 0.5f);
+                }
+                break;
+        }
+    }
+
+    public bool hasShownDetail_rest = false;
+    public void restDetailTutorial(int step)
+    {
+        Image cursorImage = _cursorContainer.transform.GetChild(4).GetComponent<Image>();
+        Transform cursorTransform = _cursorContainer.transform.GetChild(4).transform;
+        float cursorDelay = .8f;
+
+        switch (step)
+        {
+            case 1: // Shows cursor moving to command
+                if (!hasShownDetail_rest)
+                {
+                    _overlaySprite.DOFade(.8f, 0.4f);
+                    cursorTransform.gameObject.SetActive(true);
+                    cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
+                    cursorTransform.DOLocalMove(new Vector2(-337.3f, -136.5f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                }
+                void activateButton()
+                {
+                    _inputs[4].GetComponent<Button>().interactable = true;
+                    Time.timeScale = 0.05f;
+                }
+                break;
+
+            case 2: // Player clicks
+                if (!hasShownDetail_rest)
+                {
+                    Time.timeScale = 1;
+                    cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
+                    _overlaySprite.DOFade(0, 0.4f);
+                }
+                break;
+
+            case 3: // Minigame starts
+                if (!hasShownDetail_rest)
+                {
+                    _overlaySprite.DOFade(0.6f, 0.6f);
+                    StartCoroutine(fadeIn());
+                    hasShownDetail_rest = true;
                 }
                 IEnumerator fadeIn()
                 {

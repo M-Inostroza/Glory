@@ -157,6 +157,7 @@ public class DialogueManager : MonoBehaviour
                 yield return new WaitForSeconds(6);
                 moveGuardContainer(Out);
                 Overlay(0);
+                tutorial_UI.restDetailTutorial(1);
                 tutorial_UI.toggleInput(4, 1);
                 break;
             case 6:

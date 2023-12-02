@@ -22,17 +22,20 @@ public class defendManager : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        shine = shadow.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        //shine = shadow.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
         controlDefend();
-        colorFeedback();
+        //TODO colorFeedback();
     }
 
     public void activateShieldMinigame()
     {
-        tutorial_UI.defendDetailTutorial(3);
+        if (gameManager.isTutorial())
+        {
+            tutorial_UI.defendDetailTutorial(3);
+        }
         canDefend = true;
         transformControl = true;
         cameraAndKeyIn();

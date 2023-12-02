@@ -36,22 +36,29 @@ public class TargetManager : MonoBehaviour
             Combat_UI.move_UI_out();
             BattleSystem.targetHit = 0;
             courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
-        }
-        if (!tutorial_UI.hasShownDetail_attack)
+        } else
         {
-            courtain.DOColor(new Color(0, 0, 0, .5f), 0.1f);
+            if (!tutorial_UI.hasShownDetail_attack)
+            {
+                courtain.DOColor(new Color(0, 0, 0, .5f), 0.1f);
+            }
+            courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
+            
         }
-        courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
         StartCoroutine(activateTargets());
         zoomCameraIn();
     }
 
     IEnumerator activateTargets()
     {
-        if (!tutorial_UI.hasShownDetail_attack)
+        if (gameManager.isTutorial())
         {
-            tutorial_UI.attackDetailTutorial(3);
+            if (!tutorial_UI.hasShownDetail_attack)
+            {
+                tutorial_UI.attackDetailTutorial(3);
+            }
         }
+        
         var targets = this.targets;
         
         for (int i = 0; i < 3; i++)
@@ -60,11 +67,15 @@ public class TargetManager : MonoBehaviour
             targets[i].GetComponent<SpriteRenderer>().DOFade(1, 0);
             targets[i].SetActive(true);
 
-            if (!tutorial_UI.hasShownDetail_attack)
+            if (gameManager.isTutorial())
             {
-                targets[i].transform.GetChild(0).gameObject.SetActive(true);
-                targets[i].transform.GetChild(0).transform.DOScale(new Vector2(.5f, .5f), .5f);
+                if (!tutorial_UI.hasShownDetail_attack)
+                {
+                    targets[i].transform.GetChild(0).gameObject.SetActive(true);
+                    targets[i].transform.GetChild(0).transform.DOScale(new Vector2(.5f, .5f), .5f);
+                }
             }
+            
 
             if (i == 0)
             {
@@ -89,7 +100,11 @@ public class TargetManager : MonoBehaviour
             target.transform.DOScale(0, 0.05f).OnComplete(() => target.SetActive(false));
         }
 
-        courtain.DOColor(new Color(0, 0, 0, 0), .5f).OnComplete(()=> tutorial_UI.hasShownDetail_attack = true);
+        if (gameManager.isTutorial())
+        {
+            courtain.DOColor(new Color(0, 0, 0, 0), .5f).OnComplete(()=> tutorial_UI.hasShownDetail_attack = true);
+
+        }
         Combat_UI.move_UI_in();
     }
 

@@ -21,6 +21,9 @@ public class superAttackManager : MonoBehaviour
     Enemy enemy;
     Animator _enemyAnimator;
 
+    [SerializeField] GameObject _doll;
+    Animator _dollAnimator;
+
     Player _player;
     Animator _playerAnimator;
 
@@ -38,8 +41,13 @@ public class superAttackManager : MonoBehaviour
         _player = FindObjectOfType<Player>();
         _playerAnimator = _player.GetComponent<Animator>();
 
+        _dollAnimator = _doll.GetComponent<Animator>();
+
         enemy = FindObjectOfType<Enemy>();
-        _enemyAnimator = enemy.GetComponent<Animator>();
+        if (!gameManager.isTutorial())
+        {
+            _enemyAnimator = enemy.GetComponent<Animator>();
+        }
     }
     private void Update()
     {

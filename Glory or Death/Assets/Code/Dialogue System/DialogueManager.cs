@@ -26,8 +26,8 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        //tutorial_UI.toggleInput(8, 1);
-        StartCoroutine(interactions(5, 2));
+        //tutorial_UI.toggleInput(9, 1);
+        StartCoroutine(interactions(10, 2));
     }
 
     public IEnumerator interactions(int index, float delay)

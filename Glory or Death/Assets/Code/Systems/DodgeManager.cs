@@ -235,13 +235,17 @@ public class DodgeManager : MonoBehaviour
     void doCameraSlow()
     {
         mainCamera.DOFieldOfView(35, .7f);
-        if (!tutorial_UI.hasShownDetail_dodge)
+        if (gameManager.isTutorial())
         {
-            Time.timeScale = .2f;
-            tutorial_UI.dodgeDetailTutorial(3);
-        } else
-        {
-            Time.timeScale = .5f;
+            if (!tutorial_UI.hasShownDetail_dodge)
+            {
+                Time.timeScale = .2f;
+                tutorial_UI.dodgeDetailTutorial(3);
+            }
+            else
+            {
+                Time.timeScale = .5f;
+            }
         }
     }
     void returnCameraSlow(float intensity, float speed, float timeScale)

@@ -277,7 +277,7 @@ public class BattleSystem : MonoBehaviour
         void complete()
         {
             timeManager.continueUnitTimer();
-            //audioManager.Play("Combat_Theme");
+            audioManager.Play("Combat_Theme");
             _loadingScreen.SetActive(false);
         }
     }

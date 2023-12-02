@@ -52,7 +52,6 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] GameObject _superAttackManager;
     [SerializeField] GameObject _dirtManager;
 
-
     public bool timerRunning = false;
     public static bool _hasPlayedTutorial = false;
     public static bool _canClick = true;
@@ -488,6 +487,13 @@ public class Tutorial_UI : MonoBehaviour
         // 1 = in
         if (inOrOut == 1)
         {
+            if (_hasPlayedTutorial)
+            {
+                foreach (var input in _inputs)
+                {
+                    input.GetComponent<Button>().interactable = true;
+                }
+            }
             _dialogueManager.toogleEndTutorial(1);
             for (int i = 0; i < _inputs.Length; i++)
             {
@@ -587,6 +593,10 @@ public class Tutorial_UI : MonoBehaviour
     public bool hasShownDetail_defend = false;
     public void defendDetailTutorial(int step)
     {
+        if (gameManager.isTutorial())
+        {
+
+        
         Image cursorImage = _cursorContainer.transform.GetChild(1).GetComponent<Image>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(1).transform;
         float cursorDelay = .8f;
@@ -630,6 +640,7 @@ public class Tutorial_UI : MonoBehaviour
                     _overlaySprite.DOFade(0, 0.3f);
                 }
                 break;
+        }
         }
     }
 

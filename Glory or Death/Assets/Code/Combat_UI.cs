@@ -124,18 +124,22 @@ public class Combat_UI : MonoBehaviour
     }
     public static void move_UI_out()
     {
-        float move_out_speed = 0.3f;
+        if (!gameManager.isTutorial())
+        {
+            float move_out_speed = 0.3f;
 
-        _playerStats.DOLocalMoveX(_playerStats.localPosition.x - 350, move_out_speed).SetEase(Ease.InOutSine);
-        _enemyStats.DOLocalMoveX(_enemyStats.localPosition.x + 350, move_out_speed).SetEase(Ease.InOutSine);
+            _playerStats.DOLocalMoveX(_playerStats.localPosition.x - 350, move_out_speed).SetEase(Ease.InOutSine);
+            _enemyStats.DOLocalMoveX(_enemyStats.localPosition.x + 350, move_out_speed).SetEase(Ease.InOutSine);
 
-        _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x - 200, move_out_speed).SetEase(Ease.InOutSine);
+            _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x - 200, move_out_speed).SetEase(Ease.InOutSine);
 
-        _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y + 160, move_out_speed);
-        _enemyTimer.DOLocalMoveY(_enemyTimer.localPosition.y + 160, move_out_speed);
-        _fightTimer.DOLocalMoveY(270, move_out_speed).SetEase(Ease.InOutSine);
+            _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y + 160, move_out_speed);
+            _enemyTimer.DOLocalMoveY(_enemyTimer.localPosition.y + 160, move_out_speed);
+            _fightTimer.DOLocalMoveY(270, move_out_speed).SetEase(Ease.InOutSine);
 
-        _inputManager.transform.DOLocalMoveX(-500, move_out_speed).SetEase(Ease.InOutSine);
+            _inputManager.transform.DOLocalMoveX(-500, move_out_speed).SetEase(Ease.InOutSine);
+        }
+        
     }
     public static void move_Inputs_in()
     {

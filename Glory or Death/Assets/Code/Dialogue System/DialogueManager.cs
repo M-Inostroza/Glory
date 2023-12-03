@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
         //tutorial_UI.toggleInput(9, 1);
-        StartCoroutine(interactions(10, 2));
+        StartCoroutine(interactions(6, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -162,21 +162,26 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.toggleInput(4, 1);
                 break;
 
-            case 6:
-                movePlayerContainer(In); _playerText.text = "That feels good, I think I'm ready to fight...";
+            case 6: // Counter tutorial
+                movePlayerContainer(In); _playerText.text = "I think I'm ready for a real fight now...";
                 yield return new WaitForSeconds(4);
                 movePlayerContainer(Out);
                 change();
 
                 moveGuardContainer(In);
-                _guardText.text = "No no, you still have much to learn, you don't even know how to block...";
-                yield return new WaitForSeconds(4);
-                _guardText.text = "Smash the X key to rotate the shield and block the sword";
+                _guardText.text = "Hell no, you still have much to learn, you don't even know how to block an attack...";
                 yield return new WaitForSeconds(5);
+                toogleSymbols(12, true);
+                _guardText.text = "Smash (   ) to rotate the shield and block the atack";
+                yield return new WaitForSeconds(5);
+                toogleSymbols(12, false);
+                _guardText.text = "Give it a few tries...";
+                yield return new WaitForSeconds(3);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(6, 1);
                 break;
+
             case 7:
                 movePlayerContainer(In); _playerText.text = "Easy...";
                 yield return new WaitForSeconds(2);
@@ -261,6 +266,27 @@ public class DialogueManager : MonoBehaviour
             _guardFrame.transform.DOLocalMoveX(600, 0.4f).OnComplete(()=> _guardFrame.SetActive(false));
         }
     }
+
+    // Special interactions
+    public IEnumerator guardCounterInteraction(bool Pass)
+    {
+        yield return new WaitForSeconds(1);
+        Overlay(1, .6f);
+        moveGuardContainer(0);
+        if (!Pass)
+        {
+            _guardText.text = "You can do better than that... Try again";
+        }
+        else
+        {
+            _guardText.text = "Not bad rookie, try again!";
+        }
+        yield return new WaitForSeconds(3);
+        tutorial_UI.toggleInput(6, 1);
+        Overlay(0);
+        moveGuardContainer(1);
+    }
+
     void movePlayerContainer(int inOrOut)
     {
         // 0 = In - 1 = Out

@@ -152,7 +152,7 @@ public class Tutorial_UI : MonoBehaviour
         timerRunning = true;
     }
 
-    // Enemy
+    // Enemy commands
     public void OnCounterButton()
     {
         if (_canClick)
@@ -444,8 +444,8 @@ public class Tutorial_UI : MonoBehaviour
     {
         if (xKey.gameObject.activeInHierarchy)
         {
-            xKey.DOScale(0.8f, 0.1f).SetDelay(0.3f);
-            xKey.DOScale(1, 0.1f).SetDelay(0.6f).OnComplete(() => activateX());
+            xKey.DOScale(0.8f, 0.1f).SetDelay(0.2f);
+            xKey.DOScale(1, 0.1f).SetDelay(0.4f).OnComplete(() => activateX());
         }
     }
     public void activateLeftRight()
@@ -789,6 +789,40 @@ public class Tutorial_UI : MonoBehaviour
                     _overlaySprite.DOFade(0, 0.5f);
                 }
                 break;
+        }
+    }
+
+    public bool hasShownDetail_counter = false;
+    public void counterDetailTutorial(int step)
+    {
+        if (gameManager.isTutorial() && _numberOfTries == 1)
+        {
+            switch (step)
+            {
+                case 1: // Stops counter before starts
+                    if (!hasShownDetail_counter)
+                    {
+                        cameraManager.playChrome();
+                        StartCoroutine(timeManager.slowMotion(1.2f, .4f));
+                    }
+                    break;
+
+                case 2: // Fails counter
+                    if (!hasShownDetail_counter)
+                    {
+                        toggleInput(6, 0);
+                        StartCoroutine(_dialogueManager.guardCounterInteraction(false));
+                    }
+                    break;
+
+                case 3: // Perfect counter
+                    if (!hasShownDetail_counter)
+                    {
+                        toggleInput(6, 0);
+                        StartCoroutine(_dialogueManager.guardCounterInteraction(true));
+                    }
+                    break;
+            }
         }
     }
 }

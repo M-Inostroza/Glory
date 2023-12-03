@@ -13,6 +13,7 @@ public class counterSword : MonoBehaviour
     Combat_UI combatUI;
     SoundPlayer soundPlayer;
     AudioManager audioManager;
+    Tutorial_UI tutorial_UI;
 
     [Header("Materials")]
     [SerializeField] Material heartMaterial;
@@ -26,6 +27,7 @@ public class counterSword : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
         combatUI = FindObjectOfType<Combat_UI>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
+        tutorial_UI = FindObjectOfType<Tutorial_UI>();
     }
     private void OnEnable()
     {
@@ -43,14 +45,17 @@ public class counterSword : MonoBehaviour
                 combatUI.shakeShieldBar();
                 enemy.GetComponent<Animator>().Play("Attack_Blocked");
                 player.GetComponent<Animator>().Play("blockAttack");
+            } else
+            {
+                tutorial_UI.counterDetailTutorial(3);
             }
             soundPlayer.shield_metal();
             counterManager.SetActive(false);
         }
         else if (collision.name == "Counter Target")
         {
+            tutorial_UI.counterDetailTutorial(2);
             cameraManager.playChrome();
-            //FindObjectOfType<cameraManager>().playChrome();
             audioManager.Play("Counter_Fail");
             soundPlayer.stabSounds();
             meltHeart();

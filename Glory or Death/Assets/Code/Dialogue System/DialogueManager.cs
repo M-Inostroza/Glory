@@ -25,9 +25,21 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        //tutorial_UI.toggleInput(9, 1);
-        StartCoroutine(interactions(6, 2));
+        importTutorial();
+        // Inputs:
+        /*
+         - 0 = Attack
+         - 1 = Defend
+         - 2 = Dodge
+         - 3 = Focus
+         - 4 = Rest
+         - 5 = Attack 2
+         - 6 = Counter
+         - 7 = Counter 2
+         - 8 = Dirt
+         */
+        tutorial_UI.toggleInput(6, 1);
+        //StartCoroutine(interactions(6, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -343,5 +355,12 @@ public class DialogueManager : MonoBehaviour
             toogleEndTutorial(0);
             showEndScreen(true);
         }
+    }
+
+
+    // Imports
+    void importTutorial()
+    {
+        tutorial_UI = FindObjectOfType<Tutorial_UI>();
     }
 }

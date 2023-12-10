@@ -163,7 +163,7 @@ public class Tutorial_UI : MonoBehaviour
             _counterManager.SetActive(true);
             fadeTimer(0);
             if (!_hasPlayedTutorial)
-                tryLimit(7, 4, 6, 2);
+                tryLimit(7, 4, 6, 3);
         }
     }
 
@@ -287,7 +287,6 @@ public class Tutorial_UI : MonoBehaviour
                     tryLimit(2, 4, 0, 3);
                 }
                 void attack() {
-                    Debug.Log("Attack");
                     StartCoroutine(timeManager.slowMotion(1.8f, 0.5f));
                     _player.GetComponent<Animator>().Play("ATK_jump");
                     _targetManager.attack();
@@ -428,7 +427,7 @@ public class Tutorial_UI : MonoBehaviour
         if (aKey.gameObject.activeInHierarchy)
         {
             aKey.DOScale(0.8f, 0.1f).SetDelay(0.3f);
-            aKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateA());
+            aKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(activateA);
         }
     }
     public void activateS()
@@ -436,7 +435,7 @@ public class Tutorial_UI : MonoBehaviour
         if (sKey.gameObject.activeInHierarchy)
         {
             sKey.DOScale(0.8f, 0.1f).SetDelay(0.3f);
-            sKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(() => activateS());
+            sKey.DOScale(1, 0.1f).SetDelay(1f).OnComplete(activateS);
         }
     }
 
@@ -444,8 +443,8 @@ public class Tutorial_UI : MonoBehaviour
     {
         if (xKey.gameObject.activeInHierarchy)
         {
-            xKey.DOScale(0.8f, 0.1f).SetDelay(0.2f);
-            xKey.DOScale(1, 0.1f).SetDelay(0.4f).OnComplete(() => activateX());
+            xKey.DOScale(0.8f, 0.1f).SetDelay(0.1f);
+            xKey.DOScale(1, 0.1f).SetDelay(0.2f).OnComplete(activateX);
         }
     }
     public void activateLeftRight()

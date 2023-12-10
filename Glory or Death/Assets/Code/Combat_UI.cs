@@ -329,7 +329,7 @@ public class Combat_UI : MonoBehaviour
         if (xKey.gameObject.activeInHierarchy)
         {
             xKey.DOScale(0.8f, 0.1f).SetDelay(1f);
-            xKey.DOScale(1, 0.1f).SetDelay(2f).OnComplete(() => activateX());
+            xKey.DOScale(1, 0.1f).SetDelay(2f).OnComplete(activateX);
         }
     }
     public void activateS()

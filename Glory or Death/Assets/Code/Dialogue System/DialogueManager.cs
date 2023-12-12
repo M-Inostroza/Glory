@@ -38,8 +38,8 @@ public class DialogueManager : MonoBehaviour
          - 7 = Counter 2
          - 8 = Dirt
          */
-        tutorial_UI.toggleInput(6, 1);
-        //StartCoroutine(interactions(6, 2));
+        tutorial_UI.toggleInput(7, 1);
+        //StartCoroutine(interactions(7, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -58,12 +58,12 @@ public class DialogueManager : MonoBehaviour
             case 1: // Attack Tutorial
                 moveGuardContainer(In);
                 _guardText.text = "I hope you know how to use a sword...";
-                _playerText.text = "...";
                 yield return new WaitForSeconds(4);
                 moveGuardContainer(Out);
                 StartCoroutine(change());
 
                 movePlayerContainer(In);
+                _playerText.text = "...";
                 yield return new WaitForSeconds(2);
                 movePlayerContainer(Out);
                 StartCoroutine(change());
@@ -89,7 +89,7 @@ public class DialogueManager : MonoBehaviour
                 _playerText.text = "Not bad...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
-                StartCoroutine(change());
+                //StartCoroutine(change());
 
                 moveGuardContainer(In);
                 _guardText.text = "You better get use to it... let's try some defense";
@@ -194,23 +194,27 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.toggleInput(6, 1);
                 break;
 
-            case 7:
+            case 7: // Super counter tutorial
                 movePlayerContainer(In); _playerText.text = "Easy...";
                 yield return new WaitForSeconds(2);
                 movePlayerContainer(Out);
-                change();
 
                 moveGuardContainer(In); _guardText.text = "Easy??";
                 yield return new WaitForSeconds(2);
                 _guardText.text = "Let's see how easy is to block a super attack...";
                 yield return new WaitForSeconds(4);
-                _guardText.text = "Move the arrows left and right to control the shield and block the swords";
+                toogleSymbols(13, true);
+                toogleSymbols(14, true);
+                _guardText.text = "Move the arrows left (   ) and right (   ) to control the shield and block the swords";
                 yield return new WaitForSeconds(5);
+                toogleSymbols(13, false);
+                toogleSymbols(14, false);
                 moveGuardContainer(Out);
                 Overlay(0);
                 tutorial_UI.toggleInput(7, 1);
                 break;
-            case 8:
+
+            case 8: // Super Attack tutorial
                 movePlayerContainer(In); _playerText.text = "How can I even survive that??";
                 yield return new WaitForSeconds(4);
                 movePlayerContainer(Out);
@@ -280,21 +284,38 @@ public class DialogueManager : MonoBehaviour
     }
 
     // Special interactions
-    public IEnumerator guardCounterInteraction(bool Pass)
+    public IEnumerator specialGuardInteraction(bool Pass, int interactionIndex)
     {
         yield return new WaitForSeconds(1);
         Overlay(1, .6f);
         moveGuardContainer(0);
-        if (!Pass)
+        switch (interactionIndex)
         {
-            _guardText.text = "You can do better than that... Try again";
+            case 1: // Normal counter
+                if (!Pass)
+                {
+                    _guardText.text = "You can do better than that... Try again";
+                }
+                else
+                {
+                    _guardText.text = "Not bad rookie, try again!";
+                }
+                tutorial_UI.toggleInput(6, 1);
+                break;
+
+            case 2: // Super counter
+                if (!Pass)
+                {
+                    _guardText.text = "Not so easy anymore right?, try again!";
+                } else
+                {
+                    _guardText.text = "Impressive, try again!";
+                }
+                break;
         }
-        else
-        {
-            _guardText.text = "Not bad rookie, try again!";
-        }
+        
         yield return new WaitForSeconds(3);
-        tutorial_UI.toggleInput(6, 1);
+        
         Overlay(0);
         moveGuardContainer(1);
     }

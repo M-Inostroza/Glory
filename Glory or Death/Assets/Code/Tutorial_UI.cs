@@ -794,7 +794,7 @@ public class Tutorial_UI : MonoBehaviour
     public bool hasShownDetail_counter = false;
     public void counterDetailTutorial(int step)
     {
-        if (gameManager.isTutorial() && _numberOfTries == 1)
+        if (gameManager.isTutorial() && _numberOfTries >= 1)
         {
             switch (step)
             {
@@ -810,7 +810,7 @@ public class Tutorial_UI : MonoBehaviour
                     if (!hasShownDetail_counter)
                     {
                         toggleInput(6, 0);
-                        StartCoroutine(_dialogueManager.guardCounterInteraction(false));
+                        StartCoroutine(_dialogueManager.specialGuardInteraction(false, 6));
                     }
                     break;
 
@@ -818,7 +818,7 @@ public class Tutorial_UI : MonoBehaviour
                     if (!hasShownDetail_counter)
                     {
                         toggleInput(6, 0);
-                        StartCoroutine(_dialogueManager.guardCounterInteraction(true));
+                        StartCoroutine(_dialogueManager.specialGuardInteraction(true, 6));
                     }
                     break;
             }

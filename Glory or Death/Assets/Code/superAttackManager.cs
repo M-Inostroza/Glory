@@ -29,6 +29,7 @@ public class superAttackManager : MonoBehaviour
 
     AudioManager audioManager;
     Tutorial_UI tutorial_UI;
+    DialogueManager dialogueManager;
 
     int swordCounter = 0;
 
@@ -37,6 +38,7 @@ public class superAttackManager : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         cameraManager = FindObjectOfType<cameraManager>();
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
 
         _player = FindObjectOfType<Player>();
         _playerAnimator = _player.GetComponent<Animator>();
@@ -72,6 +74,18 @@ public class superAttackManager : MonoBehaviour
         if (gameManager.isTutorial())
         {
             tutorial_UI.fadeTimer(1);
+            if (gameObject.activeSelf)
+            {
+                if (swordCounter >= 5)
+                {
+                    StartCoroutine(dialogueManager.specialGuardInteraction(true, 2));
+                }
+                else
+                {
+                    StartCoroutine(dialogueManager.specialGuardInteraction(false, 2));
+                }
+            }
+            
             if (Tutorial_UI._hasPlayedTutorial)
             {
                 tutorial_UI.showAllInput(1);
@@ -80,6 +94,7 @@ public class superAttackManager : MonoBehaviour
         swordCounter = 0;
         resetFeedback();
     }
+
 
     IEnumerator SpawnSwordsWithDelay(float delay)
     {

@@ -284,9 +284,10 @@ public class DialogueManager : MonoBehaviour
     }
 
     // Special interactions
-    public IEnumerator specialGuardInteraction(bool Pass, int interactionIndex)
+    public IEnumerator specialGuardInteraction(bool Pass, int interactionIndex, float delay)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delay);
+        Debug.Log("Guard called");
         Overlay(1, .6f);
         moveGuardContainer(0);
         switch (interactionIndex)
@@ -304,11 +305,14 @@ public class DialogueManager : MonoBehaviour
                 break;
 
             case 2: // Super counter
+                Debug.Log("Case 2 executing");
                 if (!Pass)
                 {
+                    Debug.Log("Super failed");
                     _guardText.text = "Not so easy anymore right?, try again!";
                 } else
                 {
+                    Debug.Log("Super pass");
                     _guardText.text = "Impressive, try again!";
                 }
                 break;

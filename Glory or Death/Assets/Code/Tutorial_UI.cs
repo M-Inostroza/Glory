@@ -810,7 +810,7 @@ public class Tutorial_UI : MonoBehaviour
                     if (!hasShownDetail_counter)
                     {
                         toggleInput(6, 0);
-                        StartCoroutine(_dialogueManager.specialGuardInteraction(false, 6));
+                        StartCoroutine(_dialogueManager.specialGuardInteraction(false, 6, 1));
                     }
                     break;
 
@@ -818,7 +818,7 @@ public class Tutorial_UI : MonoBehaviour
                     if (!hasShownDetail_counter)
                     {
                         toggleInput(6, 0);
-                        StartCoroutine(_dialogueManager.specialGuardInteraction(true, 6));
+                        StartCoroutine(_dialogueManager.specialGuardInteraction(true, 6, 1));
                     }
                     break;
             }

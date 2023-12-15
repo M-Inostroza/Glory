@@ -74,18 +74,7 @@ public class superAttackManager : MonoBehaviour
         if (gameManager.isTutorial())
         {
             tutorial_UI.fadeTimer(1);
-            if (gameObject.activeSelf)
-            {
-                if (swordCounter >= 5)
-                {
-                    StartCoroutine(dialogueManager.specialGuardInteraction(true, 2));
-                }
-                else
-                {
-                    StartCoroutine(dialogueManager.specialGuardInteraction(false, 2));
-                }
-            }
-            
+
             if (Tutorial_UI._hasPlayedTutorial)
             {
                 tutorial_UI.showAllInput(1);
@@ -113,6 +102,17 @@ public class superAttackManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         moveCameraOut();
+        Debug.Log("Closing minigame");
+        if (swordCounter >= 5)
+        {
+            Debug.Log("More than 5 hits");
+            StartCoroutine(dialogueManager.specialGuardInteraction(true, 2, 0));
+        }
+        else
+        {
+            Debug.Log("less than 5 hits");
+            StartCoroutine(dialogueManager.specialGuardInteraction(false, 2, 0));
+        }
         gameObject.SetActive(false);
         if (!gameManager.isTutorial())
         {

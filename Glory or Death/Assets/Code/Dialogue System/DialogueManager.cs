@@ -38,17 +38,12 @@ public class DialogueManager : MonoBehaviour
          - 7 = Counter 2
          - 8 = Dirt
          */
-        tutorial_UI.toggleInput(7, 1);
-        //StartCoroutine(interactions(7, 2));
+        //tutorial_UI.toggleInput(8, 1);
+        StartCoroutine(interactions(8, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
     {
-        float changeSpeakerTime = 0.4f;
-        IEnumerator change()
-        {
-            yield return new WaitForSeconds(changeSpeakerTime);
-        }
         int In = 0;
         int Out = 1;
         yield return new WaitForSeconds(delay);
@@ -60,13 +55,11 @@ public class DialogueManager : MonoBehaviour
                 _guardText.text = "I hope you know how to use a sword...";
                 yield return new WaitForSeconds(4);
                 moveGuardContainer(Out);
-                StartCoroutine(change());
 
                 movePlayerContainer(In);
                 _playerText.text = "...";
                 yield return new WaitForSeconds(2);
                 movePlayerContainer(Out);
-                StartCoroutine(change());
 
                 moveGuardContainer(In);
                 toogleSymbols(0, true);
@@ -89,7 +82,6 @@ public class DialogueManager : MonoBehaviour
                 _playerText.text = "Not bad...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
-                //StartCoroutine(change());
 
                 moveGuardContainer(In);
                 _guardText.text = "You better get use to it... let's try some defense";
@@ -112,7 +104,6 @@ public class DialogueManager : MonoBehaviour
                 movePlayerContainer(In); _playerText.text = "I think I got this...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
-                change();
 
                 moveGuardContainer(In); _guardText.text = "Don't get too confident, let's see how you move...";
                 yield return new WaitForSeconds(4);
@@ -132,12 +123,10 @@ public class DialogueManager : MonoBehaviour
                 moveGuardContainer(In); _guardText.text = "Decent enough, don't forget to use them later in the arena";
                 yield return new WaitForSeconds(5);
                 moveGuardContainer(Out);
-                change();
 
                 movePlayerContainer(In); _playerText.text = "I will do my best...";
                 yield return new WaitForSeconds(3);
                 movePlayerContainer(Out);
-                change();
 
                 moveGuardContainer(In); _guardText.text = "We will see about that...";
                 yield return new WaitForSeconds(3);
@@ -158,7 +147,6 @@ public class DialogueManager : MonoBehaviour
                 yield return new WaitForSeconds(3);
                 FindObjectOfType<Player>().SetCurrentStamina(0);
                 movePlayerContainer(Out);
-                change();
 
                 moveGuardContainer(In); _guardText.text = "A break??, your oponent won't give you a break...";
                 yield return new WaitForSeconds(5);
@@ -178,7 +166,6 @@ public class DialogueManager : MonoBehaviour
                 movePlayerContainer(In); _playerText.text = "I think I'm ready for a real fight now...";
                 yield return new WaitForSeconds(4);
                 movePlayerContainer(Out);
-                change();
 
                 moveGuardContainer(In);
                 _guardText.text = "Hell no, you still have much to learn, you don't even know how to block an attack...";
@@ -215,24 +202,29 @@ public class DialogueManager : MonoBehaviour
                 break;
 
             case 8: // Super Attack tutorial
+                tutorial_UI.hasShownDetail_superCounter = true;
                 movePlayerContainer(In); _playerText.text = "How can I even survive that??";
                 yield return new WaitForSeconds(4);
                 movePlayerContainer(Out);
-                change();
 
                 moveGuardContainer(In);
                 _guardText.text = "Less crying and more practice, that's it";
-                yield return new WaitForSeconds(4);
-                _guardText.text = "Let's try your supper attack now";
-                yield return new WaitForSeconds(3);
-                _guardText.text = "Select the super attack command and click as many targets as you can";
                 yield return new WaitForSeconds(5);
+                _guardText.text = "You will also have a Super Attack when your adrenaline bar is full...";
+                yield return new WaitForSeconds(4);
+                toogleSymbols(15, true);
+                _guardText.text = "Select the super attack command (   ), wait for the \ntimer and click as many \ntargets as you can";
+                yield return new WaitForSeconds(5);
+                toogleSymbols(15, false);
                 moveGuardContainer(Out);
+
                 Overlay(0);
                 tutorial_UI.fadeTimer(1);
+                tutorial_UI.superAttackDetailTutorial(1);
                 tutorial_UI.toggleInput(5, 1);
                 break;
-            case 9:
+
+            case 9: // Dirt tutorial
                 moveGuardContainer(In); _guardText.text = "Good... but fights are not always fair";
                 yield return new WaitForSeconds(4);
                 _guardText.text = "The enemy will try to blind you from time to time, you can't do anything if you don't see";
@@ -287,7 +279,6 @@ public class DialogueManager : MonoBehaviour
     public IEnumerator specialGuardInteraction(bool Pass, int interactionIndex, float delay)
     {
         yield return new WaitForSeconds(delay);
-        Debug.Log("Guard called");
         Overlay(1, .6f);
         moveGuardContainer(0);
         switch (interactionIndex)
@@ -305,16 +296,29 @@ public class DialogueManager : MonoBehaviour
                 break;
 
             case 2: // Super counter
-                Debug.Log("Case 2 executing");
                 if (!Pass)
                 {
-                    Debug.Log("Super failed");
                     _guardText.text = "Not so easy anymore right?, try again!";
                 } else
                 {
-                    Debug.Log("Super pass");
                     _guardText.text = "Impressive, try again!";
                 }
+                tutorial_UI.toggleInput(7, 1);
+                break;
+
+            case 3: // Super Attack
+                if (!Pass)
+                {
+                    _guardText.text = "You can do much better than that!";
+                }
+                else
+                {
+                    _guardText.text = "You're learning fast!";
+                }
+                tutorial_UI.toggleInput(5, 1);
+                break;
+            default:
+                Debug.Log("Out of index");
                 break;
         }
         

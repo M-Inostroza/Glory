@@ -178,7 +178,7 @@ public class Tutorial_UI : MonoBehaviour
             fadeTimer(0);
             if (!_hasPlayedTutorial)
             {
-                tryLimit(8, 8, 7, 2);
+                tryLimit(8, 8, 7, 3);
             }
         }
     }
@@ -307,9 +307,10 @@ public class Tutorial_UI : MonoBehaviour
                 } else
                 {
                     fadeTimer(0);
-                    tryLimit(9, 4, 5, 2);
+                    tryLimit(9, 4, 5, 3);
                     _player.DecrementCurrentStamina(60);
                     _superAttackManager.SetActive(true);
+                    superAttackDetailTutorial(3);
                 }
                 break;
             case "DF":
@@ -548,8 +549,7 @@ public class Tutorial_UI : MonoBehaviour
 
     // Detailed tutorial section
 
-    // Detail attack
-
+    // Detail Attack
     public bool hasShownDetail_attack = false;
     public void attackDetailTutorial(int step)
     {
@@ -589,6 +589,7 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
+    // Detail Defend
     public bool hasShownDetail_defend = false;
     public void defendDetailTutorial(int step)
     {
@@ -643,6 +644,7 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
+    // Detail Dodge
     public bool hasShownDetail_dodge = false;
     public void dodgeDetailTutorial(int step)
     {
@@ -692,6 +694,7 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
+    // Detail Focus
     public bool hasShownDetail_focus = false;
     public void focusDetailTutorial(int step)
     {
@@ -741,6 +744,7 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
+    // Detail Rest
     public bool hasShownDetail_rest = false;
     public void restDetailTutorial(int step)
     {
@@ -791,6 +795,7 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
+    // Detail Counter
     public bool hasShownDetail_counter = false;
     public void counterDetailTutorial(int step)
     {
@@ -810,7 +815,7 @@ public class Tutorial_UI : MonoBehaviour
                     if (!hasShownDetail_counter)
                     {
                         toggleInput(6, 0);
-                        StartCoroutine(_dialogueManager.specialGuardInteraction(false, 6, 1));
+                        StartCoroutine(_dialogueManager.specialGuardInteraction(false, 1, 1));
                     }
                     break;
 
@@ -818,10 +823,78 @@ public class Tutorial_UI : MonoBehaviour
                     if (!hasShownDetail_counter)
                     {
                         toggleInput(6, 0);
-                        StartCoroutine(_dialogueManager.specialGuardInteraction(true, 6, 1));
+                        StartCoroutine(_dialogueManager.specialGuardInteraction(true, 1, 1));
                     }
                     break;
             }
+        }
+    }
+
+    // Detail Super Counter
+    public bool hasShownDetail_superCounter = false;
+    public void superCounterDetailTutorial(int step)
+    {
+        if (gameManager.isTutorial() && _numberOfTries >= 1)
+        {
+            switch (step)
+            {
+                case 1: // Fails counter
+                    if (!hasShownDetail_superCounter)
+                    {
+                        toggleInput(7, 0);
+                        StartCoroutine(_dialogueManager.specialGuardInteraction(false, 2, 0));
+                    }
+                    break;
+
+                case 2: // Perfect counter
+                    if (!hasShownDetail_superCounter)
+                    {
+                        toggleInput(7, 0);
+                        StartCoroutine(_dialogueManager.specialGuardInteraction(true, 2, 0));
+                    }
+                    break;
+            }
+        }
+    }
+
+    // Detail Supper Attack
+    public bool hasShownDetail_superAttack = false;
+    public void superAttackDetailTutorial(int step)
+    {
+        Image cursorImage = _cursorContainer.transform.GetChild(5).GetComponent<Image>();
+        Transform cursorTransform = _cursorContainer.transform.GetChild(5).transform;
+        float cursorDelay = .6f;
+
+        switch (step)
+        {
+            case 1: // Shows cursor moving to command
+                if (!hasShownDetail_superAttack)
+                {
+                    _overlaySprite.DOFade(.8f, 0.4f);
+                    cursorTransform.gameObject.SetActive(true);
+                    cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
+                    cursorTransform.DOLocalMove(new Vector2(-340, 51), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                }
+                void activateButton()
+                {
+                    _inputs[5].GetComponent<Button>().interactable = true;
+                    Time.timeScale = 0.01f;
+                }
+                break;
+
+            case 2: // On comand click
+                if (!hasShownDetail_superAttack)
+                {
+                    Time.timeScale = 1;
+                    cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
+                    _overlaySprite.DOFade(0, 0.4f);
+                }
+                break;
+
+            case 3: // On start minigame
+                cameraManager.playChrome();
+                StartCoroutine(timeManager.slowMotion(7, .6f));
+                break;
         }
     }
 }

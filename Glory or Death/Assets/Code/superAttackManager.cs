@@ -12,7 +12,7 @@ public class superAttackManager : MonoBehaviour
 
     [SerializeField] GameObject swordProyectilePrefab, parentCanvas;
     [SerializeField] Transform heartTarget, shield, feedbackContainer;
-    [SerializeField] float rotationSpeed;
+    
     [SerializeField] int swordNumber;
     [SerializeField] Camera mainCamera;
 
@@ -31,7 +31,8 @@ public class superAttackManager : MonoBehaviour
     Tutorial_UI tutorial_UI;
     DialogueManager dialogueManager;
 
-    int swordCounter = 0;
+    private int swordCounter = 0;
+    private float rotationSpeed = 170;
 
     private void Awake()
     {
@@ -60,28 +61,17 @@ public class superAttackManager : MonoBehaviour
     
     private void OnEnable()
     {
-        Combat_UI.move_UI_out();
-        moveFeedback();
-        audioManager.Play("Super_Attack_Enemy_On");
-        cameraManager.playChrome();
-        moveCameraIn();
+        playAllEffects();
+
         StartCoroutine(MinigameTimer(7));
         StartCoroutine(SpawnSwordsWithDelay(0.4f));
     }
 
     private void OnDisable()
     {
-        if (gameManager.isTutorial())
-        {
-            tutorial_UI.fadeTimer(1);
-
-            if (Tutorial_UI._hasPlayedTutorial)
-            {
-                tutorial_UI.showAllInput(1);
-            }
-        }
+        handleTutorial();
+        resetVisualSwordFeedback();
         swordCounter = 0;
-        resetFeedback();
     }
 
 
@@ -102,17 +92,6 @@ public class superAttackManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         moveCameraOut();
-        Debug.Log("Closing minigame");
-        if (swordCounter >= 5)
-        {
-            Debug.Log("More than 5 hits");
-            StartCoroutine(dialogueManager.specialGuardInteraction(true, 2, 0));
-        }
-        else
-        {
-            Debug.Log("less than 5 hits");
-            StartCoroutine(dialogueManager.specialGuardInteraction(false, 2, 0));
-        }
         gameObject.SetActive(false);
         if (!gameManager.isTutorial())
         {
@@ -121,7 +100,8 @@ public class superAttackManager : MonoBehaviour
         }
     }
 
-    // Tools
+
+    // Rotates the random position of swords and points the swords to the center
     void rotateSpawners()
     {
         spawnRotator.DOLocalRotate(new Vector3(0, 0, -360), 3);
@@ -132,10 +112,45 @@ public class superAttackManager : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         bullet.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
     }
+
+
+    // Manages minigame in tutorial mode
+    void handleTutorial()
+    {
+        if (gameManager.isTutorial())
+        {
+            // Check swords
+            if (swordCounter > 4 && !tutorial_UI.hasShownDetail_superCounter)
+            {
+                tutorial_UI.superCounterDetailTutorial(1);
+            } else
+            {
+                tutorial_UI.superCounterDetailTutorial(2);
+            }
+
+            tutorial_UI.fadeTimer(1);
+
+            if (Tutorial_UI._hasPlayedTutorial)
+            {
+                tutorial_UI.showAllInput(1);
+            }
+        }
+    }
+
+
+    /* Uses the arrow keys to rotate the shield
+    Modify rotation speed with: rotationSpeed (default 200) */
     void rotateOnKey()
     {
         if (!BattleSystem.IsPaused)
         {
+            if (gameManager.isTutorial())
+            {
+                rotationSpeed = 150;
+            } else
+            {
+                rotationSpeed = 170;
+            }
             if (Input.GetKey(KeyCode.RightArrow))
             {
                 float rotationAmount = rotationSpeed * Time.deltaTime;
@@ -149,6 +164,8 @@ public class superAttackManager : MonoBehaviour
         }
     }
 
+
+    // Sets enemy super damage (Not Tutorial)
     void setEnemySuperDMG()
     {
         if (!gameManager.isTutorial())
@@ -157,14 +174,18 @@ public class superAttackManager : MonoBehaviour
         }
     }
 
-    
+
+    // Fades in, animates and adds 1 to the sword counter
     public void fillSword()
     {
         feedbackContainer.GetChild(swordCounter).GetComponent<Image>().DOFade(1, 0.4f);
         feedbackContainer.GetChild(swordCounter).DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f);
         swordCounter++;
     }
-    public void resetFeedback()
+
+
+    // Resets the sword feedback to 0.2 Opacity
+    public void resetVisualSwordFeedback()
     {
         foreach (Transform sword in feedbackContainer.transform)
         {
@@ -174,6 +195,14 @@ public class superAttackManager : MonoBehaviour
 
 
     // Effects
+    void playAllEffects()
+    {
+        Combat_UI.move_UI_out();
+        moveFeedback();
+        audioManager.Play("Super_Attack_Enemy_On");
+        cameraManager.playChrome();
+        moveCameraIn();
+    }
     void moveFeedback()
     {
         if (gameManager.isTutorial())

@@ -68,7 +68,7 @@ public class Tutorial_UI : MonoBehaviour
 
         _overlay = transform.GetChild(3).gameObject;
         _overlaySprite = _overlay.GetComponent<SpriteRenderer>();
-        _cursorContainer = transform.GetChild(10).gameObject;
+        _cursorContainer = transform.GetChild(11).gameObject;
     }
     private void Start()
     {
@@ -308,7 +308,7 @@ public class Tutorial_UI : MonoBehaviour
                 {
                     fadeTimer(0);
                     tryLimit(9, 4, 5, 3);
-                    _player.DecrementCurrentStamina(60);
+                    _player.DecrementCurrentStamina(30);
                     _superAttackManager.SetActive(true);
                     superAttackDetailTutorial(3);
                 }
@@ -893,8 +893,20 @@ public class Tutorial_UI : MonoBehaviour
 
             case 3: // On start minigame
                 cameraManager.playChrome();
-                StartCoroutine(timeManager.slowMotion(7, .6f));
+                StartCoroutine(timeManager.slowMotion(4, .8f));
                 break;
         }
+    }
+
+
+
+
+
+
+
+    // Getter & Setters
+    public int GetNumberOfTries()
+    {
+        return _numberOfTries;
     }
 }

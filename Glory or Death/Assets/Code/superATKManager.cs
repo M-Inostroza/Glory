@@ -11,25 +11,21 @@ public class superATKManager : MonoBehaviour
     timeManager timeManager;
     Player Player;
     Enemy Enemy;
+    DialogueManager DialogueManager;
 
-    int hits;
+    static int hits;
     int targetAmount = 10;
     int spawnCounter;
 
     [SerializeField] Image Overlay;
     [SerializeField] Canvas Canvas;
-    //[SerializeField] GameObject vFeedback;
     [SerializeField] Image[] swordFeeds;
 
     [SerializeField] GameObject targetPrefab;
 
     private void Awake()
     {
-        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
-        Player = FindObjectOfType<Player>();
-        Enemy = FindObjectOfType<Enemy>();
-        MainCamera = FindObjectOfType<Camera>();
-        timeManager = FindObjectOfType<timeManager>();
+        importManagers();
     }
     private void OnEnable()
     {
@@ -62,6 +58,7 @@ public class superATKManager : MonoBehaviour
     }
     void finishMinigame()
     {
+        DialogueManager.superHitCheck();
         Overlay.DOFade(0, 0.5f);
         MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.5f);
         MainCamera.DOFieldOfView(50, 0.5f).OnComplete(playAnim);
@@ -94,8 +91,9 @@ public class superATKManager : MonoBehaviour
         }
     }
 
+
     // G&S
-    public int GetHits()
+    public static int GetHits()
     {
         return hits;
     }
@@ -139,5 +137,16 @@ public class superATKManager : MonoBehaviour
         {
             finishMinigame();
         }
+    }
+
+
+    void importManagers()
+    {
+        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        Player = FindObjectOfType<Player>();
+        Enemy = FindObjectOfType<Enemy>();
+        MainCamera = FindObjectOfType<Camera>();
+        timeManager = FindObjectOfType<timeManager>();
+        DialogueManager = FindObjectOfType<DialogueManager>();
     }
 }

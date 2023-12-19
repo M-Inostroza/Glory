@@ -11,6 +11,7 @@ public class Target : MonoBehaviour
     SoundPlayer soundPlayer;
     BattleSystem BS;
     Player _player;
+    timeManager _timeManager;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class Target : MonoBehaviour
         colider = gameObject.GetComponent<CircleCollider2D>();
         BS = FindObjectOfType<BattleSystem>();
         _player = FindObjectOfType<Player>();
+        _timeManager = FindObjectOfType<timeManager>();
     }
 
     private void OnMouseDown()
@@ -27,7 +29,7 @@ public class Target : MonoBehaviour
         {
             if (!gameManager.isTutorial())
             {
-                FindObjectOfType<timeManager>().enemyTimer.fillAmount += 0.03f;
+                _timeManager.enemyTimer.fillAmount += 0.03f;
                 BS.targetHit++;
             }
             soundPlayer.targetSounds();

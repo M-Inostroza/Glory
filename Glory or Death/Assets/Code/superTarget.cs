@@ -44,13 +44,13 @@ public class superTarget : MonoBehaviour
     {
         if (!BattleSystem.IsPaused)
         {
-            transform.DOKill();
+            soundPlayer.targetSounds();
             if (!gameManager.isTutorial())
             {
                 timeManager.enemyTimer.fillAmount += 0.01f;
             }
-            soundPlayer.targetSounds();
-            transform.DOScale(1.2f, 0.1f);
+            
+            transform.DOScale(1.2f, 0.1f).OnComplete(()=> transform.DOKill());
             SAM.activateFeedSwords();
             SAM.IncrementHits();
             GetComponent<Image>().DOFade(0, 0.1f).OnComplete(()=>Destroy(gameObject));

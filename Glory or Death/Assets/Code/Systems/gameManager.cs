@@ -4,12 +4,16 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class gameManager : MonoBehaviour
 {
     [SerializeField] int turnCounter;
     [SerializeField] Image overlay;
     static string currentSceneName;
+
+
+    public TMP_Text tsText;
 
     bool isPaused = false;
     private void Awake()
@@ -20,6 +24,7 @@ public class gameManager : MonoBehaviour
     private void Update()
     {
         pauseGame();
+        updateTimeScaleText();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             quitGame();
@@ -57,5 +62,10 @@ public class gameManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    void updateTimeScaleText()
+    {
+        tsText.text = Time.timeScale.ToString();
     }
 }

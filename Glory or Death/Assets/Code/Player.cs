@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
     [SerializeField] private int critHits;
 
     [SerializeField] private DodgeManager dodgeManager;
-    [SerializeField] private superATKManager SAM;
 
     //Agility (Dodging)
     public bool missed = false;
@@ -293,7 +292,7 @@ public class Player : MonoBehaviour
     }
     public void showEnemySuperDamage()
     {
-        BS.showHit(SAM.GetHits(), BS.hitText_Enemy.transform);
+        BS.showHit(superATKManager.GetHits(), BS.hitText_Enemy.transform);
     }
 
 
@@ -386,7 +385,7 @@ public class Player : MonoBehaviour
     }
     public void doSuperDMG()
     {
-        enemy_unit.GetComponent<Enemy>().TakeDamage(SAM.GetHits());
+        enemy_unit.GetComponent<Enemy>().TakeDamage(superATKManager.GetHits());
     }
 
     // Shield

@@ -38,8 +38,8 @@ public class DialogueManager : MonoBehaviour
          - 7 = Counter 2
          - 8 = Dirt
          */
-        //tutorial_UI.toggleInput(8, 1);
-        StartCoroutine(interactions(8, 2));
+        tutorial_UI.toggleInput(5, 1);
+        //StartCoroutine(interactions(8, 2));
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -327,7 +327,20 @@ public class DialogueManager : MonoBehaviour
         Overlay(0);
         moveGuardContainer(1);
     }
-
+    public void superHitCheck()
+    {
+        if (gameManager.isTutorial() && !tutorial_UI.hasShownDetail_superAttack && tutorial_UI.GetNumberOfTries() >= 1)
+        {
+            if (superATKManager.GetHits() <= 5)
+            {
+                StartCoroutine(specialGuardInteraction(false, 3, 1));
+            }
+            else
+            {
+                StartCoroutine(specialGuardInteraction(true, 3, 1));
+            }
+        }
+    }
     void movePlayerContainer(int inOrOut)
     {
         // 0 = In - 1 = Out

@@ -898,7 +898,39 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
+    // Detail Dirt
+    public bool hasShownDetail_dirt = false;
+    public void dirtDetailTutorial(int step)
+    {
+        Image cursorImage = _cursorContainer.transform.GetChild(6).GetComponent<Image>();
+        Transform cursorTransform = _cursorContainer.transform.GetChild(6).transform;
 
+        if (gameManager.isTutorial() && _numberOfTries >= 1)
+        {
+            switch (step)
+            {
+                case 1: // Button pressed, animation showing
+                    if (!hasShownDetail_dirt)
+                    {
+                        cameraManager.playChrome();
+                        StartCoroutine(timeManager.slowMotion(.2f, .4f));
+                        // Move and appear cursor
+                        cursorTransform.gameObject.SetActive(true);
+                        cursorImage.DOFade(1, .2f);
+                        cursorTransform.DOLocalMove(new Vector2(170, 30), 0.3f)
+                        .SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
+                    }
+                    break;
+
+                case 2: // Random feedback
+                    if (!hasShownDetail_dirt)
+                    {
+                        toggleInput(6, 0);
+                    }
+                    break;
+            }
+        }
+    }
 
 
 

@@ -4,7 +4,7 @@ using DG.Tweening;
 
 public class dirtToss : MonoBehaviour
 {
-    private bool _isDirty, speedReduced;
+    private bool speedReduced;
     public bool IsDirty { get; private set; }
 
     [SerializeField]
@@ -99,6 +99,7 @@ public class dirtToss : MonoBehaviour
             }
             if (opacity <= 0)
             {
+                tutorial_UI.dirtDetailTutorial(2);
                 IsDirty = false;
                 gameObject.SetActive(false);
                 Combat_UI.move_Inputs_in();
@@ -111,6 +112,7 @@ public class dirtToss : MonoBehaviour
         yield return new WaitForSeconds(time);
         DOTween.To(() => opacity, x => opacity = x, 0, 0.5f);
         IsDirty = false;
+        tutorial_UI.dirtDetailTutorial(2);
         yield return new WaitForSeconds(0.5f);
         Combat_UI.move_Inputs_in();
         gameObject.SetActive(false);

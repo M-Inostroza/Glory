@@ -105,12 +105,21 @@ public class Tutorial_UI : MonoBehaviour
 
     public void toggleInput(int index, int inOut)
     {   // 1 = in
-        if (inOut == 1)
+        try
         {
-            _inputs[index].DOLocalMoveX(140, 0.7f);
-        } else
+            if (inOut == 1)
+            {
+                _inputs[index].DOLocalMoveX(140, 0.7f);
+            }
+            else
+            {
+                _inputs[index].DOLocalMoveX(0, 0.5f);
+            }
+        }
+        catch (System.Exception)
         {
-            _inputs[index].DOLocalMoveX(0, 0.5f);
+            Debug.Log("Index out of array");
+            throw;
         }
     }
 
@@ -194,7 +203,7 @@ public class Tutorial_UI : MonoBehaviour
             _dirtManager.SetActive(true);
             fadeTimer(0);
             if (!_hasPlayedTutorial)
-                tryLimit(10, 4, 8, 3);
+                tryLimit(10, 6, 8, 3);
         }
     }
 
@@ -915,17 +924,26 @@ public class Tutorial_UI : MonoBehaviour
                         cameraManager.playChrome();
                         StartCoroutine(timeManager.slowMotion(.2f, .4f));
                         // Move and appear cursor
+                        toggleInput(8, 0);
+                        cursorTransform.DOLocalMove(new Vector2(-140, -70), 0);
                         cursorTransform.gameObject.SetActive(true);
-                        cursorImage.DOFade(1, .2f);
+                        cursorImage.DOFade(1, .5f);
                         cursorTransform.DOLocalMove(new Vector2(170, 30), 0.3f)
                         .SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
                     }
                     break;
 
-                case 2: // Random feedback
+                case 2: // Stops the hand when the dirt is gone and gives feedback
                     if (!hasShownDetail_dirt)
                     {
-                        toggleInput(6, 0);
+                        cursorImage.DOFade(0, .5f).OnComplete(kill);
+                        void kill()
+                        {
+                            cursorTransform.gameObject.SetActive(false);
+                            cursorTransform.DOKill();
+                        }
+                        toggleInput(8, 0);
+                        StartCoroutine(_dialogueManager.specialGuardInteraction(true, 4, .5f));
                     }
                     break;
             }

@@ -264,7 +264,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
     void moveGuardContainer(int inOrOut)
-    {   // 0 = In - 1 = Out
+    {   // 0 = In  1 = Out
         if (inOrOut == 0)
         {
             _guardFrame.SetActive(true);
@@ -316,6 +316,11 @@ public class DialogueManager : MonoBehaviour
                     _guardText.text = "You're learning fast!";
                 }
                 tutorial_UI.toggleInput(5, 1);
+                break;
+
+            case 4: // Dirt
+                _guardText.text = "Good job, try again!";
+                tutorial_UI.toggleInput(8, 1);
                 break;
             default:
                 Debug.Log("Out of index");

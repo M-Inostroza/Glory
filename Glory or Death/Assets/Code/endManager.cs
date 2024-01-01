@@ -149,10 +149,6 @@ public class endManager : MonoBehaviour
         dialogueText.DOFade(1, 0.3f);
         dialogueText.text = BubbleText;
         resetButton.gameObject.SetActive(true);
-        if (!isEnd)
-        {
-            showUpgradeButton(1);
-        }
     }
     public void animatePlayerAvatarOut()
     {

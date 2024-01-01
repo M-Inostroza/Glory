@@ -29,7 +29,6 @@ public class DodgeManager : MonoBehaviour
     Animator playerAnimator;
     Combat_UI combat_UI;
     Tutorial_UI tutorial_UI;
-    BattleSystem BS;
 
     // Instantiated arrows
     List<GameObject> instantArrows = new List<GameObject>();
@@ -37,7 +36,6 @@ public class DodgeManager : MonoBehaviour
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        BS = FindObjectOfType<BattleSystem>();
         playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();
         combat_UI = FindObjectOfType<Combat_UI>();
@@ -51,7 +49,7 @@ public class DodgeManager : MonoBehaviour
         isCritic = false;
 
         spawnArrows();
-        doCameraSlow();
+        triggerCameraAnimation();
         openMinigame();
         
         StartCoroutine(mainTimer(Timer)); // Normal 1.8
@@ -159,14 +157,26 @@ public class DodgeManager : MonoBehaviour
         audioManager.Play("Evade_Arrow_Wosh");
         evadeSlider.value += 50;
         instantArrows.RemoveAt(0);
-        arrow.transform.DOLocalJump(new Vector2(arrow.transform.localPosition.x, arrow.transform.localPosition.y + 10), 6, 1, 0.3f).OnComplete(() => Destroy(arrow.gameObject));
+        arrow.transform.DOLocalJump(new Vector2(arrow.transform.localPosition.x, arrow.transform.localPosition.y + 10), 6, 1, 0.3f)
+            .OnComplete(kill);
+        void kill()
+        {
+            arrow.transform.DOKill();
+            Destroy(arrow.gameObject);
+        }
     }
     void failArrow(GameObject arrow)
     {
         audioManager.Play("Evade_Arrow_Fail");
         evadeSlider.value -= 30;
         instantArrows.RemoveAt(0);
-        arrow.transform.DOShakePosition(0.3f, 4, 20).OnComplete(() => Destroy(arrow.gameObject));
+        arrow.transform.DOShakePosition(0.3f, 4, 20)
+            .OnComplete(kill);
+        void kill()
+        {
+            arrow.transform.DOKill();
+            Destroy(arrow.gameObject);
+        }
     }
     void checkSuccess()
     {
@@ -228,11 +238,12 @@ public class DodgeManager : MonoBehaviour
         void clear(Transform child)
         {
             instantArrows.Clear();
+            child.transform.DOKill();
             Destroy(child.gameObject);
         }
     }
 
-    void doCameraSlow()
+    void triggerCameraAnimation()
     {
         mainCamera.DOFieldOfView(35, .7f);
         if (gameManager.isTutorial())

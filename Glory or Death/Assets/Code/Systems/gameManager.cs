@@ -36,7 +36,7 @@ public class gameManager : MonoBehaviour
     }
     public void pauseGame()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Delete))
         {
             isPaused = !isPaused;
             if (isPaused)

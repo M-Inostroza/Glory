@@ -199,25 +199,27 @@ public class BattleSystem : MonoBehaviour
     /*-----------------------------------END FIGHT---------------------------------------------------------*/
     public void checkEndFight()
     {
-        if (playerUnit.GetCurrentHP() <= 0 && deadPlayer == false) // Defeat
+        // Defeat
+        if (playerUnit.GetCurrentHP() <= 0 && deadPlayer == false)
         {
             Combat_UI.move_UI_out();
             cameraManager.playChrome();
             audioManager.Play("Defeat_Sound");
-            timeControlDefeatVictory();
-            enemyUnit.GetComponent<Enemy>().GetComponent<Animator>().SetBool("Victory", true);
+            stopFightTimers();
+            enemyUnit.GetComponent<Animator>().SetBool("Victory", true);
             
             endManager.activateEndElements(true, 1);
             endManager.defeatScreen();
 
             deadPlayer = true;
-        } 
-        else if (enemyUnit.currentHP <= 0 && deadEnemy == false) // Victory
+        }
+        // Victory
+        else if (enemyUnit.currentHP <= 0 && deadEnemy == false)
         {
             Combat_UI.move_UI_out();
             cameraManager.playChrome();
             audioManager.Play("Last_Hit");
-            timeControlDefeatVictory();
+            stopFightTimers();
 
             endManager.activateEndElements(true, 2);
             endManager.victoryScreen();
@@ -254,11 +256,12 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.adrenaline = 0;
     }
 
-    void timeControlDefeatVictory()
+    void stopFightTimers()
     {
         StartCoroutine(timeManager.slowMotion(.7f, .2f));
         timeManager.stopUnitTimer();
         timeManager.fadeOutUnitTimer();
+        timeManager.deactivateFightTimer();
     }
     public void resetTimers(int mainTimer)
     {

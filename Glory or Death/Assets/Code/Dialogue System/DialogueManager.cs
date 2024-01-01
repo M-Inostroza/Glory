@@ -38,8 +38,9 @@ public class DialogueManager : MonoBehaviour
          - 7 = Counter 2
          - 8 = Dirt
          */
-        tutorial_UI.toggleInput(8, 1);
-        //StartCoroutine(interactions(9, 2));
+        //tutorial_UI.toggleInput(8, 1);
+        //StartCoroutine(interactions(10, 2));
+        tutorial_UI.repeatTutorial();
     }
 
     public IEnumerator interactions(int index, float delay)
@@ -239,7 +240,7 @@ public class DialogueManager : MonoBehaviour
             case 10:
                 moveGuardContainer(In); _guardText.text = "Enough, that's all you need to know...";
                 yield return new WaitForSeconds(4);
-                _guardText.text = "Now go to your cell and get some sleep, your first fight will be soon";
+                _guardText.text = "Now, go to your cell and get some sleep, your first fight will be soon";
                 yield return new WaitForSeconds(4);
                 moveGuardContainer(Out);
                 showEndScreen(true);

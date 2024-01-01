@@ -54,7 +54,10 @@ public class counterSword : MonoBehaviour
         }
         else if (collision.name == "Counter Target")
         {
-            tutorial_UI.counterDetailTutorial(2);
+            if (gameManager.isTutorial())
+            {
+                tutorial_UI.counterDetailTutorial(2);
+            }
             cameraManager.playChrome();
             audioManager.Play("Counter_Fail");
             soundPlayer.stabSounds();

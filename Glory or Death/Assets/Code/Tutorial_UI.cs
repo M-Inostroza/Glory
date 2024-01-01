@@ -68,7 +68,7 @@ public class Tutorial_UI : MonoBehaviour
 
         _overlay = transform.GetChild(3).gameObject;
         _overlaySprite = _overlay.GetComponent<SpriteRenderer>();
-        _cursorContainer = transform.GetChild(11).gameObject;
+        _cursorContainer = transform.GetChild(10).gameObject;
     }
     private void Start()
     {
@@ -484,6 +484,7 @@ public class Tutorial_UI : MonoBehaviour
 
     public void repeatTutorial()
     {
+        setHelpOff();
         _hasPlayedTutorial = true;
         _dialogueManager.showEndScreen(false);
         _dialogueManager.Overlay(0);
@@ -951,7 +952,19 @@ public class Tutorial_UI : MonoBehaviour
     }
 
 
-
+    // Sets all detailed tutorials to already shown
+    public void setHelpOff()
+    {
+        hasShownDetail_attack = true;
+        hasShownDetail_defend = true;
+        hasShownDetail_dodge = true;
+        hasShownDetail_focus = true;
+        hasShownDetail_rest = true;
+        hasShownDetail_counter = true;
+        hasShownDetail_superCounter = true;
+        hasShownDetail_superAttack = true;
+        hasShownDetail_dirt = true;
+    }
 
 
     // Getter & Setters

@@ -24,15 +24,15 @@ public class gameManager : MonoBehaviour
     private void Update()
     {
         pauseGame();
-        updateTimeScaleText();
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            quitGame();
-        }
+        //updateTimeScaleText();
+        quitGame();
     }
     public void quitGame()
     {
-        Application.Quit();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
     public void pauseGame()
     {
@@ -66,6 +66,9 @@ public class gameManager : MonoBehaviour
 
     void updateTimeScaleText()
     {
-        tsText.text = Time.timeScale.ToString();
+        if (tsText.text != null)
+        {
+            tsText.text = Time.timeScale.ToString();
+        }
     }
 }

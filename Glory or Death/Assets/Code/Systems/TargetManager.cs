@@ -100,11 +100,7 @@ public class TargetManager : MonoBehaviour
             target.transform.DOScale(0, 0.05f).OnComplete(() => target.SetActive(false));
         }
 
-        if (gameManager.isTutorial())
-        {
-            courtain.DOColor(new Color(0, 0, 0, 0), .5f).OnComplete(()=> tutorial_UI.hasShownDetail_attack = true);
-
-        }
+        courtain.DOColor(new Color(0, 0, 0, 0), .5f);
         Combat_UI.move_UI_in();
     }
 

@@ -99,7 +99,10 @@ public class dirtToss : MonoBehaviour
             }
             if (opacity <= 0)
             {
-                tutorial_UI.dirtDetailTutorial(2);
+                if (gameManager.isTutorial())
+                {
+                    tutorial_UI.dirtDetailTutorial(2);
+                }
                 IsDirty = false;
                 gameObject.SetActive(false);
                 Combat_UI.move_Inputs_in();

@@ -16,6 +16,7 @@ public class counterSword : MonoBehaviour
     SoundPlayer soundPlayer;
     AudioManager audioManager;
     Tutorial_UI tutorial_UI;
+    Combat_UI combat_UI;
 
     [Header("Materials")]
     [SerializeField] Material heartMaterial;
@@ -30,6 +31,7 @@ public class counterSword : MonoBehaviour
         combatUI = FindObjectOfType<Combat_UI>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        combat_UI = FindObjectOfType<Combat_UI>();
     }
     private void OnEnable()
     {
@@ -44,6 +46,7 @@ public class counterSword : MonoBehaviour
             case "Shield Image":
                 if (!gameManager.isTutorial())
                 {
+                    enemy.SetCriticBlock(false);
                     combatUI.shakeShieldBar();
                     enemy.GetComponent<Animator>().Play("Attack_Blocked");
                     player.GetComponent<Animator>().Play("blockAttack");
@@ -60,16 +63,18 @@ public class counterSword : MonoBehaviour
                 {
                     tutorial_UI.counterDetailTutorial(2);
                 }
+                enemy.SetCriticBlock(false);
                 cameraManager.playChrome();
                 audioManager.Play("Counter_Fail");
                 soundPlayer.stabSounds();
                 meltHeart();
                 break;
             case "Critic":
-                Debug.Log("Critic Counter");
                 if (!gameManager.isTutorial())
                 {
+                    enemy.SetCriticBlock(true);
                     _criticStars.Play();
+                    combat_UI.showStars();
                     combatUI.shakeShieldBar();
                     enemy.GetComponent<Animator>().Play("Attack_Blocked");
                     player.GetComponent<Animator>().Play("blockAttack");

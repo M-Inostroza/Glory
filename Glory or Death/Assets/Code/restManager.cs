@@ -84,7 +84,7 @@ public class restManager : MonoBehaviour
         }
         criticStar.GetComponent<Image>().DOFade(0.25f, 0);
         canRest = false;
-        player.SetCurrentStamina(restSlider.value);
+        player.SetCurrentStamina(player.GetCurrentStamina() + restSlider.value);
         player.backToIdle();
     }
 

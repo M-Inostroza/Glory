@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     private Camera mainCamera;
 
     private bool isAngry = false;
+    private bool criticBlock = false;
     public bool hasHit = false;
 
     SoundPlayer soundPlayer;
@@ -162,7 +163,13 @@ public class Enemy : MonoBehaviour
     }
     public void doBlockedDMG()
     {
-        Player.TakeDamage(nativeDamage - 2);
+        if (criticBlock)
+        {
+            Player.TakeDamage(0);
+        } else
+        {
+            Player.TakeDamage(nativeDamage / 2);
+        }
     }
     public void doSuperDMG()
     {
@@ -328,7 +335,13 @@ public class Enemy : MonoBehaviour
     }
     public void showDmgFeedbackPlayerReduced()
     {
-        BS.showHit(nativeDamage - 2, BS.hitText_Player.transform);
+        if (criticBlock)
+        {
+            BS.showHit(0, BS.hitText_Player.transform);
+        } else
+        {
+            BS.showHit(nativeDamage - 2, BS.hitText_Player.transform);
+        }
     }
     public void showDmgFeedbackPlayerSuper(int step)
     {
@@ -363,6 +376,15 @@ public class Enemy : MonoBehaviour
     public void setSuperDMG(int dmg)
     {
         superDMG = dmg;
+    }
+
+    public bool GetCriticBlock()
+    {
+        return criticBlock;
+    }
+    public void SetCriticBlock(bool isCritic)
+    {
+        criticBlock = isCritic;
     }
 
     // Caps

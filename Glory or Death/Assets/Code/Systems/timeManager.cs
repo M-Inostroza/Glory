@@ -17,6 +17,7 @@ public class timeManager : MonoBehaviour
     private Input_Manager Input_Manager;
     private Combat_UI combarUI;
     private endManager endManager;
+    private AudioManager audioManager;
 
     //Global time
     public TextMeshProUGUI timerText;
@@ -81,6 +82,7 @@ public class timeManager : MonoBehaviour
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
         endManager = FindObjectOfType<endManager>();
+        audioManager = FindObjectOfType<AudioManager>();
         timerIsRunning = false;
 
         selectEnemyAction();
@@ -390,6 +392,7 @@ public class timeManager : MonoBehaviour
             // Time out
             if (battleTimer <= 0 && !BattleSystem.OnSkill)
             {
+                audioManager.Stop("Combat_Theme");
                 Combat_UI.move_UI_out();
                 timerIsRunning = false;
                 stopUnitTimer();
@@ -437,6 +440,7 @@ public class timeManager : MonoBehaviour
     }
     public void deactivateFightTimer()
     {
+        audioManager.Stop("Combat_Theme");
         timerIsRunning = false;
     }
     public void resetFightTimer(int seconds)

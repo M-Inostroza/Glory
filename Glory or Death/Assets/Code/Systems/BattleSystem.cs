@@ -204,6 +204,7 @@ public class BattleSystem : MonoBehaviour
         {
             Combat_UI.move_UI_out();
             cameraManager.playChrome();
+            audioManager.Stop("Combat_Theme");
             audioManager.Play("Defeat_Sound");
             stopFightTimers();
             enemyUnit.GetComponent<Animator>().SetBool("Victory", true);
@@ -218,6 +219,7 @@ public class BattleSystem : MonoBehaviour
         {
             Combat_UI.move_UI_out();
             cameraManager.playChrome();
+            audioManager.Stop("Combat_Theme");
             audioManager.Play("Last_Hit");
             stopFightTimers();
 

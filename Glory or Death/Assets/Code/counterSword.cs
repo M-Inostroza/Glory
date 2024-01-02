@@ -46,6 +46,7 @@ public class counterSword : MonoBehaviour
             case "Shield Image":
                 if (!gameManager.isTutorial())
                 {
+                    Debug.Log("Normal");
                     enemy.SetCriticBlock(false);
                     combatUI.shakeShieldBar();
                     enemy.GetComponent<Animator>().Play("Attack_Blocked");
@@ -58,6 +59,7 @@ public class counterSword : MonoBehaviour
                 soundPlayer.shield_metal();
                 counterManager.SetActive(false);
                 break;
+
             case "Counter Target":
                 if (gameManager.isTutorial())
                 {
@@ -69,9 +71,11 @@ public class counterSword : MonoBehaviour
                 soundPlayer.stabSounds();
                 meltHeart();
                 break;
+
             case "Critic":
                 if (!gameManager.isTutorial())
                 {
+                    Debug.Log("Critic");
                     enemy.SetCriticBlock(true);
                     _criticStars.Play();
                     combat_UI.showStars();
@@ -84,38 +88,10 @@ public class counterSword : MonoBehaviour
                     tutorial_UI.counterDetailTutorial(3);
                 }
                 soundPlayer.shield_metal();
+                cameraManager.playChrome();
                 counterManager.SetActive(false);
                 break;
         }
-        /*if (collision.name == "Shield Image")
-        {
-            if (!gameManager.isTutorial())
-            {
-                combatUI.shakeShieldBar();
-                enemy.GetComponent<Animator>().Play("Attack_Blocked");
-                player.GetComponent<Animator>().Play("blockAttack");
-            } else
-            {
-                tutorial_UI.counterDetailTutorial(3);
-            }
-            soundPlayer.shield_metal();
-            counterManager.SetActive(false);
-        }
-        else if (collision.name == "Counter Target")
-        {
-            if (gameManager.isTutorial())
-            {
-                tutorial_UI.counterDetailTutorial(2);
-            }
-            cameraManager.playChrome();
-            audioManager.Play("Counter_Fail");
-            soundPlayer.stabSounds();
-            meltHeart();
-        }
-        else if (collision.name == "shieldStop")
-        {
-            counterManager.GetComponent<CounterManager>().canRotateBool(false);
-        }*/
     }
 
     void meltHeart()

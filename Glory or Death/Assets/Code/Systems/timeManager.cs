@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System;
 
 
 public class timeManager : MonoBehaviour
@@ -42,7 +43,7 @@ public class timeManager : MonoBehaviour
     public Image enemyActionIcon;
 
     bool dirtPrevious = false;
-    private float dirtChance = 25;
+    private float dirtChance = 20;
 
     //Generic wait time for turns
     private float mainWaitTime = 20;
@@ -283,7 +284,7 @@ public class timeManager : MonoBehaviour
             }
             else
             {
-                float attackRandom = Random.Range(0, 99);
+                float attackRandom = UnityEngine.Random.Range(0, 99);
                 if (attackRandom > dirtChance || dirtPrevious)
                 {
                     Input_Manager.SetEnemyAction("ATK1");
@@ -426,10 +427,14 @@ public class timeManager : MonoBehaviour
         EnemyRing.DOFade(1, fadeTime);
     }
 
-    public static IEnumerator slowMotion(float seconds, float timeScale)
+    public static IEnumerator slowMotion(float seconds, float timeScale, Action afterWait = null)
     {
         Time.timeScale = timeScale;
         yield return new WaitForSeconds(seconds);
+        if (afterWait != null)
+        {
+            afterWait.Invoke();
+        }
         Time.timeScale = 1;
     }
 

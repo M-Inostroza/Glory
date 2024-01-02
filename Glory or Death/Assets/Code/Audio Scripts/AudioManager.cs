@@ -21,12 +21,52 @@ public class AudioManager : MonoBehaviour
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.Play();
+        if (s != null)
+        {
+            s.source.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Sound with name " + name + " not found!");
+        }
     }
 
     public void Stop(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.Stop();
+        if (s != null)
+        {
+            s.source.Stop();
+        }
+        else
+        {
+            Debug.LogWarning("Sound with name " + name + " not found!");
+        }
+    }
+
+    public void Pause(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s != null && s.source.isPlaying)
+        {
+            s.source.Pause();
+        }
+        else
+        {
+            Debug.LogWarning("Sound with name " + name + " not found or not playing!");
+        }
+    }
+
+    public void Resume(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s != null && !s.source.isPlaying)
+        {
+            s.source.UnPause();
+        }
+        else
+        {
+            Debug.LogWarning("Sound with name " + name + " not found or already playing!");
+        }
     }
 }

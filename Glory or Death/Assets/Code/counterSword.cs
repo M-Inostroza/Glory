@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using AssetKits.ParticleImage;
 
 public class counterSword : MonoBehaviour
 {
     [SerializeField] GameObject counterManager, heart;
+    [SerializeField] ParticleImage _criticStars;
 
     Player player;
     Enemy enemy;
@@ -37,8 +39,50 @@ public class counterSword : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         counterManager.GetComponent<CounterManager>().canRotateBool(false);
-        
-        if (collision.name == "Shield Image")
+        switch (collision.name)
+        {
+            case "Shield Image":
+                if (!gameManager.isTutorial())
+                {
+                    combatUI.shakeShieldBar();
+                    enemy.GetComponent<Animator>().Play("Attack_Blocked");
+                    player.GetComponent<Animator>().Play("blockAttack");
+                }
+                else
+                {
+                    tutorial_UI.counterDetailTutorial(3);
+                }
+                soundPlayer.shield_metal();
+                counterManager.SetActive(false);
+                break;
+            case "Counter Target":
+                if (gameManager.isTutorial())
+                {
+                    tutorial_UI.counterDetailTutorial(2);
+                }
+                cameraManager.playChrome();
+                audioManager.Play("Counter_Fail");
+                soundPlayer.stabSounds();
+                meltHeart();
+                break;
+            case "Critic":
+                Debug.Log("Critic Counter");
+                if (!gameManager.isTutorial())
+                {
+                    _criticStars.Play();
+                    combatUI.shakeShieldBar();
+                    enemy.GetComponent<Animator>().Play("Attack_Blocked");
+                    player.GetComponent<Animator>().Play("blockAttack");
+                }
+                else
+                {
+                    tutorial_UI.counterDetailTutorial(3);
+                }
+                soundPlayer.shield_metal();
+                counterManager.SetActive(false);
+                break;
+        }
+        /*if (collision.name == "Shield Image")
         {
             if (!gameManager.isTutorial())
             {
@@ -66,7 +110,7 @@ public class counterSword : MonoBehaviour
         else if (collision.name == "shieldStop")
         {
             counterManager.GetComponent<CounterManager>().canRotateBool(false);
-        }
+        }*/
     }
 
     void meltHeart()

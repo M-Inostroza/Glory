@@ -118,7 +118,7 @@ public class TargetManager : MonoBehaviour
         foreach (Transform child in vFeedback.transform)
         {
             child.transform.GetComponent<Image>().DOFade(.25f, 0);
-            child.transform.DOScale(1, 0.3f).SetEase(Ease.InBack);
+            child.transform.DOScale(1.8f, 0.3f).SetEase(Ease.InBack);
         }
     }
     void zoomCameraIn()

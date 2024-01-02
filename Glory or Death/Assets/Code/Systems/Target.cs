@@ -63,7 +63,6 @@ public class Target : MonoBehaviour
 
     public void killTarget()
     {
-        //transform.GetChild(0).gameObject.SetActive(false);
         gameObject.SetActive(false);
         colider.enabled = true;
     }

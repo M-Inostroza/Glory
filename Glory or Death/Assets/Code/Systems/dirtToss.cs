@@ -115,7 +115,10 @@ public class dirtToss : MonoBehaviour
         yield return new WaitForSeconds(time);
         DOTween.To(() => opacity, x => opacity = x, 0, 0.5f);
         IsDirty = false;
-        tutorial_UI.dirtDetailTutorial(2);
+        if (gameManager.isTutorial())
+        {
+            tutorial_UI.dirtDetailTutorial(2);
+        }
         yield return new WaitForSeconds(0.5f);
         Combat_UI.move_Inputs_in();
         gameObject.SetActive(false);

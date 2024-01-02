@@ -12,12 +12,14 @@ public class gameManager : MonoBehaviour
     [SerializeField] Image overlay;
     static string currentSceneName;
 
+    AudioManager _audioManager;
 
     public TMP_Text tsText;
 
     bool isPaused = false;
     private void Awake()
     {
+        _audioManager = FindObjectOfType<AudioManager>();
         currentSceneName = SceneManager.GetActiveScene().name;
         DOTween.SetTweensCapacity(7500, 150);
     }
@@ -36,17 +38,19 @@ public class gameManager : MonoBehaviour
     }
     public void pauseGame()
     {
-        if (Input.GetKeyDown(KeyCode.Delete))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             isPaused = !isPaused;
             if (isPaused)
             {
+                _audioManager.Pause("Combat_Theme");
                 overlay.gameObject.SetActive(true);
                 Time.timeScale = 0f;
                 BattleSystem.IsPaused = true;
             }
             else
             {
+                _audioManager.Resume("Combat_Theme");
                 overlay.gameObject.SetActive(false);
                 Time.timeScale = 1f;
                 BattleSystem.IsPaused = false;

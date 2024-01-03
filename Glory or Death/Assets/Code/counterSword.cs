@@ -89,7 +89,11 @@ public class counterSword : MonoBehaviour
                 }
                 soundPlayer.shield_metal();
                 cameraManager.playChrome();
-                counterManager.SetActive(false);
+                transform.DOKill();
+                StartCoroutine(timeManager.slowMotion(.8f, .6f, () =>
+                {
+                    counterManager.SetActive(false);
+                }));
                 break;
         }
     }

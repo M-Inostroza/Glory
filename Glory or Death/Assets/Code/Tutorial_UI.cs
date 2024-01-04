@@ -39,6 +39,7 @@ public class Tutorial_UI : MonoBehaviour
     private string _slectedAction;
     private int _numberOfTries;
 
+    cameraManager _cameraManager;
     Player _player;
     TargetManager _targetManager;
     defendManager _defendManager;
@@ -65,6 +66,7 @@ public class Tutorial_UI : MonoBehaviour
         _audioManager = FindObjectOfType<AudioManager>();
         _player = FindObjectOfType<Player>();
         _defendManager = FindObjectOfType<defendManager>();
+        _cameraManager = FindObjectOfType<cameraManager>();
 
         _overlay = transform.GetChild(3).gameObject;
         _overlaySprite = _overlay.GetComponent<SpriteRenderer>();
@@ -816,7 +818,7 @@ public class Tutorial_UI : MonoBehaviour
                 case 1: // Stops counter before starts
                     if (!hasShownDetail_counter)
                     {
-                        cameraManager.playChrome();
+                        _cameraManager.playChrome();
                         StartCoroutine(timeManager.slowMotion(1.2f, .4f));
                     }
                     break;
@@ -902,7 +904,7 @@ public class Tutorial_UI : MonoBehaviour
                 break;
 
             case 3: // On start minigame
-                cameraManager.playChrome();
+                _cameraManager.playChrome();
                 StartCoroutine(timeManager.slowMotion(4, .8f));
                 break;
         }
@@ -922,7 +924,7 @@ public class Tutorial_UI : MonoBehaviour
                 case 1: // Button pressed, animation showing
                     if (!hasShownDetail_dirt)
                     {
-                        cameraManager.playChrome();
+                        _cameraManager.playChrome();
                         StartCoroutine(timeManager.slowMotion(.2f, .4f));
                         // Move and appear cursor
                         toggleInput(8, 0);

@@ -12,6 +12,7 @@ public class CounterManager : MonoBehaviour
     [SerializeField] Image _overlay;
     Combat_UI combatUI;
     Tutorial_UI tutorial_UI;
+    cameraManager _cameraManager;
 
     static float rotationSpeed = 13;
     bool canRotate = false;
@@ -25,11 +26,12 @@ public class CounterManager : MonoBehaviour
     {
         combatUI = FindObjectOfType<Combat_UI>();
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        _cameraManager = FindObjectOfType<cameraManager>();
     }
     private void Update()
     {
         rotateOnKey();
-        rotateOnStart();
+        //rotateOnStart(); TEST
     }
 
     private void OnEnable()
@@ -60,6 +62,7 @@ public class CounterManager : MonoBehaviour
 
     public void startMinigame()
     {
+        _cameraManager.playChrome();
         canRotate = true;
         setRandomRotation();
         moveCameraIn();
@@ -95,7 +98,7 @@ public class CounterManager : MonoBehaviour
     }
     void setRandomRotation()
     {
-        float randomRotation = Random.Range(66, 170); // Default 66, 170
+        float randomRotation = -20;//Random.Range(75, 170); // Default 75, 170 / Center -20 TEST
         shieldImage.transform.DORotate(new Vector3(0, 0, randomRotation), 0);
         counterTarget.transform.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 1, 6, 3).SetLoops(3, LoopType.Restart);
     }

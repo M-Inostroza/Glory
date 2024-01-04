@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private AudioManager audioManager;
     private Tutorial_UI _tutorial_UI;
     private Combat_UI _combat_UI;
+    private cameraManager _cameraManager;
     
     [Header("Stats")]
     [SerializeField] private float maxSpeed, baseSpeed;
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
         targetManager = FindObjectOfType<TargetManager>();
         timeManager = FindObjectOfType<timeManager>();
         audioManager = FindObjectOfType<AudioManager>();
+        _cameraManager = FindObjectOfType<cameraManager>();
 
         setStats();
     }
@@ -540,7 +542,7 @@ public class Player : MonoBehaviour
     }
     public void ATK_SlowmoHit(float slowMo)
     {
-        cameraManager.playChrome();
+        _cameraManager.playChrome();
         StartCoroutine(timeManager.slowMotion(slowMo, .2f));
     }
     public void blockHit()

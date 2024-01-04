@@ -9,6 +9,7 @@ public class counterSword : MonoBehaviour
 {
     [SerializeField] GameObject counterManager, heart;
     [SerializeField] ParticleImage _criticStars;
+    [SerializeField] ParticleImage _criticSparks;
 
     Player player;
     Enemy enemy;
@@ -17,6 +18,7 @@ public class counterSword : MonoBehaviour
     AudioManager audioManager;
     Tutorial_UI tutorial_UI;
     Combat_UI combat_UI;
+    cameraManager _cameraManager;
 
     [Header("Materials")]
     [SerializeField] Material heartMaterial;
@@ -32,15 +34,18 @@ public class counterSword : MonoBehaviour
         soundPlayer = FindObjectOfType<SoundPlayer>();
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
         combat_UI = FindObjectOfType<Combat_UI>();
+        _cameraManager = FindObjectOfType<cameraManager>();
     }
     private void OnEnable()
     {
+        transform.GetComponent<PolygonCollider2D>().enabled = true;
         transform.DOLocalMoveX(12, 0);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         counterManager.GetComponent<CounterManager>().canRotateBool(false);
+        transform.GetComponent<PolygonCollider2D>().enabled = false;
         switch (collision.name)
         {
             case "Shield Image":
@@ -66,7 +71,7 @@ public class counterSword : MonoBehaviour
                     tutorial_UI.counterDetailTutorial(2);
                 }
                 enemy.SetCriticBlock(false);
-                cameraManager.playChrome();
+                _cameraManager.playChrome();
                 audioManager.Play("Counter_Fail");
                 soundPlayer.stabSounds();
                 meltHeart();
@@ -78,6 +83,7 @@ public class counterSword : MonoBehaviour
                     Debug.Log("Critic");
                     enemy.SetCriticBlock(true);
                     _criticStars.Play();
+                    _criticSparks.Play();
                     combat_UI.showStars();
                     combatUI.shakeShieldBar();
                     enemy.GetComponent<Animator>().Play("Attack_Blocked");
@@ -87,10 +93,11 @@ public class counterSword : MonoBehaviour
                 {
                     tutorial_UI.counterDetailTutorial(3);
                 }
-                soundPlayer.shield_metal();
-                cameraManager.playChrome();
+                audioManager.Play("Critic Counter");
+                _cameraManager.playChrome();
                 transform.DOKill();
-                StartCoroutine(timeManager.slowMotion(.8f, .6f, () =>
+
+                StartCoroutine(timeManager.slowMotion(.6f, .4f, () =>
                 {
                     counterManager.SetActive(false);
                 }));

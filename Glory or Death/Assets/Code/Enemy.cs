@@ -33,8 +33,8 @@ public class Enemy : MonoBehaviour
     timeManager timeManager;
     Player Player;
     Combat_UI combat_UI;
-    cameraManager cameraManager;
     AudioManager audioManager;
+    cameraManager _cameraManager;
 
     Animator myAnimator;
     Animator playerAnimator;
@@ -45,7 +45,6 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        cameraManager = FindObjectOfType<cameraManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
         BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
@@ -53,6 +52,7 @@ public class Enemy : MonoBehaviour
         playerAnimator = Player.GetComponent<Animator>();
         myAnimator = GetComponent<Animator>();
         combat_UI = FindObjectOfType<Combat_UI>();
+        _cameraManager = FindObjectOfType<cameraManager>();
     }
 
     private void Update()
@@ -287,7 +287,7 @@ public class Enemy : MonoBehaviour
     }
     public void doChrome()
     {
-        cameraManager.playChrome();
+        _cameraManager.playChrome();
     }
     public void doSlow()
     {

@@ -19,6 +19,7 @@ public class timeManager : MonoBehaviour
     private Combat_UI combarUI;
     private endManager endManager;
     private AudioManager audioManager;
+    private cameraManager _cameraManager;
 
     //Global time
     public TextMeshProUGUI timerText;
@@ -43,7 +44,7 @@ public class timeManager : MonoBehaviour
     public Image enemyActionIcon;
 
     bool dirtPrevious = false;
-    private float dirtChance = 20;
+    private float dirtChance = 15;
 
     //Generic wait time for turns
     private float mainWaitTime = 20;
@@ -84,6 +85,7 @@ public class timeManager : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
         endManager = FindObjectOfType<endManager>();
         audioManager = FindObjectOfType<AudioManager>();
+        _cameraManager = FindObjectOfType<cameraManager>();
         timerIsRunning = false;
 
         selectEnemyAction();
@@ -398,7 +400,7 @@ public class timeManager : MonoBehaviour
                 timerIsRunning = false;
                 stopUnitTimer();
                 battleTimer = 0;
-                cameraManager.playChrome();
+                _cameraManager.playChrome();
                 slowMotion(2, 0.1f);
                 endManager.StartCoroutine(endManager.showEndScreen(1));
             }

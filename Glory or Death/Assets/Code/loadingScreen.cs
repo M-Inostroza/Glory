@@ -18,6 +18,7 @@ public class loadingScreen : MonoBehaviour
     Input_Manager _inputManager;
     timeManager _timeManager;
     BattleSystem _BS;
+    cameraManager _cameraManager;
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class loadingScreen : MonoBehaviour
         _audioManager = FindObjectOfType<AudioManager>();
         _timeManager = FindObjectOfType<timeManager>();
         _BS = FindObjectOfType<BattleSystem>();
+        _cameraManager = FindObjectOfType<cameraManager>();
 
         _leftPanel = gameObject.transform.GetChild(0).gameObject;
         _rightPanel = gameObject.transform.GetChild(1).gameObject;
@@ -75,7 +77,7 @@ public class loadingScreen : MonoBehaviour
     public void openScreen(int fightTime)
     {
         StartCoroutine(timeManager.slowMotion(0.5f, 0.2f));
-        cameraManager.playChrome();
+        _cameraManager.playChrome();
         resetLoadingBar();
 
         toggleLoadingScreen(0, 0.3f);

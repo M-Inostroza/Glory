@@ -58,7 +58,11 @@ public class superATKManager : MonoBehaviour
     }
     void finishMinigame()
     {
-        DialogueManager.superHitCheck();
+        if (gameManager.isTutorial())
+        {
+            DialogueManager.superHitCheck();
+        }
+        
         Overlay.DOFade(0, 0.5f);
         MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.5f);
         MainCamera.DOFieldOfView(50, 0.5f).OnComplete(playAnim);

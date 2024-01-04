@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using AssetKits.ParticleImage;
 
 public class focusManager : MonoBehaviour
 {
     float cursorSpeed; // menos es más
-    float targetSpeed; 
+    float targetSpeed;
+
+    [SerializeField] ParticleImage _celebrationParticle;
 
     [SerializeField] GameObject cursor;
     [SerializeField] GameObject target;
@@ -21,6 +24,7 @@ public class focusManager : MonoBehaviour
     private float minX = -7;
     private float maxX = 7f;
     bool canFocus = false;
+    bool canMoveTarget;
 
     // Range within which the target sprite should be when the "a" key is pressed
     private float targetRangeMin;
@@ -39,30 +43,21 @@ public class focusManager : MonoBehaviour
     }
     private void Start()
     {
-        _totalATKBuff = 0;
         setDificulty();
-        // Cursor's initial position (right)
-        cursor.transform.localPosition = new Vector2(maxX, cursor.transform.localPosition.y);
-
-        // Moves cursor from left to right
-        cursor.transform.DOLocalMoveX(minX, cursorSpeed).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
     }
 
     private void OnEnable()
     {
+        _totalATKBuff = 0;
+        canMoveTarget = true;
+        setCursor();
+        Debug.Log("from enable");
         cameraZoomIn();
         StartCoroutine(focusTimer(5));
         audioManager.Play("Focus_On");
-
-        if (gameManager.isTutorial())
-        {
-            _tutorial_UI.activateS();
-        } else
-        {
-            combat_UI.activateS();
-        }
+        activateKey();
         
-
+        
         // Target's range and position
         targetRangeMin = Random.Range(minX + 1.2f, maxX - 1.2f);
         target.transform.localPosition = new Vector2(targetRangeMin, -14.85f);
@@ -106,16 +101,21 @@ public class focusManager : MonoBehaviour
         _totalATKBuff++;
         audioManager.Play("Focus_Success");
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
-        cameraZoomOut();
-        gameObject.SetActive(false);
-        canFocus = false;
+        cursor.transform.DOKill();
+        canMoveTarget = false;
+        mainCamera.GetComponent<cameraManager>().playChrome();
+        mainCamera.GetComponent<cameraManager>().playBloom();
+        _celebrationParticle.transform.localPosition = new Vector2(target.transform.localPosition.x, _celebrationParticle.transform.localPosition.y);
+        _celebrationParticle.Play();
+        StartCoroutine(timeManager.slowMotion(.6f, .5f, () =>
+        {
+            cameraZoomOut();
+            gameObject.SetActive(false);
+            canFocus = false;
+        }));
     }
     void failFocus()
     {
-        if (!gameManager.isTutorial())
-        {
-            timeManager.enemyActionIcon.sprite = timeManager.iconSprites[1];
-        }
         audioManager.Play("Focus_Fail");
         playerUnit.GetComponent<Animator>().SetBool("skillFail", true);
         cameraZoomOut();
@@ -124,12 +124,15 @@ public class focusManager : MonoBehaviour
     }
     void moveTarget()
     {
-        target.transform.Translate(targetSpeed * Time.deltaTime, 0, 0);
-
-        // Loop
-        if (target.transform.localPosition.x > (maxX - 0.5f) || target.transform.localPosition.x < (minX + 0.5f))
+        if (canMoveTarget)
         {
-            targetSpeed *= -1;
+            target.transform.Translate(targetSpeed * Time.deltaTime, 0, 0);
+
+            // Loop
+            if (target.transform.localPosition.x > (maxX - 0.5f) || target.transform.localPosition.x < (minX + 0.5f))
+            {
+                targetSpeed *= -1;
+            }
         }
     }
     private void setDificulty()
@@ -151,6 +154,26 @@ public class focusManager : MonoBehaviour
         }
     }
 
+    void activateKey()
+    {
+        if (gameManager.isTutorial())
+        {
+            _tutorial_UI.activateS();
+        }
+        else
+        {
+            combat_UI.activateS();
+        }
+    }
+
+    void setCursor()
+    {
+        Debug.Log("From set");
+        // Cursor's initial position (right)
+        cursor.transform.localPosition = new Vector2(maxX, cursor.transform.localPosition.y);
+        // Moves cursor from left to right
+        cursor.transform.DOLocalMoveX(minX, cursorSpeed).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+    }
     void cameraZoomIn()
     {
         mainCamera.DOFieldOfView(30, 1);

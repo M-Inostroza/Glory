@@ -335,7 +335,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void superHitCheck()
     {
-        if (gameManager.isTutorial() && !tutorial_UI.hasShownDetail_superAttack && tutorial_UI.GetNumberOfTries() >= 1)
+        if (!tutorial_UI.hasShownDetail_superAttack && tutorial_UI.GetNumberOfTries() >= 1)
         {
             if (superATKManager.GetHits() <= 5)
             {

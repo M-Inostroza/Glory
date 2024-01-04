@@ -247,7 +247,7 @@ public class BattleSystem : MonoBehaviour
     }
     void setPlayerStats()
     {
-        playerUnit.NativeDamage -= focusManager.GetTotalATKBuff();
+        //playerUnit.NativeDamage -= focusManager.GetTotalATKBuff();
         focusManager.ResetATKBuff();
         playerUnit.SetAdrenaline(0);
         playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());

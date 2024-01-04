@@ -8,6 +8,7 @@ public class cameraManager : MonoBehaviour
 {
     [SerializeField] Volume _volume;
     UnityEngine.Rendering.Universal.ChromaticAberration chromaticAberration;
+    UnityEngine.Rendering.Universal.Bloom bloom;
     Animator myAnim;
     private void Start()
     {
@@ -24,7 +25,6 @@ public class cameraManager : MonoBehaviour
         // Try to get the ChromaticAberration override from the global volume
         if (_volume.profile.TryGet(out chromaticAberration))
         {
-            // Modify chromatic aberration properties
             chromaticAberration.intensity.Override(1);
             chromaticAberration.active = true;
             DOTween.To(() => chromaticAberration.intensity.value,
@@ -35,6 +35,30 @@ public class cameraManager : MonoBehaviour
         else
         {
             Debug.LogError("Chromatic Aberration not found in the global volume!");
+        }
+    }
+
+    public void playBloom()
+    {
+        if (_volume == null)
+        {
+            Debug.LogError("Global volume is not assigned!");
+            return;
+        }
+
+        // Try to get the bloom override from the global volume
+        if (_volume.profile.TryGet(out bloom))
+        {
+            bloom.intensity.Override(10);
+            bloom.active = true;
+            DOTween.To(() => bloom.intensity.value,
+                       x => bloom.intensity.Override(x),
+                       0, 1.0f)
+                .SetEase(Ease.OutQuad);
+        }
+        else
+        {
+            Debug.LogError("Bloom not found in the global volume!");
         }
     }
     public void deactivateAnimator()

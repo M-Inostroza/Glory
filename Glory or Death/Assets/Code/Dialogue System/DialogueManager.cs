@@ -38,9 +38,9 @@ public class DialogueManager : MonoBehaviour
          - 7 = Counter 2
          - 8 = Dirt
          */
-        //tutorial_UI.toggleInput(8, 1);
-        //StartCoroutine(interactions(10, 2));
-        tutorial_UI.repeatTutorial();
+        //tutorial_UI.toggleInput(4, 1);
+        StartCoroutine(interactions(6, 2));
+        //tutorial_UI.repeatTutorial();
     }
 
     public IEnumerator interactions(int index, float delay)

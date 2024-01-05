@@ -156,14 +156,14 @@ public class BattleSystem : MonoBehaviour
         // Show dmg
         if (jumper.name == "Hit Text enemy")
         {
-            hitText_Enemy.GetComponent<TMP_Text>().text = "- " + dmg;
+            hitText_Enemy.GetComponent<TMP_Text>().text = dmg.ToString();
             hitText_Enemy.SetActive(true);
             fadeTween.Play();
             jumpTween.Play();
         } 
         else if (jumper.name == "Hit Text player") 
         {
-            hitText_Player.GetComponent<TMP_Text>().text = "- " + (dmg);
+            hitText_Player.GetComponent<TMP_Text>().text = dmg.ToString();
             hitText_Player.SetActive(true);
             fadeTween.Play();
             jumpTween.Play();
@@ -247,7 +247,7 @@ public class BattleSystem : MonoBehaviour
     }
     void setPlayerStats()
     {
-        //playerUnit.NativeDamage -= focusManager.GetTotalATKBuff();
+        playerUnit.NativeDamage -= focusManager.GetTotalATKBuff();
         focusManager.ResetATKBuff();
         playerUnit.SetAdrenaline(0);
         playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());

@@ -41,12 +41,16 @@ public class focusManager : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
     }
 
+    private void Start()
+    {
+        _totalATKBuff = 0;
+    }
+
     private void OnEnable()
     {
         hasPlayedCelebration = false;
         canFocus = true;
         canMoveTarget = true;
-        _totalATKBuff = 0;
         
         cameraZoomIn();
         StartCoroutine(focusTimer(5));
@@ -94,14 +98,17 @@ public class focusManager : MonoBehaviour
     }
     void successFocus()
     {
-        _totalATKBuff++;
+        if (!gameManager.isTutorial())
+        {
+            playVisualEffects();
+        }
         audioManager.Play("Focus_Success");
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
         cursor.transform.DOKill();
         canMoveTarget = false;
-        playVisualEffects();
         StartCoroutine(timeManager.slowMotion(.6f, .5f, () =>
         {
+            _totalATKBuff++;
             cameraZoomOut();
             gameObject.SetActive(false);
             canFocus = false;
@@ -180,7 +187,7 @@ public class focusManager : MonoBehaviour
     void playVisualEffects()
     {
         mainCamera.GetComponent<cameraManager>().playChrome();
-        mainCamera.GetComponent<cameraManager>().playBloom();
+        mainCamera.GetComponent<cameraManager>().playBloom(1);
         if (!hasPlayedCelebration)
         {
             _celebrationParticle.transform.localPosition = new Vector2(target.transform.localPosition.x, _celebrationParticle.transform.localPosition.y);

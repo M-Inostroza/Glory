@@ -442,7 +442,7 @@ public class Player : MonoBehaviour
     }
 
     // Adrenaline
-    private int adrenalineFactor = 1;
+    private int adrenalineFactor = 2;
     public int GetAdrenalineFactor()
     {
         return adrenalineFactor;

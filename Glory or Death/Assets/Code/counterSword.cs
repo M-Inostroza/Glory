@@ -19,6 +19,7 @@ public class counterSword : MonoBehaviour
     Tutorial_UI tutorial_UI;
     Combat_UI combat_UI;
     cameraManager _cameraManager;
+    CounterManager _counterManager;
 
     [Header("Materials")]
     [SerializeField] Material heartMaterial;
@@ -35,6 +36,7 @@ public class counterSword : MonoBehaviour
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
         combat_UI = FindObjectOfType<Combat_UI>();
         _cameraManager = FindObjectOfType<cameraManager>();
+        _counterManager = FindObjectOfType<CounterManager>();
     }
     private void OnEnable()
     {
@@ -48,6 +50,7 @@ public class counterSword : MonoBehaviour
         switch (collision.name)
         {
             case "Shield Image":
+                Debug.Log("Normal");
                 if (!gameManager.isTutorial())
                 {
                     enemy.SetCriticBlock(false);
@@ -60,24 +63,33 @@ public class counterSword : MonoBehaviour
                     tutorial_UI.counterDetailTutorial(3);
                 }
                 soundPlayer.shield_metal();
+                transform.DOKill();
                 transform.GetComponent<PolygonCollider2D>().enabled = false;
-                counterManager.SetActive(false);
+                _counterManager.fadeElements(.2f, false);
+                StartCoroutine(timeManager.slowMotion(.3f, .3f, () =>
+                {
+                    counterManager.SetActive(false);
+                }));
                 break;
 
             case "Counter Target":
                 if (gameManager.isTutorial())
                 {
                     tutorial_UI.counterDetailTutorial(2);
+                } else
+                {
+                    enemy.SetCriticBlock(false);
                 }
                 transform.GetComponent<PolygonCollider2D>().enabled = false;
-                enemy.SetCriticBlock(false);
                 _cameraManager.playChrome();
                 audioManager.Play("Counter_Fail");
                 soundPlayer.stabSounds();
+                _cameraManager.playBloom(2);
                 meltHeart();
                 break;
 
             case "Critic":
+                Debug.Log("Critic");
                 if (!gameManager.isTutorial())
                 {
                     enemy.SetCriticBlock(true);
@@ -95,15 +107,17 @@ public class counterSword : MonoBehaviour
                 transform.GetComponent<PolygonCollider2D>().enabled = false;
                 audioManager.Play("Critic Counter");
                 _cameraManager.playChrome();
+                _cameraManager.playBloom(1);
                 transform.DOKill();
-
-                StartCoroutine(timeManager.slowMotion(.6f, .4f, () =>
+                _counterManager.fadeElements(.2f, false);
+                StartCoroutine(timeManager.slowMotion(.3f, .3f, () =>
                 {
                     counterManager.SetActive(false);
                 }));
                 break;
         }
     }
+
 
     void meltHeart()
     {

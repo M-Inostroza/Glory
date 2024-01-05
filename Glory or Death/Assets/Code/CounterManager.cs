@@ -37,6 +37,7 @@ public class CounterManager : MonoBehaviour
     private void OnEnable()
     {
         startMinigame();
+        fadeElements(0.1f, true);
     }
     private void OnDisable()
     {
@@ -113,6 +114,21 @@ public class CounterManager : MonoBehaviour
         mainCamera.DOFieldOfView(50, 0.5f);
         mainCamera.transform.DOLocalMoveY(0, 0.5f);
         _overlay.DOFade(0, 0.6f);
+    }
+
+    public void fadeElements(float speed, bool In)
+    {
+        if (In)
+        {
+            shieldImage.GetComponent<Image>().DOFade(1, speed);
+            _sword.GetComponent<Image>().DOFade(1, speed);
+            counterTarget.GetComponent<Image>().DOFade(1, speed);
+        } else
+        {
+            shieldImage.GetComponent<Image>().DOFade(0, speed);
+            _sword.GetComponent<Image>().DOFade(0, speed);
+            counterTarget.GetComponent<Image>().DOFade(0, speed);
+        }
     }
 
     public void canRotateBool(bool state)

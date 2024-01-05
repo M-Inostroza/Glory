@@ -44,12 +44,13 @@ public class superAttackManager : MonoBehaviour
         _player = FindObjectOfType<Player>();
         _playerAnimator = _player.GetComponent<Animator>();
 
-        _dollAnimator = _doll.GetComponent<Animator>();
-
         enemy = FindObjectOfType<Enemy>();
         if (!gameManager.isTutorial())
         {
             _enemyAnimator = enemy.GetComponent<Animator>();
+        } else
+        {
+            _dollAnimator = _doll.GetComponent<Animator>();
         }
     }
     private void Update()

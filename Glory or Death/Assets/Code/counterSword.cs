@@ -45,13 +45,11 @@ public class counterSword : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         counterManager.GetComponent<CounterManager>().canRotateBool(false);
-        transform.GetComponent<PolygonCollider2D>().enabled = false;
         switch (collision.name)
         {
             case "Shield Image":
                 if (!gameManager.isTutorial())
                 {
-                    Debug.Log("Normal");
                     enemy.SetCriticBlock(false);
                     combatUI.shakeShieldBar();
                     enemy.GetComponent<Animator>().Play("Attack_Blocked");
@@ -62,6 +60,7 @@ public class counterSword : MonoBehaviour
                     tutorial_UI.counterDetailTutorial(3);
                 }
                 soundPlayer.shield_metal();
+                transform.GetComponent<PolygonCollider2D>().enabled = false;
                 counterManager.SetActive(false);
                 break;
 
@@ -70,6 +69,7 @@ public class counterSword : MonoBehaviour
                 {
                     tutorial_UI.counterDetailTutorial(2);
                 }
+                transform.GetComponent<PolygonCollider2D>().enabled = false;
                 enemy.SetCriticBlock(false);
                 _cameraManager.playChrome();
                 audioManager.Play("Counter_Fail");
@@ -80,7 +80,6 @@ public class counterSword : MonoBehaviour
             case "Critic":
                 if (!gameManager.isTutorial())
                 {
-                    Debug.Log("Critic");
                     enemy.SetCriticBlock(true);
                     _criticStars.Play();
                     _criticSparks.Play();
@@ -93,6 +92,7 @@ public class counterSword : MonoBehaviour
                 {
                     tutorial_UI.counterDetailTutorial(3);
                 }
+                transform.GetComponent<PolygonCollider2D>().enabled = false;
                 audioManager.Play("Critic Counter");
                 _cameraManager.playChrome();
                 transform.DOKill();

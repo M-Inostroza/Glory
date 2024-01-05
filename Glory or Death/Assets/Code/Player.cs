@@ -511,6 +511,9 @@ public class Player : MonoBehaviour
         if (currentStamina <= 0)
         {
             currentStamina = 0;
+        } else if (currentStamina >= maxStamina)
+        {
+            currentStamina = maxStamina;
         }
     }
     // Buffs

@@ -31,7 +31,7 @@ public class CounterManager : MonoBehaviour
     private void Update()
     {
         rotateOnKey();
-        //rotateOnStart(); TEST
+        rotateOnStart();
     }
 
     private void OnEnable()
@@ -98,7 +98,7 @@ public class CounterManager : MonoBehaviour
     }
     void setRandomRotation()
     {
-        float randomRotation = -20;//Random.Range(75, 170); // Default 75, 170 / Center -20 TEST
+        float randomRotation = Random.Range(75, 170); // Default 75, 170 / Center -20 
         shieldImage.transform.DORotate(new Vector3(0, 0, randomRotation), 0);
         counterTarget.transform.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 1, 6, 3).SetLoops(3, LoopType.Restart);
     }

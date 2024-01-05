@@ -9,6 +9,7 @@ public class focusManager : MonoBehaviour
     float targetSpeed;
 
     [SerializeField] ParticleImage _celebrationParticle;
+    bool hasPlayedCelebration;
 
     [SerializeField] GameObject cursor;
     [SerializeField] GameObject target;
@@ -29,7 +30,6 @@ public class focusManager : MonoBehaviour
     // Range within which the target sprite should be when the "a" key is pressed
     private float targetRangeMin;
 
-    timeManager timeManager;
     Combat_UI combat_UI;
     Tutorial_UI _tutorial_UI;
 
@@ -38,31 +38,27 @@ public class focusManager : MonoBehaviour
         _tutorial_UI = FindObjectOfType<Tutorial_UI>();
         playerUnit = FindObjectOfType<Player>();
         combat_UI = FindObjectOfType<Combat_UI>();
-        timeManager = FindObjectOfType<timeManager>();
         audioManager = FindObjectOfType<AudioManager>();
-    }
-    private void Start()
-    {
-        setDificulty();
     }
 
     private void OnEnable()
     {
-        _totalATKBuff = 0;
+        hasPlayedCelebration = false;
+        canFocus = true;
         canMoveTarget = true;
-        setCursor();
-        Debug.Log("from enable");
+        _totalATKBuff = 0;
+        
         cameraZoomIn();
         StartCoroutine(focusTimer(5));
         audioManager.Play("Focus_On");
         activateKey();
         
-        
         // Target's range and position
         targetRangeMin = Random.Range(minX + 1.2f, maxX - 1.2f);
         target.transform.localPosition = new Vector2(targetRangeMin, -14.85f);
 
-        canFocus = true;
+        setDificulty();
+        setCursor();
     }
 
     private void Update()
@@ -103,10 +99,7 @@ public class focusManager : MonoBehaviour
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
         cursor.transform.DOKill();
         canMoveTarget = false;
-        mainCamera.GetComponent<cameraManager>().playChrome();
-        mainCamera.GetComponent<cameraManager>().playBloom();
-        _celebrationParticle.transform.localPosition = new Vector2(target.transform.localPosition.x, _celebrationParticle.transform.localPosition.y);
-        _celebrationParticle.Play();
+        playVisualEffects();
         StartCoroutine(timeManager.slowMotion(.6f, .5f, () =>
         {
             cameraZoomOut();
@@ -149,7 +142,7 @@ public class focusManager : MonoBehaviour
             }
         } else
         {
-            cursorSpeed = 1.4f;
+            cursorSpeed = 1.6f;
             targetSpeed = 1.8f;
         }
     }
@@ -168,7 +161,6 @@ public class focusManager : MonoBehaviour
 
     void setCursor()
     {
-        Debug.Log("From set");
         // Cursor's initial position (right)
         cursor.transform.localPosition = new Vector2(maxX, cursor.transform.localPosition.y);
         // Moves cursor from left to right
@@ -183,6 +175,18 @@ public class focusManager : MonoBehaviour
     {
         mainCamera.DOFieldOfView(50, 0.5f);
         mainCamera.transform.DOLocalMoveY(0, 0.5f);
+    }
+
+    void playVisualEffects()
+    {
+        mainCamera.GetComponent<cameraManager>().playChrome();
+        mainCamera.GetComponent<cameraManager>().playBloom();
+        if (!hasPlayedCelebration)
+        {
+            _celebrationParticle.transform.localPosition = new Vector2(target.transform.localPosition.x, _celebrationParticle.transform.localPosition.y);
+            _celebrationParticle.Play();
+            hasPlayedCelebration = true;
+        }
     }
 
     public static int GetTotalATKBuff()

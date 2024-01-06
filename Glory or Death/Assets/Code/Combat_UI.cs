@@ -208,7 +208,7 @@ public class Combat_UI : MonoBehaviour
     // Adrenaline
     void showSuperATKButton()
     {
-        if (playerUnit.GetAdrenaline() == 30) // Fix afrenaline
+        if (playerUnit.GetAdrenaline() == playerUnit.GetMaxAdrenaline())
         {
             _inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(55, 0.7f);
         }

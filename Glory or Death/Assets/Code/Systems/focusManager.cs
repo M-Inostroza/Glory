@@ -104,6 +104,7 @@ public class focusManager : MonoBehaviour
         }
         audioManager.Play("Focus_Success");
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
+        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
         cursor.transform.DOKill();
         canMoveTarget = false;
         StartCoroutine(timeManager.slowMotion(.6f, .5f, () =>

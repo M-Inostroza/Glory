@@ -31,6 +31,7 @@ public class Target : MonoBehaviour
             {
                 _timeManager.enemyTimer.fillAmount += 0.03f;
                 BS.targetHit++;
+                _player.incrementAdrenaline(_player.GetAdrenalineFactor());
             }
             soundPlayer.targetSounds();
             switch (tag)
@@ -51,7 +52,6 @@ public class Target : MonoBehaviour
             colider.enabled = false;
             transform.DOScale(1.2f, 0.1f);
             GetComponent<SpriteRenderer>().DOFade(0, 0.1f).OnComplete(() => killTarget());
-            _player.incrementAdrenaline(_player.GetAdrenalineFactor());
         }
     }
 

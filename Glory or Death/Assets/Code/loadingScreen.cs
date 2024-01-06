@@ -19,6 +19,7 @@ public class loadingScreen : MonoBehaviour
     timeManager _timeManager;
     BattleSystem _BS;
     cameraManager _cameraManager;
+    gameManager _gameManager;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class loadingScreen : MonoBehaviour
         _timeManager = FindObjectOfType<timeManager>();
         _BS = FindObjectOfType<BattleSystem>();
         _cameraManager = FindObjectOfType<cameraManager>();
+        _gameManager = FindObjectOfType<gameManager>();
 
         _leftPanel = gameObject.transform.GetChild(0).gameObject;
         _rightPanel = gameObject.transform.GetChild(1).gameObject;
@@ -64,27 +66,30 @@ public class loadingScreen : MonoBehaviour
         if (!isActive)
         {
             _audioManager.Play("Thunder");
+            _startButton.gameObject.SetActive(true);
             _startButton.GetComponent<Image>().DOFade(1, 0.05f).OnComplete(()=> _startButton.GetChild(0).gameObject.SetActive(true));
-            _startButton.DOShakePosition(0.4f, 5, 80, 90);
+            _startButton.DOShakePosition(0.2f, 3, 70, 90);
             isActive = true;
         } else
         {
-            _startButton.GetComponent<Image>().DOFade(0, 0.05f).OnComplete(() => _startButton.GetChild(0).gameObject.SetActive(false));
+            _startButton.GetComponent<Image>().DOFade(0, 0.05f).OnComplete(() => _startButton.gameObject.SetActive(false));
             isActive = false;
         }
     }
 
-    public void openScreen(int fightTime)
+    public void openScreen()
     {
         StartCoroutine(timeManager.slowMotion(0.5f, 0.2f));
         _cameraManager.playChrome();
         resetLoadingBar();
 
+        StartCoroutine(_gameManager.dayShow(3));
+
         toggleLoadingScreen(0, 0.3f);
         _inputManager.resetCooldown();
 
         _timeManager.selectEnemyAction();
-        _BS.resetTimers(fightTime);
+        _BS.resetTimers(94); // Fix time
 
         Combat_UI.move_UI_in();
         showStartButton();

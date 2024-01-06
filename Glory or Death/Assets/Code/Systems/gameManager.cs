@@ -10,6 +10,8 @@ public class gameManager : MonoBehaviour
 {
     [SerializeField] int turnCounter;
     [SerializeField] Image overlay;
+    [SerializeField] Transform dayContainer;
+
     static string currentSceneName;
 
     AudioManager _audioManager;
@@ -68,11 +70,28 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    public IEnumerator dayShow(float time)
+    {
+        dayContainer.GetChild(0).GetComponent<TMP_Text>().text = "Day " + turnCounter.ToString();
+        dayContainer.DOLocalMoveY(-175, 1);
+        yield return new WaitForSeconds(time);
+        dayContainer.DOLocalMoveY(-320, 1);
+    }
+
     void updateTimeScaleText()
     {
         if (tsText.text != null)
         {
             tsText.text = Time.timeScale.ToString();
         }
+    }
+
+    public void SetTurnCounter(int day)
+    {
+        turnCounter = day;
+    }
+    public void IncrementTurnCounter()
+    {
+        turnCounter++;
     }
 }

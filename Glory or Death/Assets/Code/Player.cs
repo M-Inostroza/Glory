@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxStamina, currentStamina; 
     [SerializeField] private int maxHP, currentHP;
     [SerializeField] private int adrenaline;
+    [SerializeField] private int maxAdrenaline;
     [SerializeField] private int _nativeDamage;
 
     [SerializeField] Animator _dummyAnimator;
@@ -458,6 +459,11 @@ public class Player : MonoBehaviour
     public void SetAdrenaline(int newAdrenaline)
     {
         adrenaline = newAdrenaline;
+    }
+
+    public int GetMaxAdrenaline()
+    {
+        return maxAdrenaline;
     }
     public void incrementAdrenaline(int newAdrenaline)
     {

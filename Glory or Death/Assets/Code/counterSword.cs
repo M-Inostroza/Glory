@@ -55,7 +55,6 @@ public class counterSword : MonoBehaviour
             {
                 case "Shield Image":
                     canCollide = false;
-                    Debug.Log("Normal");
                     if (!gameManager.isTutorial())
                     {
                         enemy.SetCriticBlock(false);
@@ -67,6 +66,7 @@ public class counterSword : MonoBehaviour
                     {
                         tutorial_UI.counterDetailTutorial(3);
                     }
+                    player.incrementAdrenaline(player.GetAdrenalineFactor());
                     soundPlayer.shield_metal();
                     transform.DOKill();
                     transform.GetComponent<PolygonCollider2D>().enabled = false;
@@ -80,7 +80,6 @@ public class counterSword : MonoBehaviour
 
                 case "Counter Target":
                     canCollide = false;
-                    Debug.Log("Fail");
                     if (gameManager.isTutorial())
                     {
                         tutorial_UI.counterDetailTutorial(2);
@@ -99,7 +98,6 @@ public class counterSword : MonoBehaviour
 
                 case "Critic":
                     canCollide = false;
-                    Debug.Log("Critic");
                     if (!gameManager.isTutorial())
                     {
                         enemy.SetCriticBlock(true);
@@ -113,6 +111,7 @@ public class counterSword : MonoBehaviour
                     {
                         tutorial_UI.counterDetailTutorial(3);
                     }
+                    player.incrementAdrenaline(player.GetAdrenalineFactor() + 1);
                     transform.GetComponent<PolygonCollider2D>().enabled = false;
                     audioManager.Play("Critic Counter");
                     _cameraManager.playChrome();

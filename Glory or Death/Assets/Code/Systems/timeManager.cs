@@ -386,7 +386,7 @@ public class timeManager : MonoBehaviour
     {
         if (timerIsRunning)
         {
-            battleTimer -= Time.deltaTime;
+            battleTimer -= Time.unscaledDeltaTime;
             timerText.text = Mathf.RoundToInt(battleTimer).ToString("D2");
             if (battleTimer <= 0)
             {

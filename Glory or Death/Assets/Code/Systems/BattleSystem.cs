@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour
 {
+    gameManager _gameManager;
     TargetManager targetManager;
     defendManager defendManager;
     timeManager timeManager;
@@ -70,6 +71,7 @@ public class BattleSystem : MonoBehaviour
         endManager = FindObjectOfType<endManager>();
         cameraManager = FindObjectOfType<cameraManager>();
         _resetLoadingScreen = FindObjectOfType<loadingScreen>();
+        _gameManager = FindObjectOfType<gameManager>();
 
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
@@ -102,17 +104,14 @@ public class BattleSystem : MonoBehaviour
     public void PlayerDefend()
     {
         defendManager.activateShieldMinigame();
-        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
     }
     public void PlayDodge()
     {
         dodgeManager.SetActive(true);
-        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
     }
     public void PlayFocus()
     {
         _focusManager.SetActive(true);
-        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
     }
 
     public void PlayRest()
@@ -185,9 +184,9 @@ public class BattleSystem : MonoBehaviour
 
         // Update adrenaline
         combat_UI.GetPlayerAdrenalineSlider().DOValue(playerUnit.GetAdrenaline(), 0.5f);
-        if (playerUnit.GetAdrenaline() >= 20)
+        if (playerUnit.GetAdrenaline() >= playerUnit.GetMaxAdrenaline())
         {
-            playerUnit.SetAdrenaline(20);
+            playerUnit.SetAdrenaline(playerUnit.GetMaxAdrenaline());
         }
 
         enemyHUD.adrenalineSlider.DOValue(enemyUnit.adrenaline, 0.5f);
@@ -238,11 +237,11 @@ public class BattleSystem : MonoBehaviour
         endManager.hideUpgradeScreen(true);
         endManager.hideUpgradeButton();
         _resetLoadingScreen.toggleLoadingScreen(1, 0.3f);
-        StartCoroutine(_resetLoadingScreen.fillLoadingSlider(1, 0.5f));
+        StartCoroutine(_resetLoadingScreen.fillLoadingSlider(1, 0.3f));
 
         setPlayerStats();
         setEnemyStats();
-        
+        _gameManager.IncrementTurnCounter();
         endManager.resetFight();
     }
     void setPlayerStats()
@@ -251,6 +250,8 @@ public class BattleSystem : MonoBehaviour
         focusManager.ResetATKBuff();
         playerUnit.SetAdrenaline(0);
         playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());
+        Input_Manager.SetPlayerAction("none");
+        timeManager.selectIcon("Default");
     }
     void setEnemyStats()
     {
@@ -281,6 +282,8 @@ public class BattleSystem : MonoBehaviour
         playerPanel.DOLocalMoveX(-900, 1).SetDelay(3).OnComplete(complete);
         void complete()
         {
+            _gameManager.SetTurnCounter(1);
+            StartCoroutine(_gameManager.dayShow(3));
             timeManager.continueUnitTimer();
             audioManager.Play("Combat_Theme");
             _loadingScreen.SetActive(false);

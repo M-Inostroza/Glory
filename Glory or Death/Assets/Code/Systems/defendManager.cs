@@ -12,6 +12,7 @@ public class defendManager : MonoBehaviour
 
     AudioManager audioManager;
     Tutorial_UI tutorial_UI;
+    Player _player;
 
     // Control
     bool transformControl;
@@ -20,6 +21,7 @@ public class defendManager : MonoBehaviour
     Tween scaleUP;
     private void Awake()
     {
+        _player = FindObjectOfType<Player>();
         audioManager = FindObjectOfType<AudioManager>();
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
         //shine = shadow.transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -76,6 +78,7 @@ public class defendManager : MonoBehaviour
         }
         else if (transform.localScale.x > scaleLimit && transform.localScale.x < 95)
         {
+            _player.incrementAdrenaline(_player.GetAdrenalineFactor());
             audioManager.Play("defend_success");
             scaleUP.Rewind();
             playerAnim.SetBool("skillShieldSuccess", true);

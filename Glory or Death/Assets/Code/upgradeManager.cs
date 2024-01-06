@@ -166,7 +166,7 @@ public class upgradeManager : MonoBehaviour
         if (_endManager.GetStars() >= 4)
         {
             upgradedSomehthing = true;
-            _player.incrementBaseSpeed(1);
+            _player.incrementBaseSpeed(.4f);
             _endManager.reduceStars(4);
             _endManager.updateStarUI();
             buttonFeedback(true, _centerBlock.transform.GetChild(1).transform);

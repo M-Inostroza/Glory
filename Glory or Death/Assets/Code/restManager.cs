@@ -111,8 +111,8 @@ public class restManager : MonoBehaviour
     }
     private void returnCameraZoom()
     {
-        mainCamera.DOFieldOfView(50, 0.5f);
-        mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 1);
+        mainCamera.DOFieldOfView(50, 0.2f);
+        mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), .5f);
     }
     void animateStar()
     {

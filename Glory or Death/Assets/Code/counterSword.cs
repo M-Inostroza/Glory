@@ -26,6 +26,7 @@ public class counterSword : MonoBehaviour
     [SerializeField] Material swordMaterial;
     [SerializeField] Material shieldMaterial;
 
+    bool canCollide;
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -40,6 +41,7 @@ public class counterSword : MonoBehaviour
     }
     private void OnEnable()
     {
+        canCollide = true;
         transform.GetComponent<PolygonCollider2D>().enabled = true;
         transform.DOLocalMoveX(12, 0);
     }
@@ -47,74 +49,83 @@ public class counterSword : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         counterManager.GetComponent<CounterManager>().canRotateBool(false);
-        switch (collision.name)
+        if (canCollide)
         {
-            case "Shield Image":
-                Debug.Log("Normal");
-                if (!gameManager.isTutorial())
-                {
-                    enemy.SetCriticBlock(false);
-                    combatUI.shakeShieldBar();
-                    enemy.GetComponent<Animator>().Play("Attack_Blocked");
-                    player.GetComponent<Animator>().Play("blockAttack");
-                }
-                else
-                {
-                    tutorial_UI.counterDetailTutorial(3);
-                }
-                soundPlayer.shield_metal();
-                transform.DOKill();
-                transform.GetComponent<PolygonCollider2D>().enabled = false;
-                _counterManager.fadeElements(.2f, false);
-                StartCoroutine(timeManager.slowMotion(.3f, .3f, () =>
-                {
-                    counterManager.SetActive(false);
-                }));
-                break;
+            switch (collision.name)
+            {
+                case "Shield Image":
+                    canCollide = false;
+                    Debug.Log("Normal");
+                    if (!gameManager.isTutorial())
+                    {
+                        enemy.SetCriticBlock(false);
+                        combatUI.shakeShieldBar();
+                        enemy.GetComponent<Animator>().Play("Attack_Blocked");
+                        player.GetComponent<Animator>().Play("blockAttack");
+                    }
+                    else
+                    {
+                        tutorial_UI.counterDetailTutorial(3);
+                    }
+                    soundPlayer.shield_metal();
+                    transform.DOKill();
+                    transform.GetComponent<PolygonCollider2D>().enabled = false;
+                    _counterManager.fadeElements(.2f, false);
+                    canCollide = false;
+                    StartCoroutine(timeManager.slowMotion(.3f, .3f, () =>
+                    {
+                        counterManager.SetActive(false);
+                    }));
+                    break;
 
-            case "Counter Target":
-                if (gameManager.isTutorial())
-                {
-                    tutorial_UI.counterDetailTutorial(2);
-                } else
-                {
-                    enemy.SetCriticBlock(false);
-                }
-                transform.GetComponent<PolygonCollider2D>().enabled = false;
-                _cameraManager.playChrome();
-                audioManager.Play("Counter_Fail");
-                soundPlayer.stabSounds();
-                _cameraManager.playBloom(2);
-                meltHeart();
-                break;
+                case "Counter Target":
+                    canCollide = false;
+                    Debug.Log("Fail");
+                    if (gameManager.isTutorial())
+                    {
+                        tutorial_UI.counterDetailTutorial(2);
+                    }
+                    else
+                    {
+                        enemy.SetCriticBlock(false);
+                    }
+                    transform.GetComponent<PolygonCollider2D>().enabled = false;
+                    _cameraManager.playChrome();
+                    audioManager.Play("Counter_Fail");
+                    soundPlayer.stabSounds();
+                    _cameraManager.playBloom(2);
+                    meltHeart();
+                    break;
 
-            case "Critic":
-                Debug.Log("Critic");
-                if (!gameManager.isTutorial())
-                {
-                    enemy.SetCriticBlock(true);
-                    _criticStars.Play();
-                    _criticSparks.Play();
-                    combat_UI.showStars();
-                    combatUI.shakeShieldBar();
-                    enemy.GetComponent<Animator>().Play("Attack_Blocked");
-                    player.GetComponent<Animator>().Play("blockAttack");
-                }
-                else
-                {
-                    tutorial_UI.counterDetailTutorial(3);
-                }
-                transform.GetComponent<PolygonCollider2D>().enabled = false;
-                audioManager.Play("Critic Counter");
-                _cameraManager.playChrome();
-                _cameraManager.playBloom(1);
-                transform.DOKill();
-                _counterManager.fadeElements(.2f, false);
-                StartCoroutine(timeManager.slowMotion(.3f, .3f, () =>
-                {
-                    counterManager.SetActive(false);
-                }));
-                break;
+                case "Critic":
+                    canCollide = false;
+                    Debug.Log("Critic");
+                    if (!gameManager.isTutorial())
+                    {
+                        enemy.SetCriticBlock(true);
+                        _criticSparks.Play();
+                        combat_UI.showStars();
+                        combatUI.shakeShieldBar();
+                        enemy.GetComponent<Animator>().Play("Attack_Blocked");
+                        player.GetComponent<Animator>().Play("blockAttack");
+                    }
+                    else
+                    {
+                        tutorial_UI.counterDetailTutorial(3);
+                    }
+                    transform.GetComponent<PolygonCollider2D>().enabled = false;
+                    audioManager.Play("Critic Counter");
+                    _cameraManager.playChrome();
+                    _cameraManager.playBloom(1);
+                    transform.DOKill();
+                    _counterManager.fadeElements(.2f, false);
+                    StartCoroutine(timeManager.slowMotion(.3f, .3f, () =>
+                    {
+                        _criticStars.Play();
+                        counterManager.SetActive(false);
+                    }));
+                    break;
+            }
         }
     }
 

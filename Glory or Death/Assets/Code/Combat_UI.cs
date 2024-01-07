@@ -51,6 +51,8 @@ public class Combat_UI : MonoBehaviour
     [SerializeField] Transform leftKey;
     [SerializeField] Transform rightKey;
 
+    [SerializeField] Texture2D _customCursor;
+
     // Shield Feed Effect
     private static GameObject shieldFeedback;
     private static Material swordBuffMaterial;
@@ -66,6 +68,12 @@ public class Combat_UI : MonoBehaviour
 
     private void Awake()
     {
+        // Custom cursor
+        //Cursor.SetCursor(_customCursor, Vector2.zero, CursorMode.ForceSoftware);
+
+        audioManager = FindObjectOfType<AudioManager>();
+        playerUnit = FindObjectOfType<Player>();
+        enemyUnit = FindObjectOfType<Enemy>();
         GetPlayerElements();
 
         _enemyStats = transform.GetChild(1).Find("Enemy stat HUD");
@@ -78,9 +86,7 @@ public class Combat_UI : MonoBehaviour
     {
         getShieldFeedback();
         getMaterials();
-        audioManager = FindObjectOfType<AudioManager>();
-        playerUnit = FindObjectOfType<Player>();
-        enemyUnit = FindObjectOfType<Enemy>();
+        
         staminaSlider.DOValue(staminaSlider.maxValue, 1.5f);
     }
     private void OnEnable()
@@ -376,11 +382,11 @@ public class Combat_UI : MonoBehaviour
     public void showStars()
     {
         audioManager.Play("Star_Shimes");
-        star_counter.DOLocalMoveX(-350, 0.3f);
+        star_counter.DOLocalMoveX(-350, 0.2f);
     }
     public void hideStars()
     {
-        star_counter.DOLocalMoveX(-500, 0.3f);
+        star_counter.DOLocalMoveX(-500, 0.2f);
     }
     public void starPunchSide()
     {
@@ -389,7 +395,7 @@ public class Combat_UI : MonoBehaviour
         starsTransformSide.DOPunchScale(new Vector3(scaleFactor, scaleFactor, scaleFactor), scaleTime).OnComplete(() => starsTransformSide.DOScale(1, 0));
     }
 
-    // Stamina
+    // Adrenaline
     public Slider GetPlayerAdrenalineSlider()
     {
         return playerAdrenalineSlider;

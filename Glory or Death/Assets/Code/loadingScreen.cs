@@ -89,7 +89,7 @@ public class loadingScreen : MonoBehaviour
         _inputManager.resetCooldown();
 
         _timeManager.selectEnemyAction();
-        _BS.resetTimers(94); // Fix time
+        _BS.resetTimers((int)_timeManager.defaultFightTime);
 
         Combat_UI.move_UI_in();
         showStartButton();

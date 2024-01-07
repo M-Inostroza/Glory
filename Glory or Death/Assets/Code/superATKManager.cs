@@ -13,6 +13,8 @@ public class superATKManager : MonoBehaviour
     Enemy Enemy;
     DialogueManager DialogueManager;
 
+    Animator cameraAnimator;
+
     static int hits;
     int targetAmount = 10;
     int spawnCounter;
@@ -47,40 +49,18 @@ public class superATKManager : MonoBehaviour
             Combat_UI.move_UI_out();
             timeManager.stopUnitTimer();
         }
-        Overlay.DOFade(.9f, 0.5f);
+        
         zoomCameraIn();
     }
 
-    void zoomCameraIn()
-    {
-        MainCamera.transform.DOLocalMove(new Vector3(3.3f, -0.5f, -10), 1f);
-        MainCamera.DOFieldOfView(40, 1f);
-    }
+    
     void finishMinigame()
     {
         if (gameManager.isTutorial())
         {
             DialogueManager.superHitCheck();
         }
-        
-        Overlay.DOFade(0, 0.5f);
-        MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.5f);
-        MainCamera.DOFieldOfView(50, 0.5f).OnComplete(playAnim);
-        void playAnim()
-        {
-            hideFeedback();
-            if (!gameManager.isTutorial())
-            {
-                Player.GetComponent<Animator>().Play("ATK2");
-                Enemy.GetComponent<Animator>().Play("Super_Hurt");
-                MainCamera.GetComponent<Animator>().enabled = true;
-                MainCamera.GetComponent<Animator>().Play("Cam_ATK2_Player");
-            } else
-            {
-                _tutorial_UI.fadeTimer(1);
-            }
-            Invoke("deactivateATK2", 2);
-        }
+        zoomCameraOut(); // Also plays anims
     }
 
     IEnumerator generateTarget(float n)
@@ -103,9 +83,42 @@ public class superATKManager : MonoBehaviour
     }
 
     // Tools
-    public void deactivateATK2()
+    void zoomCameraIn()
     {
-        gameObject.SetActive(false);
+        Overlay.DOFade(.9f, 0.5f);
+        MainCamera.transform.DOLocalMove(new Vector3(3.3f, -0.5f, -10), .3f);
+        MainCamera.DOFieldOfView(40, .3f);
+    }
+    void zoomCameraOut()
+    {
+        Overlay.DOFade(0, 0.5f);
+        MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.3f);
+        MainCamera.DOFieldOfView(50, 0.3f).OnComplete(playAnim);
+        void playAnim()
+        {
+            hideFeedback();
+            if (!gameManager.isTutorial())
+            {
+                playUnitAnim();
+                playCameraAnim();
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                _tutorial_UI.fadeTimer(1);
+            }
+        }
+    }
+    void playUnitAnim()
+    {
+        Player.GetComponent<Animator>().Play("ATK2");
+        Enemy.GetComponent<Animator>().Play("Super_Hurt");
+    }
+    void playCameraAnim()
+    {
+        cameraAnimator.enabled = true;
+        cameraAnimator.Rebind();
+        cameraAnimator.Play("Cam_ATK2_Player");
     }
     public void showFeedback()
     {
@@ -152,5 +165,7 @@ public class superATKManager : MonoBehaviour
         MainCamera = FindObjectOfType<Camera>();
         timeManager = FindObjectOfType<timeManager>();
         DialogueManager = FindObjectOfType<DialogueManager>();
+
+        cameraAnimator = MainCamera.GetComponent<Animator>();
     }
 }

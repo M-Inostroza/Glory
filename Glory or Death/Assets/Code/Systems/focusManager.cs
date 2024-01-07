@@ -104,15 +104,17 @@ public class focusManager : MonoBehaviour
         }
         audioManager.Play("Focus_Success");
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
-        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
         cursor.transform.DOKill();
         canMoveTarget = false;
-        StartCoroutine(timeManager.slowMotion(.6f, .5f, () =>
+        StartCoroutine(timeManager.slowMotion(.4f, .4f, () =>
         {
+            _celebrationParticle.Clear();
+            _celebrationParticle.gameObject.SetActive(false);
+            playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
             _totalATKBuff++;
             cameraZoomOut();
-            gameObject.SetActive(false);
             canFocus = false;
+            gameObject.SetActive(false);
         }));
     }
     void failFocus()
@@ -188,10 +190,11 @@ public class focusManager : MonoBehaviour
     void playVisualEffects()
     {
         mainCamera.GetComponent<cameraManager>().playChrome();
-        mainCamera.GetComponent<cameraManager>().playBloom(1);
+        mainCamera.GetComponent<cameraManager>().PlayBloom(1);
         if (!hasPlayedCelebration)
         {
             _celebrationParticle.transform.localPosition = new Vector2(target.transform.localPosition.x, _celebrationParticle.transform.localPosition.y);
+            _celebrationParticle.gameObject.SetActive(true);
             _celebrationParticle.Play();
             hasPlayedCelebration = true;
         }

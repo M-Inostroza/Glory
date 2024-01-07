@@ -10,16 +10,16 @@ public class Target : MonoBehaviour
     TargetManager targetManager;
     SoundPlayer soundPlayer;
     BattleSystem BS;
-    Player _player;
     timeManager _timeManager;
+    SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         soundPlayer = FindObjectOfType<SoundPlayer>();
         targetManager = FindObjectOfType<TargetManager>();
         colider = gameObject.GetComponent<CircleCollider2D>();
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         BS = FindObjectOfType<BattleSystem>();
-        _player = FindObjectOfType<Player>();
         _timeManager = FindObjectOfType<timeManager>();
     }
 
@@ -31,7 +31,12 @@ public class Target : MonoBehaviour
             {
                 _timeManager.enemyTimer.fillAmount += 0.03f;
                 BS.targetHit++;
-                _player.incrementAdrenaline(_player.GetAdrenalineFactor());
+                if (BS.targetHit == 3)
+                {
+                    // Fix add sound
+                    // StartCoroutine(timeManager.slowMotion(.3f, .5f));
+                    FindObjectOfType<cameraManager>().PlayBloom(1);
+                }
             }
             soundPlayer.targetSounds();
             switch (tag)
@@ -51,7 +56,7 @@ public class Target : MonoBehaviour
             }
             colider.enabled = false;
             transform.DOScale(1.2f, 0.1f);
-            GetComponent<SpriteRenderer>().DOFade(0, 0.1f).OnComplete(() => killTarget());
+            _spriteRenderer.DOFade(0, 0.1f).OnComplete(() => killTarget());
         }
     }
 

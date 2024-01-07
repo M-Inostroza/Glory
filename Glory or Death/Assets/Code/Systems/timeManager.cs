@@ -23,7 +23,8 @@ public class timeManager : MonoBehaviour
 
     //Global time
     public TextMeshProUGUI timerText;
-    public float battleTimer = 90f;
+    public float battleTimer = 94f;
+    public float defaultFightTime = 94f;
     private bool timerIsRunning = false;
     public bool timeOut;
 

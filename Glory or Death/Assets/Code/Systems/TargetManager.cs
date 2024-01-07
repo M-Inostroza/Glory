@@ -14,6 +14,7 @@ public class TargetManager : MonoBehaviour
     private Camera MainCamera;
     private Combat_UI combat_UI;
     private Tutorial_UI tutorial_UI;
+    private Player _player;
 
     [SerializeField] SpriteRenderer courtain;
     [SerializeField] GameObject vFeedback;
@@ -26,6 +27,7 @@ public class TargetManager : MonoBehaviour
         MainCamera = FindObjectOfType<Camera>();
         combat_UI = FindObjectOfType<Combat_UI>();
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        _player = FindObjectOfType<Player>();
     }
 
     public void attack()
@@ -110,6 +112,7 @@ public class TargetManager : MonoBehaviour
         {
             combat_UI.showStars();
             ATKstars.Play();
+            _player.incrementAdrenaline(_player.GetAdrenalineFactor());
         }
     }
     void activateFeedback()

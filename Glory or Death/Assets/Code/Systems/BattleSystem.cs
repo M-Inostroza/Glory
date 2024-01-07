@@ -180,16 +180,16 @@ public class BattleSystem : MonoBehaviour
         combat_UI.setPlayerHP(playerUnit.GetCurrentHP());
 
         // Update stamina
-        combat_UI.GetStaminaSlider().DOValue(playerUnit.GetCurrentStamina(), 0.5f);
+        combat_UI.GetStaminaSlider().DOValue(playerUnit.GetCurrentStamina(), 0.3f);
 
         // Update adrenaline
-        combat_UI.GetPlayerAdrenalineSlider().DOValue(playerUnit.GetAdrenaline(), 0.5f);
+        combat_UI.GetPlayerAdrenalineSlider().DOValue(playerUnit.GetAdrenaline(), 0.3f);
         if (playerUnit.GetAdrenaline() >= playerUnit.GetMaxAdrenaline())
         {
             playerUnit.SetAdrenaline(playerUnit.GetMaxAdrenaline());
         }
 
-        enemyHUD.adrenalineSlider.DOValue(enemyUnit.adrenaline, 0.5f);
+        enemyHUD.adrenalineSlider.DOValue(enemyUnit.adrenaline, 0.3f);
         if (enemyUnit.adrenaline >= 20)
         {
             enemyUnit.adrenaline = 20;
@@ -268,6 +268,7 @@ public class BattleSystem : MonoBehaviour
     }
     public void resetTimers(int mainTimer)
     {
+        Debug.Log("Timer reset: " + mainTimer);
         timeManager.resetFightTimer(mainTimer);
         timeManager.activateFightTimer();
 

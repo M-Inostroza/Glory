@@ -38,7 +38,7 @@ public class cameraManager : MonoBehaviour
         }
     }
 
-    public void playBloom(int state)
+    public void PlayBloom(int state)
     {
         // 1 Bright Bloom
         // 2 Red Bloom
@@ -78,7 +78,6 @@ public class cameraManager : MonoBehaviour
     }
     public void deactivateAnimator()
     {
-        myAnim.Play("Idle");
         myAnim.enabled = false;
     }
 

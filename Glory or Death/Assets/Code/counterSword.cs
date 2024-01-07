@@ -92,7 +92,7 @@ public class counterSword : MonoBehaviour
                     _cameraManager.playChrome();
                     audioManager.Play("Counter_Fail");
                     soundPlayer.stabSounds();
-                    _cameraManager.playBloom(2);
+                    _cameraManager.PlayBloom(2);
                     meltHeart();
                     break;
 
@@ -111,11 +111,11 @@ public class counterSword : MonoBehaviour
                     {
                         tutorial_UI.counterDetailTutorial(3);
                     }
-                    player.incrementAdrenaline(player.GetAdrenalineFactor() + 1);
+                    player.incrementAdrenaline(player.GetAdrenalineFactor());
                     transform.GetComponent<PolygonCollider2D>().enabled = false;
                     audioManager.Play("Critic Counter");
                     _cameraManager.playChrome();
-                    _cameraManager.playBloom(1);
+                    _cameraManager.PlayBloom(1);
                     transform.DOKill();
                     _counterManager.fadeElements(.2f, false);
                     StartCoroutine(timeManager.slowMotion(.3f, .3f, () =>

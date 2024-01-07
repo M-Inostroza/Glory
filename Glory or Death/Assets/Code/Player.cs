@@ -147,8 +147,8 @@ public class Player : MonoBehaviour
     }
     public void returnCamera()
     {
-        MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), .5f);
-        MainCamera.DOFieldOfView(50, 0.5f);
+        MainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), .3f);
+        MainCamera.DOFieldOfView(50, 0.3f);
     }
     public void stopHurt()
     {
@@ -297,7 +297,6 @@ public class Player : MonoBehaviour
     {
         BS.showHit(superATKManager.GetHits(), BS.hitText_Enemy.transform);
     }
-
 
     // ---------------- Getters and Setters ----------------
 

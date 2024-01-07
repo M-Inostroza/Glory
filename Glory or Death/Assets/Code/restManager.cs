@@ -100,7 +100,7 @@ public class restManager : MonoBehaviour
     {
         if (restSlider.value > 85 && !gameManager.isTutorial())
         {
-            player.incrementAdrenaline(player.GetAdrenalineFactor() + 1);
+            player.incrementAdrenaline(player.GetAdrenalineFactor());
             stars.Play();
             FindObjectOfType<Combat_UI>().showStars();
         }

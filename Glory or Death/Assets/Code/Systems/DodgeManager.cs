@@ -195,7 +195,7 @@ public class DodgeManager : MonoBehaviour
     }
     void doCritic()
     {
-        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
+        playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor()+1);
         animateStars();
         playerUnit.missed = true;
         audioManager.Play("DG_Off");

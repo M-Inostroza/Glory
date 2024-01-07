@@ -111,7 +111,7 @@ public class counterSword : MonoBehaviour
                     {
                         tutorial_UI.counterDetailTutorial(3);
                     }
-                    player.incrementAdrenaline(player.GetAdrenalineFactor());
+                    player.incrementAdrenaline(player.GetAdrenalineFactor()+2);
                     transform.GetComponent<PolygonCollider2D>().enabled = false;
                     audioManager.Play("Critic Counter");
                     _cameraManager.playChrome();

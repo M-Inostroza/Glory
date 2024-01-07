@@ -53,9 +53,9 @@ public class cameraManager : MonoBehaviour
         {
             switch (state)
             {
-                case 1: //FFFAB1
+                case 1:
                     bloom.tint.Override(HexToColor("#FFFAB1"));
-                    bloom.intensity.Override(10);
+                    bloom.intensity.Override(20);
                     bloom.active = true;
                     DOTween.To(() => bloom.intensity.value,
                                x => bloom.intensity.Override(x),

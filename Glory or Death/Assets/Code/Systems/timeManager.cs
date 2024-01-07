@@ -434,11 +434,11 @@ public class timeManager : MonoBehaviour
     {
         Time.timeScale = timeScale;
         yield return new WaitForSeconds(seconds);
+        Time.timeScale = 1;
         if (afterWait != null)
         {
             afterWait.Invoke();
         }
-        Time.timeScale = 1;
     }
 
     // G & S

@@ -37,6 +37,7 @@ public class TargetManager : MonoBehaviour
         {
             Combat_UI.move_UI_out();
             BattleSystem.targetHit = 0;
+            BattleSystem.canBloomAttack = true;
             courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
         } else
         {

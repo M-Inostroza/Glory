@@ -31,12 +31,7 @@ public class Target : MonoBehaviour
             {
                 _timeManager.enemyTimer.fillAmount += 0.03f;
                 BS.targetHit++;
-                if (BS.targetHit == 3)
-                {
-                    // Fix add sound
-                    // StartCoroutine(timeManager.slowMotion(.3f, .5f));
-                    FindObjectOfType<cameraManager>().PlayBloom(1);
-                }
+                FindObjectOfType<Player>().incrementAdrenaline(1);
             }
             soundPlayer.targetSounds();
             switch (tag)
@@ -56,7 +51,7 @@ public class Target : MonoBehaviour
             }
             colider.enabled = false;
             transform.DOScale(1.2f, 0.1f);
-            _spriteRenderer.DOFade(0, 0.1f).OnComplete(() => killTarget());
+            _spriteRenderer.DOFade(0, 0.2f).OnComplete(() => killTarget());
         }
     }
 

@@ -31,6 +31,7 @@ public class BattleSystem : MonoBehaviour
 
     [Header("Scores")]
     public int targetHit;
+    public bool canBloomAttack = true;
 
     [Header("Units")]
     public GameObject playerPrefab;
@@ -84,6 +85,7 @@ public class BattleSystem : MonoBehaviour
 
     private void Update()
     {
+        checkBloom();
         updateUI();
         checkEndFight();
     }
@@ -288,6 +290,17 @@ public class BattleSystem : MonoBehaviour
             timeManager.continueUnitTimer();
             audioManager.Play("Combat_Theme");
             _loadingScreen.SetActive(false);
+        }
+    }
+
+    void checkBloom()
+    {
+        if (targetHit == 3 && canBloomAttack)
+        {
+            // Fix add sound
+            StartCoroutine(timeManager.slowMotion(.1f, .3f));
+            FindObjectOfType<cameraManager>().PlayBloom(1);
+            canBloomAttack = false;
         }
     }
 

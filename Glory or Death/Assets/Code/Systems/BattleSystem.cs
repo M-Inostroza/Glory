@@ -270,7 +270,6 @@ public class BattleSystem : MonoBehaviour
     }
     public void resetTimers(int mainTimer)
     {
-        Debug.Log("Timer reset: " + mainTimer);
         timeManager.resetFightTimer(mainTimer);
         timeManager.activateFightTimer();
 

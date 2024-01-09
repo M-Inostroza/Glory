@@ -5,7 +5,7 @@ using System;
 public class Enemy : MonoBehaviour
 {
     [Header("Stats")]
-    public int nativeDamage;
+    public int nativeDamage; // Default 4 FIX access level
     public int maxHP;
     public int currentHP;
     public int adrenaline;
@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
 
     //Speed
     public float maxSpeed;
-    public float baseSpeed;
+    public float baseSpeed; // Default 13
 
     [Header("Systems")]
     [SerializeField] dirtToss dirtManager;
@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
     Combat_UI combat_UI;
     AudioManager audioManager;
     cameraManager _cameraManager;
+    EnemyHUD _enemyHud;
 
     Animator myAnimator;
     Animator playerAnimator;
@@ -44,15 +45,7 @@ public class Enemy : MonoBehaviour
     }
     private void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
-        soundPlayer = FindObjectOfType<SoundPlayer>();
-        BS = FindObjectOfType<BattleSystem>();
-        timeManager = FindObjectOfType<timeManager>();
-        Player = FindObjectOfType<Player>();
-        playerAnimator = Player.GetComponent<Animator>();
-        myAnimator = GetComponent<Animator>();
-        combat_UI = FindObjectOfType<Combat_UI>();
-        _cameraManager = FindObjectOfType<cameraManager>();
+        ImportScripts();
     }
 
     private void Update()
@@ -68,7 +61,7 @@ public class Enemy : MonoBehaviour
         {
             currentHP = 0;
         }
-        FindObjectOfType<EnemyHUD>().setHP(currentHP);
+        _enemyHud.setHP(currentHP);
         myAnimator.SetInteger("CurrentHP", currentHP);
     }
 
@@ -130,7 +123,7 @@ public class Enemy : MonoBehaviour
         dirtManager.gameObject.SetActive(true);
         adrenaline += 5;
     }
-    public void executeRage(int speedBuff, int dmgBuff)
+    public void ExecuteRage(int speedBuff, int dmgBuff)
     {
         timeManager.stopUnitTimer();
         executeCameraZoom();
@@ -138,7 +131,7 @@ public class Enemy : MonoBehaviour
         baseSpeed += speedBuff;
         nativeDamage += dmgBuff;
         myAnimator.Play("Rage");
-        adrenaline += 3;
+        adrenaline += 6;
     }
 
 
@@ -395,6 +388,20 @@ public class Enemy : MonoBehaviour
         {
             currentHP = maxHP;
         }
+    }
+
+    void ImportScripts()
+    {
+        _enemyHud = FindObjectOfType<EnemyHUD>();
+        audioManager = FindObjectOfType<AudioManager>();
+        soundPlayer = FindObjectOfType<SoundPlayer>();
+        BS = FindObjectOfType<BattleSystem>();
+        timeManager = FindObjectOfType<timeManager>();
+        Player = FindObjectOfType<Player>();
+        combat_UI = FindObjectOfType<Combat_UI>();
+        _cameraManager = FindObjectOfType<cameraManager>();
+        playerAnimator = Player.GetComponent<Animator>();
+        myAnimator = GetComponent<Animator>();
     }
 
 }

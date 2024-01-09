@@ -139,7 +139,7 @@ public class BattleSystem : MonoBehaviour
     }
     public void EnemyTurn_rage()
     {
-        enemyUnit.executeRage(3, 2);
+        enemyUnit.ExecuteRage(3, 2);
     }
 
     // UI
@@ -257,6 +257,9 @@ public class BattleSystem : MonoBehaviour
     }
     void setEnemyStats()
     {
+        enemyUnit.nativeDamage = 4; // Default
+        enemyUnit.baseSpeed = 13; // Default
+        enemyUnit.setAngryState(false);
         enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
         enemyUnit.adrenaline = 0;
     }

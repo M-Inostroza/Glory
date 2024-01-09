@@ -68,11 +68,11 @@ public class loadingScreen : MonoBehaviour
             _audioManager.Play("Thunder");
             _startButton.gameObject.SetActive(true);
             _startButton.GetComponent<Image>().DOFade(1, 0.05f).OnComplete(()=> _startButton.GetChild(0).gameObject.SetActive(true));
-            _startButton.DOShakePosition(0.2f, 3, 70, 90);
+            _startButton.DOShakePosition(0.2f, 4, 70, 90);
             isActive = true;
         } else
         {
-            _startButton.GetComponent<Image>().DOFade(0, 0.05f).OnComplete(() => _startButton.gameObject.SetActive(false));
+            _startButton.gameObject.SetActive(false);
             isActive = false;
         }
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using AssetKits.ParticleImage;
+using UnityEngine.UI;
 
 public class focusManager : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class focusManager : MonoBehaviour
     [SerializeField] GameObject target;
 
     [SerializeField] Camera mainCamera;
+
+    // Timer bars
+    Slider _timerBarLeft;
+    Slider _timerBarRight;
 
     Player playerUnit;
     AudioManager audioManager;
@@ -39,6 +44,9 @@ public class focusManager : MonoBehaviour
         playerUnit = FindObjectOfType<Player>();
         combat_UI = FindObjectOfType<Combat_UI>();
         audioManager = FindObjectOfType<AudioManager>();
+
+        _timerBarLeft = transform.GetChild(5).GetComponent<Slider>();
+        _timerBarRight = transform.GetChild(6).GetComponent<Slider>();
     }
 
     private void Start()
@@ -62,7 +70,8 @@ public class focusManager : MonoBehaviour
         target.transform.localPosition = new Vector2(targetRangeMin, -14.85f);
 
         setDificulty();
-        setCursor();
+        SetCursor();
+        RunBarTimers();
     }
 
     private void Update()
@@ -169,12 +178,20 @@ public class focusManager : MonoBehaviour
         }
     }
 
-    void setCursor()
+    void SetCursor()
     {
         // Cursor's initial position (right)
         cursor.transform.localPosition = new Vector2(maxX, cursor.transform.localPosition.y);
         // Moves cursor from left to right
         cursor.transform.DOLocalMoveX(minX, cursorSpeed).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    void RunBarTimers()
+    {
+        _timerBarLeft.value = 10;
+        _timerBarRight.value = 10;
+        _timerBarLeft.DOValue(0, 5);
+        _timerBarRight.DOValue(0, 5);
     }
     void cameraZoomIn()
     {

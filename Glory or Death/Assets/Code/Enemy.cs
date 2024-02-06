@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                adrenaline += 7;
+                adrenaline += 6;
                 myAnimator.SetBool("attack", true);
                 Player.GetComponent<Animator>().SetBool("HURT", true);
             }
@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
     public void executeDirt()
     {
         dirtManager.gameObject.SetActive(true);
-        adrenaline += 5;
+        adrenaline += 4;
     }
     public void ExecuteRage(int speedBuff, int dmgBuff)
     {

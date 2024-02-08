@@ -45,8 +45,11 @@ public class focusManager : MonoBehaviour
         combat_UI = FindObjectOfType<Combat_UI>();
         audioManager = FindObjectOfType<AudioManager>();
 
-        _timerBarLeft = transform.GetChild(5).GetComponent<Slider>();
-        _timerBarRight = transform.GetChild(6).GetComponent<Slider>();
+        if (!gameManager.isTutorial())
+        {
+            _timerBarLeft = transform.GetChild(5).GetComponent<Slider>();
+            _timerBarRight = transform.GetChild(6).GetComponent<Slider>();
+        }
     }
 
     private void Start()
@@ -71,7 +74,10 @@ public class focusManager : MonoBehaviour
 
         setDificulty();
         SetCursor();
-        RunBarTimers();
+        if (!gameManager.isTutorial())
+        {
+            RunBarTimers();
+        }
     }
 
     private void Update()
@@ -117,10 +123,14 @@ public class focusManager : MonoBehaviour
         canMoveTarget = false;
         StartCoroutine(timeManager.slowMotion(.4f, .4f, () =>
         {
-            _celebrationParticle.Clear();
-            _celebrationParticle.gameObject.SetActive(false);
-            playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
-            _totalATKBuff++;
+            if (!gameManager.isTutorial())
+            {
+                _celebrationParticle.Clear();
+                _celebrationParticle.gameObject.SetActive(false);
+                playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
+                _totalATKBuff++;
+            }
+            
             cameraZoomOut();
             canFocus = false;
             gameObject.SetActive(false);

@@ -39,7 +39,7 @@ public class DialogueManager : MonoBehaviour
          - 8 = Dirt
          */
         //tutorial_UI.toggleInput(4, 1);
-        StartCoroutine(interactions(6, 2));
+        StartCoroutine(interactions(4, 1));
         //tutorial_UI.repeatTutorial();
     }
 

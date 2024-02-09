@@ -28,7 +28,6 @@ public class gameManager : MonoBehaviour
     private void Update()
     {
         pauseGame();
-        //updateTimeScaleText();
         quitGame();
     }
     public void quitGame()

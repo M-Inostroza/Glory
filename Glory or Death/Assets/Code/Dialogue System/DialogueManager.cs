@@ -38,8 +38,8 @@ public class DialogueManager : MonoBehaviour
          - 7 = Counter 2
          - 8 = Dirt
          */
-        //tutorial_UI.toggleInput(4, 1);
-        StartCoroutine(interactions(4, 1));
+        tutorial_UI.toggleInput(7, 1);
+        //StartCoroutine(interactions(8, 1));
         //tutorial_UI.repeatTutorial();
     }
 
@@ -403,6 +403,11 @@ public class DialogueManager : MonoBehaviour
             toogleEndTutorial(0);
             showEndScreen(true);
         }
+    }
+
+    public void startFight()
+    {
+        Debug.Log("Starting fight");
     }
 
 

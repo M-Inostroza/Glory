@@ -106,6 +106,7 @@ public class superATKManager : MonoBehaviour
             else
             {
                 _tutorial_UI.fadeTimer(1);
+                gameObject.SetActive(false);
             }
         }
     }

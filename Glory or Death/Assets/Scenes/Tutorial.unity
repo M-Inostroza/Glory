@@ -9681,6 +9681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnCounter: 0
   overlay: {fileID: 0}
+  dayContainer: {fileID: 0}
   tsText: {fileID: 870429885}
 --- !u!4 &719196015
 Transform:
@@ -38575,9 +38576,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 719196014}
-        m_TargetAssemblyTypeName: gameManager, Assembly-CSharp
-        m_MethodName: quitGame
+      - m_Target: {fileID: 2128812805}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+        m_MethodName: startFight
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

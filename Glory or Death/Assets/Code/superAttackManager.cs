@@ -43,8 +43,8 @@ public class superAttackManager : MonoBehaviour
 
         _player = FindObjectOfType<Player>();
         _playerAnimator = _player.GetComponent<Animator>();
-
         enemy = FindObjectOfType<Enemy>();
+
         if (!gameManager.isTutorial())
         {
             _enemyAnimator = enemy.GetComponent<Animator>();
@@ -63,7 +63,6 @@ public class superAttackManager : MonoBehaviour
     private void OnEnable()
     {
         playAllEffects();
-
         StartCoroutine(MinigameTimer(7));
         StartCoroutine(SpawnSwordsWithDelay(0.4f));
     }

@@ -281,7 +281,7 @@ public class BattleSystem : MonoBehaviour
         timeManager.continueUnitTimer();
     }
 
-    void openGame()
+    void openGame() // Deals with the panels showing at the begining of the fight
     {
         enemyPanel.DOLocalMoveX(900, 1).SetDelay(3);
         playerPanel.DOLocalMoveX(-900, 1).SetDelay(3).OnComplete(complete);

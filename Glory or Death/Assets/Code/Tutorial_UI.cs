@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Tutorial_UI : MonoBehaviour
 {
@@ -27,6 +28,11 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] Transform xKey;
     [SerializeField] Transform leftKey;
     [SerializeField] Transform rightKey;
+
+    // Fight presentation and scene change
+    [SerializeField] Transform panelContainer;
+    [SerializeField] Transform playerPanel;
+    [SerializeField] Transform enemyPanel;
 
     // Shield
     [SerializeField] Slider shieldBar;
@@ -966,6 +972,19 @@ public class Tutorial_UI : MonoBehaviour
         hasShownDetail_superCounter = true;
         hasShownDetail_superAttack = true;
         hasShownDetail_dirt = true;
+    }
+
+    // Deal with end tutorial panels
+    public void changeSceneToFight()
+    {
+        panelContainer.gameObject.SetActive(true);
+        enemyPanel.DOLocalMoveX(308, .5f);
+        playerPanel.DOLocalMoveX(-308, .5f);
+        playerPanel.DOLocalMoveX(-308, 1).SetDelay(3).OnComplete(complete);
+        void complete()
+        {   
+            SceneManager.LoadScene("Arena");
+        }
     }
 
 

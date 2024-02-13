@@ -38,8 +38,8 @@ public class DialogueManager : MonoBehaviour
          - 7 = Counter 2
          - 8 = Dirt
          */
-        tutorial_UI.toggleInput(7, 1);
-        //StartCoroutine(interactions(8, 1));
+        //tutorial_UI.toggleInput(7, 1);
+        StartCoroutine(interactions(1, 1));
         //tutorial_UI.repeatTutorial();
     }
 
@@ -237,7 +237,8 @@ public class DialogueManager : MonoBehaviour
                 tutorial_UI.fadeTimer(0);
                 tutorial_UI.toggleInput(8, 1);
                 break;
-            case 10:
+
+            case 10: // End tutorial
                 moveGuardContainer(In); _guardText.text = "Enough, that's all you need to know...";
                 yield return new WaitForSeconds(4);
                 _guardText.text = "Now, go to your cell and get some sleep, your first fight will be soon";
@@ -403,11 +404,6 @@ public class DialogueManager : MonoBehaviour
             toogleEndTutorial(0);
             showEndScreen(true);
         }
-    }
-
-    public void startFight()
-    {
-        Debug.Log("Starting fight");
     }
 
 

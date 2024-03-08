@@ -2044,7 +2044,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Overlay: {fileID: 2991851271611462825}
   Canvas: {fileID: 4050200695986430548}
-  vFeedback: {fileID: 7080368464171943372}
   swordFeeds:
   - {fileID: 8712603309204083742}
   - {fileID: 8784365056300853503}
@@ -3817,12 +3816,13 @@ MonoBehaviour:
   maxHP: 30
   currentHP: 0
   adrenaline: 0
+  maxAdrenaline: 0
   _nativeDamage: 0
+  _dummyAnimator: {fileID: 0}
   maxShield: 4
   currentShield: 0
   critHits: 0
   dodgeManager: {fileID: 0}
-  SAM: {fileID: 0}
   missed: 0
   MainCamera: {fileID: 0}
   enemy_unit: {fileID: 0}
@@ -4882,7 +4882,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5530230206134543551, guid: 9d6a952bf3ddc7e42aafa545177a7d44, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9d6a952bf3ddc7e42aafa545177a7d44, type: 3}
 --- !u!4 &6510574232275496290 stripped
 Transform:

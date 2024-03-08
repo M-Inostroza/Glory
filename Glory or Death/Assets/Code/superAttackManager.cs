@@ -146,10 +146,10 @@ public class superAttackManager : MonoBehaviour
         {
             if (gameManager.isTutorial())
             {
-                rotationSpeed = 150;
+                rotationSpeed = 100;
             } else
             {
-                rotationSpeed = 170;
+                rotationSpeed = 120;
             }
             if (Input.GetKey(KeyCode.RightArrow))
             {

@@ -83,7 +83,7 @@ public class focusManager : MonoBehaviour
     private void Update()
     {
         moveTarget();
-        checkFocus();
+        checkInputHit();
     }
 
     IEnumerator focusTimer(float time) // Mejorable!!
@@ -91,14 +91,20 @@ public class focusManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         failFocus();
     }
-    void checkFocus()
+
+    // Executes when the user presses the S key and checks the hit
+    void checkInputHit()
     {
+        float boxOffset = 1.3f;
+
         if (canFocus && !BattleSystem.IsPaused)
         {
             if (Input.GetKey(KeyCode.S))
             {
-                float targetXstart = target.transform.localPosition.x - 1.3f;
-                float targetXend = target.transform.localPosition.x + 1.3f;
+                float targetXstart = target.transform.localPosition.x - boxOffset;
+                float targetXend = target.transform.localPosition.x + boxOffset;
+
+                StopBarTimers();
 
                 if (cursor.transform.localPosition.x > targetXstart && cursor.transform.localPosition.x < targetXend)
                 {
@@ -203,6 +209,13 @@ public class focusManager : MonoBehaviour
         _timerBarLeft.DOValue(0, 5);
         _timerBarRight.DOValue(0, 5);
     }
+
+    void StopBarTimers()
+    {
+        _timerBarLeft.DOKill();
+        _timerBarRight.DOKill();
+    }
+
     void cameraZoomIn()
     {
         mainCamera.DOFieldOfView(30, 1);

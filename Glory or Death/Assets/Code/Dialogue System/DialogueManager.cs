@@ -23,59 +23,82 @@ public class DialogueManager : MonoBehaviour
 
     Tutorial_UI tutorial_UI;
 
+    private int _currentBlock;
+
+
+    // Inputs:
+    /*
+     - 0 = Attack
+     - 1 = Defend
+     - 2 = Dodge
+     - 3 = Focus
+     - 4 = Rest
+     - 5 = Attack 2
+     - 6 = Counter
+     - 7 = Counter 2
+     - 8 = Dirt
+     */
     void Start()
     {
         importTutorial();
-        // Inputs:
-        /*
-         - 0 = Attack
-         - 1 = Defend
-         - 2 = Dodge
-         - 3 = Focus
-         - 4 = Rest
-         - 5 = Attack 2
-         - 6 = Counter
-         - 7 = Counter 2
-         - 8 = Dirt
-         */
         //tutorial_UI.toggleInput(7, 1);
-        StartCoroutine(interactions(1, 1));
-        //tutorial_UI.repeatTutorial();
+        _currentBlock = 1;
+        StartCoroutine(Interactions(1, 0.5f));
     }
 
-    public IEnumerator interactions(int index, float delay)
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            _currentBlock++;
+        }
+    }
+
+    public IEnumerator Interactions(int index, float delay)
     {
         int In = 0;
         int Out = 1;
         yield return new WaitForSeconds(delay);
+
         Overlay(1, .6f);
+
         switch (index)
         {
             case 1: // Attack Tutorial
-                moveGuardContainer(In);
-                _guardText.text = "I hope you know how to use a sword...";
-                yield return new WaitForSeconds(4);
-                moveGuardContainer(Out);
+                switch (_currentBlock)
+                {
+                    case 1:
+                        moveGuardContainer(In);
+                        _guardText.text = "I hope you know how to use a sword...";
+                        moveGuardContainer(Out);
+                        break;
 
-                movePlayerContainer(In);
-                _playerText.text = "...";
-                yield return new WaitForSeconds(2);
-                movePlayerContainer(Out);
+                    case 2:
+                        movePlayerContainer(In);
+                        _playerText.text = "...";
+                        movePlayerContainer(Out);
+                        break;
 
-                moveGuardContainer(In);
-                toogleSymbols(0, true);
-                toogleSymbols(1, true);
-                _guardText.text = "Select the attack command (   ), wait for the timer and click as many targets (   ) as you can"; 
-                yield return new WaitForSeconds(6);
-                toogleSymbols(0, false);
-                toogleSymbols(1, false);
-                _guardText.text = "Try it a few times...";
-                yield return new WaitForSeconds(2);
-                moveGuardContainer(Out);
-                Overlay(0);
-                tutorial_UI.toggleInput(0, 1);
-                yield return new WaitForSeconds(1);
-                tutorial_UI.attackDetailTutorial(1);
+                    case 3:
+                        moveGuardContainer(In);
+                        toogleSymbols(0, true);
+                        toogleSymbols(1, true);
+                        _guardText.text = "Select the attack command (   ), wait for the timer and click as many targets (   ) as you can";
+                        break;
+
+                    case 4:
+                        toogleSymbols(0, false);
+                        toogleSymbols(1, false);
+                        _guardText.text = "Try it a few times...";
+                        break;
+
+                    case 5:
+                        moveGuardContainer(Out);
+                        Overlay(0);
+                        tutorial_UI.toggleInput(0, 1);
+                        tutorial_UI.attackDetailTutorial(1);
+                        break;
+                }
                 break;
 
             case 2: // Defense tutorial

@@ -12,7 +12,7 @@ public class DialogueEditor : Editor
         
         if (GUILayout.Button("Next Interaction"))
         {
-            DM.StartCoroutine(DM.interactions(2, 0));
+            DM.StartCoroutine(DM.Interactions(2, 0));
         }
     }
 }

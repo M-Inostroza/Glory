@@ -411,7 +411,7 @@ public class Tutorial_UI : MonoBehaviour
         if (_numberOfTries == tries)
         {
             toggleInput(outInputIndex, 0);
-            StartCoroutine(_dialogueManager.interactions(interaction, delay));
+            StartCoroutine(_dialogueManager.Interactions(interaction, delay));
             _numberOfTries = 0;
         } 
     }

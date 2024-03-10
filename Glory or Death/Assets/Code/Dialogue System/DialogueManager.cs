@@ -23,7 +23,9 @@ public class DialogueManager : MonoBehaviour
 
     Tutorial_UI tutorial_UI;
 
+    private int _interactionIndex;
     private int _currentBlock;
+    private bool canChangeInteraction = true;
 
 
     // Inputs:
@@ -38,23 +40,44 @@ public class DialogueManager : MonoBehaviour
      - 7 = Counter 2
      - 8 = Dirt
      */
+
+    // Interactions:
+    /*
+     - 1 = Attack
+     - 2 = Defend
+     - 3 = Dodge
+     - 4 = Focus
+     - 5 = Rest
+     - 6 = Counter
+     - 7 = 
+     - 8 = Counter 2
+     - 9 = Dirt
+     */
     void Start()
     {
         importTutorial();
         //tutorial_UI.toggleInput(7, 1);
+        _interactionIndex = 7;
         _currentBlock = 1;
-        StartCoroutine(Interactions(1, 0.5f));
+
+        StartCoroutine(Interactions(_interactionIndex, 0.2f, _currentBlock));
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        manageControlClick();
+    }
+
+    void manageControlClick()
+    {
+        if (Input.GetMouseButtonDown(0) && canChangeInteraction)
         {
             _currentBlock++;
+            StartCoroutine(Interactions(_interactionIndex, 0.1f, _currentBlock));
         }
     }
 
-    public IEnumerator Interactions(int index, float delay)
+    public IEnumerator Interactions(int index, float delay, int block = 0)
     {
         int In = 0;
         int Out = 1;
@@ -65,25 +88,25 @@ public class DialogueManager : MonoBehaviour
         switch (index)
         {
             case 1: // Attack Tutorial
-                switch (_currentBlock)
+                switch (block)
                 {
                     case 1:
                         moveGuardContainer(In);
                         _guardText.text = "I hope you know how to use a sword...";
-                        moveGuardContainer(Out);
                         break;
 
                     case 2:
+                        moveGuardContainer(Out);
                         movePlayerContainer(In);
                         _playerText.text = "...";
-                        movePlayerContainer(Out);
                         break;
 
                     case 3:
+                        movePlayerContainer(Out);
                         moveGuardContainer(In);
                         toogleSymbols(0, true);
                         toogleSymbols(1, true);
-                        _guardText.text = "Select the attack command (   ), wait for the timer and click as many targets (   ) as you can";
+                        _guardText.text = "Select the attack command     , wait for the timer and click as many targets     as you can";
                         break;
 
                     case 4:
@@ -97,180 +120,315 @@ public class DialogueManager : MonoBehaviour
                         Overlay(0);
                         tutorial_UI.toggleInput(0, 1);
                         tutorial_UI.attackDetailTutorial(1);
+                        FinishInteraction();
                         break;
                 }
                 break;
 
             case 2: // Defense tutorial
-                movePlayerContainer(In);
-                _playerText.text = "Not bad...";
-                yield return new WaitForSeconds(3);
-                movePlayerContainer(Out);
+                switch (block)
+                {
+                    case 1:
+                        movePlayerContainer(In); 
+                        _playerText.text = "Not bad...";
+                        StartInteraction();
+                        break;
 
-                moveGuardContainer(In);
-                _guardText.text = "You better get use to it... let's try some defense";
-                yield return new WaitForSeconds(3);
-                toogleSymbols(2, true);
-                toogleSymbols(3, true);
-                _guardText.text = "Click the defend command (   ) and press     when the circle is \nin the green area...";
-                yield return new WaitForSeconds(6);
-                toogleSymbols(2, false);
-                toogleSymbols(3, false);
-                _guardText.text = "If you succeed you will get a shield point, which will allow you to counter the enemy attack";
-                yield return new WaitForSeconds(5);
-                moveGuardContainer(Out);
-                Overlay(0);
-                tutorial_UI.toggleInput(1, 1);
-                tutorial_UI.defendDetailTutorial(1);
+                    case 2:
+                        movePlayerContainer(Out);
+                        moveGuardContainer(In);
+                        _guardText.text = "You better get use to it... let's try some defense";
+                        break;
+
+                    case 3:
+                        toogleSymbols(2, true);
+                        toogleSymbols(3, true);
+                        _guardText.text = "Click the defend command     and press     when the circle is \nin the green area...";
+                        break;
+
+                    case 4:
+                        toogleSymbols(2, false);
+                        toogleSymbols(3, false);
+                        _guardText.text = "If you succeed you will get a shield point, which will allow you to counter the enemy attack";
+                        break;
+
+                    case 5:
+                        moveGuardContainer(Out);
+                        Overlay(0);
+                        tutorial_UI.toggleInput(1, 1);
+                        tutorial_UI.defendDetailTutorial(1);
+                        FinishInteraction();
+                        break;
+                }
                 break;
 
             case 3: // Dodge tutorial
-                movePlayerContainer(In); _playerText.text = "I think I got this...";
-                yield return new WaitForSeconds(3);
-                movePlayerContainer(Out);
+                switch (block)
+                {
+                    case 1:
+                        movePlayerContainer(In); 
+                        _playerText.text = "I think I got this...";
+                        StartInteraction();
+                        break;
 
-                moveGuardContainer(In); _guardText.text = "Don't get too confident, let's see how you move...";
-                yield return new WaitForSeconds(4);
-                toogleSymbols(4, true);
-                _guardText.fontSize = 20;
-                _guardText.text = "Select the dodge command (    ), wait for the timer and press the arrow keys in the right order, this will avoid the next enemy attack...";
-                yield return new WaitForSeconds(6);
-                toogleSymbols(4, false);
-                moveGuardContainer(Out);
-                Overlay(0);
-                tutorial_UI.toggleInput(2, 1);
-                tutorial_UI.dodgeDetailTutorial(1);
+                    case 2:
+                        movePlayerContainer(Out);
+                        moveGuardContainer(In);
+                        _guardText.text = "Don't get too confident, let's see your moves...";
+                        break;
+
+                    case 3:
+                        toogleSymbols(4, true);
+                        _guardText.fontSize = 20;
+                        _guardText.text = "Select the dodge command     , wait for the timer and press the arrow keys in the right order, this will avoid the next enemy attack...";
+                        break;
+
+                    case 4:
+                        toogleSymbols(4, false);
+                        moveGuardContainer(Out);
+                        Overlay(0);
+                        tutorial_UI.toggleInput(2, 1);
+                        tutorial_UI.dodgeDetailTutorial(1);
+                        FinishInteraction();
+                        break;
+                }
                 break;
 
             case 4: // Focus tutorial
-                _guardText.fontSize = 22;
-                moveGuardContainer(In); _guardText.text = "Decent enough, don't forget to use them later in the arena";
-                yield return new WaitForSeconds(5);
-                moveGuardContainer(Out);
+                switch (block)
+                {
+                    case 1:
+                        _guardText.fontSize = 22;
+                        moveGuardContainer(In); 
+                        _guardText.text = "Decent enough, don't forget to use them later in the arena";
+                        StartInteraction();
+                        break;
 
-                movePlayerContainer(In); _playerText.text = "I will do my best...";
-                yield return new WaitForSeconds(3);
-                movePlayerContainer(Out);
+                    case 2:
+                        moveGuardContainer(Out);
+                        movePlayerContainer(In); 
+                        _playerText.text = "I will do my best...";
+                        break;
 
-                moveGuardContainer(In); _guardText.text = "We will see about that...";
-                yield return new WaitForSeconds(3);
-                _guardText.text = "Let's learn to focus now, this will give you a speed boost and you will deal more damage for a moment";
-                yield return new WaitForSeconds(8);
-                for (int i = 5; i < 9; i++) { toogleSymbols(i, true); }
-                _guardText.text = "Select the focus command (   ) and press     when the \nblock (   ) is inside the \nmoving box (    )";
-                yield return new WaitForSeconds(5);
-                for (int i = 5; i < 9; i++) { toogleSymbols(i, false); }
-                moveGuardContainer(Out);
-                Overlay(0);
-                tutorial_UI.focusDetailTutorial(1);
-                tutorial_UI.toggleInput(3, 1);
+                    case 3:
+                        movePlayerContainer(Out);
+                        moveGuardContainer(In); 
+                        _guardText.text = "We will see about that...";
+                        break;
+
+                    case 4:
+                        _guardText.text = "Let's learn to focus now, this will give you a speed boost and you will deal more damage for a moment";
+                        break;
+
+                    case 5:
+                        for (int i = 5; i < 9; i++) { toogleSymbols(i, true); }
+                        _guardText.text = "Select the focus command     and press     when the \nblock     is inside the \nmoving box     ";
+                        break;
+
+                    case 6:
+                        for (int i = 5; i < 9; i++) { toogleSymbols(i, false); }
+                        moveGuardContainer(Out);
+                        Overlay(0);
+                        tutorial_UI.focusDetailTutorial(1);
+                        tutorial_UI.toggleInput(3, 1);
+                        FinishInteraction();
+                        break;
+                }
                 break;
 
             case 5: // Rest tutorial
-                movePlayerContainer(In); _playerText.text = "Can I have a break?";
-                yield return new WaitForSeconds(3);
-                FindObjectOfType<Player>().SetCurrentStamina(0);
-                movePlayerContainer(Out);
-
-                moveGuardContainer(In); _guardText.text = "A break??, your oponent won't give you a break...";
-                yield return new WaitForSeconds(5);
-                for (int i = 9; i < 12; i++) { toogleSymbols(i, true); }
-                _guardText.text = "Select the rest command (   ) and smash the arrow keys \nleft (   ) and right (   ) to recover stamina";
-                yield return new WaitForSeconds(6);
-                for (int i = 9; i < 12; i++) { toogleSymbols(i, false); }
-                _guardText.text = "Stamina allows you to execute commands, if your stamina is empty you won't be able to perform any action!";
-                yield return new WaitForSeconds(6);
-                moveGuardContainer(Out);
-                Overlay(0);
-                tutorial_UI.restDetailTutorial(1);
-                tutorial_UI.toggleInput(4, 1);
+                switch (block)
+                {
+                    case 1:
+                        movePlayerContainer(In);
+                        _playerText.text = "Can I have a break?";
+                        FindObjectOfType<Player>().SetCurrentStamina(0);
+                        StartInteraction();
+                        break;
+                    case 2:
+                        movePlayerContainer(Out);
+                        moveGuardContainer(In);
+                        _guardText.text = "A break??, your oponent won't give you a break...";
+                        break;
+                    case 3:
+                        for (int i = 9; i < 12; i++) { toogleSymbols(i, true); }
+                        _guardText.text = "Select the rest command     and smash the arrow keys \nleft     and right     to recover stamina";
+                        break;
+                    case 4:
+                        for (int i = 9; i < 12; i++) { toogleSymbols(i, false); }
+                        _guardText.text = "Stamina allows you to execute commands, if your stamina is empty you won't be able to perform any action!";
+                        break;
+                    case 5:
+                        moveGuardContainer(Out);
+                        Overlay(0);
+                        tutorial_UI.restDetailTutorial(1);
+                        tutorial_UI.toggleInput(4, 1);
+                        FinishInteraction();
+                        break;
+                }
                 break;
 
             case 6: // Counter tutorial
-                movePlayerContainer(In); _playerText.text = "I think I'm ready for a real fight now...";
-                yield return new WaitForSeconds(4);
-                movePlayerContainer(Out);
-
-                moveGuardContainer(In);
-                _guardText.text = "Hell no, you still have much to learn, you don't even know how to block an attack...";
-                yield return new WaitForSeconds(5);
-                toogleSymbols(12, true);
-                _guardText.text = "Smash (   ) to rotate the shield and block the atack";
-                yield return new WaitForSeconds(5);
-                toogleSymbols(12, false);
-                _guardText.text = "Give it a few tries...";
-                yield return new WaitForSeconds(3);
-                moveGuardContainer(Out);
-                Overlay(0);
-                tutorial_UI.toggleInput(6, 1);
+                switch (block)
+                {
+                    case 1:
+                        movePlayerContainer(In);
+                        _playerText.text = "I think I'm ready for a real fight now...";
+                        StartInteraction();
+                        break;
+                    case 2:
+                        movePlayerContainer(Out);
+                        moveGuardContainer(In);
+                        _guardText.text = "Hell no, you still have much to learn, you don't even know how to block an attack...";
+                        break;
+                    case 3:
+                        toogleSymbols(12, true);
+                        _guardText.text = "Smash     to rotate the shield and block the atack";
+                        break;
+                    case 4:
+                        toogleSymbols(12, false);
+                        _guardText.text = "Give it a few tries...";
+                        break;
+                    case 5:
+                        moveGuardContainer(Out);
+                        Overlay(0);
+                        tutorial_UI.toggleInput(6, 1);
+                        FinishInteraction();
+                        break;
+                }
                 break;
 
             case 7: // Super counter tutorial
-                movePlayerContainer(In); _playerText.text = "Easy...";
-                yield return new WaitForSeconds(2);
-                movePlayerContainer(Out);
-
-                moveGuardContainer(In); _guardText.text = "Easy??";
-                yield return new WaitForSeconds(2);
-                _guardText.text = "Let's see how easy is to block a super attack...";
-                yield return new WaitForSeconds(4);
-                toogleSymbols(13, true);
-                toogleSymbols(14, true);
-                _guardText.text = "Move the arrows left (   ) and right (   ) to control the shield and block the swords";
-                yield return new WaitForSeconds(5);
-                toogleSymbols(13, false);
-                toogleSymbols(14, false);
-                moveGuardContainer(Out);
-                Overlay(0);
-                tutorial_UI.toggleInput(7, 1);
+                switch (block)
+                {
+                    case 1:
+                        movePlayerContainer(In);
+                        _playerText.text = "Easy...";
+                        StartInteraction();
+                        break;
+                    case 2:
+                        movePlayerContainer(Out);
+                        moveGuardContainer(In);
+                        _guardText.text = "Hahahaha, don't make me laugh boy...";
+                        break;
+                    case 3:
+                        _guardText.text = "Let's see how easy is to block a super attack...";
+                        break;
+                    case 4:
+                        toogleSymbols(13, true);
+                        toogleSymbols(14, true);
+                        _guardText.text = "Move the arrows left     and right     to control the shield and block the swords";
+                        break;
+                    case 5:
+                        toogleSymbols(13, false);
+                        toogleSymbols(14, false);
+                        moveGuardContainer(Out);
+                        Overlay(0);
+                        tutorial_UI.toggleInput(7, 1);
+                        FinishInteraction();
+                        break;
+                }
                 break;
 
             case 8: // Super Attack tutorial
-                tutorial_UI.hasShownDetail_superCounter = true;
-                movePlayerContainer(In); _playerText.text = "How can I even survive that??";
-                yield return new WaitForSeconds(4);
-                movePlayerContainer(Out);
+                switch (block)
+                {
+                    case 1:
+                        tutorial_UI.hasShownDetail_superCounter = true;
+                        movePlayerContainer(In);
+                        _playerText.text = "How can I even survive that??";
+                        StartInteraction();
+                        break;
 
-                moveGuardContainer(In);
-                _guardText.text = "Less crying and more practice, that's it";
-                yield return new WaitForSeconds(5);
-                _guardText.text = "You will also have a Super Attack when your adrenaline bar is full...";
-                yield return new WaitForSeconds(4);
-                toogleSymbols(15, true);
-                _guardText.text = "Select the super attack command (   ), wait for the \ntimer and click as many \ntargets as you can";
-                yield return new WaitForSeconds(5);
-                toogleSymbols(15, false);
-                moveGuardContainer(Out);
+                    case 2:
+                        movePlayerContainer(Out);
+                        moveGuardContainer(In);
+                        _guardText.text = "Less crying and more practice, that's it";
+                        break;
 
-                Overlay(0);
-                tutorial_UI.fadeTimer(1);
-                tutorial_UI.superAttackDetailTutorial(1);
-                tutorial_UI.toggleInput(5, 1);
+                    case 3:
+                        _guardText.text = "You will also have a Super Attack when your adrenaline bar is full...";
+                        break;
+
+                    case 4:
+                        toogleSymbols(15, true);
+                        _guardText.text = "Select the super attack command    , wait for the \ntimer and click as many \ntargets as you can";
+                        break;
+
+                    case 5:
+                        toogleSymbols(15, false);
+                        moveGuardContainer(Out);
+                        Overlay(0);
+                        tutorial_UI.fadeTimer(1);
+                        tutorial_UI.superAttackDetailTutorial(1);
+                        tutorial_UI.toggleInput(5, 1);
+                        FinishInteraction();
+                        break;
+                }
                 break;
 
             case 9: // Dirt tutorial
-                moveGuardContainer(In); _guardText.text = "Good... but fights are not always fair";
-                yield return new WaitForSeconds(4);
-                _guardText.text = "The enemy will try to blind you from time to time, you can't do anything if you don't see";
-                yield return new WaitForSeconds(5);
-                _guardText.text = "Hold the left click and drag from side to side to clean the dirt";
-                yield return new WaitForSeconds(5);
-                moveGuardContainer(Out);
-                Overlay(0);
-                tutorial_UI.fadeTimer(0);
-                tutorial_UI.toggleInput(8, 1);
+                switch (block)
+                {
+                    case 1:
+                        moveGuardContainer(In);
+                        _guardText.text = "Good... but fights are not always fair";
+                        StartInteraction();
+                        break;
+
+                    case 2:
+                        _guardText.text = "The enemy will try to blind you from time to time, you can't do anything if you don't see";
+                        break;
+
+                    case 3:
+                        _guardText.text = "Hold the left click and drag from side to side to clean the dirt";
+                        break;
+
+                    case 4:
+                        moveGuardContainer(Out);
+                        Overlay(0);
+                        tutorial_UI.fadeTimer(0);
+                        tutorial_UI.toggleInput(8, 1);
+                        FinishInteraction();
+                        break;
+                }
                 break;
 
             case 10: // End tutorial
-                moveGuardContainer(In); _guardText.text = "Enough, that's all you need to know...";
-                yield return new WaitForSeconds(4);
-                _guardText.text = "Now, go to your cell and get some sleep, your first fight will be soon";
-                yield return new WaitForSeconds(4);
-                moveGuardContainer(Out);
-                showEndScreen(true);
-                Overlay(1, .8f);
+                switch (block)
+                {
+                    case 1:
+                        moveGuardContainer(In);
+                        _guardText.text = "Enough, that's all you need to know...";
+                        StartInteraction();
+                        break;
+
+                    case 2:
+                        _guardText.text = "Now, go to your cell and get some sleep, your first fight will be soon";
+                        break;
+
+                    case 3:
+                        moveGuardContainer(Out);
+                        showEndScreen(true);
+                        Overlay(1, .8f);
+                        FinishInteraction();
+                        break;
+                }
                 break;
         }
+    }
+
+    void StartInteraction()
+    {
+        _currentBlock = 1;
+        canChangeInteraction = true;
+    }
+
+    void FinishInteraction() 
+    {
+        _interactionIndex++;
+        _currentBlock = 0;
+        canChangeInteraction = false;
     }
 
     void toogleSymbols(int symbol, bool inOut)
@@ -281,7 +439,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (showOrHide == 0)
         {
-            _overlay.DOFade(0, 0.4f).OnComplete(()=> _overlay.gameObject.SetActive(false));
+            _overlay.DOFade(0, 0.4f).OnComplete(() => _overlay.gameObject.SetActive(false));
         } else if (showOrHide == 1)
         {
             _overlay.gameObject.SetActive(true);
@@ -296,7 +454,7 @@ public class DialogueManager : MonoBehaviour
             _guardFrame.transform.DOLocalMoveX(70, 0.4f);
         } else
         {
-            _guardFrame.transform.DOLocalMoveX(600, 0.4f).OnComplete(()=> _guardFrame.SetActive(false));
+            _guardFrame.transform.DOLocalMoveX(600, 0.4f).OnComplete(() => _guardFrame.SetActive(false));
         }
     }
 
@@ -351,9 +509,9 @@ public class DialogueManager : MonoBehaviour
                 Debug.Log("Out of index");
                 break;
         }
-        
+
         yield return new WaitForSeconds(3);
-        
+
         Overlay(0);
         moveGuardContainer(1);
     }
@@ -399,7 +557,7 @@ public class DialogueManager : MonoBehaviour
         } else
         {
             Overlay(0);
-            _readyText.DOLocalMoveY(250, 1).OnComplete(()=> _readyText.gameObject.SetActive(false));
+            _readyText.DOLocalMoveY(250, 1).OnComplete(() => _readyText.gameObject.SetActive(false));
             _fightButton.DOLocalMoveY(-300, 1).OnComplete(() => _fightButton.gameObject.SetActive(false));
             _resetButton.DOLocalMoveY(-300, 1).OnComplete(() => _resetButton.gameObject.SetActive(false));
         }

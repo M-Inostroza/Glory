@@ -77,6 +77,7 @@ public class CounterManager : MonoBehaviour
             combatUI.activateX();
         } else
         {
+            tutorial_UI.hideUI();
             tutorial_UI.activateX();
         }
         _sword.transform.DOLocalMoveX(-3.25f, 3).SetEase(Ease.Linear);
@@ -86,6 +87,7 @@ public class CounterManager : MonoBehaviour
     {
         if (gameManager.isTutorial())
         {
+            tutorial_UI.showUI();
             tutorial_UI.fadeTimer(1);
             if (Tutorial_UI._hasPlayedTutorial)
             {

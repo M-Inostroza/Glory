@@ -129,6 +129,7 @@ public class superAttackManager : MonoBehaviour
             }
 
             tutorial_UI.fadeTimer(1);
+            tutorial_UI.showUI();
 
             if (Tutorial_UI._hasPlayedTutorial)
             {
@@ -197,7 +198,16 @@ public class superAttackManager : MonoBehaviour
     // Effects
     void playAllEffects()
     {
-        Combat_UI.move_UI_out();
+        if (gameManager.isTutorial())
+        {
+            tutorial_UI.hideUI();
+            if (!tutorial_UI.hasShownDetail_superCounter)
+            {
+                tutorial_UI.toggleInput(7, 0);
+            }
+        } else {
+            Combat_UI.move_UI_out();
+        }
         moveFeedback();
         audioManager.Play("Super_Attack_Enemy_On");
         cameraManager.playChrome();

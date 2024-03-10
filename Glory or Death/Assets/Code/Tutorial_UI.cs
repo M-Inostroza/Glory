@@ -89,13 +89,21 @@ public class Tutorial_UI : MonoBehaviour
         refillStamina();
         updateShield();
     }
-    void showUI()
+    public void showUI()
     {
         float move_in_speed = 0.3f;
 
         _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x + 200, move_in_speed).SetEase(Ease.InOutSine);
         _playerStats.DOLocalMoveX(_playerStats.localPosition.x + 350, move_in_speed).SetEase(Ease.InOutSine);
         _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y - 160, move_in_speed);
+    }
+    public void hideUI()
+    {
+        float move_in_speed = 0.3f;
+
+        _playerStamina.DOLocalMoveX(_playerStamina.localPosition.x - 200, move_in_speed).SetEase(Ease.InOutSine);
+        _playerStats.DOLocalMoveX(_playerStats.localPosition.x - 350, move_in_speed).SetEase(Ease.InOutSine);
+        _playerTimer.DOLocalMoveY(_playerTimer.localPosition.y + 160, move_in_speed);
     }
     void refillStamina()
     {
@@ -301,7 +309,7 @@ public class Tutorial_UI : MonoBehaviour
                     fadeTimer(0);
                     _player.DecrementCurrentStamina(15);
                     attack();
-                    tryLimit(2, 4, 0, 3);
+                    tryLimit(2, 5, 0, 3);
                 }
                 void attack() {
                     StartCoroutine(timeManager.slowMotion(1.8f, 0.5f));
@@ -405,13 +413,13 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
-    void tryLimit(int interaction, float delay, int outInputIndex, int tries)
+    void tryLimit(int interaction, float delay, int leavingInput, int tries)
     {
         _numberOfTries++;
         if (_numberOfTries == tries)
         {
-            toggleInput(outInputIndex, 0);
-            StartCoroutine(_dialogueManager.Interactions(interaction, delay));
+            toggleInput(leavingInput, 0);
+            StartCoroutine(_dialogueManager.Interactions(interaction, delay, 1));
             _numberOfTries = 0;
         } 
     }
@@ -566,6 +574,8 @@ public class Tutorial_UI : MonoBehaviour
     }
 
     // Detailed tutorial section
+    private float cursorDelay = 0.4f;
+    private float cursorSpeed = 0.6f;
 
     // Detail Attack
     public bool hasShownDetail_attack = false;
@@ -573,7 +583,6 @@ public class Tutorial_UI : MonoBehaviour
     {
         Image cursorImage = _cursorContainer.transform.GetChild(0).GetComponent<Image>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(0).transform;
-        float cursorDelay = .6f;
 
         switch (step)
         {
@@ -583,7 +592,7 @@ public class Tutorial_UI : MonoBehaviour
                     _overlaySprite.DOFade(.8f, 0.4f);
                     cursorTransform.gameObject.SetActive(true);
                     cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
-                    cursorTransform.DOLocalMove(new Vector2(-336, 13.3f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                    cursorTransform.DOLocalMove(new Vector2(-336, 13.3f), cursorSpeed).SetDelay(cursorDelay).OnComplete(activateButton);
                 }
                 void activateButton()
                 {
@@ -595,14 +604,14 @@ public class Tutorial_UI : MonoBehaviour
             case 2: // On comand click
                 if (!hasShownDetail_attack)
                 {
-                    Time.timeScale = 0.8f;
-                    cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
-                    _overlaySprite.DOFade(0, 0.4f);
+                    Time.timeScale = 0.9f;
+                    cursorImage.DOFade(0, 0.2f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
+                    _overlaySprite.DOFade(0, 0.3f);
                 }
                 break;
 
             case 3: // On attack animation
-                Time.timeScale = 0.3f;
+                Time.timeScale = 0.5f;
                 break;
         }
     }
@@ -613,27 +622,24 @@ public class Tutorial_UI : MonoBehaviour
     {
         if (gameManager.isTutorial())
         {
+            Image cursorImage = _cursorContainer.transform.GetChild(1).GetComponent<Image>();
+            Transform cursorTransform = _cursorContainer.transform.GetChild(1).transform;
 
-        
-        Image cursorImage = _cursorContainer.transform.GetChild(1).GetComponent<Image>();
-        Transform cursorTransform = _cursorContainer.transform.GetChild(1).transform;
-        float cursorDelay = .8f;
-
-        switch (step)
-        {
-            case 1: // Shows cursor moving to command
-                if (!hasShownDetail_defend)
-                {
-                    _overlaySprite.DOFade(.8f, 0.4f);
-                    cursorTransform.gameObject.SetActive(true);
-                    cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
-                    cursorTransform.DOLocalMove(new Vector2(-336, -30), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
-                }
-                void activateButton()
-                {
-                    _inputs[1].GetComponent<Button>().interactable = true;
-                    Time.timeScale = 0.05f;
-                }
+            switch (step)
+            {
+                case 1: // Shows cursor moving to command
+                    if (!hasShownDetail_defend)
+                    {
+                        _overlaySprite.DOFade(.8f, 0.4f);
+                        cursorTransform.gameObject.SetActive(true);
+                        cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
+                        cursorTransform.DOLocalMove(new Vector2(-336, -30), cursorSpeed).SetDelay(cursorDelay).OnComplete(activateButton);
+                    }
+                    void activateButton()
+                    {
+                        _inputs[1].GetComponent<Button>().interactable = true;
+                        Time.timeScale = 0.05f;
+                    }
                 break;
 
             case 2: // Player clicks
@@ -668,7 +674,6 @@ public class Tutorial_UI : MonoBehaviour
     {
         Image cursorImage = _cursorContainer.transform.GetChild(2).GetComponent<Image>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(2).transform;
-        float cursorDelay = .8f;
 
         switch (step)
         {
@@ -678,7 +683,7 @@ public class Tutorial_UI : MonoBehaviour
                     _overlaySprite.DOFade(.8f, 0.4f);
                     cursorTransform.gameObject.SetActive(true);
                     cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
-                    cursorTransform.DOLocalMove(new Vector2(-337.6f, -70.5f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                    cursorTransform.DOLocalMove(new Vector2(-337.6f, -70.5f), cursorSpeed).SetDelay(cursorDelay).OnComplete(activateButton);
                 }
                 void activateButton()
                 {
@@ -718,7 +723,6 @@ public class Tutorial_UI : MonoBehaviour
     {
         Image cursorImage = _cursorContainer.transform.GetChild(3).GetComponent<Image>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(3).transform;
-        float cursorDelay = .8f;
 
         switch (step)
         {
@@ -728,7 +732,7 @@ public class Tutorial_UI : MonoBehaviour
                     _overlaySprite.DOFade(.8f, 0.4f);
                     cursorTransform.gameObject.SetActive(true);
                     cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
-                    cursorTransform.DOLocalMove(new Vector2(-339.7f, -87.9f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                    cursorTransform.DOLocalMove(new Vector2(-339.7f, -87.9f), cursorSpeed).SetDelay(cursorDelay).OnComplete(activateButton);
                 }
                 void activateButton()
                 {
@@ -768,7 +772,6 @@ public class Tutorial_UI : MonoBehaviour
     {
         Image cursorImage = _cursorContainer.transform.GetChild(4).GetComponent<Image>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(4).transform;
-        float cursorDelay = .8f;
 
         switch (step)
         {
@@ -778,7 +781,7 @@ public class Tutorial_UI : MonoBehaviour
                     _overlaySprite.DOFade(.8f, 0.4f);
                     cursorTransform.gameObject.SetActive(true);
                     cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
-                    cursorTransform.DOLocalMove(new Vector2(-337.3f, -136.5f), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                    cursorTransform.DOLocalMove(new Vector2(-337.3f, -136.5f), cursorSpeed).SetDelay(cursorDelay).OnComplete(activateButton);
                 }
                 void activateButton()
                 {
@@ -819,6 +822,8 @@ public class Tutorial_UI : MonoBehaviour
     {
         if (gameManager.isTutorial() && _numberOfTries >= 1)
         {
+            toggleInput(6, 0);
+
             switch (step)
             {
                 case 1: // Stops counter before starts
@@ -832,7 +837,6 @@ public class Tutorial_UI : MonoBehaviour
                 case 2: // Fails counter
                     if (!hasShownDetail_counter)
                     {
-                        toggleInput(6, 0);
                         StartCoroutine(_dialogueManager.specialGuardInteraction(false, 1, 1));
                     }
                     break;
@@ -840,7 +844,6 @@ public class Tutorial_UI : MonoBehaviour
                 case 3: // Perfect counter
                     if (!hasShownDetail_counter)
                     {
-                        toggleInput(6, 0);
                         StartCoroutine(_dialogueManager.specialGuardInteraction(true, 1, 1));
                     }
                     break;
@@ -859,7 +862,6 @@ public class Tutorial_UI : MonoBehaviour
                 case 1: // Fails counter
                     if (!hasShownDetail_superCounter)
                     {
-                        toggleInput(7, 0);
                         StartCoroutine(_dialogueManager.specialGuardInteraction(false, 2, 0));
                     }
                     break;
@@ -867,7 +869,6 @@ public class Tutorial_UI : MonoBehaviour
                 case 2: // Perfect counter
                     if (!hasShownDetail_superCounter)
                     {
-                        toggleInput(7, 0);
                         StartCoroutine(_dialogueManager.specialGuardInteraction(true, 2, 0));
                     }
                     break;
@@ -881,7 +882,6 @@ public class Tutorial_UI : MonoBehaviour
     {
         Image cursorImage = _cursorContainer.transform.GetChild(5).GetComponent<Image>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(5).transform;
-        float cursorDelay = .6f;
 
         switch (step)
         {
@@ -891,7 +891,7 @@ public class Tutorial_UI : MonoBehaviour
                     _overlaySprite.DOFade(.8f, 0.4f);
                     cursorTransform.gameObject.SetActive(true);
                     cursorImage.DOFade(1, 0.4f).SetDelay(cursorDelay);
-                    cursorTransform.DOLocalMove(new Vector2(-340, 51), 0.8f).SetDelay(cursorDelay).OnComplete(activateButton);
+                    cursorTransform.DOLocalMove(new Vector2(-340, 51), cursorSpeed).SetDelay(cursorDelay).OnComplete(activateButton);
                 }
                 void activateButton()
                 {

@@ -69,7 +69,7 @@ public class DodgeManager : MonoBehaviour
         evadeTarget.transform.DOLocalMoveX(newRandom, 0.1f);
 
         // Animates bar
-        evadeSlider.transform.DOLocalMoveY(-70, 0.3f);
+        evadeSlider.transform.DOLocalMoveY(-90, 0.3f);
         evadeSlider.transform.DOScale(1.3f, 0.3f);
 
         // Opacity fade ON
@@ -251,12 +251,8 @@ public class DodgeManager : MonoBehaviour
         {
             if (!tutorial_UI.hasShownDetail_dodge)
             {
-                Time.timeScale = .2f;
-                tutorial_UI.dodgeDetailTutorial(3);
-            }
-            else
-            {
                 Time.timeScale = .5f;
+                tutorial_UI.dodgeDetailTutorial(3);
             }
         }
     }

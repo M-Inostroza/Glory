@@ -23,8 +23,8 @@ public class DialogueManager : MonoBehaviour
 
     Tutorial_UI tutorial_UI;
 
-    private int _interactionIndex;
-    private int _currentBlock;
+    private static int _interactionIndex;
+    private static int _currentBlock;
     private bool canChangeInteraction = true;
 
 
@@ -49,15 +49,15 @@ public class DialogueManager : MonoBehaviour
      - 4 = Focus
      - 5 = Rest
      - 6 = Counter
-     - 7 = 
-     - 8 = Counter 2
+     - 7 = Counter 2
+     - 8 = Super Attack
      - 9 = Dirt
+     - 10 = end 
      */
     void Start()
     {
         importTutorial();
-        //tutorial_UI.toggleInput(7, 1);
-        _interactionIndex = 7;
+        _interactionIndex = 10;
         _currentBlock = 1;
 
         StartCoroutine(Interactions(_interactionIndex, 0.2f, _currentBlock));
@@ -118,7 +118,7 @@ public class DialogueManager : MonoBehaviour
                     case 5:
                         moveGuardContainer(Out);
                         Overlay(0);
-                        tutorial_UI.toggleInput(0, 1);
+                        StartCoroutine(tutorial_UI.toggleInput(0, 1));
                         tutorial_UI.attackDetailTutorial(1);
                         FinishInteraction();
                         break;
@@ -155,7 +155,7 @@ public class DialogueManager : MonoBehaviour
                     case 5:
                         moveGuardContainer(Out);
                         Overlay(0);
-                        tutorial_UI.toggleInput(1, 1);
+                        StartCoroutine(tutorial_UI.toggleInput(1, 1));
                         tutorial_UI.defendDetailTutorial(1);
                         FinishInteraction();
                         break;
@@ -187,7 +187,7 @@ public class DialogueManager : MonoBehaviour
                         toogleSymbols(4, false);
                         moveGuardContainer(Out);
                         Overlay(0);
-                        tutorial_UI.toggleInput(2, 1);
+                        StartCoroutine(tutorial_UI.toggleInput(2, 1));
                         tutorial_UI.dodgeDetailTutorial(1);
                         FinishInteraction();
                         break;
@@ -230,7 +230,7 @@ public class DialogueManager : MonoBehaviour
                         moveGuardContainer(Out);
                         Overlay(0);
                         tutorial_UI.focusDetailTutorial(1);
-                        tutorial_UI.toggleInput(3, 1);
+                        StartCoroutine(tutorial_UI.toggleInput(3, 1));
                         FinishInteraction();
                         break;
                 }
@@ -262,7 +262,7 @@ public class DialogueManager : MonoBehaviour
                         moveGuardContainer(Out);
                         Overlay(0);
                         tutorial_UI.restDetailTutorial(1);
-                        tutorial_UI.toggleInput(4, 1);
+                        StartCoroutine(tutorial_UI.toggleInput(4, 1));
                         FinishInteraction();
                         break;
                 }
@@ -292,7 +292,7 @@ public class DialogueManager : MonoBehaviour
                     case 5:
                         moveGuardContainer(Out);
                         Overlay(0);
-                        tutorial_UI.toggleInput(6, 1);
+                        StartCoroutine(tutorial_UI.toggleInput(6, 1));
                         FinishInteraction();
                         break;
                 }
@@ -324,7 +324,7 @@ public class DialogueManager : MonoBehaviour
                         toogleSymbols(14, false);
                         moveGuardContainer(Out);
                         Overlay(0);
-                        tutorial_UI.toggleInput(7, 1);
+                        StartCoroutine(tutorial_UI.toggleInput(7, 1));
                         FinishInteraction();
                         break;
                 }
@@ -361,7 +361,7 @@ public class DialogueManager : MonoBehaviour
                         Overlay(0);
                         tutorial_UI.fadeTimer(1);
                         tutorial_UI.superAttackDetailTutorial(1);
-                        tutorial_UI.toggleInput(5, 1);
+                        StartCoroutine(tutorial_UI.toggleInput(5, 1));
                         FinishInteraction();
                         break;
                 }
@@ -388,7 +388,7 @@ public class DialogueManager : MonoBehaviour
                         moveGuardContainer(Out);
                         Overlay(0);
                         tutorial_UI.fadeTimer(0);
-                        tutorial_UI.toggleInput(8, 1);
+                        StartCoroutine(tutorial_UI.toggleInput(8, 1));
                         FinishInteraction();
                         break;
                 }
@@ -451,10 +451,10 @@ public class DialogueManager : MonoBehaviour
         if (inOrOut == 0)
         {
             _guardFrame.SetActive(true);
-            _guardFrame.transform.DOLocalMoveX(70, 0.4f);
+            _guardFrame.transform.DOLocalMoveX(70, 0.2f);
         } else
         {
-            _guardFrame.transform.DOLocalMoveX(600, 0.4f).OnComplete(() => _guardFrame.SetActive(false));
+            _guardFrame.transform.DOLocalMoveX(600, 0.2f).OnComplete(() => _guardFrame.SetActive(false));
         }
     }
 
@@ -475,7 +475,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     _guardText.text = "Not bad rookie, try again!";
                 }
-                tutorial_UI.toggleInput(6, 1);
+                StartCoroutine(tutorial_UI.toggleInput(6, 1));
                 break;
 
             case 2: // Super counter
@@ -486,7 +486,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     _guardText.text = "Impressive, try again!";
                 }
-                tutorial_UI.toggleInput(7, 1);
+                StartCoroutine(tutorial_UI.toggleInput(7, 1));
                 break;
 
             case 3: // Super Attack
@@ -498,12 +498,12 @@ public class DialogueManager : MonoBehaviour
                 {
                     _guardText.text = "You're learning fast!";
                 }
-                tutorial_UI.toggleInput(5, 1);
+                StartCoroutine(tutorial_UI.toggleInput(5, 1));
                 break;
 
             case 4: // Dirt
                 _guardText.text = "Good job, try again!";
-                tutorial_UI.toggleInput(8, 1);
+                StartCoroutine(tutorial_UI.toggleInput(8, 1));
                 break;
             default:
                 Debug.Log("Out of index");
@@ -535,11 +535,11 @@ public class DialogueManager : MonoBehaviour
         if (inOrOut == 0)
         {
             _playerFrame.SetActive(true);
-            _playerFrame.transform.DOLocalMoveX(-70, 0.4f);
+            _playerFrame.transform.DOLocalMoveX(-70, 0.2f);
         }
         else
         {
-            _playerFrame.transform.DOLocalMoveX(-600, 0.4f).OnComplete(() => _playerFrame.SetActive(false));
+            _playerFrame.transform.DOLocalMoveX(-600, 0.2f).OnComplete(() => _playerFrame.SetActive(false));
         }
     }
 
@@ -592,5 +592,11 @@ public class DialogueManager : MonoBehaviour
     void importTutorial()
     {
         tutorial_UI = FindObjectOfType<Tutorial_UI>();
+    }
+
+    // Getter Setters
+    public static int GetCurrentInteraction()
+    {
+        return _interactionIndex;
     }
 }

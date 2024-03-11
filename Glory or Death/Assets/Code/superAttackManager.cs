@@ -203,9 +203,10 @@ public class superAttackManager : MonoBehaviour
             tutorial_UI.hideUI();
             if (!tutorial_UI.hasShownDetail_superCounter)
             {
-                tutorial_UI.toggleInput(7, 0);
+                StartCoroutine(tutorial_UI.toggleInput(7, 0));
             }
-        } else {
+        } else 
+        {
             Combat_UI.move_UI_out();
         }
         moveFeedback();

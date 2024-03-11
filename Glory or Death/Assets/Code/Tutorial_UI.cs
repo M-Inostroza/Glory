@@ -119,8 +119,9 @@ public class Tutorial_UI : MonoBehaviour
         hpText.text = _player.GetCurrentHP().ToString() + " / " + _player.GetMaxHP().ToString();
     }
 
-    public void toggleInput(int index, int inOut)
+    public IEnumerator toggleInput(int index, int inOut, float delay = 0)
     {   // 1 = in
+        yield return new WaitForSeconds(delay);
         try
         {
             if (inOut == 1)
@@ -418,7 +419,7 @@ public class Tutorial_UI : MonoBehaviour
         _numberOfTries++;
         if (_numberOfTries == tries)
         {
-            toggleInput(leavingInput, 0);
+            StartCoroutine(toggleInput(leavingInput, 0)); 
             StartCoroutine(_dialogueManager.Interactions(interaction, delay, 1));
             _numberOfTries = 0;
         } 
@@ -525,7 +526,7 @@ public class Tutorial_UI : MonoBehaviour
             {
                 if (i <= 5)
                 {
-                    toggleInput(i, 1);
+                    StartCoroutine(toggleInput(i, 1));
                 }
                 else
                 {
@@ -539,7 +540,7 @@ public class Tutorial_UI : MonoBehaviour
             _dialogueManager.toogleEndTutorial(0);
             for (int i = 0; i < _inputs.Length; i++)
             {
-                toggleInput(i, 0);
+                StartCoroutine(toggleInput(i, 0));
             }
         }
     }
@@ -607,11 +608,12 @@ public class Tutorial_UI : MonoBehaviour
                     Time.timeScale = 0.9f;
                     cursorImage.DOFade(0, 0.2f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
                     _overlaySprite.DOFade(0, 0.3f);
+                    StartCoroutine(toggleInput(0, 0));
                 }
                 break;
 
             case 3: // On attack animation
-                Time.timeScale = 0.5f;
+                Time.timeScale = 0.6f;
                 break;
         }
     }
@@ -648,6 +650,7 @@ public class Tutorial_UI : MonoBehaviour
                     Time.timeScale = 0.8f;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
                     _overlaySprite.DOFade(0, 0.4f);
+                    StartCoroutine(toggleInput(1, 0));
                 }
                 break;
 
@@ -698,15 +701,17 @@ public class Tutorial_UI : MonoBehaviour
                     Time.timeScale = 1;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
                     _overlaySprite.DOFade(0, 0.4f);
+                    StartCoroutine(toggleInput(2, 0));
                 }
                 break;
 
             case 3: // Minigame starts
                 if (!hasShownDetail_dodge)
                 {
-                    _overlaySprite.DOFade(0.6f, 0.6f);
+                    _overlaySprite.DOFade(0.6f, 0.4f);
                     StartCoroutine(fadeIn());
                     hasShownDetail_dodge = true;
+                    StartCoroutine(toggleInput(2, 1, 2));
                 }
                 IEnumerator fadeIn()
                 {
@@ -747,6 +752,7 @@ public class Tutorial_UI : MonoBehaviour
                     Time.timeScale = 1;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
                     _overlaySprite.DOFade(0, 0.4f);
+                    StartCoroutine(toggleInput(3, 0));
                 }
                 break;
 
@@ -756,11 +762,12 @@ public class Tutorial_UI : MonoBehaviour
                     _overlaySprite.DOFade(0.6f, 0.6f);
                     StartCoroutine(fadeIn());
                     hasShownDetail_focus = true;
+                    StartCoroutine(toggleInput(3, 1, 4.2f));
                 }
                 IEnumerator fadeIn()
                 {
-                    yield return new WaitForSeconds(3);
-                    _overlaySprite.DOFade(0, 0.5f);
+                    yield return new WaitForSeconds(2.5f);
+                    _overlaySprite.DOFade(0, 0.8f);
                 }
                 break;
         }
@@ -791,6 +798,10 @@ public class Tutorial_UI : MonoBehaviour
                 break;
 
             case 2: // Player clicks
+                if (!_hasPlayedTutorial)
+                {
+                    StartCoroutine(toggleInput(4, 0));
+                }
                 if (!hasShownDetail_rest)
                 {
                     Time.timeScale = 1;
@@ -806,6 +817,7 @@ public class Tutorial_UI : MonoBehaviour
                     StartCoroutine(fadeIn());
                     StartCoroutine(timeManager.slowMotion(1f, 0.6f));
                     hasShownDetail_rest = true;
+                    StartCoroutine(toggleInput(4, 1, 5));
                 }
                 IEnumerator fadeIn()
                 {
@@ -822,7 +834,7 @@ public class Tutorial_UI : MonoBehaviour
     {
         if (gameManager.isTutorial() && _numberOfTries >= 1)
         {
-            toggleInput(6, 0);
+            StartCoroutine(toggleInput(6, 0));
 
             switch (step)
             {
@@ -906,6 +918,7 @@ public class Tutorial_UI : MonoBehaviour
                     Time.timeScale = 1;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
                     _overlaySprite.DOFade(0, 0.4f);
+                    StartCoroutine(toggleInput(5, 0));
                 }
                 break;
 
@@ -933,7 +946,7 @@ public class Tutorial_UI : MonoBehaviour
                         _cameraManager.playChrome();
                         StartCoroutine(timeManager.slowMotion(.2f, .4f));
                         // Move and appear cursor
-                        toggleInput(8, 0);
+                        StartCoroutine(toggleInput(8, 0));
                         cursorTransform.DOLocalMove(new Vector2(-140, -70), 0);
                         cursorTransform.gameObject.SetActive(true);
                         cursorImage.DOFade(1, .5f);
@@ -951,7 +964,7 @@ public class Tutorial_UI : MonoBehaviour
                             cursorTransform.gameObject.SetActive(false);
                             cursorTransform.DOKill();
                         }
-                        toggleInput(8, 0);
+                        StartCoroutine(toggleInput(8, 0));
                         StartCoroutine(_dialogueManager.specialGuardInteraction(true, 4, .5f));
                     }
                     break;

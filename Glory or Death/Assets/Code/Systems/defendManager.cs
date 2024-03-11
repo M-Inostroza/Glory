@@ -101,6 +101,11 @@ public class defendManager : MonoBehaviour
         keyCanvas.SetActive(false);
         transformControl = false;
         canDefend = false;
+
+        if (gameManager.isTutorial() && !tutorial_UI.hasShownDetail_defend && tutorial_UI.GetNumberOfTries() != 0)
+        {
+            StartCoroutine(tutorial_UI.toggleInput(1, 1, 2.5f));
+        }
     }
 
     void colorFeedback()

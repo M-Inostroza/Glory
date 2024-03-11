@@ -75,7 +75,7 @@ public class TargetManager : MonoBehaviour
                 if (!tutorial_UI.hasShownDetail_attack)
                 {
                     targets[i].transform.GetChild(0).gameObject.SetActive(true);
-                    targets[i].transform.GetChild(0).transform.DOScale(new Vector2(.5f, .5f), .5f);
+                    targets[i].transform.GetChild(0).transform.DOScale(new Vector2(.5f, .5f), .2f);
                 }
             }
             
@@ -105,6 +105,10 @@ public class TargetManager : MonoBehaviour
 
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
         Combat_UI.move_UI_in();
+        if (gameManager.isTutorial() && !tutorial_UI.hasShownDetail_attack && tutorial_UI.GetNumberOfTries() != 0)
+        {
+            StartCoroutine(tutorial_UI.toggleInput(0, 1, 3.2f));
+        }
     }
 
     public void checkCritic()
@@ -122,7 +126,7 @@ public class TargetManager : MonoBehaviour
         foreach (Transform child in vFeedback.transform)
         {
             child.transform.GetComponent<Image>().DOFade(.25f, 0);
-            child.transform.DOScale(1.8f, 0.3f).SetEase(Ease.InBack);
+            child.transform.DOScale(1.6f, 0.2f).SetEase(Ease.InBack);
         }
     }
     void zoomCameraIn()

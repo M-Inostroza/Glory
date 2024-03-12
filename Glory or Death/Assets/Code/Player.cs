@@ -21,6 +21,10 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxAdrenaline;
     [SerializeField] private int _nativeDamage;
 
+    [Header("Effects")]
+    [SerializeField] private ParticleSystem attackBlood;
+    [SerializeField] private ParticleSystem attackSpark;
+
     [SerializeField] Animator _dummyAnimator;
 
     [SerializeField] private int maxShield, currentShield;
@@ -544,6 +548,17 @@ public class Player : MonoBehaviour
     }
 
     // Effects
+
+    public void PlayBloodMid()
+    {
+        if (!gameManager.isTutorial())
+        {
+            attackBlood.gameObject.SetActive(true);
+        } else
+        {
+            attackSpark.gameObject.SetActive(true);
+        }
+    }
     public void shakeHit()
     {
         transform.DOShakePosition(0.3f, 0.2f, 22, 10, false, true);

@@ -13,6 +13,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject _playerFrame;
     [SerializeField] GameObject _guardFrame;
 
+    private GameObject _playerAvatarManager;
+    private GameObject _guardAvatarManager;
+
+
     [SerializeField] Image _overlay;
     [SerializeField] Transform _fightButton;
     [SerializeField] Transform _resetButton;
@@ -56,8 +60,12 @@ public class DialogueManager : MonoBehaviour
      */
     void Start()
     {
+        _playerAvatarManager = _playerFrame.transform.GetChild(1).gameObject;
+        _guardAvatarManager = _guardFrame.transform.GetChild(2).gameObject;
+
+        // Continue here
         importTutorial();
-        _interactionIndex = 10;
+        _interactionIndex = 4;
         _currentBlock = 1;
 
         StartCoroutine(Interactions(_interactionIndex, 0.2f, _currentBlock));

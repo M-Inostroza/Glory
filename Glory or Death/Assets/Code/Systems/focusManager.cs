@@ -119,10 +119,7 @@ public class focusManager : MonoBehaviour
     }
     void successFocus()
     {
-        if (!gameManager.isTutorial())
-        {
-            playVisualEffects();
-        }
+        playVisualEffects();
         audioManager.Play("Focus_Success");
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
         cursor.transform.DOKill();
@@ -131,12 +128,11 @@ public class focusManager : MonoBehaviour
         {
             if (!gameManager.isTutorial())
             {
-                _celebrationParticle.Clear();
-                _celebrationParticle.gameObject.SetActive(false);
                 playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
                 _totalATKBuff++;
             }
-            
+            _celebrationParticle.Clear();
+            _celebrationParticle.gameObject.SetActive(false);
             cameraZoomOut();
             canFocus = false;
             gameObject.SetActive(false);
@@ -231,6 +227,11 @@ public class focusManager : MonoBehaviour
     {
         mainCamera.GetComponent<cameraManager>().playChrome();
         mainCamera.GetComponent<cameraManager>().PlayBloom(1);
+        PlayCelebrationParticle();
+    }
+
+    public void PlayCelebrationParticle()
+    {
         if (!hasPlayedCelebration)
         {
             _celebrationParticle.transform.localPosition = new Vector2(target.transform.localPosition.x, _celebrationParticle.transform.localPosition.y);

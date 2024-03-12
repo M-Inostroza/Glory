@@ -51,6 +51,7 @@ public class Tutorial_UI : MonoBehaviour
     defendManager _defendManager;
     AudioManager _audioManager;
     DialogueManager _dialogueManager;
+
     [SerializeField] GameObject _dodgeManager;
     [SerializeField] GameObject _focusManager;
     [SerializeField] GameObject _restManager;

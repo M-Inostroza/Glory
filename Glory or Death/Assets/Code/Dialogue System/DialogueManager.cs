@@ -13,8 +13,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject _playerFrame;
     [SerializeField] GameObject _guardFrame;
 
-    private GameObject _playerAvatarManager;
-    private GameObject _guardAvatarManager;
+    private Transform _playerAvatarManager;
+    private Transform _guardAvatarManager;
 
 
     [SerializeField] Image _overlay;
@@ -60,12 +60,12 @@ public class DialogueManager : MonoBehaviour
      */
     void Start()
     {
-        _playerAvatarManager = _playerFrame.transform.GetChild(1).gameObject;
-        _guardAvatarManager = _guardFrame.transform.GetChild(2).gameObject;
+        _playerAvatarManager = _playerFrame.transform.GetChild(1).transform;
+        _guardAvatarManager = _guardFrame.transform.GetChild(2).transform;
 
         // Continue here
         importTutorial();
-        _interactionIndex = 4;
+        _interactionIndex = 1;
         _currentBlock = 1;
 
         StartCoroutine(Interactions(_interactionIndex, 0.2f, _currentBlock));
@@ -99,17 +99,20 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         moveGuardContainer(In);
                         _guardText.text = "I hope you know how to use a sword...";
                         break;
 
                     case 2:
+                        ChangeFaceExpression(2, _playerAvatarManager);
                         moveGuardContainer(Out);
                         movePlayerContainer(In);
                         _playerText.text = "...";
                         break;
 
                     case 3:
+                        ChangeFaceExpression(3, _guardAvatarManager);
                         movePlayerContainer(Out);
                         moveGuardContainer(In);
                         toogleSymbols(0, true);
@@ -118,6 +121,7 @@ public class DialogueManager : MonoBehaviour
                         break;
 
                     case 4:
+                        ChangeFaceExpression(5, _guardAvatarManager);
                         toogleSymbols(0, false);
                         toogleSymbols(1, false);
                         _guardText.text = "Try it a few times...";
@@ -137,24 +141,28 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(0, _playerAvatarManager);
                         movePlayerContainer(In); 
                         _playerText.text = "Not bad...";
                         StartInteraction();
                         break;
 
                     case 2:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         movePlayerContainer(Out);
                         moveGuardContainer(In);
                         _guardText.text = "You better get use to it... let's try some defense";
                         break;
 
                     case 3:
+                        ChangeFaceExpression(3, _guardAvatarManager);
                         toogleSymbols(2, true);
                         toogleSymbols(3, true);
                         _guardText.text = "Click the defend command     and press     when the circle is \nin the green area...";
                         break;
 
                     case 4:
+                        ChangeFaceExpression(0, _guardAvatarManager);
                         toogleSymbols(2, false);
                         toogleSymbols(3, false);
                         _guardText.text = "If you succeed you will get a shield point, which will allow you to counter the enemy attack";
@@ -174,18 +182,21 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(4, _playerAvatarManager);
                         movePlayerContainer(In); 
                         _playerText.text = "I think I got this...";
                         StartInteraction();
                         break;
 
                     case 2:
+                        ChangeFaceExpression(4, _guardAvatarManager);
                         movePlayerContainer(Out);
                         moveGuardContainer(In);
                         _guardText.text = "Don't get too confident, let's see your moves...";
                         break;
 
                     case 3:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         toogleSymbols(4, true);
                         _guardText.fontSize = 20;
                         _guardText.text = "Select the dodge command     , wait for the timer and press the arrow keys in the right order, this will avoid the next enemy attack...";
@@ -206,6 +217,7 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(0, _guardAvatarManager);
                         _guardText.fontSize = 22;
                         moveGuardContainer(In); 
                         _guardText.text = "Decent enough, don't forget to use them later in the arena";
@@ -213,18 +225,21 @@ public class DialogueManager : MonoBehaviour
                         break;
 
                     case 2:
+                        ChangeFaceExpression(0, _playerAvatarManager);
                         moveGuardContainer(Out);
                         movePlayerContainer(In); 
                         _playerText.text = "I will do my best...";
                         break;
 
                     case 3:
+                        ChangeFaceExpression(3, _guardAvatarManager);
                         movePlayerContainer(Out);
                         moveGuardContainer(In); 
                         _guardText.text = "We will see about that...";
                         break;
 
                     case 4:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         _guardText.text = "Let's learn to focus now, this will give you a speed boost and you will deal more damage for a moment";
                         break;
 
@@ -248,24 +263,31 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(3, _playerAvatarManager);
                         movePlayerContainer(In);
                         _playerText.text = "Can I have a break?";
                         FindObjectOfType<Player>().SetCurrentStamina(0);
                         StartInteraction();
                         break;
+
                     case 2:
+                        ChangeFaceExpression(2, _guardAvatarManager);
                         movePlayerContainer(Out);
                         moveGuardContainer(In);
-                        _guardText.text = "A break??, your oponent won't give you a break...";
+                        _guardText.text = "A break??, your oponent \nwon't give you a break...";
                         break;
+
                     case 3:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         for (int i = 9; i < 12; i++) { toogleSymbols(i, true); }
                         _guardText.text = "Select the rest command     and smash the arrow keys \nleft     and right     to recover stamina";
                         break;
+
                     case 4:
                         for (int i = 9; i < 12; i++) { toogleSymbols(i, false); }
                         _guardText.text = "Stamina allows you to execute commands, if your stamina is empty you won't be able to perform any action!";
                         break;
+
                     case 5:
                         moveGuardContainer(Out);
                         Overlay(0);
@@ -280,23 +302,30 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(2, _playerAvatarManager);
                         movePlayerContainer(In);
                         _playerText.text = "I think I'm ready for a real fight now...";
                         StartInteraction();
                         break;
+
                     case 2:
+                        ChangeFaceExpression(5, _guardAvatarManager);
                         movePlayerContainer(Out);
                         moveGuardContainer(In);
                         _guardText.text = "Hell no, you still have much to learn, you don't even know how to block an attack...";
                         break;
+
                     case 3:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         toogleSymbols(12, true);
                         _guardText.text = "Smash     to rotate the shield and block the atack";
                         break;
+
                     case 4:
                         toogleSymbols(12, false);
                         _guardText.text = "Give it a few tries...";
                         break;
+
                     case 5:
                         moveGuardContainer(Out);
                         Overlay(0);
@@ -310,19 +339,25 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(4, _playerAvatarManager);
                         movePlayerContainer(In);
                         _playerText.text = "Easy...";
                         StartInteraction();
                         break;
+
                     case 2:
+                        ChangeFaceExpression(5, _guardAvatarManager);
                         movePlayerContainer(Out);
                         moveGuardContainer(In);
                         _guardText.text = "Hahahaha, don't make me laugh boy...";
                         break;
+
                     case 3:
                         _guardText.text = "Let's see how easy is to block a super attack...";
                         break;
+
                     case 4:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         toogleSymbols(13, true);
                         toogleSymbols(14, true);
                         _guardText.text = "Move the arrows left     and right     to control the shield and block the swords";
@@ -342,6 +377,7 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(5, _playerAvatarManager);
                         tutorial_UI.hasShownDetail_superCounter = true;
                         movePlayerContainer(In);
                         _playerText.text = "How can I even survive that??";
@@ -349,12 +385,14 @@ public class DialogueManager : MonoBehaviour
                         break;
 
                     case 2:
+                        ChangeFaceExpression(4, _guardAvatarManager);
                         movePlayerContainer(Out);
                         moveGuardContainer(In);
                         _guardText.text = "Less crying and more practice, that's it";
                         break;
 
                     case 3:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         _guardText.text = "You will also have a Super Attack when your adrenaline bar is full...";
                         break;
 
@@ -379,16 +417,19 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(0, _guardAvatarManager);
                         moveGuardContainer(In);
                         _guardText.text = "Good... but fights are not always fair";
                         StartInteraction();
                         break;
 
                     case 2:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         _guardText.text = "The enemy will try to blind you from time to time, you can't do anything if you don't see";
                         break;
 
                     case 3:
+                        ChangeFaceExpression(5, _guardAvatarManager);
                         _guardText.text = "Hold the left click and drag from side to side to clean the dirt";
                         break;
 
@@ -406,13 +447,15 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        ChangeFaceExpression(1, _guardAvatarManager);
                         moveGuardContainer(In);
                         _guardText.text = "Enough, that's all you need to know...";
                         StartInteraction();
                         break;
 
                     case 2:
-                        _guardText.text = "Now, go to your cell and get some sleep, your first fight will be soon";
+                        ChangeFaceExpression(4, _guardAvatarManager);
+                        _guardText.text = "Now, go to your cell and get some sleep, \nyour first fight will be soon";
                         break;
 
                     case 3:
@@ -464,6 +507,23 @@ public class DialogueManager : MonoBehaviour
         {
             _guardFrame.transform.DOLocalMoveX(600, 0.2f).OnComplete(() => _guardFrame.SetActive(false));
         }
+    }
+
+    void ChangeFaceExpression(int Face, Transform Unit)
+    {
+        // Player           Enemy
+        // 0 = Serene       0 = Serene
+        // 1 = Confused     1 = Serious
+        // 2 = Annoyed      2 = Angry 
+        // 3 = Ashamed      3 = Incredolous 
+        // 4 = Happy        4 = Irritado 
+        // 5 = Furious      5 = Sarcastic 
+
+        for (int i = 0; i < Unit.childCount; i++)
+        {
+            Unit.GetChild(i).gameObject.SetActive(false);
+        }
+        Unit.GetChild(Face).gameObject.SetActive(true);
     }
 
     // Special interactions

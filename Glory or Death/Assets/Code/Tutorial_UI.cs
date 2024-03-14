@@ -51,6 +51,7 @@ public class Tutorial_UI : MonoBehaviour
     defendManager _defendManager;
     AudioManager _audioManager;
     DialogueManager _dialogueManager;
+    GoalManager _goalManager;
 
     [SerializeField] GameObject _dodgeManager;
     [SerializeField] GameObject _focusManager;
@@ -74,6 +75,7 @@ public class Tutorial_UI : MonoBehaviour
         _player = FindObjectOfType<Player>();
         _defendManager = FindObjectOfType<defendManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
+        _goalManager = FindObjectOfType<GoalManager>();
 
         _overlay = transform.GetChild(3).gameObject;
         _overlaySprite = _overlay.GetComponent<SpriteRenderer>();
@@ -697,12 +699,12 @@ public class Tutorial_UI : MonoBehaviour
                 break;
 
             case 2: // Player clicks
+                StartCoroutine(toggleInput(2, 0));
                 if (!hasShownDetail_dodge)
                 {
                     Time.timeScale = 1;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
                     _overlaySprite.DOFade(0, 0.4f);
-                    StartCoroutine(toggleInput(2, 0));
                 }
                 break;
 
@@ -748,12 +750,12 @@ public class Tutorial_UI : MonoBehaviour
                 break;
 
             case 2: // Player clicks
+                StartCoroutine(toggleInput(3, 0));
                 if (!hasShownDetail_focus)
                 {
                     Time.timeScale = 1;
                     cursorImage.DOFade(0, 0.4f).OnComplete(() => cursorTransform.gameObject.SetActive(true));
                     _overlaySprite.DOFade(0, 0.4f);
-                    StartCoroutine(toggleInput(3, 0));
                 }
                 break;
 

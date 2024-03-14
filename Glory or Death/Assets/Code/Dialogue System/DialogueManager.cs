@@ -26,6 +26,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] Transform _symbols;
 
     Tutorial_UI tutorial_UI;
+    GoalManager goalManager;
 
     private static int _interactionIndex;
     private static int _currentBlock;
@@ -60,6 +61,7 @@ public class DialogueManager : MonoBehaviour
      */
     void Start()
     {
+        goalManager = FindObjectOfType<GoalManager>();
         _playerAvatarManager = _playerFrame.transform.GetChild(1).transform;
         _guardAvatarManager = _guardFrame.transform.GetChild(2).transform;
 
@@ -132,6 +134,8 @@ public class DialogueManager : MonoBehaviour
                         Overlay(0);
                         StartCoroutine(tutorial_UI.toggleInput(0, 1));
                         tutorial_UI.attackDetailTutorial(1);
+                        goalManager.MoveGoal(1);
+                        goalManager.SetGoal("Attack the training dummy", 3);
                         FinishInteraction();
                         break;
                 }
@@ -173,6 +177,8 @@ public class DialogueManager : MonoBehaviour
                         Overlay(0);
                         StartCoroutine(tutorial_UI.toggleInput(1, 1));
                         tutorial_UI.defendDetailTutorial(1);
+                        goalManager.MoveGoal(1);
+                        goalManager.SetGoal("Defend yourself!", 2);
                         FinishInteraction();
                         break;
                 }
@@ -578,7 +584,7 @@ public class DialogueManager : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
 
         Overlay(0);
         moveGuardContainer(1);

@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private Tutorial_UI _tutorial_UI;
     private Combat_UI _combat_UI;
     private cameraManager _cameraManager;
+    private GoalManager _goalManager;
     
     [Header("Stats")]
     [SerializeField] private float maxSpeed, baseSpeed;
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Find a better way to do this");
         _tutorial_UI = FindObjectOfType<Tutorial_UI>();
         _combat_UI = FindObjectOfType<Combat_UI>();
 
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
         timeManager = FindObjectOfType<timeManager>();
         audioManager = FindObjectOfType<AudioManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
+        _goalManager = FindObjectOfType<GoalManager>();
 
         setStats();
     }
@@ -367,7 +370,7 @@ public class Player : MonoBehaviour
         _nativeDamage -= newDamage;
     }
 
-    // Anim ref
+    // Animation references
     public void deactivateAttackFeed()
     {
         GameObject attackFeedback = targetManager.GetAttackFeedback();
@@ -393,6 +396,30 @@ public class Player : MonoBehaviour
     {
         enemy_unit.GetComponent<Enemy>().TakeDamage(superATKManager.GetHits());
     }
+
+    
+    public void updateTryScreen()
+    {
+        if (gameManager.isTutorial())
+        {
+            if (!_goalManager.CheckGoal())
+            {
+                _goalManager.UpdateTry();
+            }
+        }
+    }
+    public void checkTryScreen()
+    {
+        if (gameManager.isTutorial())
+        {
+            if (_goalManager.CheckGoal())
+            {
+                _goalManager.MoveGoal(0);
+            }
+        }
+    }
+
+
 
     // Shield
     private int shieldFactor = 1;

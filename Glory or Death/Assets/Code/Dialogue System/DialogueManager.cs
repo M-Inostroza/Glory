@@ -23,6 +23,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] Transform _endTutButton;
     [SerializeField] Transform _readyText;
 
+    [SerializeField] GameObject _clickShow;
+
     [SerializeField] Transform _symbols;
 
     Tutorial_UI tutorial_UI;
@@ -65,7 +67,6 @@ public class DialogueManager : MonoBehaviour
         _playerAvatarManager = _playerFrame.transform.GetChild(1).transform;
         _guardAvatarManager = _guardFrame.transform.GetChild(2).transform;
 
-        // Continue here
         importTutorial();
         _interactionIndex = 1;
         _currentBlock = 1;
@@ -101,6 +102,7 @@ public class DialogueManager : MonoBehaviour
                 switch (block)
                 {
                     case 1:
+                        _clickShow.SetActive(true);
                         ChangeFaceExpression(1, _guardAvatarManager);
                         moveGuardContainer(In);
                         _guardText.text = "I hope you know how to use a sword...";
@@ -109,6 +111,7 @@ public class DialogueManager : MonoBehaviour
                     case 2:
                         ChangeFaceExpression(2, _playerAvatarManager);
                         moveGuardContainer(Out);
+                        _clickShow.SetActive(false);
                         movePlayerContainer(In);
                         _playerText.text = "...";
                         break;
@@ -135,13 +138,14 @@ public class DialogueManager : MonoBehaviour
                         StartCoroutine(tutorial_UI.toggleInput(0, 1));
                         tutorial_UI.attackDetailTutorial(1);
                         goalManager.MoveGoal(1);
-                        goalManager.SetGoal("Attack the training dummy", 3);
+                        goalManager.SetGoal("Attack the training dummy!", 3);
                         FinishInteraction();
                         break;
                 }
                 break;
 
             case 2: // Defense tutorial
+                goalManager.MoveGoal(0, true);
                 switch (block)
                 {
                     case 1:
@@ -185,6 +189,7 @@ public class DialogueManager : MonoBehaviour
                 break;
 
             case 3: // Dodge tutorial
+                goalManager.MoveGoal(0, true);
                 switch (block)
                 {
                     case 1:
@@ -214,12 +219,15 @@ public class DialogueManager : MonoBehaviour
                         Overlay(0);
                         StartCoroutine(tutorial_UI.toggleInput(2, 1));
                         tutorial_UI.dodgeDetailTutorial(1);
+                        goalManager.MoveGoal(1);
+                        goalManager.SetGoal("Evade the enemy attack", 2);
                         FinishInteraction();
                         break;
                 }
                 break;
 
             case 4: // Focus tutorial
+                goalManager.MoveGoal(0, true);
                 switch (block)
                 {
                     case 1:
@@ -260,12 +268,15 @@ public class DialogueManager : MonoBehaviour
                         Overlay(0);
                         tutorial_UI.focusDetailTutorial(1);
                         StartCoroutine(tutorial_UI.toggleInput(3, 1));
+                        goalManager.MoveGoal(1);
+                        goalManager.SetGoal("Use the focus skill", 2);
                         FinishInteraction();
                         break;
                 }
                 break;
 
             case 5: // Rest tutorial
+                goalManager.MoveGoal(0, true);
                 switch (block)
                 {
                     case 1:
@@ -299,12 +310,15 @@ public class DialogueManager : MonoBehaviour
                         Overlay(0);
                         tutorial_UI.restDetailTutorial(1);
                         StartCoroutine(tutorial_UI.toggleInput(4, 1));
+                        goalManager.MoveGoal(1);
+                        goalManager.SetGoal("Get some rest", 2);
                         FinishInteraction();
                         break;
                 }
                 break;
 
             case 6: // Counter tutorial
+                goalManager.MoveGoal(0, true);
                 switch (block)
                 {
                     case 1:
@@ -336,12 +350,15 @@ public class DialogueManager : MonoBehaviour
                         moveGuardContainer(Out);
                         Overlay(0);
                         StartCoroutine(tutorial_UI.toggleInput(6, 1));
+                        goalManager.MoveGoal(1);
+                        goalManager.SetGoal("Counter the enemy attack!", 3);
                         FinishInteraction();
                         break;
                 }
                 break;
 
             case 7: // Super counter tutorial
+                goalManager.MoveGoal(0, true);
                 switch (block)
                 {
                     case 1:
@@ -374,12 +391,15 @@ public class DialogueManager : MonoBehaviour
                         moveGuardContainer(Out);
                         Overlay(0);
                         StartCoroutine(tutorial_UI.toggleInput(7, 1));
+                        goalManager.MoveGoal(1);
+                        goalManager.SetGoal("Counter the enemy super attack!", 3);
                         FinishInteraction();
                         break;
                 }
                 break;
 
             case 8: // Super Attack tutorial
+                goalManager.MoveGoal(0, true);
                 switch (block)
                 {
                     case 1:
@@ -414,12 +434,15 @@ public class DialogueManager : MonoBehaviour
                         tutorial_UI.fadeTimer(1);
                         tutorial_UI.superAttackDetailTutorial(1);
                         StartCoroutine(tutorial_UI.toggleInput(5, 1));
+                        goalManager.MoveGoal(1);
+                        goalManager.SetGoal("Practice your super attack!", 3);
                         FinishInteraction();
                         break;
                 }
                 break;
 
             case 9: // Dirt tutorial
+                goalManager.MoveGoal(0, true);
                 switch (block)
                 {
                     case 1:
@@ -444,12 +467,15 @@ public class DialogueManager : MonoBehaviour
                         Overlay(0);
                         tutorial_UI.fadeTimer(0);
                         StartCoroutine(tutorial_UI.toggleInput(8, 1));
+                        goalManager.MoveGoal(1);
+                        goalManager.SetGoal("Remove the dirt from your eyes", 3);
                         FinishInteraction();
                         break;
                 }
                 break;
 
             case 10: // End tutorial
+                goalManager.MoveGoal(0, true);
                 switch (block)
                 {
                     case 1:

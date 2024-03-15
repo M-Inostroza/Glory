@@ -12,6 +12,7 @@ public class superATKManager : MonoBehaviour
     Player Player;
     Enemy Enemy;
     DialogueManager DialogueManager;
+    GoalManager GoalManager;
 
     Animator cameraAnimator;
 
@@ -33,6 +34,15 @@ public class superATKManager : MonoBehaviour
     {
         startMinigame();
         StartCoroutine(generateTarget(0.3f));
+    }
+
+    private void OnDisable()
+    {
+        if (gameManager.isTutorial())
+        {
+            GoalManager.MoveGoal(1);
+            _tutorial_UI.showUI();
+        }
     }
 
     void startMinigame()
@@ -160,6 +170,7 @@ public class superATKManager : MonoBehaviour
 
     void importManagers()
     {
+        GoalManager = FindObjectOfType<GoalManager>();
         _tutorial_UI = FindObjectOfType<Tutorial_UI>();
         Player = FindObjectOfType<Player>();
         Enemy = FindObjectOfType<Enemy>();

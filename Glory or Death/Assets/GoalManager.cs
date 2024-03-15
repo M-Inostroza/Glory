@@ -23,7 +23,7 @@ public class GoalManager : MonoBehaviour
 
 
 
-    public void MoveGoal(int inOut)
+    public void MoveGoal(int inOut, bool reset = false)
     {
         // 1 = in
         if (inOut == 1)
@@ -31,37 +31,28 @@ public class GoalManager : MonoBehaviour
             transform.DOLocalMoveX(307, 0.3f);
         } else
         {
-            transform.DOLocalMoveX(495, 0.3f).OnComplete(ResetTry);
+            transform.DOLocalMoveX(495, 0.3f).OnComplete(()=> {
+                if (reset)
+                {
+                    _tryIndex = 0;
+                }
+            });
         }
     }
 
-    public void SetGoal(string Text, int Goal)
+    public void SetGoal(string GoalText, int maxTry) // Set the objective and the number of tries
     {
-        _maxTry = Goal;
-        _goalText.text = Text;
-        _goalTrack.text = _tryIndex + " / " + _maxTry.ToString();
+        _maxTry = maxTry;
+        _goalText.text = GoalText;
+        _goalTrack.text = _tryIndex + " / " + _maxTry;
     }
 
-    public void UpdateTry()
+    public void UpdateGoalIndex() // Increases the number of tries that the player has made
     {
-        _tryIndex++;
-        _goalTrack.text = _tryIndex + " / " + _maxTry.ToString();
-    }
-
-    public bool CheckGoal()
-    {
-        if (_tryIndex == _maxTry)
+        if (_tryIndex != _maxTry)
         {
-            return true;
-        } else
-        {
-            return false;
+            _tryIndex++;
+            _goalTrack.text = _tryIndex + " / " + _maxTry;
         }
-    }
-
-    public void ResetTry()
-    {
-        _tryIndex = 0;
-        _maxTry = 0;
     }
 }

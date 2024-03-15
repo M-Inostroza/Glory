@@ -45,7 +45,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Find a better way to do this");
         _tutorial_UI = FindObjectOfType<Tutorial_UI>();
         _combat_UI = FindObjectOfType<Combat_UI>();
 
@@ -396,29 +395,6 @@ public class Player : MonoBehaviour
     {
         enemy_unit.GetComponent<Enemy>().TakeDamage(superATKManager.GetHits());
     }
-
-    
-    public void updateTryScreen()
-    {
-        if (gameManager.isTutorial())
-        {
-            if (!_goalManager.CheckGoal())
-            {
-                _goalManager.UpdateTry();
-            }
-        }
-    }
-    public void checkTryScreen()
-    {
-        if (gameManager.isTutorial())
-        {
-            if (_goalManager.CheckGoal())
-            {
-                _goalManager.MoveGoal(0);
-            }
-        }
-    }
-
 
 
     // Shield

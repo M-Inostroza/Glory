@@ -192,7 +192,11 @@ public class Tutorial_UI : MonoBehaviour
             _counterManager.SetActive(true);
             fadeTimer(0);
             if (!_hasPlayedTutorial)
+            {
+                _goalManager.UpdateGoalIndex();
                 tryLimit(7, 4, 6, 3);
+            }
+                
         }
     }
 
@@ -207,6 +211,7 @@ public class Tutorial_UI : MonoBehaviour
             fadeTimer(0);
             if (!_hasPlayedTutorial)
             {
+                _goalManager.UpdateGoalIndex();
                 tryLimit(8, 8, 7, 3);
             }
         }
@@ -223,7 +228,10 @@ public class Tutorial_UI : MonoBehaviour
             _dirtManager.SetActive(true);
             fadeTimer(0);
             if (!_hasPlayedTutorial)
+            {
+                _goalManager.UpdateGoalIndex();
                 tryLimit(10, 6, 8, 3);
+            }
         }
     }
 
@@ -310,6 +318,7 @@ public class Tutorial_UI : MonoBehaviour
                     }
                 } else
                 {
+                    _goalManager.UpdateGoalIndex();
                     fadeTimer(0);
                     _player.DecrementCurrentStamina(15);
                     attack();
@@ -322,6 +331,8 @@ public class Tutorial_UI : MonoBehaviour
                 }
                 break;
             case "ATK2":
+                hideUI();
+                _goalManager.MoveGoal(0);
                 if (_hasPlayedTutorial)
                 {
                     if (_player.GetCurrentStamina() > 60)
@@ -335,6 +346,7 @@ public class Tutorial_UI : MonoBehaviour
                     }
                 } else
                 {
+                    _goalManager.UpdateGoalIndex();
                     fadeTimer(0);
                     tryLimit(9, 4, 5, 3);
                     _player.DecrementCurrentStamina(30);
@@ -358,6 +370,7 @@ public class Tutorial_UI : MonoBehaviour
                 }
                 else
                 {
+                    _goalManager.UpdateGoalIndex();
                     fadeTimer(0);
                     tryLimit(3, 4, 1, 2);
                     _player.DecrementCurrentStamina(10);
@@ -380,6 +393,7 @@ public class Tutorial_UI : MonoBehaviour
                 }
                 else
                 {
+                    _goalManager.UpdateGoalIndex();
                     fadeTimer(0);
                     tryLimit(4, 4, 2, 2);
                     _player.DecrementCurrentStamina(15);
@@ -402,6 +416,7 @@ public class Tutorial_UI : MonoBehaviour
                 }
                 else
                 {
+                    _goalManager.UpdateGoalIndex();
                     fadeTimer(0);
                     tryLimit(5, 7, 3, 2);
                     _player.DecrementCurrentStamina(15);
@@ -411,7 +426,10 @@ public class Tutorial_UI : MonoBehaviour
             case "RST":
                 fadeTimer(0);
                 if (!_hasPlayedTutorial)
+                {
+                    _goalManager.UpdateGoalIndex();
                     tryLimit(6, 5, 4, 2);
+                }
                 _restManager.SetActive(true);
                 break;
         }
@@ -699,7 +717,10 @@ public class Tutorial_UI : MonoBehaviour
                 break;
 
             case 2: // Player clicks
-                StartCoroutine(toggleInput(2, 0));
+                if (!_hasPlayedTutorial)
+                {
+                    StartCoroutine(toggleInput(2, 0));
+                }
                 if (!hasShownDetail_dodge)
                 {
                     Time.timeScale = 1;
@@ -750,7 +771,10 @@ public class Tutorial_UI : MonoBehaviour
                 break;
 
             case 2: // Player clicks
-                StartCoroutine(toggleInput(3, 0));
+                if (!_hasPlayedTutorial)
+                {
+                    StartCoroutine(toggleInput(3, 0));
+                }
                 if (!hasShownDetail_focus)
                 {
                     Time.timeScale = 1;

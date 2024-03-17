@@ -24,7 +24,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Toggle testMode;
 
     [Header("Mechanics")]
-    public GameObject dodgeManager;
+    [SerializeField] GameObject dodgeManager;
     public GameObject _focusManager;
     public GameObject restManager;
     public GameObject superAttackManager;
@@ -63,21 +63,7 @@ public class BattleSystem : MonoBehaviour
 
     private void Awake()
     {
-        audioManager = FindObjectOfType<AudioManager>();
-        playerAnimator = playerPrefab.GetComponent<Animator>();
-        combat_UI = FindObjectOfType<Combat_UI>();
-        targetManager = FindObjectOfType<TargetManager>();
-        defendManager = FindObjectOfType<defendManager>();
-        timeManager = FindObjectOfType<timeManager>();
-        endManager = FindObjectOfType<endManager>();
-        cameraManager = FindObjectOfType<cameraManager>();
-        _resetLoadingScreen = FindObjectOfType<loadingScreen>();
-        _gameManager = FindObjectOfType<gameManager>();
-
-        playerUnit = FindObjectOfType<Player>();
-        enemyUnit = FindObjectOfType<Enemy>();
-
-        Input_Manager = FindObjectOfType<Input_Manager>();
+        GetScripts();
 
         timeManager.stopUnitTimer();
         openGame();
@@ -314,6 +300,25 @@ public class BattleSystem : MonoBehaviour
     public bool GetDeadEnemy()
     {
         return deadEnemy;
+    }
+
+    void GetScripts()
+    {
+        playerAnimator = playerPrefab.GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
+        combat_UI = FindObjectOfType<Combat_UI>();
+        targetManager = FindObjectOfType<TargetManager>();
+        defendManager = FindObjectOfType<defendManager>();
+        timeManager = FindObjectOfType<timeManager>();
+        endManager = FindObjectOfType<endManager>();
+        cameraManager = FindObjectOfType<cameraManager>();
+        _resetLoadingScreen = FindObjectOfType<loadingScreen>();
+        _gameManager = FindObjectOfType<gameManager>();
+
+        playerUnit = FindObjectOfType<Player>();
+        enemyUnit = FindObjectOfType<Enemy>();
+
+        Input_Manager = FindObjectOfType<Input_Manager>();
     }
 }
 

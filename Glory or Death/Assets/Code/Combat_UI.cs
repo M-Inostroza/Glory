@@ -216,11 +216,11 @@ public class Combat_UI : MonoBehaviour
     {
         if (playerUnit.GetAdrenaline() == playerUnit.GetMaxAdrenaline())
         {
-            _inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(55, 0.7f);
+            _inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(55, 0.5f);
         }
         else
         {
-            _inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(-40, 0.7f);
+            _inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(-40, 0.5f);
         }
     }
 

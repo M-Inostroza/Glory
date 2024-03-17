@@ -69,17 +69,4 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound with name " + name + " not found or already playing!");
         }
     }
-
-    /*public void SyncPitch(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s != null)
-        {
-            s.source.pitch = Time.timeScale;
-        }
-        else
-        {
-            Debug.LogWarning("Sound with name " + name + " not found!");
-        }
-    }*/
 }

@@ -22,6 +22,7 @@ public class IntroManager : MonoBehaviour
     [SerializeField] private ParticleSystem _electricity;
 
     [SerializeField] private Transform _logoContainer;
+    [SerializeField] private Button _skipButton;
 
     void Start()
     {
@@ -89,6 +90,7 @@ public class IntroManager : MonoBehaviour
     {
         _overlay.GetComponent<Image>().DOFade(0, 1).SetDelay(delay);
         VideoPlayer.Play();
+        AppearSkipButton();
     }
 
     public IEnumerator CloseTutorialPanels(float sceneDelay = 0) // Deals with the panels showing at the begining of the tutorial
@@ -110,5 +112,20 @@ public class IntroManager : MonoBehaviour
             targetTime = 0;
         }
         VideoPlayer.time = targetTime;
+    }
+
+    void AppearSkipButton()
+    {
+        _skipButton.gameObject.SetActive(true);
+        _skipButton.transform.GetChild(0).GetComponent<Image>().DOFade(1, 1).SetDelay(6);
+        _skipButton.GetComponent<Image>().DOFade(1, 1).SetDelay(6);
+    }
+
+    public void DissapearSkipButton()
+    {
+        _skipButton.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.3f);
+        _skipButton.GetComponent<Image>().DOFade(0, 0.3f).OnComplete(()=> {
+            _skipButton.gameObject.SetActive(false);
+        });
     }
 }

@@ -40,7 +40,7 @@ public class IntroManager : MonoBehaviour
 
     void OnVideoFinished(VideoPlayer vp)
     {
-        openTutorialPanels(3);
+        StartCoroutine(CloseTutorialPanels(2));
     }
 
     void ChangeScene()
@@ -91,11 +91,24 @@ public class IntroManager : MonoBehaviour
         VideoPlayer.Play();
     }
 
-    IEnumerator openTutorialPanels(float delay) // Deals with the panels showing at the begining of the tutorial
+    public IEnumerator CloseTutorialPanels(float sceneDelay = 0) // Deals with the panels showing at the begining of the tutorial
     {
-        _dollPanel.DOLocalMoveX(308, 1);
-        _playerPanel.DOLocalMoveX(-308, 1);
-        yield return new WaitForSeconds(delay);
-        ChangeScene();
+        float panelSpeed = 0.5f;
+
+        _dollPanel.DOLocalMoveX(308, panelSpeed);
+        _playerPanel.DOLocalMoveX(-308, panelSpeed); /*Do camera shake*/
+
+        yield return new WaitForSeconds(sceneDelay);
+        //ChangeScene();
+    }
+
+    public void SkipVideo()
+    {
+        double targetTime = VideoPlayer.length - 8;
+        if (targetTime < 0)
+        {
+            targetTime = 0;
+        }
+        VideoPlayer.time = targetTime;
     }
 }

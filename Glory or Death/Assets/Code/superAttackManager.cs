@@ -28,7 +28,7 @@ public class superAttackManager : MonoBehaviour
     Animator _playerAnimator;
 
     AudioManager audioManager;
-    Tutorial_UI tutorial_UI;
+    TutorialManager TutorialManager;
     DialogueManager dialogueManager;
 
     private int swordCounter = 0;
@@ -38,7 +38,7 @@ public class superAttackManager : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
         cameraManager = FindObjectOfType<cameraManager>();
-        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
         dialogueManager = FindObjectOfType<DialogueManager>();
 
         _player = FindObjectOfType<Player>();
@@ -120,20 +120,20 @@ public class superAttackManager : MonoBehaviour
         if (gameManager.isTutorial())
         {
             // Check swords
-            if (swordCounter > 4 && !tutorial_UI.hasShownDetail_superCounter)
+            if (swordCounter > 4 && !TutorialManager.hasShownDetail_superCounter)
             {
-                tutorial_UI.superCounterDetailTutorial(1);
+                TutorialManager.superCounterDetailTutorial(1);
             } else
             {
-                tutorial_UI.superCounterDetailTutorial(2);
+                TutorialManager.superCounterDetailTutorial(2);
             }
 
-            tutorial_UI.fadeTimer(1);
-            tutorial_UI.showUI();
+            TutorialManager.fadeTimer(1);
+            TutorialManager.showUI();
 
-            if (Tutorial_UI._hasPlayedTutorial)
+            if (TutorialManager._hasPlayedTutorial)
             {
-                tutorial_UI.showAllInput(1);
+                TutorialManager.showAllInput(1);
             }
         }
     }
@@ -200,10 +200,10 @@ public class superAttackManager : MonoBehaviour
     {
         if (gameManager.isTutorial())
         {
-            tutorial_UI.hideUI();
-            if (!tutorial_UI.hasShownDetail_superCounter)
+            TutorialManager.hideUI();
+            if (!TutorialManager.hasShownDetail_superCounter)
             {
-                StartCoroutine(tutorial_UI.toggleInput(7, 0));
+                StartCoroutine(TutorialManager.toggleInput(7, 0));
             }
         } else 
         {

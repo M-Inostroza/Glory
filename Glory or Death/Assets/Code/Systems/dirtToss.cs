@@ -12,7 +12,7 @@ public class dirtToss : MonoBehaviour
 
     private Player player;
     private SpriteRenderer dirtTexture;
-    private Tutorial_UI tutorial_UI;
+    private TutorialManager TutorialManager;
 
     // Dirt texture opacity
     public float maxOpacity = 0.8f;
@@ -29,7 +29,7 @@ public class dirtToss : MonoBehaviour
     {
         dirtTexture = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<Player>();
-        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
     }
 
     private void OnEnable()
@@ -51,13 +51,13 @@ public class dirtToss : MonoBehaviour
     }
     private void OnDisable()
     {
-        Tutorial_UI._canClick = true;
+        TutorialManager._canClick = true;
         if (gameManager.isTutorial())
         {
-            tutorial_UI.fadeTimer(1);
-            if (Tutorial_UI._hasPlayedTutorial)
+            TutorialManager.fadeTimer(1);
+            if (TutorialManager._hasPlayedTutorial)
             {
-                tutorial_UI.showAllInput(1);
+                TutorialManager.showAllInput(1);
             }
         }
         player.incrementBaseSpeed(1000);
@@ -101,7 +101,7 @@ public class dirtToss : MonoBehaviour
             {
                 if (gameManager.isTutorial())
                 {
-                    tutorial_UI.dirtDetailTutorial(2);
+                    TutorialManager.dirtDetailTutorial(2);
                 }
                 IsDirty = false;
                 gameObject.SetActive(false);
@@ -117,7 +117,7 @@ public class dirtToss : MonoBehaviour
         IsDirty = false;
         if (gameManager.isTutorial())
         {
-            tutorial_UI.dirtDetailTutorial(2);
+            TutorialManager.dirtDetailTutorial(2);
         }
         yield return new WaitForSeconds(0.5f);
         Combat_UI.move_Inputs_in();

@@ -6,22 +6,25 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Tutorial_UI : MonoBehaviour
+public class TutorialManager : MonoBehaviour
 {
+    [Header("Skill Icons")]
     [SerializeField] Sprite[] iconSprites;
 
+    [Header("Stamina UI")]
     [SerializeField] Transform _playerStamina;
     [SerializeField] Transform _staminaAlarm;
     [SerializeField] Slider _staminaSlider;
 
+    [Header("Player UI")]
     [SerializeField] Transform _playerTimer;
     [SerializeField] Transform _playerStats;
-
     [SerializeField] Image _playerActionIcon;
 
     [SerializeField] TMP_Text staminaText;
     [SerializeField] TMP_Text hpText;
 
+    [Header("Inputs")]
     [SerializeField] Transform[] _inputs;
     [SerializeField] Transform aKey;
     [SerializeField] Transform sKey;
@@ -30,6 +33,7 @@ public class Tutorial_UI : MonoBehaviour
     [SerializeField] Transform rightKey;
 
     // Fight presentation and scene change
+    [Header("Fight presentation")]
     [SerializeField] Transform panelContainer;
     [SerializeField] Transform playerPanel;
     [SerializeField] Transform enemyPanel;
@@ -53,6 +57,7 @@ public class Tutorial_UI : MonoBehaviour
     DialogueManager _dialogueManager;
     GoalManager _goalManager;
 
+    [Header("Skills")]
     [SerializeField] GameObject _dodgeManager;
     [SerializeField] GameObject _focusManager;
     [SerializeField] GameObject _restManager;
@@ -599,8 +604,20 @@ public class Tutorial_UI : MonoBehaviour
     private float cursorDelay = 0.4f;
     private float cursorSpeed = 0.6f;
 
-    // Detail Attack
+    //---------------------------------- Detail Attack ----------------------------------//
+
     public bool hasShownDetail_attack = false;
+    int _tutorialHits = 0;
+    public void AddTutorialHits()
+    {
+        _tutorialHits++;
+        if (_tutorialHits == 3)
+        {
+            _cameraManager.PlayBloom(1);
+            StartCoroutine(timeManager.slowMotion(0.2f, 0.3f));
+            _tutorialHits = 0;
+        }
+    }
     public void attackDetailTutorial(int step)
     {
         Image cursorImage = _cursorContainer.transform.GetChild(0).GetComponent<Image>();
@@ -639,7 +656,8 @@ public class Tutorial_UI : MonoBehaviour
         }
     }
 
-    // Detail Defend
+
+    //---------------------------------- Detail Defend ----------------------------------//
     public bool hasShownDetail_defend = false;
     public void defendDetailTutorial(int step)
     {

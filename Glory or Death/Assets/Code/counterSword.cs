@@ -16,7 +16,7 @@ public class counterSword : MonoBehaviour
     Combat_UI combatUI;
     SoundPlayer soundPlayer;
     AudioManager audioManager;
-    Tutorial_UI tutorial_UI;
+    TutorialManager TutorialManager;
     Combat_UI combat_UI;
     cameraManager _cameraManager;
     CounterManager _counterManager;
@@ -34,7 +34,7 @@ public class counterSword : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
         combatUI = FindObjectOfType<Combat_UI>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
-        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
         combat_UI = FindObjectOfType<Combat_UI>();
         _cameraManager = FindObjectOfType<cameraManager>();
         _counterManager = FindObjectOfType<CounterManager>();
@@ -64,7 +64,7 @@ public class counterSword : MonoBehaviour
                     }
                     else
                     {
-                        tutorial_UI.counterDetailTutorial(3);
+                        TutorialManager.counterDetailTutorial(3);
                     }
                     player.incrementAdrenaline(player.GetAdrenalineFactor());
                     soundPlayer.shield_metal();
@@ -82,7 +82,7 @@ public class counterSword : MonoBehaviour
                     canCollide = false;
                     if (gameManager.isTutorial())
                     {
-                        tutorial_UI.counterDetailTutorial(2);
+                        TutorialManager.counterDetailTutorial(2);
                     }
                     else
                     {
@@ -109,7 +109,7 @@ public class counterSword : MonoBehaviour
                     }
                     else
                     {
-                        tutorial_UI.counterDetailTutorial(3);
+                        TutorialManager.counterDetailTutorial(3);
                     }
                     player.incrementAdrenaline(player.GetAdrenalineFactor()+2);
                     transform.GetComponent<PolygonCollider2D>().enabled = false;

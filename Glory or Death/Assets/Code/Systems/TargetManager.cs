@@ -13,7 +13,7 @@ public class TargetManager : MonoBehaviour
     private BattleSystem BattleSystem;
     private Camera MainCamera;
     private Combat_UI combat_UI;
-    private Tutorial_UI tutorial_UI;
+    private TutorialManager TutorialManager;
     private Player _player;
 
     [SerializeField] SpriteRenderer courtain;
@@ -26,7 +26,7 @@ public class TargetManager : MonoBehaviour
         BattleSystem = FindObjectOfType<BattleSystem>();
         MainCamera = FindObjectOfType<Camera>();
         combat_UI = FindObjectOfType<Combat_UI>();
-        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
         _player = FindObjectOfType<Player>();
     }
 
@@ -41,7 +41,7 @@ public class TargetManager : MonoBehaviour
             courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
         } else
         {
-            if (!tutorial_UI.hasShownDetail_attack)
+            if (!TutorialManager.hasShownDetail_attack)
             {
                 courtain.DOColor(new Color(0, 0, 0, .5f), 0.1f);
             }
@@ -56,9 +56,9 @@ public class TargetManager : MonoBehaviour
     {
         if (gameManager.isTutorial())
         {
-            if (!tutorial_UI.hasShownDetail_attack)
+            if (!TutorialManager.hasShownDetail_attack)
             {
-                tutorial_UI.attackDetailTutorial(3);
+                TutorialManager.attackDetailTutorial(3);
             }
         }
         
@@ -72,7 +72,7 @@ public class TargetManager : MonoBehaviour
 
             if (gameManager.isTutorial())
             {
-                if (!tutorial_UI.hasShownDetail_attack)
+                if (!TutorialManager.hasShownDetail_attack)
                 {
                     targets[i].transform.GetChild(0).gameObject.SetActive(true);
                     targets[i].transform.GetChild(0).transform.DOScale(new Vector2(.5f, .5f), .2f);
@@ -105,9 +105,9 @@ public class TargetManager : MonoBehaviour
 
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
         Combat_UI.move_UI_in();
-        if (gameManager.isTutorial() && !tutorial_UI.hasShownDetail_attack && tutorial_UI.GetNumberOfTries() != 0)
+        if (gameManager.isTutorial() && !TutorialManager.hasShownDetail_attack && TutorialManager.GetNumberOfTries() != 0)
         {
-            StartCoroutine(tutorial_UI.toggleInput(0, 1, 3.2f));
+            StartCoroutine(TutorialManager.toggleInput(0, 1, 3.2f));
         }
     }
 

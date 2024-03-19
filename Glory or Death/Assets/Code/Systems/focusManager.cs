@@ -36,11 +36,11 @@ public class focusManager : MonoBehaviour
     private float targetRangeMin;
 
     Combat_UI combat_UI;
-    Tutorial_UI _tutorial_UI;
+    TutorialManager TutorialManager;
 
     private void Awake()
     {
-        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
         playerUnit = FindObjectOfType<Player>();
         combat_UI = FindObjectOfType<Combat_UI>();
         audioManager = FindObjectOfType<AudioManager>();
@@ -165,11 +165,11 @@ public class focusManager : MonoBehaviour
         {
             cursorSpeed = 2;
             targetSpeed = 1.6f;
-            if (!_tutorial_UI.hasShownDetail_focus)
+            if (!TutorialManager.hasShownDetail_focus)
             {
                 cursorSpeed = 2.4f;
                 targetSpeed = 1;
-                _tutorial_UI.focusDetailTutorial(3);
+                TutorialManager.focusDetailTutorial(3);
             }
         } else
         {
@@ -182,7 +182,7 @@ public class focusManager : MonoBehaviour
     {
         if (gameManager.isTutorial())
         {
-            _tutorial_UI.activateS();
+            TutorialManager.activateS();
         }
         else
         {

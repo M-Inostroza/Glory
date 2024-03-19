@@ -287,7 +287,7 @@ public class BattleSystem : MonoBehaviour
         {
             // Fix add sound
             StartCoroutine(timeManager.slowMotion(.1f, .3f));
-            FindObjectOfType<cameraManager>().PlayBloom(1);
+            cameraManager.PlayBloom(1);
             canBloomAttack = false;
         }
     }

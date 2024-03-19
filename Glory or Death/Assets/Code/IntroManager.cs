@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 using System.Collections.Generic;
 
 public class IntroManager : MonoBehaviour
@@ -11,18 +12,22 @@ public class IntroManager : MonoBehaviour
     private VideoPlayer VideoPlayer;
     private cameraManager CameraManager;
     private AudioManager AudioManager;
-    private gameManager GameManager;
 
+    [Header("Loading screen")]
     [SerializeField] GameObject _loadingScreen;
     [SerializeField] Transform _playerPanel;
     [SerializeField] Transform _dollPanel;
 
-    // Logo Elements
+    
     [SerializeField] private GameObject _glory, _death, _or, _thunder, _BG, _playButton, _overlay;
     [SerializeField] private ParticleSystem _electricity;
-
     [SerializeField] private Transform _logoContainer;
+
+    [Header("Skip button")]
     [SerializeField] private Button _skipButton;
+    [SerializeField] private TMP_Text _skipText;
+
+    bool _hasShownPanel = false;
 
     void Start()
     {
@@ -30,18 +35,27 @@ public class IntroManager : MonoBehaviour
 
         CameraManager = FindObjectOfType<cameraManager>();
         AudioManager = FindObjectOfType<AudioManager>();
-        GameManager = FindObjectOfType<gameManager>();
 
         VideoPlayer = GetComponent<VideoPlayer>();
-        VideoPlayer.loopPointReached += OnVideoFinished;
 
         _BG.transform.DOScale(new Vector3(1, 1, 1), 2);
         StartCoroutine(introLogo(0.8f));
     }
 
-    void OnVideoFinished(VideoPlayer vp)
+    private void Update()
     {
-        StartCoroutine(CloseTutorialPanels(2));
+        StopVideo();
+    }
+
+    void StopVideo()
+    {
+        if (VideoPlayer.time >= 48)
+        {
+            if (!_hasShownPanel)
+            {
+                StartCoroutine(CloseTutorialPanels(4));
+            }
+        }
     }
 
     void ChangeScene()
@@ -93,20 +107,23 @@ public class IntroManager : MonoBehaviour
         AppearSkipButton();
     }
 
-    public IEnumerator CloseTutorialPanels(float sceneDelay = 0) // Deals with the panels showing at the begining of the tutorial
+    public IEnumerator CloseTutorialPanels(float sceneDelay) // Deals with the panels showing at the begining of the tutorial
     {
-        float panelSpeed = 0.5f;
+        float panelSpeed = 0.4f;
+        Transform screenContainer = _loadingScreen.transform.GetChild(0).transform;
 
-        _dollPanel.DOLocalMoveX(308, panelSpeed);
-        _playerPanel.DOLocalMoveX(-308, panelSpeed); /*Do camera shake*/
+        _hasShownPanel = true;
+        _dollPanel.DOLocalMoveX(308, panelSpeed).SetEase(Ease.InCubic).OnComplete(()=> AudioManager.Play("Open_Tutorial"));
+        _playerPanel.DOLocalMoveX(-308, panelSpeed).SetEase(Ease.InCubic).OnComplete(() => screenContainer.DOShakePosition(0.6f, 6, 80, 20));
 
         yield return new WaitForSeconds(sceneDelay);
-        //ChangeScene();
+        VideoPlayer.Stop();
+        ChangeScene();
     }
 
     public void SkipVideo()
     {
-        double targetTime = VideoPlayer.length - 8;
+        double targetTime = VideoPlayer.length - 11;
         if (targetTime < 0)
         {
             targetTime = 0;
@@ -116,14 +133,15 @@ public class IntroManager : MonoBehaviour
 
     void AppearSkipButton()
     {
+        int delay = 4;
         _skipButton.gameObject.SetActive(true);
-        _skipButton.transform.GetChild(0).GetComponent<Image>().DOFade(1, 1).SetDelay(6);
-        _skipButton.GetComponent<Image>().DOFade(1, 1).SetDelay(6);
+        _skipText.DOFade(1, 1).SetDelay(delay);
+        _skipButton.GetComponent<Image>().DOFade(1, 1).SetDelay(delay);
     }
 
     public void DissapearSkipButton()
     {
-        _skipButton.transform.GetChild(0).GetComponent<Image>().DOFade(0, 0.3f);
+        _skipText.DOFade(0, 0.3f);
         _skipButton.GetComponent<Image>().DOFade(0, 0.3f).OnComplete(()=> {
             _skipButton.gameObject.SetActive(false);
         });

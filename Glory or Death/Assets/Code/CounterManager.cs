@@ -11,7 +11,7 @@ public class CounterManager : MonoBehaviour
 
     [SerializeField] Image _overlay;
     Combat_UI combatUI;
-    Tutorial_UI tutorial_UI;
+    TutorialManager TutorialManager;
     cameraManager _cameraManager;
 
     static float rotationSpeed = 13;
@@ -25,7 +25,7 @@ public class CounterManager : MonoBehaviour
     private void Awake()
     {
         combatUI = FindObjectOfType<Combat_UI>();
-        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
     }
     private void Update()
@@ -77,8 +77,8 @@ public class CounterManager : MonoBehaviour
             combatUI.activateX();
         } else
         {
-            tutorial_UI.hideUI();
-            tutorial_UI.activateX();
+            TutorialManager.hideUI();
+            TutorialManager.activateX();
         }
         _sword.transform.DOLocalMoveX(-3.25f, 3).SetEase(Ease.Linear);
     }
@@ -87,11 +87,11 @@ public class CounterManager : MonoBehaviour
     {
         if (gameManager.isTutorial())
         {
-            tutorial_UI.showUI();
-            tutorial_UI.fadeTimer(1);
-            if (Tutorial_UI._hasPlayedTutorial)
+            TutorialManager.showUI();
+            TutorialManager.fadeTimer(1);
+            if (TutorialManager._hasPlayedTutorial)
             {
-                tutorial_UI.showAllInput(1);
+                TutorialManager.showAllInput(1);
             }
         }
         _sword.transform.DOKill();

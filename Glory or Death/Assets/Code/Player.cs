@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private TargetManager targetManager; 
     private BattleSystem BS;
     private AudioManager audioManager;
-    private Tutorial_UI _tutorial_UI;
+    private TutorialManager TutorialManager;
     private Combat_UI _combat_UI;
     private cameraManager _cameraManager;
     private GoalManager _goalManager;
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
         _combat_UI = FindObjectOfType<Combat_UI>();
 
         myAnim = GetComponent<Animator>();
@@ -146,8 +146,8 @@ public class Player : MonoBehaviour
             }
         } else
         {
-            _tutorial_UI.fadeTimer(1);
-            _tutorial_UI.selectIcon("Default");
+            TutorialManager.fadeTimer(1);
+            TutorialManager.selectIcon("Default");
             backToIdle();
         }
     }
@@ -176,8 +176,8 @@ public class Player : MonoBehaviour
             timeManager.defaultAction();
         } else
         {
-            _tutorial_UI.fadeTimer(1);
-            _tutorial_UI.selectIcon("Default");
+            TutorialManager.fadeTimer(1);
+            TutorialManager.selectIcon("Default");
         }
     }
     public void stopDodgeSkillFail()
@@ -185,8 +185,8 @@ public class Player : MonoBehaviour
         myAnim.SetBool("skillFail", false);
         if (gameManager.isTutorial())
         {
-            _tutorial_UI.fadeTimer(1);
-            _tutorial_UI.selectIcon("Default");
+            TutorialManager.fadeTimer(1);
+            TutorialManager.selectIcon("Default");
         } else
         {
             timeManager.playerTimer.fillAmount = 1;
@@ -214,8 +214,8 @@ public class Player : MonoBehaviour
             timeManager.defaultAction();
         } else
         {
-            _tutorial_UI.fadeTimer(1);
-            _tutorial_UI.selectIcon("Default");
+            TutorialManager.fadeTimer(1);
+            TutorialManager.selectIcon("Default");
         }
     }
     public void stopShieldSuccess()
@@ -223,8 +223,8 @@ public class Player : MonoBehaviour
         myAnim.SetBool("skillShieldSuccess", false);
         if (gameManager.isTutorial())
         {
-            _tutorial_UI.fadeTimer(1);
-            _tutorial_UI.selectIcon("Default");
+            TutorialManager.fadeTimer(1);
+            TutorialManager.selectIcon("Default");
         } else
         {
             Combat_UI.shieldFeed();

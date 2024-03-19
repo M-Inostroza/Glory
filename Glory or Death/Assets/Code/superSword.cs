@@ -7,13 +7,13 @@ public class superSword : MonoBehaviour
 {
     SoundPlayer soundPlayer;
     superAttackManager superATK;
-    Tutorial_UI tutorial_UI;
+    TutorialManager TutorialManager;
 
     private void Start()
     {
         superATK = FindObjectOfType<superAttackManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
-        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

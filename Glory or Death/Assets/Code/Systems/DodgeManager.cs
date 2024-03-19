@@ -28,7 +28,7 @@ public class DodgeManager : MonoBehaviour
     AudioManager audioManager;
     Animator playerAnimator;
     Combat_UI combat_UI;
-    Tutorial_UI tutorial_UI;
+    TutorialManager TutorialManager;
 
     // Instantiated arrows
     List<GameObject> instantArrows = new List<GameObject>();
@@ -39,7 +39,7 @@ public class DodgeManager : MonoBehaviour
         playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();
         combat_UI = FindObjectOfType<Combat_UI>();
-        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
     }
 
     private void OnEnable()
@@ -249,10 +249,10 @@ public class DodgeManager : MonoBehaviour
         mainCamera.DOFieldOfView(35, .7f);
         if (gameManager.isTutorial())
         {
-            if (!tutorial_UI.hasShownDetail_dodge)
+            if (!TutorialManager.hasShownDetail_dodge)
             {
                 Time.timeScale = .5f;
-                tutorial_UI.dodgeDetailTutorial(3);
+                TutorialManager.dodgeDetailTutorial(3);
             }
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class superATKManager : MonoBehaviour
 {
-    Tutorial_UI _tutorial_UI;
+    TutorialManager TutorialManager;
     Camera MainCamera;
     timeManager timeManager;
     Player Player;
@@ -41,7 +41,7 @@ public class superATKManager : MonoBehaviour
         if (gameManager.isTutorial())
         {
             GoalManager.MoveGoal(1);
-            _tutorial_UI.showUI();
+            TutorialManager.showUI();
         }
     }
 
@@ -52,8 +52,8 @@ public class superATKManager : MonoBehaviour
         showFeedback();
         if (gameManager.isTutorial())
         {
-            _tutorial_UI.fadeTimer(0);
-            _tutorial_UI.selectIcon("Default");
+            TutorialManager.fadeTimer(0);
+            TutorialManager.selectIcon("Default");
         } else
         {
             Combat_UI.move_UI_out();
@@ -115,7 +115,7 @@ public class superATKManager : MonoBehaviour
             }
             else
             {
-                _tutorial_UI.fadeTimer(1);
+                TutorialManager.fadeTimer(1);
                 gameObject.SetActive(false);
             }
         }
@@ -171,7 +171,7 @@ public class superATKManager : MonoBehaviour
     void importManagers()
     {
         GoalManager = FindObjectOfType<GoalManager>();
-        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
         Player = FindObjectOfType<Player>();
         Enemy = FindObjectOfType<Enemy>();
         MainCamera = FindObjectOfType<Camera>();

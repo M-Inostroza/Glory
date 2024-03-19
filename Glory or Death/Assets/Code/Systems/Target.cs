@@ -7,16 +7,20 @@ public class Target : MonoBehaviour
     public GameObject vFeedback;
     
     CircleCollider2D colider;
-    TargetManager targetManager;
+    TargetManager TargetManager;
     SoundPlayer soundPlayer;
     BattleSystem BS;
     timeManager _timeManager;
     SpriteRenderer _spriteRenderer;
+    Player Player;
+    TutorialManager TutorialManager;
 
     private void Awake()
     {
+        TutorialManager = FindObjectOfType<TutorialManager>();
+        Player = FindObjectOfType<Player>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
-        targetManager = FindObjectOfType<TargetManager>();
+        TargetManager = FindObjectOfType<TargetManager>();
         colider = gameObject.GetComponent<CircleCollider2D>();
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         BS = FindObjectOfType<BattleSystem>();
@@ -30,22 +34,25 @@ public class Target : MonoBehaviour
             if (!gameManager.isTutorial())
             {
                 _timeManager.enemyTimer.fillAmount += 0.03f;
+                Player.incrementAdrenaline(2);
                 BS.targetHit++;
-                FindObjectOfType<Player>().incrementAdrenaline(1);
+            } else
+            {
+                TutorialManager.AddTutorialHits();
             }
             soundPlayer.targetSounds();
             switch (tag)
             {
                 case "target_0":
-                    targetManager.attackOrder.Add(0);
+                    TargetManager.attackOrder.Add(0);
                     animateFeedback(0);
                     break;
                 case "target_1":
-                    targetManager.attackOrder.Add(1);
+                    TargetManager.attackOrder.Add(1);
                     animateFeedback(1);
                     break;
                 case "target_2":
-                    targetManager.attackOrder.Add(2);
+                    TargetManager.attackOrder.Add(2);
                     animateFeedback(2);
                     break;
             }

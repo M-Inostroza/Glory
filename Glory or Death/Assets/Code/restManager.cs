@@ -16,12 +16,12 @@ public class restManager : MonoBehaviour
     Player player;
     timeManager timeManager;
     AudioManager audioManager;
-    Tutorial_UI _tutorial_UI;
+    TutorialManager TutorialManager;
 
     bool canRest = false;
     private void Awake()
     {
-        _tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
         player = FindObjectOfType<Player>();
         timeManager = FindObjectOfType<timeManager>();
         audioManager = FindObjectOfType<AudioManager>();
@@ -40,8 +40,8 @@ public class restManager : MonoBehaviour
             FindObjectOfType<Combat_UI>().activateLeftRight();
         } else
         {
-            _tutorial_UI.activateLeftRight();
-            _tutorial_UI.restDetailTutorial(3);
+            TutorialManager.activateLeftRight();
+            TutorialManager.restDetailTutorial(3);
         }
         hasAnimatedStar = false;
         restSlider.value = 0;
@@ -79,8 +79,8 @@ public class restManager : MonoBehaviour
             timeManager.fadeInUnitTimer();
         } else
         {
-            _tutorial_UI.fadeTimer(1);
-            _tutorial_UI.selectIcon("Default");
+            TutorialManager.fadeTimer(1);
+            TutorialManager.selectIcon("Default");
         }
         criticStar.GetComponent<Image>().DOFade(0.25f, 0);
         canRest = false;

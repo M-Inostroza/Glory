@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] Transform _symbols;
 
-    Tutorial_UI tutorial_UI;
+    TutorialManager TutorialManager;
     GoalManager goalManager;
 
     private static int _interactionIndex;
@@ -68,7 +68,7 @@ public class DialogueManager : MonoBehaviour
         _guardAvatarManager = _guardFrame.transform.GetChild(2).transform;
 
         importTutorial();
-        _interactionIndex = 1;
+        _interactionIndex = 2;
         _currentBlock = 1;
 
         StartCoroutine(Interactions(_interactionIndex, 0.2f, _currentBlock));
@@ -135,8 +135,8 @@ public class DialogueManager : MonoBehaviour
                     case 5:
                         moveGuardContainer(Out);
                         Overlay(0);
-                        StartCoroutine(tutorial_UI.toggleInput(0, 1));
-                        tutorial_UI.attackDetailTutorial(1);
+                        StartCoroutine(TutorialManager.toggleInput(0, 1));
+                        TutorialManager.attackDetailTutorial(1);
                         goalManager.MoveGoal(1);
                         goalManager.SetGoal("Attack the training dummy!", 3);
                         FinishInteraction();
@@ -179,8 +179,8 @@ public class DialogueManager : MonoBehaviour
                     case 5:
                         moveGuardContainer(Out);
                         Overlay(0);
-                        StartCoroutine(tutorial_UI.toggleInput(1, 1));
-                        tutorial_UI.defendDetailTutorial(1);
+                        StartCoroutine(TutorialManager.toggleInput(1, 1));
+                        TutorialManager.defendDetailTutorial(1);
                         goalManager.MoveGoal(1);
                         goalManager.SetGoal("Defend yourself!", 2);
                         FinishInteraction();
@@ -217,8 +217,8 @@ public class DialogueManager : MonoBehaviour
                         toogleSymbols(4, false);
                         moveGuardContainer(Out);
                         Overlay(0);
-                        StartCoroutine(tutorial_UI.toggleInput(2, 1));
-                        tutorial_UI.dodgeDetailTutorial(1);
+                        StartCoroutine(TutorialManager.toggleInput(2, 1));
+                        TutorialManager.dodgeDetailTutorial(1);
                         goalManager.MoveGoal(1);
                         goalManager.SetGoal("Evade the enemy attack", 2);
                         FinishInteraction();
@@ -266,8 +266,8 @@ public class DialogueManager : MonoBehaviour
                         for (int i = 5; i < 9; i++) { toogleSymbols(i, false); }
                         moveGuardContainer(Out);
                         Overlay(0);
-                        tutorial_UI.focusDetailTutorial(1);
-                        StartCoroutine(tutorial_UI.toggleInput(3, 1));
+                        TutorialManager.focusDetailTutorial(1);
+                        StartCoroutine(TutorialManager.toggleInput(3, 1));
                         goalManager.MoveGoal(1);
                         goalManager.SetGoal("Use the focus skill", 2);
                         FinishInteraction();
@@ -308,8 +308,8 @@ public class DialogueManager : MonoBehaviour
                     case 5:
                         moveGuardContainer(Out);
                         Overlay(0);
-                        tutorial_UI.restDetailTutorial(1);
-                        StartCoroutine(tutorial_UI.toggleInput(4, 1));
+                        TutorialManager.restDetailTutorial(1);
+                        StartCoroutine(TutorialManager.toggleInput(4, 1));
                         goalManager.MoveGoal(1);
                         goalManager.SetGoal("Get some rest", 2);
                         FinishInteraction();
@@ -349,7 +349,7 @@ public class DialogueManager : MonoBehaviour
                     case 5:
                         moveGuardContainer(Out);
                         Overlay(0);
-                        StartCoroutine(tutorial_UI.toggleInput(6, 1));
+                        StartCoroutine(TutorialManager.toggleInput(6, 1));
                         goalManager.MoveGoal(1);
                         goalManager.SetGoal("Counter the enemy attack!", 3);
                         FinishInteraction();
@@ -390,7 +390,7 @@ public class DialogueManager : MonoBehaviour
                         toogleSymbols(14, false);
                         moveGuardContainer(Out);
                         Overlay(0);
-                        StartCoroutine(tutorial_UI.toggleInput(7, 1));
+                        StartCoroutine(TutorialManager.toggleInput(7, 1));
                         goalManager.MoveGoal(1);
                         goalManager.SetGoal("Counter the enemy super attack!", 3);
                         FinishInteraction();
@@ -404,7 +404,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     case 1:
                         ChangeFaceExpression(5, _playerAvatarManager);
-                        tutorial_UI.hasShownDetail_superCounter = true;
+                        TutorialManager.hasShownDetail_superCounter = true;
                         movePlayerContainer(In);
                         _playerText.text = "How can I even survive that??";
                         StartInteraction();
@@ -431,9 +431,9 @@ public class DialogueManager : MonoBehaviour
                         toogleSymbols(15, false);
                         moveGuardContainer(Out);
                         Overlay(0);
-                        tutorial_UI.fadeTimer(1);
-                        tutorial_UI.superAttackDetailTutorial(1);
-                        StartCoroutine(tutorial_UI.toggleInput(5, 1));
+                        TutorialManager.fadeTimer(1);
+                        TutorialManager.superAttackDetailTutorial(1);
+                        StartCoroutine(TutorialManager.toggleInput(5, 1));
                         goalManager.MoveGoal(1);
                         goalManager.SetGoal("Practice your super attack!", 3);
                         FinishInteraction();
@@ -465,8 +465,8 @@ public class DialogueManager : MonoBehaviour
                     case 4:
                         moveGuardContainer(Out);
                         Overlay(0);
-                        tutorial_UI.fadeTimer(0);
-                        StartCoroutine(tutorial_UI.toggleInput(8, 1));
+                        TutorialManager.fadeTimer(0);
+                        StartCoroutine(TutorialManager.toggleInput(8, 1));
                         goalManager.MoveGoal(1);
                         goalManager.SetGoal("Remove the dirt from your eyes", 3);
                         FinishInteraction();
@@ -575,7 +575,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     _guardText.text = "Not bad rookie, try again!";
                 }
-                StartCoroutine(tutorial_UI.toggleInput(6, 1));
+                StartCoroutine(TutorialManager.toggleInput(6, 1));
                 break;
 
             case 2: // Super counter
@@ -586,7 +586,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     _guardText.text = "Impressive, try again!";
                 }
-                StartCoroutine(tutorial_UI.toggleInput(7, 1));
+                StartCoroutine(TutorialManager.toggleInput(7, 1));
                 break;
 
             case 3: // Super Attack
@@ -598,12 +598,12 @@ public class DialogueManager : MonoBehaviour
                 {
                     _guardText.text = "You're learning fast!";
                 }
-                StartCoroutine(tutorial_UI.toggleInput(5, 1));
+                StartCoroutine(TutorialManager.toggleInput(5, 1));
                 break;
 
             case 4: // Dirt
                 _guardText.text = "Good job, try again!";
-                StartCoroutine(tutorial_UI.toggleInput(8, 1));
+                StartCoroutine(TutorialManager.toggleInput(8, 1));
                 break;
             default:
                 Debug.Log("Out of index");
@@ -617,7 +617,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void superHitCheck()
     {
-        if (!tutorial_UI.hasShownDetail_superAttack && tutorial_UI.GetNumberOfTries() >= 1)
+        if (!TutorialManager.hasShownDetail_superAttack && TutorialManager.GetNumberOfTries() >= 1)
         {
             if (superATKManager.GetHits() <= 5)
             {
@@ -680,7 +680,7 @@ public class DialogueManager : MonoBehaviour
 
     public void OnFinishTutorualButton()
     {
-        if (!tutorial_UI.timerRunning)
+        if (!TutorialManager.timerRunning)
         {
             toogleEndTutorial(0);
             showEndScreen(true);
@@ -691,7 +691,7 @@ public class DialogueManager : MonoBehaviour
     // Imports
     void importTutorial()
     {
-        tutorial_UI = FindObjectOfType<Tutorial_UI>();
+        TutorialManager = FindObjectOfType<TutorialManager>();
     }
 
     // Getter Setters

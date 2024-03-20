@@ -23,6 +23,9 @@ public class focusManager : MonoBehaviour
 
     Player playerUnit;
     AudioManager audioManager;
+    cameraManager CameraManager;
+    Combat_UI combat_UI;
+    TutorialManager TutorialManager;
 
     static int _totalATKBuff;
     
@@ -35,11 +38,11 @@ public class focusManager : MonoBehaviour
     // Range within which the target sprite should be when the "a" key is pressed
     private float targetRangeMin;
 
-    Combat_UI combat_UI;
-    TutorialManager TutorialManager;
+    [SerializeField] Image[] _fadeElements;
 
     private void Awake()
     {
+        CameraManager = FindObjectOfType<cameraManager>();
         TutorialManager = FindObjectOfType<TutorialManager>();
         playerUnit = FindObjectOfType<Player>();
         combat_UI = FindObjectOfType<Combat_UI>();
@@ -62,6 +65,8 @@ public class focusManager : MonoBehaviour
         hasPlayedCelebration = false;
         canFocus = true;
         canMoveTarget = true;
+
+        FadeAllElements(true);
         
         cameraZoomIn();
         StartCoroutine(focusTimer(5));
@@ -124,6 +129,8 @@ public class focusManager : MonoBehaviour
         playerUnit.GetComponent<Animator>().SetBool("focusSuccess", true);
         cursor.transform.DOKill();
         canMoveTarget = false;
+        FadeAllElements(false);
+
         StartCoroutine(timeManager.slowMotion(.4f, .4f, () =>
         {
             if (!gameManager.isTutorial())
@@ -140,10 +147,12 @@ public class focusManager : MonoBehaviour
     }
     void failFocus()
     {
+        CameraManager.PlayBloom(2, 0.6f);
+        FadeAllElements(false);
+        transform.DOShakePosition(0.3f, 0.3f, 15).OnComplete(()=> gameObject.SetActive(false));
         audioManager.Play("Focus_Fail");
         playerUnit.GetComponent<Animator>().SetBool("skillFail", true);
         cameraZoomOut();
-        gameObject.SetActive(false);
         canFocus = false;
     }
     void moveTarget()
@@ -238,6 +247,23 @@ public class focusManager : MonoBehaviour
             _celebrationParticle.gameObject.SetActive(true);
             _celebrationParticle.Play();
             hasPlayedCelebration = true;
+        }
+    }
+
+    void FadeAllElements(bool inOut)
+    {
+        if (inOut)
+        {
+            foreach (var element in _fadeElements)
+            {
+                element.DOFade(1, 0.3f);
+            }
+        } else
+        {
+            foreach (var element in _fadeElements)
+            {
+                element.DOFade(0, 0.3f);
+            }
         }
     }
 

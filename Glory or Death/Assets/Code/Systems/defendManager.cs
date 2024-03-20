@@ -14,8 +14,9 @@ public class defendManager : MonoBehaviour
     TutorialManager TutorialManager;
     Player Player;
     cameraManager CameraManager;
-    
+
     // Control
+    static bool isShieldCritic = false;
     bool transformControl;
     bool canDefend = false;
 
@@ -78,7 +79,7 @@ public class defendManager : MonoBehaviour
 
         if (transform.localScale.x < _defaultScaleLimit && transform.localScale.x > _criticEnd || transform.localScale.x < _criticStart)
         {   // Fail
-            CameraManager.PlayBloom(2);
+            CameraManager.PlayBloom(2, 0.3f);
             AudioManager.Play("UI_select_fail");
             transform.DOShakePosition(0.2f, 0.05f, 40).OnComplete(Fail);
             scaleUP.Kill();
@@ -102,7 +103,8 @@ public class defendManager : MonoBehaviour
             {
                 Player.incrementAdrenaline(Player.GetAdrenalineFactor() + 2);
             }
-            CameraManager.PlayBloom(1);
+            isShieldCritic = true;
+            CameraManager.PlayBloom(1, 0.5f);
             playerAnim.SetBool("skillShieldSuccess", true);
             AudioManager.Play("defend_success");
             scaleUP.Rewind();
@@ -165,6 +167,17 @@ public class defendManager : MonoBehaviour
         {
             FindObjectOfType<Combat_UI>().activateA();
         }
+    }
+
+    // G&S
+
+    public static bool GetShieldCritic()
+    {
+        return isShieldCritic;
+    }
+    public static void SetShieldCritic(bool newState)
+    {
+        isShieldCritic = newState;
     }
 }
 

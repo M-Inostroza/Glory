@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class dirtToss : MonoBehaviour
 {
@@ -10,25 +11,27 @@ public class dirtToss : MonoBehaviour
     [SerializeField]
     private Camera mainCam;
 
-    private Player player;
+    private Player Player;
     private SpriteRenderer dirtTexture;
     private TutorialManager TutorialManager;
 
     // Dirt texture opacity
-    public float maxOpacity = 0.8f;
+    private float maxOpacity = 0.8f;
     private float opacity;
 
     // Scratch's speed threshold
-    public float scratchSpeedThreshold = 10000f;
+    float scratchSpeedThreshold = 10000f;
 
     // Percentage of maximum opacity to reduce per scratch
-    public float opacityReductionPerScratch = 0.05f;
+    float opacityReductionPerScratch = 0.05f;
     private Vector3 prevMousePos;
+
+    [SerializeField] Slider _dirtFeedback;
 
     private void Start()
     {
         dirtTexture = GetComponent<SpriteRenderer>();
-        player = FindObjectOfType<Player>();
+        Player = FindObjectOfType<Player>();
         TutorialManager = FindObjectOfType<TutorialManager>();
     }
 
@@ -60,7 +63,7 @@ public class dirtToss : MonoBehaviour
                 TutorialManager.showAllInput(1);
             }
         }
-        player.incrementBaseSpeed(1000);
+        Player.incrementBaseSpeed(1000);
         speedReduced = false;
     }
     private void makeItDirt()
@@ -70,7 +73,7 @@ public class dirtToss : MonoBehaviour
 
         if (!speedReduced)
         {
-            player.reduceBaseSpeed(1000);
+            Player.reduceBaseSpeed(1000);
             speedReduced = true;
         }
         

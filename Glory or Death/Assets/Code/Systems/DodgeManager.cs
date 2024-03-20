@@ -222,6 +222,11 @@ public class DodgeManager : MonoBehaviour
             }
         }
 
+        if (gameManager.isTutorial())
+        {
+            TutorialManager.FadeInOverlay();
+        }
+
         returnCameraSlow(50, 0.5f, 1);
         
         evadeSlider.transform.DOLocalMoveY(-170, 0.4f);
@@ -249,11 +254,7 @@ public class DodgeManager : MonoBehaviour
         mainCamera.DOFieldOfView(35, .7f);
         if (gameManager.isTutorial())
         {
-            if (!TutorialManager.hasShownDetail_dodge)
-            {
-                Time.timeScale = .5f;
-                TutorialManager.dodgeDetailTutorial(3);
-            }
+            TutorialManager.dodgeDetailTutorial(3);
         }
     }
     void returnCameraSlow(float intensity, float speed, float timeScale)

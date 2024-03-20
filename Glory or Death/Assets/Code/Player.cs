@@ -301,7 +301,7 @@ public class Player : MonoBehaviour
     }
     public void showEnemySuperDamage()
     {
-        BS.showHit(superATKManager.GetHits(), BS.hitText_Enemy.transform);
+        BS.showHit(SuperATKManager.GetHits(), BS.hitText_Enemy.transform);
     }
 
     // ---------------- Getters and Setters ----------------
@@ -393,7 +393,7 @@ public class Player : MonoBehaviour
     }
     public void doSuperDMG()
     {
-        enemy_unit.GetComponent<Enemy>().TakeDamage(superATKManager.GetHits());
+        enemy_unit.GetComponent<Enemy>().TakeDamage(SuperATKManager.GetHits());
     }
 
 
@@ -425,7 +425,14 @@ public class Player : MonoBehaviour
     }
     public void increaseCurrentShield()
     {
-        currentShield += shieldFactor;
+        if (defendManager.GetShieldCritic())
+        {
+            currentShield += shieldFactor + 1;
+            defendManager.SetShieldCritic(false);
+        } else
+        {
+            currentShield += shieldFactor;
+        }
         capShield();
     }
     public void decreaseCurrentShield()

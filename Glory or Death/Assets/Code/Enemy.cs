@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     [Header("Systems")]
     [SerializeField] dirtToss dirtManager;
     [SerializeField] CounterManager counterManager;
-    [SerializeField] superAttackManager superAttackManager;
+    [SerializeField] SuperCounterManager SuperCounterManager;
 
     [SerializeField]
     private Camera mainCamera;
@@ -115,7 +115,7 @@ public class Enemy : MonoBehaviour
     {
         if (!dirtManager.IsDirty)
         {
-            superAttackManager.gameObject.SetActive(true);
+            SuperCounterManager.gameObject.SetActive(true);
         }
     }
     public void executeDirt()

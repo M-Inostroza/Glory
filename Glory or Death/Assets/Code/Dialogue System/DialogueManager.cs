@@ -56,8 +56,8 @@ public class DialogueManager : MonoBehaviour
      - 4 = Focus
      - 5 = Rest
      - 6 = Counter
-     - 7 = Counter 2
-     - 8 = Super Attack
+     - 7 = Super counter
+     - 8 = ATK2
      - 9 = Dirt
      - 10 = end 
      */
@@ -68,7 +68,7 @@ public class DialogueManager : MonoBehaviour
         _guardAvatarManager = _guardFrame.transform.GetChild(2).transform;
 
         importTutorial();
-        _interactionIndex = 2;
+        _interactionIndex = 8;
         _currentBlock = 1;
 
         StartCoroutine(Interactions(_interactionIndex, 0.2f, _currentBlock));
@@ -619,7 +619,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (!TutorialManager.hasShownDetail_superAttack && TutorialManager.GetNumberOfTries() >= 1)
         {
-            if (superATKManager.GetHits() <= 5)
+            if (SuperATKManager.GetHits() <= 5)
             {
                 StartCoroutine(specialGuardInteraction(false, 3, 1));
             }

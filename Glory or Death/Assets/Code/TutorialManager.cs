@@ -710,8 +710,12 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    // Detail Dodge
+    //---------------------------------- Detail Dodge ----------------------------------//
     public bool hasShownDetail_dodge = false;
+    public void FadeInOverlay()
+    {
+        _overlaySprite.DOFade(0, 0.3f);
+    }
     public void dodgeDetailTutorial(int step)
     {
         Image cursorImage = _cursorContainer.transform.GetChild(2).GetComponent<Image>();
@@ -750,16 +754,11 @@ public class TutorialManager : MonoBehaviour
             case 3: // Minigame starts
                 if (!hasShownDetail_dodge)
                 {
-                    _overlaySprite.DOFade(0.6f, 0.4f);
-                    StartCoroutine(fadeIn());
+                    Time.timeScale = .5f;
                     hasShownDetail_dodge = true;
                     StartCoroutine(toggleInput(2, 1, 2));
                 }
-                IEnumerator fadeIn()
-                {
-                    yield return new WaitForSeconds(1);
-                    _overlaySprite.DOFade(0, 0.5f);
-                }
+                _overlaySprite.DOFade(0.6f, 0.4f);
                 break;
         }
     }

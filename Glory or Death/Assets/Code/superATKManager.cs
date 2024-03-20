@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class superATKManager : MonoBehaviour
+public class SuperATKManager : MonoBehaviour
 {
     TutorialManager TutorialManager;
     Camera MainCamera;
@@ -49,7 +49,7 @@ public class superATKManager : MonoBehaviour
     {
         spawnCounter = 0;
         hits = 0;
-        showFeedback();
+        ToggleSwordFeedback(true);
         if (gameManager.isTutorial())
         {
             TutorialManager.fadeTimer(0);
@@ -70,6 +70,7 @@ public class superATKManager : MonoBehaviour
         {
             DialogueManager.superHitCheck();
         }
+        ToggleSwordFeedback(false);
         zoomCameraOut(); // Also plays anims
     }
 
@@ -131,11 +132,20 @@ public class superATKManager : MonoBehaviour
         cameraAnimator.Rebind();
         cameraAnimator.Play("Cam_ATK2_Player");
     }
-    public void showFeedback()
+    public void ToggleSwordFeedback(bool inOut)
     {
-        foreach (Image feed in swordFeeds)
+        if (inOut)
         {
-            feed.DOFade(.25f, 0.5f);
+            foreach (Image feed in swordFeeds)
+            {
+                feed.DOFade(.25f, 0.5f);
+            }
+        } else
+        {
+            foreach (Image feed in swordFeeds)
+            {
+                feed.DOFade(0, 0.2f);
+            }
         }
     }
     public void hideFeedback()

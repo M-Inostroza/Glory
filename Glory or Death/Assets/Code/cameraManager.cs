@@ -38,7 +38,7 @@ public class cameraManager : MonoBehaviour
         }
     }
 
-    public void PlayBloom(int state)
+    public void PlayBloom(int state, float duration = 1)
     {
         // 1 Bright Bloom
         // 2 Red Bloom
@@ -59,7 +59,7 @@ public class cameraManager : MonoBehaviour
                     bloom.active = true;
                     DOTween.To(() => bloom.intensity.value,
                                x => bloom.intensity.Override(x),
-                               0, 1.0f)
+                               0, duration)
                         .SetEase(Ease.OutQuad);
                     break;
                 case 2:
@@ -68,10 +68,8 @@ public class cameraManager : MonoBehaviour
                     bloom.active = true;
                     DOTween.To(() => bloom.intensity.value,
                                x => bloom.intensity.Override(x),
-                               0, 1.0f)
+                               0, duration)
                         .SetEase(Ease.OutQuad);
-                    break;
-                default:
                     break;
             }
         }

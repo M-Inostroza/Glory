@@ -6,16 +6,19 @@ using UnityEngine.UI;
 
 public class superTarget : MonoBehaviour
 {
-    superATKManager SAM;
+    SuperATKManager SuperATKManager;
     SoundPlayer soundPlayer;
     timeManager timeManager;
     CircleCollider2D colider;
 
+    Image _targetImage;
+
     private void Awake()
     {
+        _targetImage = GetComponent<Image>();
         colider = GetComponent<CircleCollider2D>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
-        SAM = FindObjectOfType<superATKManager>();
+        SuperATKManager = FindObjectOfType<SuperATKManager>();
         timeManager = FindObjectOfType<timeManager>();
     }
     private void OnEnable()
@@ -37,7 +40,7 @@ public class superTarget : MonoBehaviour
 
     private void OnDestroy()
     {
-        SAM.IncrementSpawnCounter();
+        SuperATKManager.IncrementSpawnCounter();
     }
 
     private void OnMouseDown()
@@ -51,9 +54,9 @@ public class superTarget : MonoBehaviour
             }
             
             transform.DOScale(1.2f, 0.1f).OnComplete(()=> transform.DOKill());
-            SAM.activateFeedSwords();
-            SAM.IncrementHits();
-            GetComponent<Image>().DOFade(0, 0.1f).OnComplete(()=>Destroy(gameObject));
+            SuperATKManager.activateFeedSwords();
+            SuperATKManager.IncrementHits();
+            _targetImage.DOFade(0, 0.1f).OnComplete(()=>Destroy(gameObject));
         }
     }
 }

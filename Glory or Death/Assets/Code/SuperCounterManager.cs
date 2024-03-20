@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class superAttackManager : MonoBehaviour
+public class SuperCounterManager : MonoBehaviour
 {
     [Header("Spawners")]
     [SerializeField] Transform spawnRotator;
@@ -15,6 +15,9 @@ public class superAttackManager : MonoBehaviour
     
     [SerializeField] int swordNumber;
     [SerializeField] Camera mainCamera;
+
+
+    [SerializeField] Image[] _comandArrows;
 
     cameraManager cameraManager;
 
@@ -58,6 +61,7 @@ public class superAttackManager : MonoBehaviour
         rotateSpawners();
         rotateOnKey();
         setEnemySuperDMG();
+        ShowKeys();
     }
     
     private void OnEnable()
@@ -165,6 +169,26 @@ public class superAttackManager : MonoBehaviour
         }
     }
 
+    void ShowKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            _comandArrows[0].DOFade(0.5f, 0);
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            _comandArrows[0].DOFade(0.3f, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            _comandArrows[1].DOFade(0.5f, 0);
+        }
+        else if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            _comandArrows[1].DOFade(0.3f, 0);
+        }
+    }
+
 
     // Sets enemy super damage (Not Tutorial)
     void setEnemySuperDMG()
@@ -198,6 +222,7 @@ public class superAttackManager : MonoBehaviour
     // Effects
     void playAllEffects()
     {
+        // TO DO: Activate left right
         if (gameManager.isTutorial())
         {
             TutorialManager.hideUI();

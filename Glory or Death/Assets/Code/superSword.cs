@@ -6,12 +6,12 @@ using DG.Tweening;
 public class superSword : MonoBehaviour
 {
     SoundPlayer soundPlayer;
-    superAttackManager superATK;
+    SuperCounterManager SuperCounterManager;
     TutorialManager TutorialManager;
 
     private void Start()
     {
-        superATK = FindObjectOfType<superAttackManager>();
+        SuperCounterManager = FindObjectOfType<SuperCounterManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
         TutorialManager = FindObjectOfType<TutorialManager>();
     }
@@ -26,7 +26,7 @@ public class superSword : MonoBehaviour
         }
         else if (collision.name == "Heart")
         {
-            superATK.fillSword();
+            SuperCounterManager.fillSword();
             soundPlayer.stabSounds();
             gameObject.transform.DOKill();
             Destroy(gameObject);

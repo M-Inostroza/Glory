@@ -40,7 +40,10 @@ public class SuperATKManager : MonoBehaviour
     {
         if (gameManager.isTutorial())
         {
-            GoalManager.MoveGoal(1);
+            if (!TutorialManager._hasPlayedTutorial)
+            {
+                GoalManager.MoveGoal(1);
+            }
             TutorialManager.showUI();
         }
     }

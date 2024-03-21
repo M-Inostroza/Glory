@@ -32,11 +32,13 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] Transform leftKey;
     [SerializeField] Transform rightKey;
 
-    // Fight presentation and scene change
+    
     [Header("Fight presentation")]
     [SerializeField] Transform panelContainer;
     [SerializeField] Transform playerPanel;
     [SerializeField] Transform enemyPanel;
+    [SerializeField] GameObject _dollAvatar;
+    [SerializeField] GameObject _brutusAvatar;
 
     // Shield
     [SerializeField] Slider shieldBar;
@@ -88,6 +90,7 @@ public class TutorialManager : MonoBehaviour
     }
     private void Start()
     {
+        StartCoroutine(OpenTutorial(2));
         showUI();
     }
     private void Update()
@@ -1034,6 +1037,8 @@ public class TutorialManager : MonoBehaviour
     // Deal with end tutorial panels
     public void changeSceneToFight()
     {
+        _brutusAvatar.SetActive(true);
+        _dollAvatar.SetActive(false);
         panelContainer.gameObject.SetActive(true);
         enemyPanel.DOLocalMoveX(308, .5f);
         playerPanel.DOLocalMoveX(-308, .5f);
@@ -1042,6 +1047,15 @@ public class TutorialManager : MonoBehaviour
         {   
             SceneManager.LoadScene("Arena");
         }
+    }
+
+    IEnumerator OpenTutorial(int duration)
+    {
+        _brutusAvatar.SetActive(false);
+        _dollAvatar.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        enemyPanel.DOLocalMoveX(1208, .8f);
+        playerPanel.DOLocalMoveX(-1208, .8f);
     }
 
 

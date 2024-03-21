@@ -13,6 +13,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject _playerFrame;
     [SerializeField] GameObject _guardFrame;
 
+
     private Transform _playerAvatarManager;
     private Transform _guardAvatarManager;
 
@@ -68,10 +69,10 @@ public class DialogueManager : MonoBehaviour
         _guardAvatarManager = _guardFrame.transform.GetChild(2).transform;
 
         importTutorial();
-        _interactionIndex = 8;
+        _interactionIndex = 1;
         _currentBlock = 1;
 
-        StartCoroutine(Interactions(_interactionIndex, 0.2f, _currentBlock));
+        StartCoroutine(Interactions(_interactionIndex, 3, _currentBlock));
     }
 
     private void Update()

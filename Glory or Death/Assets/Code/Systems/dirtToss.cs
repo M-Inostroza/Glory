@@ -23,10 +23,12 @@ public class dirtToss : MonoBehaviour
     float scratchSpeedThreshold = 10000f;
 
     // Percentage of maximum opacity to reduce per scratch
-    float opacityReductionPerScratch = 0.05f;
+    float opacityReductionPerScratch = 0.003f;
     private Vector3 prevMousePos;
 
     [SerializeField] Slider _dirtFeedback;
+    [SerializeField] Image _sliderFill;
+    [SerializeField] Image _sliderContainer;
 
     private void Start()
     {
@@ -41,6 +43,7 @@ public class dirtToss : MonoBehaviour
         {
             Combat_UI.move_Inputs_out();
         }
+        FadeFeedback(true);
         mainCam.DOShakePosition(0.3f, 0.3f, 20, 10);
         speedReduced = false;
         IsDirty = true;
@@ -51,6 +54,7 @@ public class dirtToss : MonoBehaviour
     private void Update()
     {
         makeItDirt();
+        UpdateFeedback();
     }
     private void OnDisable()
     {
@@ -107,9 +111,29 @@ public class dirtToss : MonoBehaviour
                     TutorialManager.dirtDetailTutorial(2);
                 }
                 IsDirty = false;
+                FadeFeedback(false);
                 gameObject.SetActive(false);
                 Combat_UI.move_Inputs_in();
             }
+        }
+    }
+
+    void UpdateFeedback()
+    {
+        _dirtFeedback.value = opacity * 100;
+    }
+
+    void FadeFeedback(bool inOut)
+    {
+        if (inOut)
+        {
+            _dirtFeedback.gameObject.SetActive(true);
+            _sliderContainer.DOFade(1, 0.2f);
+            _sliderFill.DOFade(1, 0.3f);
+        } else
+        {
+            _sliderFill.DOFade(0, 0.3f);
+            _sliderContainer.DOFade(0, 0.2f).OnComplete(()=> _dirtFeedback.gameObject.SetActive(false));
         }
     }
 

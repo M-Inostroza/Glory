@@ -47,7 +47,7 @@ public class defendManager : MonoBehaviour
         transformControl = true;
         cameraAndKeyIn();
         
-        scaleUP = transform.DOScale(1, 1.5f).SetEase(Ease.InOutQuad).OnComplete(Fail);
+        scaleUP = transform.DOScale(1, 2.5f).SetEase(Ease.InOutQuad).OnComplete(Fail);
         _minigameCircle.SetActive(true);
         AudioManager.Play("Shield_charge");
     }
@@ -148,8 +148,8 @@ public class defendManager : MonoBehaviour
 
     void cameraZoomIn()
     {
-        mainCamera.DOFieldOfView(35, 0.2f);
-        mainCamera.transform.DOLocalMoveY(-1.7f, 0.2f);
+        mainCamera.DOFieldOfView(35, 0.5f);
+        mainCamera.transform.DOLocalMoveY(-1.7f, 0.5f);
     }
     void cameraZoomOut()
     {

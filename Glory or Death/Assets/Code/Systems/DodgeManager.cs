@@ -27,7 +27,7 @@ public class DodgeManager : MonoBehaviour
 
     AudioManager audioManager;
     Animator playerAnimator;
-    Combat_UI combat_UI;
+    CombatManager CombatManager;
     TutorialManager TutorialManager;
 
     // Instantiated arrows
@@ -38,7 +38,7 @@ public class DodgeManager : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         playerUnit = FindObjectOfType<Player>();
         playerAnimator = playerUnit.GetComponent<Animator>();
-        combat_UI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
         TutorialManager = FindObjectOfType<TutorialManager>();
     }
 
@@ -267,7 +267,7 @@ public class DodgeManager : MonoBehaviour
         if (!gameManager.isTutorial())
         {
             DGCritic.Play();
-            combat_UI.showStars();
+            CombatManager.showStars();
         }
         starFeedback.transform.DOLocalJump(new Vector3(140, 28, 0), 18, 1, 0.6f).OnComplete(() => starFeedback.transform.DOLocalMove(new Vector2(112, 0), 0));
         starFeedback.transform.DOLocalRotate(new Vector3(0, 0, -160), 0.6f).OnComplete(() => starFeedback.transform.localRotation = Quaternion.identity);

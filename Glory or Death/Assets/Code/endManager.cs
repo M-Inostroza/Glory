@@ -8,7 +8,7 @@ using TMPro;
 
 public class endManager : MonoBehaviour
 {
-    Combat_UI combat_UI;
+    CombatManager CombatManager;
     SoundPlayer soundPlayer;
     AudioManager audioManager;
     Player _player;
@@ -46,7 +46,7 @@ public class endManager : MonoBehaviour
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        combat_UI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
 
         _player = FindObjectOfType<Player>();
@@ -82,16 +82,16 @@ public class endManager : MonoBehaviour
     }
     public void addToStarCounter()
     {
-        if (combat_UI.GetStars() != 0)
+        if (CombatManager.GetStars() != 0)
         {
             starCounter++;
             updateStarUI();
-            combat_UI.removeStar();
+            CombatManager.removeStar();
         }
         else
         {
             StartCoroutine(animatePlayerAvatarIn("Just a warm up...", 0));
-            combat_UI.hideStars();
+            CombatManager.hideStars();
         }
     }
     public void updateStarUI()
@@ -182,8 +182,8 @@ public class endManager : MonoBehaviour
 
     void playStarAnimation()
     {
-        combat_UI.showStars();
-        if (combat_UI.GetStars() > 0)
+        CombatManager.showStars();
+        if (CombatManager.GetStars() > 0)
         {
             starParticle.Play();
         } else

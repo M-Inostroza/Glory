@@ -69,7 +69,7 @@ public class DialogueManager : MonoBehaviour
         _guardAvatarManager = _guardFrame.transform.GetChild(2).transform;
 
         importTutorial();
-        _interactionIndex = 1;
+        _interactionIndex = 2;
         _currentBlock = 1;
 
         StartCoroutine(Interactions(_interactionIndex, 3, _currentBlock));

@@ -12,6 +12,7 @@ public class dirtToss : MonoBehaviour
     private Camera mainCam;
 
     private Player Player;
+    private Enemy Enemy;
     private SpriteRenderer dirtTexture;
     private TutorialManager TutorialManager;
 
@@ -34,6 +35,7 @@ public class dirtToss : MonoBehaviour
     {
         dirtTexture = GetComponent<SpriteRenderer>();
         Player = FindObjectOfType<Player>();
+        Enemy = FindObjectOfType<Enemy>();
         TutorialManager = FindObjectOfType<TutorialManager>();
     }
 
@@ -41,7 +43,7 @@ public class dirtToss : MonoBehaviour
     {
         if (!gameManager.isTutorial())
         {
-            Combat_UI.move_Inputs_out();
+            CombatManager.move_Inputs_out();
         }
         FadeFeedback(true);
         mainCam.DOShakePosition(0.3f, 0.3f, 20, 10);
@@ -113,7 +115,7 @@ public class dirtToss : MonoBehaviour
                 IsDirty = false;
                 FadeFeedback(false);
                 gameObject.SetActive(false);
-                Combat_UI.move_Inputs_in();
+                CombatManager.move_Inputs_in();
             }
         }
     }
@@ -147,7 +149,7 @@ public class dirtToss : MonoBehaviour
             TutorialManager.dirtDetailTutorial(2);
         }
         yield return new WaitForSeconds(0.5f);
-        Combat_UI.move_Inputs_in();
+        CombatManager.move_Inputs_in();
         gameObject.SetActive(false);
     }
 }

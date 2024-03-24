@@ -10,7 +10,7 @@ public class CounterManager : MonoBehaviour
     [SerializeField] Camera mainCamera;
 
     [SerializeField] Image _overlay;
-    Combat_UI combatUI;
+    CombatManager CombatManager;
     TutorialManager TutorialManager;
     cameraManager _cameraManager;
 
@@ -24,7 +24,7 @@ public class CounterManager : MonoBehaviour
 
     private void Awake()
     {
-        combatUI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
         TutorialManager = FindObjectOfType<TutorialManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
     }
@@ -74,7 +74,7 @@ public class CounterManager : MonoBehaviour
 
         if (!gameManager.isTutorial())
         {
-            combatUI.activateX();
+            CombatManager.activateX();
         } else
         {
             TutorialManager.hideUI();

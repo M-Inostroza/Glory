@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
 
-public class Combat_UI : MonoBehaviour
+public class CombatManager : MonoBehaviour
 {
     // Stats
     private static Transform _playerStats;

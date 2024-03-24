@@ -13,11 +13,11 @@ public class counterSword : MonoBehaviour
 
     Player player;
     Enemy enemy;
-    Combat_UI combatUI;
+    CombatManager combatUI;
     SoundPlayer soundPlayer;
     AudioManager audioManager;
     TutorialManager TutorialManager;
-    Combat_UI combat_UI;
+    CombatManager CombatManager;
     cameraManager _cameraManager;
     CounterManager _counterManager;
 
@@ -32,10 +32,10 @@ public class counterSword : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
-        combatUI = FindObjectOfType<Combat_UI>();
+        combatUI = FindObjectOfType<CombatManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
         TutorialManager = FindObjectOfType<TutorialManager>();
-        combat_UI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
         _counterManager = FindObjectOfType<CounterManager>();
     }
@@ -102,7 +102,7 @@ public class counterSword : MonoBehaviour
                     {
                         enemy.SetCriticBlock(true);
                         _criticSparks.Play();
-                        combat_UI.showStars();
+                        CombatManager.showStars();
                         combatUI.shakeShieldBar();
                         enemy.GetComponent<Animator>().Play("Attack_Blocked");
                         player.GetComponent<Animator>().Play("blockAttack");

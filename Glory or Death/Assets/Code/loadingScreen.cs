@@ -91,7 +91,7 @@ public class loadingScreen : MonoBehaviour
         _timeManager.selectEnemyAction();
         _BS.resetTimers((int)_timeManager.defaultFightTime);
 
-        Combat_UI.move_UI_in();
+        CombatManager.move_UI_in();
         showStartButton();
         _audioManager.Play("Combat_Theme");
     }

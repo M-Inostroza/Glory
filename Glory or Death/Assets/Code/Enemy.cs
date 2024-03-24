@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
     BattleSystem BS;
     timeManager timeManager;
     Player Player;
-    Combat_UI combat_UI;
+    CombatManager CombatManager;
     AudioManager audioManager;
     cameraManager _cameraManager;
     EnemyHUD _enemyHud;
@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
     {
         if (dirtManager.IsDirty)
         {
-            baseSpeed = 15;
+            baseSpeed = 17;
         }
         else
         {
@@ -127,7 +127,7 @@ public class Enemy : MonoBehaviour
     {
         timeManager.stopUnitTimer();
         executeCameraZoom();
-        Combat_UI.move_UI_out();
+        CombatManager.move_UI_out();
         baseSpeed += speedBuff;
         nativeDamage += dmgBuff;
         myAnimator.Play("Rage");
@@ -191,7 +191,7 @@ public class Enemy : MonoBehaviour
             timeManager.fadeInUnitTimer();
             timeManager.continueUnitTimer();
             backToIdle();
-            Combat_UI.move_UI_in();
+            CombatManager.move_UI_in();
         }
         else
         {
@@ -231,7 +231,7 @@ public class Enemy : MonoBehaviour
     public void returnFromRage()
     {
         returnCameraZoom();
-        Combat_UI.move_UI_in();
+        CombatManager.move_UI_in();
         timeManager.continueUnitTimer();
         timeManager.fadeInUnitTimer();
     }
@@ -262,11 +262,11 @@ public class Enemy : MonoBehaviour
     // Buffs
     public void doDamageBuff()
     {
-        combat_UI.damageBuff("enemy");
+        CombatManager.damageBuff("enemy");
     }
     public void doSpeedBuff()
     {
-        combat_UI.speedBuff("enemy");
+        CombatManager.speedBuff("enemy");
     }
 
     // Camera
@@ -301,18 +301,18 @@ public class Enemy : MonoBehaviour
     }
     public void doUIOut()
     {
-        Combat_UI.move_UI_out();
+        CombatManager.move_UI_out();
     }
     public void doUIIn()
     {
         // Calling from end animation super attack
         if (!BS.GetDeadPlayer() && !dirtManager.IsDirty)
         {
-            Combat_UI.move_UI_in();
+            CombatManager.move_UI_in();
         }
         else if (dirtManager.IsDirty)
         {
-            Combat_UI.move_UI_in(false);
+            CombatManager.move_UI_in(false);
         }
     }
 
@@ -398,7 +398,7 @@ public class Enemy : MonoBehaviour
         BS = FindObjectOfType<BattleSystem>();
         timeManager = FindObjectOfType<timeManager>();
         Player = FindObjectOfType<Player>();
-        combat_UI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
         playerAnimator = Player.GetComponent<Animator>();
         myAnimator = GetComponent<Animator>();

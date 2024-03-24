@@ -37,7 +37,7 @@ public class restManager : MonoBehaviour
     {
         if (!gameManager.isTutorial())
         {
-            FindObjectOfType<Combat_UI>().activateLeftRight();
+            FindObjectOfType<CombatManager>().activateLeftRight();
         } else
         {
             TutorialManager.activateLeftRight();
@@ -102,7 +102,7 @@ public class restManager : MonoBehaviour
         {
             player.incrementAdrenaline(player.GetAdrenalineFactor());
             stars.Play();
-            FindObjectOfType<Combat_UI>().showStars();
+            FindObjectOfType<CombatManager>().showStars();
         }
     }
     private void cameraZoom()

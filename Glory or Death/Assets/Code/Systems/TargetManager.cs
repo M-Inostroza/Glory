@@ -12,7 +12,7 @@ public class TargetManager : MonoBehaviour
 
     private BattleSystem BattleSystem;
     private Camera MainCamera;
-    private Combat_UI combat_UI;
+    private CombatManager CombatManager;
     private TutorialManager TutorialManager;
     private Player _player;
 
@@ -25,7 +25,7 @@ public class TargetManager : MonoBehaviour
     {
         BattleSystem = FindObjectOfType<BattleSystem>();
         MainCamera = FindObjectOfType<Camera>();
-        combat_UI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
         TutorialManager = FindObjectOfType<TutorialManager>();
         _player = FindObjectOfType<Player>();
     }
@@ -35,7 +35,7 @@ public class TargetManager : MonoBehaviour
         activateFeedback();
         if (!gameManager.isTutorial())
         {
-            Combat_UI.move_UI_out();
+            CombatManager.move_UI_out();
             BattleSystem.targetHit = 0;
             BattleSystem.canBloomAttack = true;
             courtain.DOColor(new Color(0, 0, 0, .5f), 0.8f);
@@ -104,7 +104,7 @@ public class TargetManager : MonoBehaviour
         }
 
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
-        Combat_UI.move_UI_in();
+        CombatManager.move_UI_in();
         if (gameManager.isTutorial() && !TutorialManager.hasShownDetail_attack && TutorialManager.GetNumberOfTries() != 0)
         {
             StartCoroutine(TutorialManager.toggleInput(0, 1, 3.2f));
@@ -115,7 +115,7 @@ public class TargetManager : MonoBehaviour
     {
         if (BattleSystem.targetHit == 3 && !BattleSystem.GetDeadEnemy() && !gameManager.isTutorial())
         {
-            combat_UI.showStars();
+            CombatManager.showStars();
             ATKstars.Play();
             _player.incrementAdrenaline(_player.GetAdrenalineFactor());
         }

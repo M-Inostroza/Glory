@@ -59,7 +59,7 @@ public class SuperATKManager : MonoBehaviour
             TutorialManager.selectIcon("Default");
         } else
         {
-            Combat_UI.move_UI_out();
+            CombatManager.move_UI_out();
             timeManager.stopUnitTimer();
         }
         

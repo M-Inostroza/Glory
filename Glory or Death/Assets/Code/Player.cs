@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private BattleSystem BS;
     private AudioManager audioManager;
     private TutorialManager TutorialManager;
-    private Combat_UI _combat_UI;
+    private CombatManager CombatManager;
     private cameraManager _cameraManager;
     private GoalManager _goalManager;
     
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         TutorialManager = FindObjectOfType<TutorialManager>();
-        _combat_UI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
 
         myAnim = GetComponent<Animator>();
         BS = FindObjectOfType<BattleSystem>();
@@ -227,7 +227,7 @@ public class Player : MonoBehaviour
             TutorialManager.selectIcon("Default");
         } else
         {
-            Combat_UI.shieldFeed();
+            CombatManager.shieldFeed();
             timeManager.playerTimer.fillAmount = 1;
             timeManager.continueUnitTimer();
             timeManager.defaultAction();
@@ -540,20 +540,22 @@ public class Player : MonoBehaviour
     {
         if (!gameManager.isTutorial())
         {
-            _combat_UI.damageBuff("player");
+            CombatManager.damageBuff("player");
         }
     }
     public void doSpeedBuff()
     {
         if (!gameManager.isTutorial())
         {
-            _combat_UI.speedBuff("player");
+            CombatManager.speedBuff("player");
         }
     }
     public IEnumerator boostSpeed()
     {
         baseSpeed += 3f;
-        yield return new WaitForSeconds(3.5f);
+        //timeManager.RushEffect(true);
+        yield return new WaitForSeconds(3.5f); // TODO
+        //timeManager.RushEffect(false);
         baseSpeed -= 3f;
     }
 
@@ -589,6 +591,6 @@ public class Player : MonoBehaviour
     }
     public void Do_UI_in()
     {
-        Combat_UI.move_UI_in();
+        CombatManager.move_UI_in();
     }
 }

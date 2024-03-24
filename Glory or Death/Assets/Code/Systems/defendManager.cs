@@ -39,15 +39,22 @@ public class defendManager : MonoBehaviour
 
     public void activateShieldMinigame()
     {
+        float tutorialLevel = 2.5f;
+        float combatLevel = 2f;
+
         if (gameManager.isTutorial())
         {
             TutorialManager.defendDetailTutorial(3);
+            scaleUP = transform.DOScale(1, tutorialLevel).SetEase(Ease.InOutQuad).OnComplete(Fail);
+        } else
+        {
+            scaleUP = transform.DOScale(1, combatLevel).SetEase(Ease.InOutQuad).OnComplete(Fail);
         }
+
         canDefend = true;
         transformControl = true;
         cameraAndKeyIn();
         
-        scaleUP = transform.DOScale(1, 2.5f).SetEase(Ease.InOutQuad).OnComplete(Fail);
         _minigameCircle.SetActive(true);
         AudioManager.Play("Shield_charge");
     }
@@ -79,7 +86,7 @@ public class defendManager : MonoBehaviour
 
         if (transform.localScale.x < _defaultScaleLimit && transform.localScale.x > _criticEnd || transform.localScale.x < _criticStart)
         {   // Fail
-            CameraManager.PlayBloom(2, 0.3f);
+            CameraManager.PlayBloom(2, 0.7f);
             AudioManager.Play("UI_select_fail");
             transform.DOShakePosition(0.2f, 0.05f, 40).OnComplete(Fail);
             scaleUP.Kill();
@@ -95,7 +102,7 @@ public class defendManager : MonoBehaviour
             AudioManager.Play("defend_success");
             scaleUP.Rewind();
             playerAnim.SetBool("skillShieldSuccess", true);
-            closeMinigame();
+            CloseMinigame();
         } 
         else if (transform.localScale.x > _criticStart && transform.localScale.x < _criticEnd) 
         {   // Critic win
@@ -104,12 +111,12 @@ public class defendManager : MonoBehaviour
                 Player.incrementAdrenaline(Player.GetAdrenalineFactor() + 2);
             }
             isShieldCritic = true;
-            CameraManager.PlayBloom(1, 0.5f);
+            CameraManager.PlayBloom(1, 0.7f);
             playerAnim.SetBool("skillShieldSuccess", true);
             AudioManager.Play("defend_success");
             scaleUP.Rewind();
             transform.DOScale(0, 0);
-            closeMinigame();
+            CloseMinigame();
         }
     }
 
@@ -118,10 +125,10 @@ public class defendManager : MonoBehaviour
         scaleUP.Rewind();
         AudioManager.Play("defend_fail");
         playerAnim.SetBool("skillFail", true);
-        closeMinigame();
+        CloseMinigame();
     }
 
-    void closeMinigame()
+    void CloseMinigame()
     {
         cameraZoomOut();
         _minigameCircle.SetActive(false);
@@ -165,7 +172,7 @@ public class defendManager : MonoBehaviour
             TutorialManager.activateA();
         } else
         {
-            FindObjectOfType<Combat_UI>().activateA();
+            FindObjectOfType<CombatManager>().activateA();
         }
     }
 

@@ -16,7 +16,7 @@ public class timeManager : MonoBehaviour
 
     private BattleSystem BS;
     private Input_Manager Input_Manager;
-    private Combat_UI combarUI;
+    private CombatManager combarUI;
     private endManager endManager;
     private AudioManager audioManager;
     private cameraManager _cameraManager;
@@ -38,6 +38,7 @@ public class timeManager : MonoBehaviour
     public bool playerTimerControl = true;
     public Image playerTimer;
     public Image playerActionIcon;
+    [SerializeField] GameObject _rushEffect;
 
     // Enemy Timer
     public bool enemyTimerControl = true;
@@ -81,7 +82,7 @@ public class timeManager : MonoBehaviour
 
         BS = FindObjectOfType<BattleSystem>();
         Input_Manager = FindObjectOfType<Input_Manager>();
-        combarUI = FindObjectOfType<Combat_UI>();
+        combarUI = FindObjectOfType<CombatManager>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
         endManager = FindObjectOfType<endManager>();
@@ -397,7 +398,7 @@ public class timeManager : MonoBehaviour
             if (battleTimer <= 0 && !BattleSystem.OnSkill)
             {
                 audioManager.Stop("Combat_Theme");
-                Combat_UI.move_UI_out();
+                CombatManager.move_UI_out();
                 timerIsRunning = false;
                 stopUnitTimer();
                 battleTimer = 0;
@@ -409,6 +410,11 @@ public class timeManager : MonoBehaviour
     }
 
     // Utilities
+
+    public void RushEffect(bool activate)
+    {
+        _rushEffect.SetActive(activate);
+    }
     public void fadeOutUnitTimer()
     {
         float fadeTime = 0.05f;

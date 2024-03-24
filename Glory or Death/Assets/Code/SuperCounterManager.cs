@@ -19,7 +19,7 @@ public class SuperCounterManager : MonoBehaviour
 
     [SerializeField] Image[] _comandArrows;
 
-    cameraManager cameraManager;
+    cameraManager CameraManager;
 
     Enemy enemy;
     Animator _enemyAnimator;
@@ -35,12 +35,12 @@ public class SuperCounterManager : MonoBehaviour
     DialogueManager dialogueManager;
 
     private int swordCounter = 0;
-    private float rotationSpeed = 170;
+    private float rotationSpeed;
 
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        cameraManager = FindObjectOfType<cameraManager>();
+        CameraManager = FindObjectOfType<cameraManager>();
         TutorialManager = FindObjectOfType<TutorialManager>();
         dialogueManager = FindObjectOfType<DialogueManager>();
 
@@ -58,9 +58,9 @@ public class SuperCounterManager : MonoBehaviour
     }
     private void Update()
     {
-        rotateSpawners();
-        rotateOnKey();
-        setEnemySuperDMG();
+        RotateSpawners();
+        RotateShieldOnKey();
+        SetEnemySuperDMG();
         ShowKeys();
     }
     
@@ -106,7 +106,7 @@ public class SuperCounterManager : MonoBehaviour
 
 
     // Rotates the random position of swords and points the swords to the center
-    void rotateSpawners()
+    void RotateSpawners()
     {
         spawnRotator.DOLocalRotate(new Vector3(0, 0, -360), 3);
     }
@@ -144,17 +144,17 @@ public class SuperCounterManager : MonoBehaviour
 
 
     /* Uses the arrow keys to rotate the shield
-    Modify rotation speed with: rotationSpeed (default 200) */
-    void rotateOnKey()
+    Modify rotation speed with: rotationSpeed */
+    void RotateShieldOnKey()
     {
         if (!BattleSystem.IsPaused)
         {
             if (gameManager.isTutorial())
             {
-                rotationSpeed = 100;
+                rotationSpeed = 80;
             } else
             {
-                rotationSpeed = 120;
+                rotationSpeed = 70;
             }
             if (Input.GetKey(KeyCode.RightArrow))
             {
@@ -191,7 +191,7 @@ public class SuperCounterManager : MonoBehaviour
 
 
     // Sets enemy super damage (Not Tutorial)
-    void setEnemySuperDMG()
+    void SetEnemySuperDMG()
     {
         if (!gameManager.isTutorial())
         {
@@ -232,11 +232,11 @@ public class SuperCounterManager : MonoBehaviour
             }
         } else 
         {
-            Combat_UI.move_UI_out();
+            CombatManager.move_UI_out();
         }
         moveFeedback();
         audioManager.Play("Super_Attack_Enemy_On");
-        cameraManager.playChrome();
+        CameraManager.playChrome();
         moveCameraIn();
     }
     void moveFeedback()

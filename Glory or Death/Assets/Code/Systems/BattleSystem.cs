@@ -11,7 +11,7 @@ public class BattleSystem : MonoBehaviour
     defendManager defendManager;
     timeManager timeManager;
     Input_Manager Input_Manager;
-    Combat_UI combat_UI;
+    CombatManager CombatManager;
     endManager endManager;
     cameraManager cameraManager;
     AudioManager audioManager;
@@ -165,13 +165,13 @@ public class BattleSystem : MonoBehaviour
     {
         // Update health
         enemyHUD.setHP(enemyUnit.currentHP);
-        combat_UI.setPlayerHP(playerUnit.GetCurrentHP());
+        CombatManager.setPlayerHP(playerUnit.GetCurrentHP());
 
         // Update stamina
-        combat_UI.GetStaminaSlider().DOValue(playerUnit.GetCurrentStamina(), 0.3f);
+        CombatManager.GetStaminaSlider().DOValue(playerUnit.GetCurrentStamina(), 0.3f);
 
         // Update adrenaline
-        combat_UI.GetPlayerAdrenalineSlider().DOValue(playerUnit.GetAdrenaline(), 0.3f);
+        CombatManager.GetPlayerAdrenalineSlider().DOValue(playerUnit.GetAdrenaline(), 0.3f);
         if (playerUnit.GetAdrenaline() >= playerUnit.GetMaxAdrenaline())
         {
             playerUnit.SetAdrenaline(playerUnit.GetMaxAdrenaline());
@@ -189,7 +189,7 @@ public class BattleSystem : MonoBehaviour
         // Defeat
         if (playerUnit.GetCurrentHP() <= 0 && deadPlayer == false)
         {
-            Combat_UI.move_UI_out();
+            CombatManager.move_UI_out();
             cameraManager.playChrome();
             audioManager.Stop("Combat_Theme");
             audioManager.Play("Defeat_Sound");
@@ -204,7 +204,7 @@ public class BattleSystem : MonoBehaviour
         // Victory
         else if (enemyUnit.currentHP <= 0 && deadEnemy == false)
         {
-            Combat_UI.move_UI_out();
+            CombatManager.move_UI_out();
             cameraManager.playChrome();
             audioManager.Stop("Combat_Theme");
             audioManager.Play("Last_Hit");
@@ -276,7 +276,7 @@ public class BattleSystem : MonoBehaviour
             _gameManager.SetTurnCounter(1);
             StartCoroutine(_gameManager.dayShow(3));
             timeManager.continueUnitTimer();
-            audioManager.Play("Combat_Theme");
+            //audioManager.Play("Combat_Theme"); REMOVE
             _loadingScreen.SetActive(false);
         }
     }
@@ -306,7 +306,7 @@ public class BattleSystem : MonoBehaviour
     {
         playerAnimator = playerPrefab.GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
-        combat_UI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
         targetManager = FindObjectOfType<TargetManager>();
         defendManager = FindObjectOfType<defendManager>();
         timeManager = FindObjectOfType<timeManager>();

@@ -17,6 +17,8 @@ public class focusManager : MonoBehaviour
 
     [SerializeField] Camera mainCamera;
 
+    
+
     // Timer bars
     Slider _timerBarLeft;
     Slider _timerBarRight;
@@ -24,7 +26,7 @@ public class focusManager : MonoBehaviour
     Player playerUnit;
     AudioManager audioManager;
     cameraManager CameraManager;
-    Combat_UI combat_UI;
+    CombatManager CombatManager;
     TutorialManager TutorialManager;
 
     static int _totalATKBuff;
@@ -45,7 +47,7 @@ public class focusManager : MonoBehaviour
         CameraManager = FindObjectOfType<cameraManager>();
         TutorialManager = FindObjectOfType<TutorialManager>();
         playerUnit = FindObjectOfType<Player>();
-        combat_UI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
         audioManager = FindObjectOfType<AudioManager>();
 
         if (!gameManager.isTutorial())
@@ -195,7 +197,7 @@ public class focusManager : MonoBehaviour
         }
         else
         {
-            combat_UI.activateS();
+            CombatManager.activateS();
         }
     }
 

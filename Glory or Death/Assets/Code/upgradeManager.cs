@@ -13,7 +13,7 @@ public class upgradeManager : MonoBehaviour
     timeManager _timeManager;
     endManager _endManager;
     AudioManager _audioManager;
-    Combat_UI _combat_UI;
+    CombatManager CombatManager;
 
     List<GameObject> blockList = new List<GameObject>();
 
@@ -25,7 +25,7 @@ public class upgradeManager : MonoBehaviour
         _timeManager = FindObjectOfType<timeManager>();
         _endManager = FindObjectOfType<endManager>();
         _audioManager = FindObjectOfType<AudioManager>();
-        _combat_UI = FindObjectOfType<Combat_UI>();
+        CombatManager = FindObjectOfType<CombatManager>();
     }
 
     private void OnEnable()
@@ -216,7 +216,7 @@ public class upgradeManager : MonoBehaviour
         if (_endManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
-            _combat_UI.updateShieldBar();
+            CombatManager.updateShieldBar();
             _player.setMaxShield(_player.GetMaxShield() + 1);
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
@@ -233,7 +233,7 @@ public class upgradeManager : MonoBehaviour
         if (_endManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
-            _combat_UI.updateShieldBar();
+            CombatManager.updateShieldBar();
             CounterManager.SetRotationSpeed(CounterManager.GetRotationSpeed() + 1);
             _endManager.reduceStars(2);
             _endManager.updateStarUI();

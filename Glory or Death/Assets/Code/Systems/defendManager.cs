@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using AssetKits.ParticleImage;
 
 public class defendManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class defendManager : MonoBehaviour
     [SerializeField] GameObject _minigameCircle;
     [SerializeField] GameObject _aKeyCanvas;
     [SerializeField] Camera mainCamera;
+    [SerializeField] ParticleImage _starCritic;
 
     SpriteRenderer _auraEffect;
 
@@ -14,6 +16,7 @@ public class defendManager : MonoBehaviour
     TutorialManager TutorialManager;
     Player Player;
     cameraManager CameraManager;
+    CombatManager CombatManager;
 
     // Control
     static bool isShieldCritic = false;
@@ -25,6 +28,7 @@ public class defendManager : MonoBehaviour
     Tween scaleUP;
     private void Awake()
     {
+        CombatManager = FindObjectOfType<CombatManager>(); 
         CameraManager = FindObjectOfType<cameraManager>();
         Player = FindObjectOfType<Player>();
         AudioManager = FindObjectOfType<AudioManager>();
@@ -112,6 +116,8 @@ public class defendManager : MonoBehaviour
             }
             isShieldCritic = true;
             CameraManager.PlayBloom(1, 0.7f);
+            CombatManager.showStars();
+            _starCritic.Play();
             playerAnim.SetBool("skillShieldSuccess", true);
             AudioManager.Play("defend_success");
             scaleUP.Rewind();

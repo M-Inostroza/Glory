@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxAdrenaline;
     [SerializeField] private int _nativeDamage;
 
+    // Bla
+
     [Header("Effects")]
     [SerializeField] private ParticleSystem attackBlood;
     [SerializeField] private ParticleSystem attackSpark;

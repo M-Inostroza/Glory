@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     SoundPlayer soundPlayer;
     
     BattleSystem BS;
-    timeManager timeManager;
+    TimeManager TimeManager;
     Player Player;
     CombatManager CombatManager;
     AudioManager audioManager;
@@ -125,7 +125,7 @@ public class Enemy : MonoBehaviour
     }
     public void ExecuteRage(int speedBuff, int dmgBuff)
     {
-        timeManager.stopUnitTimer();
+        TimeManager.stopUnitTimer();
         executeCameraZoom();
         CombatManager.move_UI_out();
         baseSpeed += speedBuff;
@@ -173,9 +173,9 @@ public class Enemy : MonoBehaviour
     {
         if (!BS.GetDeadPlayer())
         {
-            timeManager.enemyTimer.fillAmount = 1;
-            timeManager.fadeInUnitTimer();
-            timeManager.continueUnitTimer();
+            TimeManager.enemyTimer.fillAmount = 1;
+            TimeManager.fadeInUnitTimer();
+            TimeManager.continueUnitTimer();
             myAnimator.SetBool("attack", false);
         } else
         {
@@ -187,9 +187,9 @@ public class Enemy : MonoBehaviour
         adrenaline = 0;
         if (!BS.GetDeadPlayer())
         {
-            timeManager.enemyTimer.fillAmount = 1;
-            timeManager.fadeInUnitTimer();
-            timeManager.continueUnitTimer();
+            TimeManager.enemyTimer.fillAmount = 1;
+            TimeManager.fadeInUnitTimer();
+            TimeManager.continueUnitTimer();
             backToIdle();
             CombatManager.move_UI_in();
         }
@@ -210,9 +210,9 @@ public class Enemy : MonoBehaviour
 
     public void stopDirt()
     {
-        timeManager.enemyTimer.fillAmount = 1;
-        timeManager.fadeInUnitTimer();
-        timeManager.continueUnitTimer();
+        TimeManager.enemyTimer.fillAmount = 1;
+        TimeManager.fadeInUnitTimer();
+        TimeManager.continueUnitTimer();
         backToIdle();
     }
     public void stopEnemyDefense()
@@ -232,8 +232,8 @@ public class Enemy : MonoBehaviour
     {
         returnCameraZoom();
         CombatManager.move_UI_in();
-        timeManager.continueUnitTimer();
-        timeManager.fadeInUnitTimer();
+        TimeManager.continueUnitTimer();
+        TimeManager.fadeInUnitTimer();
     }
     public void executeCameraZoom()
     {
@@ -256,7 +256,7 @@ public class Enemy : MonoBehaviour
 
     public void selectNextAction()
     {
-        timeManager.selectEnemyAction();
+        TimeManager.selectEnemyAction();
     }
 
     // Buffs
@@ -285,7 +285,7 @@ public class Enemy : MonoBehaviour
     }
     public void doSlow()
     {
-        StartCoroutine(timeManager.slowMotion(.2f, .2f));
+        StartCoroutine(TimeManager.slowMotion(.2f, .2f));
     }
     public void doSuperATKzoom()
     {
@@ -396,7 +396,7 @@ public class Enemy : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
         BS = FindObjectOfType<BattleSystem>();
-        timeManager = FindObjectOfType<timeManager>();
+        TimeManager = FindObjectOfType<TimeManager>();
         Player = FindObjectOfType<Player>();
         CombatManager = FindObjectOfType<CombatManager>();
         _cameraManager = FindObjectOfType<cameraManager>();

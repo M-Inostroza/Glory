@@ -8,7 +8,7 @@ public class SuperATKManager : MonoBehaviour
 {
     TutorialManager TutorialManager;
     Camera MainCamera;
-    timeManager timeManager;
+    TimeManager TimeManager;
     Player Player;
     Enemy Enemy;
     DialogueManager DialogueManager;
@@ -60,7 +60,7 @@ public class SuperATKManager : MonoBehaviour
         } else
         {
             CombatManager.move_UI_out();
-            timeManager.stopUnitTimer();
+            TimeManager.stopUnitTimer();
         }
         
         zoomCameraIn();
@@ -188,7 +188,7 @@ public class SuperATKManager : MonoBehaviour
         Player = FindObjectOfType<Player>();
         Enemy = FindObjectOfType<Enemy>();
         MainCamera = FindObjectOfType<Camera>();
-        timeManager = FindObjectOfType<timeManager>();
+        TimeManager = FindObjectOfType<TimeManager>();
         DialogueManager = FindObjectOfType<DialogueManager>();
 
         cameraAnimator = MainCamera.GetComponent<Animator>();

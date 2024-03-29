@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
-    private timeManager timeManager;
+    private TimeManager TimeManager;
     private TargetManager targetManager; 
     private BattleSystem BS;
     private AudioManager audioManager;
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         myAnim = GetComponent<Animator>();
         BS = FindObjectOfType<BattleSystem>();
         targetManager = FindObjectOfType<TargetManager>();
-        timeManager = FindObjectOfType<timeManager>();
+        TimeManager = FindObjectOfType<TimeManager>();
         audioManager = FindObjectOfType<AudioManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
         _goalManager = FindObjectOfType<GoalManager>();
@@ -135,11 +135,11 @@ public class Player : MonoBehaviour
         {
             if (BS.GetDeadEnemy() == false)
             {
-                timeManager.playerActionIcon.sprite = timeManager.iconSprites[1];
-                timeManager.playerTimer.fillAmount = 1;
+                TimeManager.playerActionIcon.sprite = TimeManager.iconSprites[1];
+                TimeManager.playerTimer.fillAmount = 1;
                 FindObjectOfType<Input_Manager>().SetPlayerAction("none");
-                timeManager.fadeInUnitTimer();
-                timeManager.continueUnitTimer();
+                TimeManager.fadeInUnitTimer();
+                TimeManager.continueUnitTimer();
                 myAnim.Play("Idle");
             }
             else
@@ -165,17 +165,17 @@ public class Player : MonoBehaviour
     public void stopDefendSkill()
     {
         myAnim.SetBool("DF_Skill", false);
-        timeManager.continueUnitTimer();
-        timeManager.defaultAction();
+        TimeManager.continueUnitTimer();
+        TimeManager.defaultAction();
     }
     public void stopDodgeSkill()
     {
         myAnim.SetBool("evadeSuccess", false);
         if (!gameManager.isTutorial())
         {
-            timeManager.playerTimer.fillAmount = 1;
-            timeManager.continueUnitTimer();
-            timeManager.defaultAction();
+            TimeManager.playerTimer.fillAmount = 1;
+            TimeManager.continueUnitTimer();
+            TimeManager.defaultAction();
         } else
         {
             TutorialManager.fadeTimer(1);
@@ -191,16 +191,16 @@ public class Player : MonoBehaviour
             TutorialManager.selectIcon("Default");
         } else
         {
-            timeManager.playerTimer.fillAmount = 1;
-            timeManager.continueUnitTimer();
-            timeManager.defaultAction();
+            TimeManager.playerTimer.fillAmount = 1;
+            TimeManager.continueUnitTimer();
+            TimeManager.defaultAction();
         }
     }
     public void stopEvadeJump()
     {
         missed = false;
         myAnim.SetBool("evadeJump", false);
-        timeManager.fadeInUnitTimer();
+        TimeManager.fadeInUnitTimer();
     }
     public void stopDodgeIcon()
     {
@@ -211,9 +211,9 @@ public class Player : MonoBehaviour
         myAnim.SetBool("focusSuccess", false);
         if (!gameManager.isTutorial())
         {
-            timeManager.playerTimer.fillAmount = 1;
-            timeManager.continueUnitTimer();
-            timeManager.defaultAction();
+            TimeManager.playerTimer.fillAmount = 1;
+            TimeManager.continueUnitTimer();
+            TimeManager.defaultAction();
         } else
         {
             TutorialManager.fadeTimer(1);
@@ -230,9 +230,9 @@ public class Player : MonoBehaviour
         } else
         {
             CombatManager.shieldFeed();
-            timeManager.playerTimer.fillAmount = 1;
-            timeManager.continueUnitTimer();
-            timeManager.defaultAction();
+            TimeManager.playerTimer.fillAmount = 1;
+            TimeManager.continueUnitTimer();
+            TimeManager.defaultAction();
         }
     }
     public void stopRest()
@@ -555,9 +555,9 @@ public class Player : MonoBehaviour
     public IEnumerator boostSpeed()
     {
         baseSpeed += 3f;
-        //timeManager.RushEffect(true);
+        //TimeManager.RushEffect(true);
         yield return new WaitForSeconds(3.5f); // TODO
-        //timeManager.RushEffect(false);
+        //TimeManager.RushEffect(false);
         baseSpeed -= 3f;
     }
 
@@ -580,7 +580,7 @@ public class Player : MonoBehaviour
     public void ATK_SlowmoHit(float slowMo)
     {
         _cameraManager.playChrome();
-        StartCoroutine(timeManager.slowMotion(slowMo, .2f));
+        StartCoroutine(TimeManager.slowMotion(slowMo, .2f));
     }
     public void blockHit()
     {

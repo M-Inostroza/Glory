@@ -72,7 +72,7 @@ public class counterSword : MonoBehaviour
                     transform.GetComponent<PolygonCollider2D>().enabled = false;
                     _counterManager.fadeElements(.2f, false);
                     canCollide = false;
-                    StartCoroutine(timeManager.slowMotion(.3f, .3f, () =>
+                    StartCoroutine(TimeManager.slowMotion(.3f, .3f, () =>
                     {
                         counterManager.SetActive(false);
                     }));
@@ -118,7 +118,7 @@ public class counterSword : MonoBehaviour
                     _cameraManager.PlayBloom(1);
                     transform.DOKill();
                     _counterManager.fadeElements(.2f, false);
-                    StartCoroutine(timeManager.slowMotion(.3f, .3f, () =>
+                    StartCoroutine(TimeManager.slowMotion(.3f, .3f, () =>
                     {
                         _criticStars.Play();
                         counterManager.SetActive(false);
@@ -131,7 +131,7 @@ public class counterSword : MonoBehaviour
 
     void meltHeart()
     {
-        StartCoroutine(timeManager.slowMotion(0.4f, 0.3f));
+        StartCoroutine(TimeManager.slowMotion(0.4f, 0.3f));
         DOTween.To(() => heartMaterial.GetFloat("_FadeAmount"), x => heartMaterial.SetFloat("_FadeAmount", x), 1, 0.5f)
             .OnComplete(()=> playAnims_closeGame());
         DOTween.To(() => swordMaterial.GetFloat("_FadeAmount"), x => swordMaterial.SetFloat("_FadeAmount", x), 1, 0.5f);

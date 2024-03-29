@@ -7,7 +7,7 @@ using DG.Tweening;
 using System;
 
 
-public class timeManager : MonoBehaviour
+public class TimeManager : MonoBehaviour
 {
     public Sprite[] iconSprites;
 
@@ -78,7 +78,7 @@ public class timeManager : MonoBehaviour
     //Manages general timer
     private void Start()
     {
-        setActionCost();
+        SetActionCost();
 
         BS = FindObjectOfType<BattleSystem>();
         Input_Manager = FindObjectOfType<Input_Manager>();
@@ -100,7 +100,8 @@ public class timeManager : MonoBehaviour
         runTimer();
     }
 
-    public void setActionCost()
+
+    public void SetActionCost()
     {
         costATKText.text = costATK.ToString();
         costDFText.text = costDF.ToString();

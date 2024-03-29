@@ -133,7 +133,7 @@ public class focusManager : MonoBehaviour
         canMoveTarget = false;
         FadeAllElements(false);
 
-        StartCoroutine(timeManager.slowMotion(.4f, .4f, () =>
+        StartCoroutine(TimeManager.slowMotion(.4f, .4f, () =>
         {
             if (!gameManager.isTutorial())
             {

@@ -14,7 +14,7 @@ public class restManager : MonoBehaviour
     bool hasAnimatedStar = false;
 
     Player player;
-    timeManager timeManager;
+    TimeManager TimeManager;
     AudioManager audioManager;
     TutorialManager TutorialManager;
 
@@ -23,7 +23,7 @@ public class restManager : MonoBehaviour
     {
         TutorialManager = FindObjectOfType<TutorialManager>();
         player = FindObjectOfType<Player>();
-        timeManager = FindObjectOfType<timeManager>();
+        TimeManager = FindObjectOfType<TimeManager>();
         audioManager = FindObjectOfType<AudioManager>();
     }
     private void Update()
@@ -75,8 +75,8 @@ public class restManager : MonoBehaviour
     {
         if (!gameManager.isTutorial())
         {
-            timeManager.continueUnitTimer();
-            timeManager.fadeInUnitTimer();
+            TimeManager.continueUnitTimer();
+            TimeManager.fadeInUnitTimer();
         } else
         {
             TutorialManager.fadeTimer(1);

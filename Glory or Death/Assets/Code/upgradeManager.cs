@@ -10,7 +10,7 @@ public class upgradeManager : MonoBehaviour
     [SerializeField] GameObject _rightBlock;
 
     Player _player;
-    timeManager _timeManager;
+    TimeManager _TimeManager;
     endManager _endManager;
     AudioManager _audioManager;
     CombatManager CombatManager;
@@ -22,7 +22,7 @@ public class upgradeManager : MonoBehaviour
     private void Start()
     {
         _player = FindObjectOfType<Player>();
-        _timeManager = FindObjectOfType<timeManager>();
+        _TimeManager = FindObjectOfType<TimeManager>();
         _endManager = FindObjectOfType<endManager>();
         _audioManager = FindObjectOfType<AudioManager>();
         CombatManager = FindObjectOfType<CombatManager>();
@@ -90,7 +90,7 @@ public class upgradeManager : MonoBehaviour
         if (_endManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
-            _timeManager.dodgeFactorCD -= 0.2f;
+            _TimeManager.dodgeFactorCD -= 0.2f;
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(0).transform);
@@ -104,7 +104,7 @@ public class upgradeManager : MonoBehaviour
         if (_endManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
-            _timeManager.attackFactorCD -= 0.2f;
+            _TimeManager.attackFactorCD -= 0.2f;
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(1).transform);
@@ -133,8 +133,8 @@ public class upgradeManager : MonoBehaviour
         if (_endManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
-            _timeManager.CostFC = _timeManager.CostFC -= 5;
-            _timeManager.setActionCost();
+            _TimeManager.CostFC = _TimeManager.CostFC -= 5;
+            _TimeManager.SetActionCost();
             _endManager.reduceStars(2);
             _endManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(3).transform);

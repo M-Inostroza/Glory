@@ -10,7 +10,7 @@ public class Target : MonoBehaviour
     TargetManager TargetManager;
     SoundPlayer soundPlayer;
     BattleSystem BS;
-    timeManager _timeManager;
+    TimeManager _TimeManager;
     SpriteRenderer _spriteRenderer;
     Player Player;
     TutorialManager TutorialManager;
@@ -24,7 +24,7 @@ public class Target : MonoBehaviour
         colider = gameObject.GetComponent<CircleCollider2D>();
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         BS = FindObjectOfType<BattleSystem>();
-        _timeManager = FindObjectOfType<timeManager>();
+        _TimeManager = FindObjectOfType<TimeManager>();
     }
 
     private void OnMouseDown()
@@ -33,7 +33,7 @@ public class Target : MonoBehaviour
         {
             if (!gameManager.isTutorial())
             {
-                _timeManager.enemyTimer.fillAmount += 0.03f;
+                _TimeManager.enemyTimer.fillAmount += 0.03f;
                 Player.incrementAdrenaline(2);
                 BS.targetHit++;
             } else

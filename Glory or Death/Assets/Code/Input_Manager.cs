@@ -16,7 +16,7 @@ public class Input_Manager : MonoBehaviour
     private string selectedEnemyAction;
 
     
-    timeManager timeManager;
+    TimeManager TimeManager;
     AudioManager audioManager;
 
     // Avoid click spam
@@ -31,7 +31,7 @@ public class Input_Manager : MonoBehaviour
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        timeManager = FindObjectOfType<timeManager>();
+        TimeManager = FindObjectOfType<TimeManager>();
 
         GetCooldownImages();
 
@@ -50,7 +50,7 @@ public class Input_Manager : MonoBehaviour
             audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "ATK1";
-            timeManager.selectIcon("ATK1");
+            TimeManager.selectIcon("ATK1");
         }
         else
         {
@@ -64,7 +64,7 @@ public class Input_Manager : MonoBehaviour
             audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "ATK2";
-            timeManager.selectIcon("ATK2");
+            TimeManager.selectIcon("ATK2");
         }
         else
         {
@@ -79,7 +79,7 @@ public class Input_Manager : MonoBehaviour
             audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "DF";
-            timeManager.selectIcon("DF");
+            TimeManager.selectIcon("DF");
         }
         else
         {
@@ -94,7 +94,7 @@ public class Input_Manager : MonoBehaviour
             audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "DG";
-            timeManager.selectIcon("DG");
+            TimeManager.selectIcon("DG");
         }
         else
         {
@@ -109,7 +109,7 @@ public class Input_Manager : MonoBehaviour
             audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "FC";
-            timeManager.selectIcon("FC");
+            TimeManager.selectIcon("FC");
         }
         else
         {
@@ -124,7 +124,7 @@ public class Input_Manager : MonoBehaviour
             audioManager.Play("UI_select");
             canClick = false;
             selectedPlayerAction = "RST";
-            timeManager.selectIcon("RST");
+            TimeManager.selectIcon("RST");
         }
         else
         {
@@ -191,10 +191,10 @@ public class Input_Manager : MonoBehaviour
     }
     void UpdateCooldown()
     {
-        timeManager.ReduceCooldown(DefendButtonCD);
-        timeManager.ReduceCooldown(AttackButtonCD);
-        timeManager.ReduceCooldown(DodgeButtonCD);
-        timeManager.ReduceCooldown(FocusButtonCD);
+        TimeManager.ReduceCooldown(DefendButtonCD);
+        TimeManager.ReduceCooldown(AttackButtonCD);
+        TimeManager.ReduceCooldown(DodgeButtonCD);
+        TimeManager.ReduceCooldown(FocusButtonCD);
     }
 
     public void resetCooldown()

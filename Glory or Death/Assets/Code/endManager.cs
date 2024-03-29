@@ -9,7 +9,7 @@ using TMPro;
 public class endManager : MonoBehaviour
 {
     CombatManager CombatManager;
-    SoundPlayer soundPlayer;
+    SoundPlayer SoundPlayer;
     AudioManager audioManager;
     Player _player;
 
@@ -47,7 +47,7 @@ public class endManager : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
         CombatManager = FindObjectOfType<CombatManager>();
-        soundPlayer = FindObjectOfType<SoundPlayer>();
+        SoundPlayer = FindObjectOfType<SoundPlayer>();
 
         _player = FindObjectOfType<Player>();
     }
@@ -76,7 +76,7 @@ public class endManager : MonoBehaviour
                 activateDefeatElements(state);
                 break;
             case 2: // Victory
-                activateVictoryElements(state);
+                ActivateVictoryElements(state);
                 break;
         }
     }
@@ -126,7 +126,7 @@ public class endManager : MonoBehaviour
         defeatEffects[1].transform.DOLocalMoveY(-1200, 1);
     }
 
-    public void victoryScreen()
+    public void victoryScreen() // Victory
     {
         endOverlay.DOFade(0.85f, 1f);
         victoryLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
@@ -173,7 +173,7 @@ public class endManager : MonoBehaviour
             bool hasHitPlayed = false;
             if (curveY < threshholdValue && !hasHitPlayed)
             {
-                soundPlayer.metalStone();
+                SoundPlayer.metalStone();
                 hasHitPlayed = true;
                 threshholdValue -= 0.6f;
             }
@@ -239,7 +239,7 @@ public class endManager : MonoBehaviour
         defeatLabelContainer.gameObject.SetActive(state);
         defeatScreenContainer.SetActive(state);
     }
-    void activateVictoryElements(bool state)
+    public void ActivateVictoryElements(bool state)
     {
         victoryScreenContainer.SetActive(state);
         endOverlay.gameObject.SetActive(state);

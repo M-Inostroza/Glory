@@ -267,36 +267,36 @@ public class TutorialManager : MonoBehaviour
             case "ATK1":
                 _slectedAction = "ATK1";
                 _playerActionIcon.sprite = iconSprites[1];
-                timeManager.animateIcon(_playerActionIcon.transform);
+                TimeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "ATK2":
                 _slectedAction = "ATK2";
                 _playerActionIcon.sprite = iconSprites[6];
-                timeManager.animateIcon(_playerActionIcon.transform);
+                TimeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "DF":
                 _slectedAction = "DF";
                 _playerActionIcon.sprite = iconSprites[2];
-                timeManager.animateIcon(_playerActionIcon.transform);
+                TimeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "DG":
                 _slectedAction = "DG";
                 _playerActionIcon.sprite = iconSprites[3];
-                timeManager.animateIcon(_playerActionIcon.transform);
+                TimeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "FC":
                 _slectedAction = "FC";
                 _playerActionIcon.sprite = iconSprites[4];
-                timeManager.animateIcon(_playerActionIcon.transform);
+                TimeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "RST":
                 _slectedAction = "RST";
                 _playerActionIcon.sprite = iconSprites[5];
-                timeManager.animateIcon(_playerActionIcon.transform);
+                TimeManager.animateIcon(_playerActionIcon.transform);
                 break;
             case "Default":
                 _playerActionIcon.sprite = iconSprites[0];
-                timeManager.animateIcon(_playerActionIcon.transform);
+                TimeManager.animateIcon(_playerActionIcon.transform);
                 break;
         }
     }
@@ -333,7 +333,7 @@ public class TutorialManager : MonoBehaviour
                     tryLimit(2, 5, 0, 3);
                 }
                 void attack() {
-                    StartCoroutine(timeManager.slowMotion(1.8f, 0.5f));
+                    StartCoroutine(TimeManager.slowMotion(1.8f, 0.5f));
                     _player.GetComponent<Animator>().Play("ATK_jump");
                     _targetManager.attack();
                 }
@@ -617,7 +617,7 @@ public class TutorialManager : MonoBehaviour
         if (_tutorialHits == 3)
         {
             _cameraManager.PlayBloom(1);
-            StartCoroutine(timeManager.slowMotion(0.2f, 0.3f));
+            StartCoroutine(TimeManager.slowMotion(0.2f, 0.3f));
             _tutorialHits = 0;
         }
     }
@@ -700,7 +700,7 @@ public class TutorialManager : MonoBehaviour
                 if (!hasShownDetail_defend)
                 {
                     _overlaySprite.DOFade(0.6f, 0.4f);
-                    StartCoroutine(timeManager.slowMotion(1.2f, 0.4f));
+                    StartCoroutine(TimeManager.slowMotion(1.2f, 0.4f));
                     StartCoroutine(fadeIn());
                 }
                 IEnumerator fadeIn()
@@ -862,7 +862,7 @@ public class TutorialManager : MonoBehaviour
                 {
                     _overlaySprite.DOFade(0.6f, 0.6f);
                     StartCoroutine(fadeIn());
-                    StartCoroutine(timeManager.slowMotion(1f, 0.6f));
+                    StartCoroutine(TimeManager.slowMotion(1f, 0.6f));
                     hasShownDetail_rest = true;
                     StartCoroutine(toggleInput(4, 1, 5));
                 }
@@ -889,7 +889,7 @@ public class TutorialManager : MonoBehaviour
                     if (!hasShownDetail_counter)
                     {
                         _cameraManager.playChrome();
-                        StartCoroutine(timeManager.slowMotion(1.2f, .4f));
+                        StartCoroutine(TimeManager.slowMotion(1.2f, .4f));
                     }
                     break;
 
@@ -971,7 +971,7 @@ public class TutorialManager : MonoBehaviour
 
             case 3: // On start minigame
                 _cameraManager.playChrome();
-                StartCoroutine(timeManager.slowMotion(4, .8f));
+                StartCoroutine(TimeManager.slowMotion(4, .8f));
                 break;
         }
     }
@@ -991,7 +991,7 @@ public class TutorialManager : MonoBehaviour
                     if (!hasShownDetail_dirt)
                     {
                         _cameraManager.playChrome();
-                        StartCoroutine(timeManager.slowMotion(.2f, .4f));
+                        StartCoroutine(TimeManager.slowMotion(.2f, .4f));
                         // Move and appear cursor
                         StartCoroutine(toggleInput(8, 0));
                         cursorTransform.DOLocalMove(new Vector2(-140, -70), 0);

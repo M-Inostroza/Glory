@@ -8,7 +8,7 @@ public class superTarget : MonoBehaviour
 {
     SuperATKManager SuperATKManager;
     SoundPlayer soundPlayer;
-    timeManager timeManager;
+    TimeManager TimeManager;
     CircleCollider2D colider;
 
     Image _targetImage;
@@ -19,7 +19,7 @@ public class superTarget : MonoBehaviour
         colider = GetComponent<CircleCollider2D>();
         soundPlayer = FindObjectOfType<SoundPlayer>();
         SuperATKManager = FindObjectOfType<SuperATKManager>();
-        timeManager = FindObjectOfType<timeManager>();
+        TimeManager = FindObjectOfType<TimeManager>();
     }
     private void OnEnable()
     {
@@ -50,7 +50,7 @@ public class superTarget : MonoBehaviour
             soundPlayer.targetSounds();
             if (!gameManager.isTutorial())
             {
-                timeManager.enemyTimer.fillAmount += 0.01f;
+                TimeManager.enemyTimer.fillAmount += 0.01f;
             }
             
             transform.DOScale(1.2f, 0.1f).OnComplete(()=> transform.DOKill());

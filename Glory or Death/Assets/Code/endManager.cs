@@ -126,7 +126,7 @@ public class endManager : MonoBehaviour
         defeatEffects[1].transform.DOLocalMoveY(-1200, 1);
     }
 
-    public void victoryScreen() // Victory
+    public void VictoryScreen() // Victory
     {
         endOverlay.DOFade(0.85f, 1f);
         victoryLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);

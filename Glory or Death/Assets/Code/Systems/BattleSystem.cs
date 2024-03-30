@@ -211,7 +211,7 @@ public class BattleSystem : MonoBehaviour
             stopFightTimers();
 
             endManager.activateEndElements(true, 2);
-            endManager.victoryScreen();
+            endManager.VictoryScreen();
             StartCoroutine(endManager.animatePlayerAvatarIn("Thanks for playing!", 3, true));
 
             deadEnemy = true;

@@ -43,6 +43,9 @@ public class endManager : MonoBehaviour
     [Header("Victory")]
     [SerializeField] Transform victoryLabelContainer;
     [SerializeField] GameObject victoryScreenContainer;
+
+    [SerializeField] Transform _finalDaysUI;
+
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -128,6 +131,7 @@ public class endManager : MonoBehaviour
 
     public void VictoryScreen() // Victory
     {
+        ShowFinalDays();
         endOverlay.DOFade(0.85f, 1f);
         victoryLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
         quitButton.DOLocalMoveY(-160, 1).SetDelay(3.5f);
@@ -137,6 +141,11 @@ public class endManager : MonoBehaviour
         }
         victoryEffects[0].transform.DOLocalMoveY(-60, 1);
         victoryEffects[1].transform.DOLocalMoveY(-70, 1);
+    }
+
+    public void ShowFinalDays()
+    {
+        _finalDaysUI.DOLocalMoveY(67, 0.8f).SetDelay(2);
     }
 
     // Avatar Anim

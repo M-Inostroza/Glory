@@ -14,8 +14,8 @@ public class GoalManager : MonoBehaviour
 
     void Start()
     {
-        _goalText = transform.GetChild(0).GetComponent<TMP_Text>();
-        _goalTrack = transform.GetChild(1).GetComponent<TMP_Text>();
+        _goalText = transform.GetChild(1).GetComponent<TMP_Text>();
+        _goalTrack = transform.GetChild(2).GetComponent<TMP_Text>();
 
         _tryIndex = 0;
         _maxTry = 0;

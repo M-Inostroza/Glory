@@ -38,7 +38,7 @@ public class SuperATKManager : MonoBehaviour
 
     private void OnDisable()
     {
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             if (!TutorialManager._hasPlayedTutorial)
             {
@@ -53,7 +53,7 @@ public class SuperATKManager : MonoBehaviour
         spawnCounter = 0;
         hits = 0;
         ToggleSwordFeedback(true);
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.fadeTimer(0);
             TutorialManager.selectIcon("Default");
@@ -69,7 +69,7 @@ public class SuperATKManager : MonoBehaviour
     
     void finishMinigame()
     {
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             DialogueManager.superHitCheck();
         }
@@ -111,7 +111,7 @@ public class SuperATKManager : MonoBehaviour
         void playAnim()
         {
             hideFeedback();
-            if (!gameManager.isTutorial())
+            if (!GameManager.isTutorial())
             {
                 playUnitAnim();
                 playCameraAnim();

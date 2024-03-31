@@ -50,7 +50,7 @@ public class focusManager : MonoBehaviour
         CombatManager = FindObjectOfType<CombatManager>();
         audioManager = FindObjectOfType<AudioManager>();
 
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             _timerBarLeft = transform.GetChild(5).GetComponent<Slider>();
             _timerBarRight = transform.GetChild(6).GetComponent<Slider>();
@@ -81,7 +81,7 @@ public class focusManager : MonoBehaviour
 
         setDificulty();
         SetCursor();
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             RunBarTimers();
         }
@@ -135,7 +135,7 @@ public class focusManager : MonoBehaviour
 
         StartCoroutine(TimeManager.slowMotion(.4f, .4f, () =>
         {
-            if (!gameManager.isTutorial())
+            if (!GameManager.isTutorial())
             {
                 playerUnit.incrementAdrenaline(playerUnit.GetAdrenalineFactor());
                 _totalATKBuff++;
@@ -172,7 +172,7 @@ public class focusManager : MonoBehaviour
     }
     private void setDificulty()
     {
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             cursorSpeed = 2;
             targetSpeed = 1.6f;
@@ -191,7 +191,7 @@ public class focusManager : MonoBehaviour
 
     void activateKey()
     {
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.activateS();
         }

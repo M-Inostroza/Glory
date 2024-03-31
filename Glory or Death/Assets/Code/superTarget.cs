@@ -48,7 +48,7 @@ public class superTarget : MonoBehaviour
         if (!BattleSystem.IsPaused)
         {
             soundPlayer.targetSounds();
-            if (!gameManager.isTutorial())
+            if (!GameManager.isTutorial())
             {
                 TimeManager.enemyTimer.fillAmount += 0.01f;
             }

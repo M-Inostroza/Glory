@@ -109,7 +109,7 @@ public class CombatManager : MonoBehaviour
     // UI
     public static void move_UI_in(bool includeInput = true)
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             float move_in_speed = 0.3f;
 
@@ -130,7 +130,7 @@ public class CombatManager : MonoBehaviour
     }
     public static void move_UI_out()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             float move_out_speed = 0.3f;
 
@@ -149,7 +149,7 @@ public class CombatManager : MonoBehaviour
     }
     public static void move_Inputs_in()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             float move_in_speed = 0.5f;
             _inputManager.transform.DOLocalMoveX(_inputManager.transform.localPosition.x + 80, move_in_speed);

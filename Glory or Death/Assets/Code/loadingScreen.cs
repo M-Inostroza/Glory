@@ -19,7 +19,7 @@ public class loadingScreen : MonoBehaviour
     TimeManager _TimeManager;
     BattleSystem _BS;
     cameraManager _cameraManager;
-    gameManager _gameManager;
+    GameManager _GameManager;
 
     void Start()
     {
@@ -28,7 +28,7 @@ public class loadingScreen : MonoBehaviour
         _TimeManager = FindObjectOfType<TimeManager>();
         _BS = FindObjectOfType<BattleSystem>();
         _cameraManager = FindObjectOfType<cameraManager>();
-        _gameManager = FindObjectOfType<gameManager>();
+        _GameManager = FindObjectOfType<GameManager>();
 
         _leftPanel = gameObject.transform.GetChild(0).gameObject;
         _rightPanel = gameObject.transform.GetChild(1).gameObject;
@@ -83,7 +83,7 @@ public class loadingScreen : MonoBehaviour
         _cameraManager.playChrome();
         resetLoadingBar();
 
-        StartCoroutine(_gameManager.dayShow(3));
+        StartCoroutine(_GameManager.dayShow(3));
 
         toggleLoadingScreen(0, 0.3f);
         _inputManager.resetCooldown();

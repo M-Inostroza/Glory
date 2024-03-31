@@ -72,7 +72,7 @@ public class CounterManager : MonoBehaviour
         swordMaterial.SetFloat("_FadeAmount", 0);
         shieldMaterial.SetFloat("_FadeAmount", 0);
 
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             CombatManager.activateX();
         } else
@@ -85,7 +85,7 @@ public class CounterManager : MonoBehaviour
 
     public void closeMinigame()
     {
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.showUI();
             TutorialManager.fadeTimer(1);

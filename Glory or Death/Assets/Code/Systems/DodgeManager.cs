@@ -222,7 +222,7 @@ public class DodgeManager : MonoBehaviour
             }
         }
 
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.FadeInOverlay();
         }
@@ -252,7 +252,7 @@ public class DodgeManager : MonoBehaviour
     void triggerCameraAnimation()
     {
         mainCamera.DOFieldOfView(35, .7f);
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.dodgeDetailTutorial(3);
         }
@@ -264,7 +264,7 @@ public class DodgeManager : MonoBehaviour
     }
     void animateStars()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             DGCritic.Play();
             CombatManager.showStars();

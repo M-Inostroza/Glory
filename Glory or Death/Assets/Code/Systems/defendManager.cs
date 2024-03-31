@@ -2,7 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using AssetKits.ParticleImage;
 
-public class defendManager : MonoBehaviour
+public class defEndManager : MonoBehaviour
 {
     [SerializeField] Animator playerAnim;
     [SerializeField] GameObject _minigameCircle;
@@ -46,7 +46,7 @@ public class defendManager : MonoBehaviour
         float tutorialLevel = 2.5f;
         float combatLevel = 2f;
 
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.defendDetailTutorial(3);
             scaleUP = transform.DOScale(1, tutorialLevel).SetEase(Ease.InOutQuad).OnComplete(Fail);
@@ -99,7 +99,7 @@ public class defendManager : MonoBehaviour
         }
         else if (transform.localScale.x > _defaultScaleLimit && transform.localScale.x < .95f)
         {   // Normal win
-            if (!gameManager.isTutorial())
+            if (!GameManager.isTutorial())
             {
                 Player.incrementAdrenaline(Player.GetAdrenalineFactor());
             }
@@ -110,7 +110,7 @@ public class defendManager : MonoBehaviour
         } 
         else if (transform.localScale.x > _criticStart && transform.localScale.x < _criticEnd) 
         {   // Critic win
-            if (!gameManager.isTutorial())
+            if (!GameManager.isTutorial())
             {
                 Player.incrementAdrenaline(Player.GetAdrenalineFactor() + 2);
             }
@@ -142,7 +142,7 @@ public class defendManager : MonoBehaviour
         transformControl = false;
         canDefend = false;
 
-        if (gameManager.isTutorial() && !TutorialManager.hasShownDetail_defend && TutorialManager.GetNumberOfTries() != 0)
+        if (GameManager.isTutorial() && !TutorialManager.hasShownDetail_defend && TutorialManager.GetNumberOfTries() != 0)
         {
             StartCoroutine(TutorialManager.toggleInput(1, 1, 2.5f));
         }
@@ -173,7 +173,7 @@ public class defendManager : MonoBehaviour
     {
         cameraZoomIn();
         _aKeyCanvas.SetActive(true);
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.activateA();
         } else

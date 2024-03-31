@@ -17,7 +17,7 @@ public class TimeManager : MonoBehaviour
     private BattleSystem BS;
     private Input_Manager Input_Manager;
     private CombatManager combarUI;
-    private endManager endManager;
+    private EndManager EndManager;
     private AudioManager audioManager;
     private cameraManager _cameraManager;
 
@@ -85,7 +85,7 @@ public class TimeManager : MonoBehaviour
         combarUI = FindObjectOfType<CombatManager>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
-        endManager = FindObjectOfType<endManager>();
+        EndManager = FindObjectOfType<EndManager>();
         audioManager = FindObjectOfType<AudioManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
         timerIsRunning = false;
@@ -405,7 +405,7 @@ public class TimeManager : MonoBehaviour
                 battleTimer = 0;
                 _cameraManager.playChrome();
                 slowMotion(2, 0.1f);
-                endManager.StartCoroutine(endManager.showEndScreen(1));
+                EndManager.StartCoroutine(EndManager.showEndScreen(1));
             }
         }
     }

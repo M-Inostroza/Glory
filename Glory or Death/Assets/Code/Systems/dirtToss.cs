@@ -41,7 +41,7 @@ public class dirtToss : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             CombatManager.move_Inputs_out();
         }
@@ -61,7 +61,7 @@ public class dirtToss : MonoBehaviour
     private void OnDisable()
     {
         TutorialManager._canClick = true;
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.fadeTimer(1);
             if (TutorialManager._hasPlayedTutorial)
@@ -108,7 +108,7 @@ public class dirtToss : MonoBehaviour
             }
             if (opacity <= 0)
             {
-                if (gameManager.isTutorial())
+                if (GameManager.isTutorial())
                 {
                     TutorialManager.dirtDetailTutorial(2);
                 }
@@ -144,7 +144,7 @@ public class dirtToss : MonoBehaviour
         yield return new WaitForSeconds(time);
         DOTween.To(() => opacity, x => opacity = x, 0, 0.5f);
         IsDirty = false;
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.dirtDetailTutorial(2);
         }

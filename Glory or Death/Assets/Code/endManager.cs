@@ -6,7 +6,7 @@ using DG.Tweening;
 using AssetKits.ParticleImage;
 using TMPro;
 
-public class endManager : MonoBehaviour
+public class EndManager : MonoBehaviour
 {
     CombatManager CombatManager;
     SoundPlayer SoundPlayer;
@@ -115,7 +115,7 @@ public class endManager : MonoBehaviour
         hideUpgradeButton();
     }
 
-    public void defeatScreen()
+    public void DefeatScreen()
     {
         endOverlay.DOFade(0.85f, 1f);
         enemyContainer.DOLocalMoveX(0, 0.3f).SetDelay(2.5f);
@@ -145,6 +145,7 @@ public class endManager : MonoBehaviour
 
     public void ShowFinalDays()
     {
+        _finalDaysUI.GetChild(4).GetComponent<TMP_Text>().text = GameManager.GetDayCounter().ToString() + " Days!";
         _finalDaysUI.DOLocalMoveY(67, 0.8f).SetDelay(2);
     }
 

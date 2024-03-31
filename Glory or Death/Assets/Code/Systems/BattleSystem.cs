@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour
 {
-    gameManager _gameManager;
+    GameManager GameManager;
     TargetManager targetManager;
-    defendManager defendManager;
+    defEndManager defEndManager;
     TimeManager TimeManager;
     Input_Manager Input_Manager;
     CombatManager CombatManager;
-    endManager endManager;
+    EndManager EndManager;
     cameraManager cameraManager;
     AudioManager audioManager;
     loadingScreen _resetLoadingScreen;
@@ -91,7 +91,7 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayerDefend()
     {
-        defendManager.activateShieldMinigame();
+        defEndManager.activateShieldMinigame();
     }
     public void PlayDodge()
     {
@@ -196,8 +196,8 @@ public class BattleSystem : MonoBehaviour
             stopFightTimers();
             enemyUnit.GetComponent<Animator>().SetBool("Victory", true);
             
-            endManager.activateEndElements(true, 1);
-            endManager.defeatScreen();
+            EndManager.activateEndElements(true, 1);
+            EndManager.DefeatScreen();
 
             deadPlayer = true;
         }
@@ -210,9 +210,9 @@ public class BattleSystem : MonoBehaviour
             audioManager.Play("Last_Hit");
             stopFightTimers();
 
-            endManager.activateEndElements(true, 2);
-            endManager.VictoryScreen();
-            StartCoroutine(endManager.animatePlayerAvatarIn("Thanks for playing!", 3, true));
+            EndManager.activateEndElements(true, 2);
+            EndManager.VictoryScreen();
+            StartCoroutine(EndManager.animatePlayerAvatarIn("Thanks for playing!", 3, true));
 
             deadEnemy = true;
         }
@@ -222,15 +222,15 @@ public class BattleSystem : MonoBehaviour
     public void resetBattle()
     {
         cameraManager.playChrome();
-        endManager.hideUpgradeScreen(true);
-        endManager.hideUpgradeButton();
+        EndManager.hideUpgradeScreen(true);
+        EndManager.hideUpgradeButton();
         _resetLoadingScreen.toggleLoadingScreen(1, 0.3f);
         StartCoroutine(_resetLoadingScreen.fillLoadingSlider(1, 0.3f));
 
         setPlayerStats();
         setEnemyStats();
-        _gameManager.IncrementTurnCounter();
-        endManager.resetFight();
+        GameManager.IncrementTurnCounter();
+        EndManager.resetFight();
     }
     void setPlayerStats()
     {
@@ -273,8 +273,8 @@ public class BattleSystem : MonoBehaviour
         playerPanel.DOLocalMoveX(-900, 1).SetDelay(3).OnComplete(complete);
         void complete()
         {
-            _gameManager.SetTurnCounter(1);
-            StartCoroutine(_gameManager.dayShow(3));
+            GameManager.SetDayCounter(1);
+            StartCoroutine(GameManager.dayShow(3));
             TimeManager.continueUnitTimer();
             //audioManager.Play("Combat_Theme"); REMOVE
             _loadingScreen.SetActive(false);
@@ -308,12 +308,12 @@ public class BattleSystem : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         CombatManager = FindObjectOfType<CombatManager>();
         targetManager = FindObjectOfType<TargetManager>();
-        defendManager = FindObjectOfType<defendManager>();
+        defEndManager = FindObjectOfType<defEndManager>();
         TimeManager = FindObjectOfType<TimeManager>();
-        endManager = FindObjectOfType<endManager>();
+        EndManager = FindObjectOfType<EndManager>();
         cameraManager = FindObjectOfType<cameraManager>();
         _resetLoadingScreen = FindObjectOfType<loadingScreen>();
-        _gameManager = FindObjectOfType<gameManager>();
+        GameManager = FindObjectOfType<GameManager>();
 
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();

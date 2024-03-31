@@ -54,7 +54,7 @@ public class TutorialManager : MonoBehaviour
     cameraManager _cameraManager;
     Player _player;
     TargetManager _targetManager;
-    defendManager _defendManager;
+    defEndManager _defEndManager;
     AudioManager _audioManager;
     DialogueManager _dialogueManager;
     GoalManager _goalManager;
@@ -80,7 +80,7 @@ public class TutorialManager : MonoBehaviour
         _targetManager = FindObjectOfType<TargetManager>();
         _audioManager = FindObjectOfType<AudioManager>();
         _player = FindObjectOfType<Player>();
-        _defendManager = FindObjectOfType<defendManager>();
+        _defEndManager = FindObjectOfType<defEndManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
         _goalManager = FindObjectOfType<GoalManager>();
 
@@ -369,7 +369,7 @@ public class TutorialManager : MonoBehaviour
                     {
                         fadeTimer(0);
                         _player.DecrementCurrentStamina(10);
-                        _defendManager.activateShieldMinigame();
+                        _defEndManager.activateShieldMinigame();
                     }
                     else
                     {
@@ -382,7 +382,7 @@ public class TutorialManager : MonoBehaviour
                     fadeTimer(0);
                     tryLimit(3, 4, 1, 2);
                     _player.DecrementCurrentStamina(10);
-                    _defendManager.activateShieldMinigame();
+                    _defEndManager.activateShieldMinigame();
                 }
                 break;
             case "DG":
@@ -664,7 +664,7 @@ public class TutorialManager : MonoBehaviour
     public bool hasShownDetail_defend = false;
     public void defendDetailTutorial(int step)
     {
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             Image cursorImage = _cursorContainer.transform.GetChild(1).GetComponent<Image>();
             Transform cursorTransform = _cursorContainer.transform.GetChild(1).transform;
@@ -879,7 +879,7 @@ public class TutorialManager : MonoBehaviour
     public bool hasShownDetail_counter = false;
     public void counterDetailTutorial(int step)
     {
-        if (gameManager.isTutorial() && _numberOfTries >= 1)
+        if (GameManager.isTutorial() && _numberOfTries >= 1)
         {
             StartCoroutine(toggleInput(6, 0));
 
@@ -914,7 +914,7 @@ public class TutorialManager : MonoBehaviour
     public bool hasShownDetail_superCounter = false;
     public void superCounterDetailTutorial(int step)
     {
-        if (gameManager.isTutorial() && _numberOfTries >= 1)
+        if (GameManager.isTutorial() && _numberOfTries >= 1)
         {
             switch (step)
             {
@@ -983,7 +983,7 @@ public class TutorialManager : MonoBehaviour
         Image cursorImage = _cursorContainer.transform.GetChild(6).GetComponent<Image>();
         Transform cursorTransform = _cursorContainer.transform.GetChild(6).transform;
 
-        if (gameManager.isTutorial() && _numberOfTries >= 1)
+        if (GameManager.isTutorial() && _numberOfTries >= 1)
         {
             switch (step)
             {

@@ -6,9 +6,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class gameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    [SerializeField] int turnCounter;
+    private static int _dayCounter;
     [SerializeField] Image overlay;
     [SerializeField] Transform dayContainer;
 
@@ -71,7 +71,7 @@ public class gameManager : MonoBehaviour
 
     public IEnumerator dayShow(float time)
     {
-        dayContainer.GetChild(0).GetComponent<TMP_Text>().text = "Day " + turnCounter.ToString();
+        dayContainer.GetChild(0).GetComponent<TMP_Text>().text = "Day " + _dayCounter.ToString();
         dayContainer.DOLocalMoveY(-175, 1);
         yield return new WaitForSeconds(time);
         dayContainer.DOLocalMoveY(-320, 1);
@@ -85,12 +85,16 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    public void SetTurnCounter(int day)
+    public void SetDayCounter(int day)
     {
-        turnCounter = day;
+        _dayCounter = day;
     }
     public void IncrementTurnCounter()
     {
-        turnCounter++;
+        _dayCounter++;
+    }
+    public static int GetDayCounter()
+    {
+        return _dayCounter;
     }
 }

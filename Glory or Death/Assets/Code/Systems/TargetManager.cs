@@ -33,7 +33,7 @@ public class TargetManager : MonoBehaviour
     public void attack()
     {
         activateFeedback();
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             CombatManager.move_UI_out();
             BattleSystem.targetHit = 0;
@@ -54,7 +54,7 @@ public class TargetManager : MonoBehaviour
 
     IEnumerator activateTargets()
     {
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             if (!TutorialManager.hasShownDetail_attack)
             {
@@ -70,7 +70,7 @@ public class TargetManager : MonoBehaviour
             targets[i].GetComponent<SpriteRenderer>().DOFade(1, 0);
             targets[i].SetActive(true);
 
-            if (gameManager.isTutorial())
+            if (GameManager.isTutorial())
             {
                 if (!TutorialManager.hasShownDetail_attack)
                 {
@@ -105,7 +105,7 @@ public class TargetManager : MonoBehaviour
 
         courtain.DOColor(new Color(0, 0, 0, 0), .5f);
         CombatManager.move_UI_in();
-        if (gameManager.isTutorial() && !TutorialManager.hasShownDetail_attack && TutorialManager.GetNumberOfTries() != 0)
+        if (GameManager.isTutorial() && !TutorialManager.hasShownDetail_attack && TutorialManager.GetNumberOfTries() != 0)
         {
             StartCoroutine(TutorialManager.toggleInput(0, 1, 3.2f));
         }
@@ -113,7 +113,7 @@ public class TargetManager : MonoBehaviour
 
     public void checkCritic()
     {
-        if (BattleSystem.targetHit == 3 && !BattleSystem.GetDeadEnemy() && !gameManager.isTutorial())
+        if (BattleSystem.targetHit == 3 && !BattleSystem.GetDeadEnemy() && !GameManager.isTutorial())
         {
             CombatManager.showStars();
             ATKstars.Play();

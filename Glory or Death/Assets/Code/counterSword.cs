@@ -55,7 +55,7 @@ public class counterSword : MonoBehaviour
             {
                 case "Shield Image":
                     canCollide = false;
-                    if (!gameManager.isTutorial())
+                    if (!GameManager.isTutorial())
                     {
                         enemy.SetCriticBlock(false);
                         combatUI.shakeShieldBar();
@@ -80,7 +80,7 @@ public class counterSword : MonoBehaviour
 
                 case "Counter Target":
                     canCollide = false;
-                    if (gameManager.isTutorial())
+                    if (GameManager.isTutorial())
                     {
                         TutorialManager.counterDetailTutorial(2);
                     }
@@ -98,7 +98,7 @@ public class counterSword : MonoBehaviour
 
                 case "Critic":
                     canCollide = false;
-                    if (!gameManager.isTutorial())
+                    if (!GameManager.isTutorial())
                     {
                         enemy.SetCriticBlock(true);
                         _criticSparks.Play();
@@ -139,7 +139,7 @@ public class counterSword : MonoBehaviour
     }
     void playAnims_closeGame()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             enemy.GetComponent<Animator>().SetBool("attack", true);
             player.GetComponent<Animator>().SetBool("HURT", true);

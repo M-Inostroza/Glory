@@ -48,7 +48,7 @@ public class SuperCounterManager : MonoBehaviour
         _playerAnimator = _player.GetComponent<Animator>();
         enemy = FindObjectOfType<Enemy>();
 
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             _enemyAnimator = enemy.GetComponent<Animator>();
         } else
@@ -97,7 +97,7 @@ public class SuperCounterManager : MonoBehaviour
         yield return new WaitForSeconds(timer);
         moveCameraOut();
         gameObject.SetActive(false);
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             _enemyAnimator.Play("Attack_Strong");
             _playerAnimator.Play("superDMG");
@@ -121,7 +121,7 @@ public class SuperCounterManager : MonoBehaviour
     // Manages minigame in tutorial mode
     void handleTutorial()
     {
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             // Check swords
             if (swordCounter > 4 && !TutorialManager.hasShownDetail_superCounter)
@@ -149,7 +149,7 @@ public class SuperCounterManager : MonoBehaviour
     {
         if (!BattleSystem.IsPaused)
         {
-            if (gameManager.isTutorial())
+            if (GameManager.isTutorial())
             {
                 rotationSpeed = 80;
             } else
@@ -193,7 +193,7 @@ public class SuperCounterManager : MonoBehaviour
     // Sets enemy super damage (Not Tutorial)
     void SetEnemySuperDMG()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             enemy.setSuperDMG(swordCounter);
         }
@@ -223,7 +223,7 @@ public class SuperCounterManager : MonoBehaviour
     void playAllEffects()
     {
         // TO DO: Activate left right
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.hideUI();
             if (!TutorialManager.hasShownDetail_superCounter)
@@ -241,7 +241,7 @@ public class SuperCounterManager : MonoBehaviour
     }
     void moveFeedback()
     {
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             feedbackContainer.DOLocalMoveY(-2, 0.3f);
         } else

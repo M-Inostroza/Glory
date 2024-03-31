@@ -35,7 +35,7 @@ public class restManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())  
         {
             FindObjectOfType<CombatManager>().activateLeftRight();
         } else
@@ -73,7 +73,7 @@ public class restManager : MonoBehaviour
 
     private void OnDisable()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             TimeManager.continueUnitTimer();
             TimeManager.fadeInUnitTimer();
@@ -98,7 +98,7 @@ public class restManager : MonoBehaviour
     }
     void checkCritic()
     {
-        if (restSlider.value > 85 && !gameManager.isTutorial())
+        if (restSlider.value > 85 && !GameManager.isTutorial())
         {
             player.incrementAdrenaline(player.GetAdrenalineFactor());
             stars.Play();

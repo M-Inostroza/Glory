@@ -11,7 +11,7 @@ public class upgradeManager : MonoBehaviour
 
     Player _player;
     TimeManager _TimeManager;
-    endManager _endManager;
+    EndManager _EndManager;
     AudioManager _audioManager;
     CombatManager CombatManager;
 
@@ -23,7 +23,7 @@ public class upgradeManager : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         _TimeManager = FindObjectOfType<TimeManager>();
-        _endManager = FindObjectOfType<endManager>();
+        _EndManager = FindObjectOfType<EndManager>();
         _audioManager = FindObjectOfType<AudioManager>();
         CombatManager = FindObjectOfType<CombatManager>();
     }
@@ -87,12 +87,12 @@ public class upgradeManager : MonoBehaviour
     // Upgrades right block
     public void reduceDodgeCooldown()
     {
-        if (_endManager.GetStars() >= 2)
+        if (_EndManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
             _TimeManager.dodgeFactorCD -= 0.2f;
-            _endManager.reduceStars(2);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(2);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(0).transform);
         } else
         {
@@ -101,12 +101,12 @@ public class upgradeManager : MonoBehaviour
     }
     public void reduceATKCooldown()
     {
-        if (_endManager.GetStars() >= 2)
+        if (_EndManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
             _TimeManager.attackFactorCD -= 0.2f;
-            _endManager.reduceStars(2);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(2);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(1).transform);
         } else
         {
@@ -115,12 +115,12 @@ public class upgradeManager : MonoBehaviour
     }
     public void adrenalineEarning()
     {
-        if (_endManager.GetStars() >= 3)
+        if (_EndManager.GetStars() >= 3)
         {
             upgradedSomehthing = true;
             _player.SetAdrenalineFactor(_player.GetAdrenalineFactor() + 1);
-            _endManager.reduceStars(3);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(3);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(2).transform);
         }
         else
@@ -130,13 +130,13 @@ public class upgradeManager : MonoBehaviour
     }
     public void reduceFocusCost()
     {
-        if (_endManager.GetStars() >= 2)
+        if (_EndManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
             _TimeManager.CostFC = _TimeManager.CostFC -= 5;
             _TimeManager.SetActionCost();
-            _endManager.reduceStars(2);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(2);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(3).transform);
         }
         else
@@ -148,12 +148,12 @@ public class upgradeManager : MonoBehaviour
     // Upgrades center block
     public void incrementATK()
     {
-        if (_endManager.GetStars() >= 3)
+        if (_EndManager.GetStars() >= 3)
         {
             upgradedSomehthing = true;
             _player.NativeDamage++;
-            _endManager.reduceStars(3);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(3);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _centerBlock.transform.GetChild(0).transform);
         }
         else
@@ -163,12 +163,12 @@ public class upgradeManager : MonoBehaviour
     }
     public void incrementSpeed()
     {
-        if (_endManager.GetStars() >= 4)
+        if (_EndManager.GetStars() >= 4)
         {
             upgradedSomehthing = true;
             _player.incrementBaseSpeed(.4f);
-            _endManager.reduceStars(4);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(4);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _centerBlock.transform.GetChild(1).transform);
         }
         else
@@ -179,12 +179,12 @@ public class upgradeManager : MonoBehaviour
 
     public void shieldEarning()
     {
-        if (_endManager.GetStars() >= 3)
+        if (_EndManager.GetStars() >= 3)
         {
             upgradedSomehthing = true;
             _player.SetShieldFactor(_player.GetShieldFactor() + 1);
-            _endManager.reduceStars(3);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(3);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _centerBlock.transform.GetChild(2).transform);
         }
         else
@@ -198,12 +198,12 @@ public class upgradeManager : MonoBehaviour
     {
         // calculate 30%
         float lifeBack = _player.GetMaxHP() * .3f;
-        if (_endManager.GetStars() >= 3)
+        if (_EndManager.GetStars() >= 3)
         {
             upgradedSomehthing = true;
             _player.SetCurrentHP(_player.GetCurrentHP() + (int)lifeBack);
-            _endManager.reduceStars(3);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(3);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _leftBlock.transform.GetChild(0).transform);
         }
         else
@@ -213,13 +213,13 @@ public class upgradeManager : MonoBehaviour
     }
     public void incrementMaxShield()
     {
-        if (_endManager.GetStars() >= 2)
+        if (_EndManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
             CombatManager.updateShieldBar();
             _player.setMaxShield(_player.GetMaxShield() + 1);
-            _endManager.reduceStars(2);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(2);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _leftBlock.transform.GetChild(1).transform);
         }
         else
@@ -230,13 +230,13 @@ public class upgradeManager : MonoBehaviour
 
     public void incrementBlockSpeed()
     {
-        if (_endManager.GetStars() >= 2)
+        if (_EndManager.GetStars() >= 2)
         {
             upgradedSomehthing = true;
             CombatManager.updateShieldBar();
             CounterManager.SetRotationSpeed(CounterManager.GetRotationSpeed() + 1);
-            _endManager.reduceStars(2);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(2);
+            _EndManager.updateStarUI();
             buttonFeedback(true, _leftBlock.transform.GetChild(2).transform);
         }
         else
@@ -248,11 +248,11 @@ public class upgradeManager : MonoBehaviour
     // Randomizer
     public void randomizeUpgrades()
     {
-        if (_endManager.GetStars() >= 1 && !upgradedSomehthing)
+        if (_EndManager.GetStars() >= 1 && !upgradedSomehthing)
         {
             _audioManager.Play("Randomize");
-            _endManager.reduceStars(1);
-            _endManager.updateStarUI();
+            _EndManager.reduceStars(1);
+            _EndManager.updateStarUI();
             setRandomUpgrade();
         } else
         {

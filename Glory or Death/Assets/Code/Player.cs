@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         currentStamina = maxStamina;
         currentShield = 0;
         currentHP = maxHP;
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             currentShield = 0;
         } else
@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
     }
     public void stopAttack()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             if (BS.GetDeadEnemy() == false)
             {
@@ -171,7 +171,7 @@ public class Player : MonoBehaviour
     public void stopDodgeSkill()
     {
         myAnim.SetBool("evadeSuccess", false);
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             TimeManager.playerTimer.fillAmount = 1;
             TimeManager.continueUnitTimer();
@@ -185,7 +185,7 @@ public class Player : MonoBehaviour
     public void stopDodgeSkillFail()
     {
         myAnim.SetBool("skillFail", false);
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.fadeTimer(1);
             TutorialManager.selectIcon("Default");
@@ -209,7 +209,7 @@ public class Player : MonoBehaviour
     public void stopFocusSkill()
     {
         myAnim.SetBool("focusSuccess", false);
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             TimeManager.playerTimer.fillAmount = 1;
             TimeManager.continueUnitTimer();
@@ -223,7 +223,7 @@ public class Player : MonoBehaviour
     public void stopShieldSuccess()
     {
         myAnim.SetBool("skillShieldSuccess", false);
-        if (gameManager.isTutorial())
+        if (GameManager.isTutorial())
         {
             TutorialManager.fadeTimer(1);
             TutorialManager.selectIcon("Default");
@@ -249,7 +249,7 @@ public class Player : MonoBehaviour
     }
     public void hurtParts(int part)
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             switch (part)
             {
@@ -282,7 +282,7 @@ public class Player : MonoBehaviour
 
     public void checkVictoryCondition()
     {
-        if (!gameManager.isTutorial() && enemy_unit != null)
+        if (!GameManager.isTutorial() && enemy_unit != null)
         {
             myAnim.SetInteger("Victory", enemy_unit.GetComponent<Enemy>().currentHP);
         }
@@ -296,7 +296,7 @@ public class Player : MonoBehaviour
     }
     public void showEnemyDamage()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             BS.showHit(_nativeDamage, BS.hitText_Enemy.transform);
         }
@@ -381,14 +381,14 @@ public class Player : MonoBehaviour
                 continue;
             child.transform.DOScale(0, 0.3f).SetEase(Ease.InBack).OnComplete(()=> attackFeedback.SetActive(false));
         }
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             targetManager.checkCritic();
         }
     }
     public void doDMG()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             enemy_unit.GetComponent<Enemy>().TakeDamage(NativeDamage);
         }
@@ -427,10 +427,10 @@ public class Player : MonoBehaviour
     }
     public void increaseCurrentShield()
     {
-        if (defendManager.GetShieldCritic())
+        if (defEndManager.GetShieldCritic())
         {
             currentShield += shieldFactor + 1;
-            defendManager.SetShieldCritic(false);
+            defEndManager.SetShieldCritic(false);
         } else
         {
             currentShield += shieldFactor;
@@ -540,14 +540,14 @@ public class Player : MonoBehaviour
     // Buffs
     public void doDamageBuff()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             CombatManager.damageBuff("player");
         }
     }
     public void doSpeedBuff()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             CombatManager.speedBuff("player");
         }
@@ -565,7 +565,7 @@ public class Player : MonoBehaviour
 
     public void PlayBloodMid()
     {
-        if (!gameManager.isTutorial())
+        if (!GameManager.isTutorial())
         {
             attackBlood.gameObject.SetActive(true);
         } else

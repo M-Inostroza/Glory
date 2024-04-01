@@ -54,7 +54,7 @@ public class TutorialManager : MonoBehaviour
     cameraManager _cameraManager;
     Player _player;
     TargetManager _targetManager;
-    defEndManager _defEndManager;
+    DefendManager DefendManager;
     AudioManager _audioManager;
     DialogueManager _dialogueManager;
     GoalManager _goalManager;
@@ -80,7 +80,7 @@ public class TutorialManager : MonoBehaviour
         _targetManager = FindObjectOfType<TargetManager>();
         _audioManager = FindObjectOfType<AudioManager>();
         _player = FindObjectOfType<Player>();
-        _defEndManager = FindObjectOfType<defEndManager>();
+        DefendManager = FindObjectOfType<DefendManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
         _goalManager = FindObjectOfType<GoalManager>();
 
@@ -369,7 +369,7 @@ public class TutorialManager : MonoBehaviour
                     {
                         fadeTimer(0);
                         _player.DecrementCurrentStamina(10);
-                        _defEndManager.activateShieldMinigame();
+                        DefendManager.activateShieldMinigame();
                     }
                     else
                     {
@@ -382,7 +382,7 @@ public class TutorialManager : MonoBehaviour
                     fadeTimer(0);
                     tryLimit(3, 4, 1, 2);
                     _player.DecrementCurrentStamina(10);
-                    _defEndManager.activateShieldMinigame();
+                    DefendManager.activateShieldMinigame();
                 }
                 break;
             case "DG":

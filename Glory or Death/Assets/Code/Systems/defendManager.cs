@@ -2,7 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using AssetKits.ParticleImage;
 
-public class defEndManager : MonoBehaviour
+public class DefendManager : MonoBehaviour
 {
     [SerializeField] Animator playerAnim;
     [SerializeField] GameObject _minigameCircle;

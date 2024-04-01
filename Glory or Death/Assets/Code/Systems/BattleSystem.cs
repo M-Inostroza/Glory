@@ -8,14 +8,14 @@ public class BattleSystem : MonoBehaviour
 {
     GameManager GameManager;
     TargetManager targetManager;
-    defEndManager defEndManager;
+    DefendManager DefendManager;
     TimeManager TimeManager;
     Input_Manager Input_Manager;
     CombatManager CombatManager;
     EndManager EndManager;
     cameraManager cameraManager;
     AudioManager audioManager;
-    loadingScreen _resetLoadingScreen;
+    LoadingScreen LoadingScreen;
 
     [SerializeField] GameObject _loadingScreen;
     [SerializeField] Transform playerPanel;
@@ -66,7 +66,7 @@ public class BattleSystem : MonoBehaviour
         GetScripts();
 
         TimeManager.stopUnitTimer();
-        openGame();
+        OpenGame();
     }
 
     private void Update()
@@ -91,7 +91,7 @@ public class BattleSystem : MonoBehaviour
 
     public void PlayerDefend()
     {
-        defEndManager.activateShieldMinigame();
+        DefendManager.activateShieldMinigame();
     }
     public void PlayDodge()
     {
@@ -224,8 +224,8 @@ public class BattleSystem : MonoBehaviour
         cameraManager.playChrome();
         EndManager.hideUpgradeScreen(true);
         EndManager.hideUpgradeButton();
-        _resetLoadingScreen.toggleLoadingScreen(1, 0.3f);
-        StartCoroutine(_resetLoadingScreen.fillLoadingSlider(1, 0.3f));
+        LoadingScreen.toggleLoadingScreen(1, 0.3f);
+        StartCoroutine(LoadingScreen.fillLoadingSlider(1, 0.3f));
 
         setPlayerStats();
         setEnemyStats();
@@ -255,22 +255,14 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(TimeManager.slowMotion(.7f, .2f));
         TimeManager.stopUnitTimer();
         TimeManager.fadeOutUnitTimer();
-        TimeManager.deactivateFightTimer();
+        TimeManager.DeactivateFightTimer();
     }
-    public void resetTimers(int mainTimer)
-    {
-        TimeManager.resetFightTimer(mainTimer);
-        TimeManager.activateFightTimer();
+    
 
-        TimeManager.resetPlayerTimer();
-        TimeManager.resetEnemyTimer();
-        TimeManager.continueUnitTimer();
-    }
-
-    void openGame() // Deals with the panels showing at the begining of the fight
+    void OpenGame() // Deals with the panels showing at the begining of the fight
     {
-        enemyPanel.DOLocalMoveX(900, 1).SetDelay(3);
-        playerPanel.DOLocalMoveX(-900, 1).SetDelay(3).OnComplete(complete);
+        enemyPanel.DOLocalMoveX(900, 1).SetDelay(2.5f);
+        playerPanel.DOLocalMoveX(-900, 1).SetDelay(2.5f).OnComplete(complete);
         void complete()
         {
             GameManager.SetDayCounter(1);
@@ -279,7 +271,7 @@ public class BattleSystem : MonoBehaviour
             //audioManager.Play("Combat_Theme"); REMOVE
             _loadingScreen.SetActive(false);
         }
-    }
+    } // Global Start
 
     void checkBloom()
     {
@@ -308,11 +300,11 @@ public class BattleSystem : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         CombatManager = FindObjectOfType<CombatManager>();
         targetManager = FindObjectOfType<TargetManager>();
-        defEndManager = FindObjectOfType<defEndManager>();
+        DefendManager = FindObjectOfType<DefendManager>();
         TimeManager = FindObjectOfType<TimeManager>();
         EndManager = FindObjectOfType<EndManager>();
         cameraManager = FindObjectOfType<cameraManager>();
-        _resetLoadingScreen = FindObjectOfType<loadingScreen>();
+        LoadingScreen = FindObjectOfType<LoadingScreen>();
         GameManager = FindObjectOfType<GameManager>();
 
         playerUnit = FindObjectOfType<Player>();

@@ -427,10 +427,10 @@ public class Player : MonoBehaviour
     }
     public void increaseCurrentShield()
     {
-        if (defEndManager.GetShieldCritic())
+        if (DefendManager.GetShieldCritic())
         {
             currentShield += shieldFactor + 1;
-            defEndManager.SetShieldCritic(false);
+            DefendManager.SetShieldCritic(false);
         } else
         {
             currentShield += shieldFactor;

@@ -10,7 +10,7 @@ public class EndManager : MonoBehaviour
 {
     CombatManager CombatManager;
     SoundPlayer SoundPlayer;
-    AudioManager audioManager;
+    AudioManager AudioManager;
     Player _player;
 
     [SerializeField] Image endOverlay;
@@ -39,7 +39,7 @@ public class EndManager : MonoBehaviour
     [SerializeField] Transform defeatLabelContainer;
     [SerializeField] GameObject defeatScreenContainer;
 
-    // Victory
+    // Victory elements
     [Header("Victory")]
     [SerializeField] Transform victoryLabelContainer;
     [SerializeField] GameObject victoryScreenContainer;
@@ -48,7 +48,7 @@ public class EndManager : MonoBehaviour
 
     private void Awake()
     {
-        audioManager = FindObjectOfType<AudioManager>();
+        AudioManager = FindObjectOfType<AudioManager>();
         CombatManager = FindObjectOfType<CombatManager>();
         SoundPlayer = FindObjectOfType<SoundPlayer>();
 
@@ -61,8 +61,8 @@ public class EndManager : MonoBehaviour
     {
         updateStarUI();
         activateEndElements(true, 0);
-        audioManager.Play("End_Horn");
-        audioManager.Play("End_Drums");
+        AudioManager.Play("End_Horn");
+        AudioManager.Play("End_Drums");
         endOverlay.DOFade(0.85f, 1f);
         yield return new WaitForSeconds(delay);
 
@@ -78,7 +78,7 @@ public class EndManager : MonoBehaviour
             case 1: // Defeat
                 activateDefeatElements(state);
                 break;
-            case 2: // Victory
+            case 2: // Victory case
                 ActivateVictoryElements(state);
                 break;
         }
@@ -129,8 +129,11 @@ public class EndManager : MonoBehaviour
         defeatEffects[1].transform.DOLocalMoveY(-1200, 1);
     }
 
-    public void VictoryScreen() // Victory
+    public void VictoryScreen() // Victory 
     {
+        // Debug
+        FindObjectOfType<TimeManager>().stopUnitTimer();
+        // Debug
         ShowFinalDays();
         endOverlay.DOFade(0.85f, 1f);
         victoryLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
@@ -145,6 +148,11 @@ public class EndManager : MonoBehaviour
 
     public void ShowFinalDays()
     {
+        if (GameManager.UpdateNewRecord())
+        {
+            // Create the new record effect
+            _finalDaysUI.GetChild(5).gameObject.SetActive(true);
+        }
         _finalDaysUI.GetChild(4).GetComponent<TMP_Text>().text = GameManager.GetDayCounter().ToString() + " Days!";
         _finalDaysUI.DOLocalMoveY(67, 0.8f).SetDelay(2);
     }
@@ -209,14 +217,14 @@ public class EndManager : MonoBehaviour
     }
     public void hideUpgradeButton()
     {
-        audioManager.Play("DG_jump_1");
+        AudioManager.Play("DG_jump_1");
         upgradeButton.DOLocalMoveX(530, .3f);
     }
 
     public void showUpgradeScreen()
     {
         // onUpgradeButton
-        audioManager.Play("UI_select");
+        AudioManager.Play("UI_select");
         _upgradeManager.SetActive(true);
         animatePlayerAvatarOut();
         _upgradeManager.transform.DOLocalMoveX(200, 0.3f);
@@ -229,7 +237,7 @@ public class EndManager : MonoBehaviour
         summeryWindow.transform.DOLocalMoveX(0, 0.3f);
         if (!isReset)
         {
-            audioManager.Play("UI_select");
+            AudioManager.Play("UI_select");
             showUpgradeButton();
         }
     }

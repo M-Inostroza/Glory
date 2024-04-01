@@ -9,6 +9,8 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     private static int _dayCounter;
+    private static int _dayRecord;
+
     [SerializeField] Image overlay;
     [SerializeField] Transform dayContainer;
 
@@ -85,6 +87,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Day counters
     public void SetDayCounter(int day)
     {
         _dayCounter = day;
@@ -96,5 +99,27 @@ public class GameManager : MonoBehaviour
     public static int GetDayCounter()
     {
         return _dayCounter;
+    }
+
+    // Day record
+    public static int GetRecordDays()
+    {
+        return _dayRecord;
+    }
+    public static void SetRecordDays(int newRecord)
+    {
+        _dayRecord = newRecord;
+    }
+
+    public static bool UpdateNewRecord()
+    {
+        if (_dayCounter >= _dayRecord)
+        {
+            _dayRecord = _dayCounter;
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 }

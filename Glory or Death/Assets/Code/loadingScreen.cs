@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class loadingScreen : MonoBehaviour
+public class LoadingScreen : MonoBehaviour
 {
     private static GameObject _leftPanel;
     private static GameObject _rightPanel;
@@ -16,8 +16,7 @@ public class loadingScreen : MonoBehaviour
 
     AudioManager _audioManager;
     Input_Manager _inputManager;
-    TimeManager _TimeManager;
-    BattleSystem _BS;
+    TimeManager TimeManager;
     cameraManager _cameraManager;
     GameManager _GameManager;
 
@@ -25,8 +24,7 @@ public class loadingScreen : MonoBehaviour
     {
         _inputManager = FindObjectOfType<Input_Manager>();
         _audioManager = FindObjectOfType<AudioManager>();
-        _TimeManager = FindObjectOfType<TimeManager>();
-        _BS = FindObjectOfType<BattleSystem>();
+        TimeManager = FindObjectOfType<TimeManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
         _GameManager = FindObjectOfType<GameManager>();
 
@@ -77,7 +75,7 @@ public class loadingScreen : MonoBehaviour
         }
     }
 
-    public void openScreen()
+    public void openScreen() // Also global start?
     {
         StartCoroutine(TimeManager.slowMotion(0.5f, 0.2f));
         _cameraManager.playChrome();
@@ -88,8 +86,8 @@ public class loadingScreen : MonoBehaviour
         toggleLoadingScreen(0, 0.3f);
         _inputManager.resetCooldown();
 
-        _TimeManager.selectEnemyAction();
-        _BS.resetTimers((int)_TimeManager.defaultFightTime);
+        TimeManager.selectEnemyAction();
+        TimeManager.ResetTimers();
 
         CombatManager.move_UI_in();
         showStartButton();

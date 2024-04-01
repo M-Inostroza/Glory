@@ -25,7 +25,7 @@ public class TimeManager : MonoBehaviour
     public TextMeshProUGUI timerText;
     public float battleTimer = 94f;
     public float defaultFightTime = 94f;
-    private bool timerIsRunning = false;
+    private static bool timerIsRunning = false;
     public bool timeOut;
 
     //Cooldowns
@@ -410,6 +410,16 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    public void ResetTimers() // Resets all timers
+    {
+        resetFightTimer((int)defaultFightTime);
+        ActivateFightTimer();
+
+        resetPlayerTimer();
+        resetEnemyTimer();
+        continueUnitTimer();
+    }
+
     // Utilities
 
     public void RushEffect(bool activate)
@@ -449,13 +459,12 @@ public class TimeManager : MonoBehaviour
     }
 
     // G & S
-    public void activateFightTimer()
+    public void ActivateFightTimer()
     {
         timerIsRunning = true;
     }
-    public void deactivateFightTimer()
+    public static void DeactivateFightTimer()
     {
-        audioManager.Stop("Combat_Theme");
         timerIsRunning = false;
     }
     public void resetFightTimer(int seconds)

@@ -11,7 +11,7 @@ public class EndManager : MonoBehaviour
     CombatManager CombatManager;
     SoundPlayer SoundPlayer;
     AudioManager AudioManager;
-    Player _player;
+    TimeManager TimeManager;
 
     [SerializeField] Image endOverlay;
     [SerializeField] Image dialogueBubble;
@@ -23,7 +23,7 @@ public class EndManager : MonoBehaviour
 
     [SerializeField] Transform endStarSymbol;
     [SerializeField] Transform summeryWindow;
-    [SerializeField] Transform quitButton;
+    [SerializeField] Transform _TryAgainButton;
     [SerializeField] Transform resetButton;
     [SerializeField] Transform upgradeButton;
 
@@ -51,8 +51,7 @@ public class EndManager : MonoBehaviour
         AudioManager = FindObjectOfType<AudioManager>();
         CombatManager = FindObjectOfType<CombatManager>();
         SoundPlayer = FindObjectOfType<SoundPlayer>();
-
-        _player = FindObjectOfType<Player>();
+        TimeManager = FindObjectOfType<TimeManager>();
     }
 
     // End
@@ -66,17 +65,17 @@ public class EndManager : MonoBehaviour
         endOverlay.DOFade(0.85f, 1f);
         yield return new WaitForSeconds(delay);
 
-        showSummary();
+        ShowSummaryWindow();
     }
     public void activateEndElements(bool state, int condition)
     {
         switch (condition)
         {
             case 0: // Time Out
-                activateTimeOutElements(state);
+                ActivateTimeOutElements(state);
                 break;
             case 1: // Defeat
-                activateDefeatElements(state);
+                ActivateDefeatElements(state);
                 break;
             case 2: // Victory case
                 ActivateVictoryElements(state);
@@ -93,7 +92,7 @@ public class EndManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(animatePlayerAvatarIn("Just a warm up...", 0));
+            StartCoroutine(AnimatePlayerAvatarIn("Just a warm up...", 0));
             CombatManager.hideStars();
         }
     }
@@ -120,7 +119,7 @@ public class EndManager : MonoBehaviour
         endOverlay.DOFade(0.85f, 1f);
         enemyContainer.DOLocalMoveX(0, 0.3f).SetDelay(2.5f);
         defeatLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
-        quitButton.DOLocalMoveY(-160, 1).SetDelay(3.5f);
+        _TryAgainButton.DOLocalMoveY(-160, 1).SetDelay(3.5f);
         foreach (var effect in defeatEffects)
         {
             effect.gameObject.SetActive(true);
@@ -129,36 +128,70 @@ public class EndManager : MonoBehaviour
         defeatEffects[1].transform.DOLocalMoveY(-1200, 1);
     }
 
-    public void VictoryScreen() // Victory 
-    {
-        // Debug
-        FindObjectOfType<TimeManager>().stopUnitTimer();
-        // Debug
-        ShowFinalDays();
-        endOverlay.DOFade(0.85f, 1f);
-        victoryLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
-        quitButton.DOLocalMoveY(-160, 1).SetDelay(3.5f);
-        foreach (var effect in victoryEffects)
-        {
-            effect.gameObject.SetActive(true);
-        }
-        victoryEffects[0].transform.DOLocalMoveY(-60, 1);
-        victoryEffects[1].transform.DOLocalMoveY(-70, 1);
-    }
 
-    public void ShowFinalDays()
+    // ---------- Victory handler ---------- //
+    public void VictoryScreen() 
     {
-        if (GameManager.UpdateNewRecord())
-        {
-            // Create the new record effect
-            _finalDaysUI.GetChild(5).gameObject.SetActive(true);
-        }
-        _finalDaysUI.GetChild(4).GetComponent<TMP_Text>().text = GameManager.GetDayCounter().ToString() + " Days!";
-        _finalDaysUI.DOLocalMoveY(67, 0.8f).SetDelay(2);
+        ShowFinalDays(true);
+        MoveVictoryUI(true);
+        PlayVictoryVisuals(true);
     }
+    void PlayVictoryVisuals(bool onOff)
+    {
+        if (onOff)
+        {
+            foreach (var effect in victoryEffects)
+            {
+                effect.gameObject.SetActive(true);
+            }
+            victoryEffects[0].transform.DOLocalMoveY(-60, 1);
+            victoryEffects[1].transform.DOLocalMoveY(-70, 1);
+        } else
+        {
+            foreach (var effect in victoryEffects)
+            {
+                effect.gameObject.SetActive(false);
+            }
+            victoryEffects[0].transform.DOLocalMoveY(6, 0.5f);
+            victoryEffects[1].transform.DOLocalMoveY(800, 1);
+        }
+    }
+    void MoveVictoryUI(bool inOut)
+    {
+        if (inOut)
+        {
+            endOverlay.DOFade(0.85f, 1f);
+            victoryLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
+            _TryAgainButton.DOLocalMoveY(-160, 1).SetDelay(3.5f);
+        } else
+        {
+            endOverlay.DOFade(0, 0.5f);
+            victoryLabelContainer.DOLocalMoveY(300, 0.5f);
+            _TryAgainButton.DOLocalMoveY(-325, 0.5f);
+        }
+    }
+    public void ShowFinalDays(bool inOut)
+    {
+        if (inOut)
+        {
+            if (GameManager.UpdateNewRecord())
+            {
+                // Create the new record effect
+                _finalDaysUI.GetChild(5).gameObject.SetActive(true);
+            }
+            _finalDaysUI.GetChild(4).GetComponent<TMP_Text>().text = GameManager.GetDayCounter().ToString() + " Days!";
+            _finalDaysUI.DOLocalMoveY(67, 0.8f).SetDelay(2);
+        } else
+        {
+            _finalDaysUI.DOLocalMoveY(-440, 0.8f).OnComplete(()=> _finalDaysUI.GetChild(5).gameObject.SetActive(false));
+        }
+        
+    }
+    // ---------- Victory handler ---------- //
 
-    // Avatar Anim
-    public IEnumerator animatePlayerAvatarIn(string BubbleText, float delay, bool isEnd = false)
+
+    // ---------- Avatar Show ---------- //
+    public IEnumerator AnimatePlayerAvatarIn(string BubbleText, float delay, bool isEnd = false)
     {
         yield return new WaitForSeconds(delay);
         playerAvatar.transform.DOLocalMoveX(-318, .2f);
@@ -175,14 +208,11 @@ public class EndManager : MonoBehaviour
         dialogueBubble.DOFade(0, 0.1f);
         dialogueText.DOFade(0, 0.1f);
     }
+    // ---------- Avatar Show ---------- //
 
-    // Summary window
-    void showSummary()
-    {
-        playBounceSound();
-    }
 
-    void playBounceSound()
+    // ---------- Summary window ---------- //
+    void ShowSummaryWindow()
     {
         summeryWindow.transform.DOLocalMoveY(0, 2f).SetEase(Ease.OutBounce).OnUpdate(() =>
         {
@@ -195,22 +225,12 @@ public class EndManager : MonoBehaviour
                 hasHitPlayed = true;
                 threshholdValue -= 0.6f;
             }
-        }).OnComplete(playStarAnimation);
+        }).OnComplete(PlayStarAnimation);
     }
+    // ---------- Summary window ---------- //
 
-    void playStarAnimation()
-    {
-        CombatManager.showStars();
-        if (CombatManager.GetStars() > 0)
-        {
-            starParticle.Play();
-        } else
-        {
-            showUpgradeButton();
-        }
-    }
 
-    // Upgrade Button
+    // ---------- Upgrade ---------- //
     public void showUpgradeButton(int delay = 0)
     {
         upgradeButton.DOLocalMoveX(300, .4f).SetDelay(delay);
@@ -220,7 +240,6 @@ public class EndManager : MonoBehaviour
         AudioManager.Play("DG_jump_1");
         upgradeButton.DOLocalMoveX(530, .3f);
     }
-
     public void showUpgradeScreen()
     {
         // onUpgradeButton
@@ -231,7 +250,7 @@ public class EndManager : MonoBehaviour
         summeryWindow.transform.DOLocalMoveX(-200, 0.3f);
         hideUpgradeButton();
     }
-    public void hideUpgradeScreen(bool isReset)
+    public void HideUpgradeScreen(bool isReset)
     {
         _upgradeManager.transform.DOLocalMoveX(650, 0.3f);
         summeryWindow.transform.DOLocalMoveX(0, 0.3f);
@@ -241,8 +260,11 @@ public class EndManager : MonoBehaviour
             showUpgradeButton();
         }
     }
+    // ---------- Upgrade ---------- //
 
-    void activateTimeOutElements(bool state)
+
+    // ---------- End elements hadler ---------- //
+    void ActivateTimeOutElements(bool state)
     {
         summeryWindow.gameObject.SetActive(state);
         playerAvatar.gameObject.SetActive(state);
@@ -251,13 +273,13 @@ public class EndManager : MonoBehaviour
         endConfeti.gameObject.SetActive(state);
         _upgradeManager.SetActive(state);
     }
-    void activateDefeatElements(bool state)
+    void ActivateDefeatElements(bool state)
     {
         endOverlay.gameObject.SetActive(state);
         defeatLabelContainer.gameObject.SetActive(state);
         defeatScreenContainer.SetActive(state);
     }
-    public void ActivateVictoryElements(bool state)
+    void ActivateVictoryElements(bool state)
     {
         victoryScreenContainer.SetActive(state);
         endOverlay.gameObject.SetActive(state);
@@ -266,13 +288,41 @@ public class EndManager : MonoBehaviour
         dialogueBubble.gameObject.SetActive(state);
         endConfeti.gameObject.SetActive(state);
     }
+    // ---------- End elements hadler ---------- //
 
+
+    // ---------- Stars ---------- //
     public int GetStars()
     {
         return starCounter;
     }
-    public void reduceStars(int starsToReduce)
+    public void ReduceStars(int starsToReduce)
     {
         starCounter -= starsToReduce;
+    }
+    void PlayStarAnimation()
+    {
+        CombatManager.showStars();
+        if (CombatManager.GetStars() > 0)
+        {
+            starParticle.Play();
+        }
+        else
+        {
+            showUpgradeButton();
+        }
+    }
+    // ---------- Stars ---------- //
+
+
+    // RESET - in case of Victory, starts a new round --you keep upgrades--
+    public void TryAgain()
+    {
+        TimeManager.ResetTimers();
+        MoveVictoryUI(false);
+        ShowFinalDays(false);
+        PlayVictoryVisuals(false);
+        // All cooldown refresh
+        // All stats go normal
     }
 }

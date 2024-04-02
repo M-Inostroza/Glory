@@ -75,13 +75,13 @@ public class LoadingScreen : MonoBehaviour
         }
     }
 
-    public void openScreen() // Also global start?
+    public void openScreen() // Opens the next day
     {
         StartCoroutine(TimeManager.slowMotion(0.5f, 0.2f));
         _cameraManager.playChrome();
         resetLoadingBar();
 
-        StartCoroutine(_GameManager.dayShow(3));
+        StartCoroutine(_GameManager.DayShow(3));
 
         toggleLoadingScreen(0, 0.3f);
         _inputManager.resetCooldown();

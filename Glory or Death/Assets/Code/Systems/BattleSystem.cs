@@ -212,7 +212,7 @@ public class BattleSystem : MonoBehaviour
 
             EndManager.activateEndElements(true, 2);
             EndManager.VictoryScreen();
-            StartCoroutine(EndManager.animatePlayerAvatarIn("Thanks for playing!", 3, true));
+            StartCoroutine(EndManager.AnimatePlayerAvatarIn("Thanks for playing!", 3, true));
 
             deadEnemy = true;
         }
@@ -222,7 +222,7 @@ public class BattleSystem : MonoBehaviour
     public void resetBattle()
     {
         cameraManager.playChrome();
-        EndManager.hideUpgradeScreen(true);
+        EndManager.HideUpgradeScreen(true);
         EndManager.hideUpgradeButton();
         LoadingScreen.toggleLoadingScreen(1, 0.3f);
         StartCoroutine(LoadingScreen.fillLoadingSlider(1, 0.3f));
@@ -266,7 +266,7 @@ public class BattleSystem : MonoBehaviour
         void complete()
         {
             GameManager.SetDayCounter(1);
-            StartCoroutine(GameManager.dayShow(3));
+            StartCoroutine(GameManager.DayShow(3));
             TimeManager.continueUnitTimer();
             //audioManager.Play("Combat_Theme"); REMOVE
             _loadingScreen.SetActive(false);

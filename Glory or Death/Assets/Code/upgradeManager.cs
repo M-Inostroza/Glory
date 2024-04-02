@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class upgradeManager : MonoBehaviour
+public class UpgradeManager : MonoBehaviour
 {
     [SerializeField] GameObject _leftBlock;
     [SerializeField] GameObject _centerBlock;
@@ -91,7 +91,7 @@ public class upgradeManager : MonoBehaviour
         {
             upgradedSomehthing = true;
             _TimeManager.dodgeFactorCD -= 0.2f;
-            _EndManager.reduceStars(2);
+            _EndManager.ReduceStars(2);
             _EndManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(0).transform);
         } else
@@ -105,7 +105,7 @@ public class upgradeManager : MonoBehaviour
         {
             upgradedSomehthing = true;
             _TimeManager.attackFactorCD -= 0.2f;
-            _EndManager.reduceStars(2);
+            _EndManager.ReduceStars(2);
             _EndManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(1).transform);
         } else
@@ -119,7 +119,7 @@ public class upgradeManager : MonoBehaviour
         {
             upgradedSomehthing = true;
             _player.SetAdrenalineFactor(_player.GetAdrenalineFactor() + 1);
-            _EndManager.reduceStars(3);
+            _EndManager.ReduceStars(3);
             _EndManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(2).transform);
         }
@@ -135,7 +135,7 @@ public class upgradeManager : MonoBehaviour
             upgradedSomehthing = true;
             _TimeManager.CostFC = _TimeManager.CostFC -= 5;
             _TimeManager.SetActionCost();
-            _EndManager.reduceStars(2);
+            _EndManager.ReduceStars(2);
             _EndManager.updateStarUI();
             buttonFeedback(true, _rightBlock.transform.GetChild(3).transform);
         }
@@ -152,7 +152,7 @@ public class upgradeManager : MonoBehaviour
         {
             upgradedSomehthing = true;
             _player.NativeDamage++;
-            _EndManager.reduceStars(3);
+            _EndManager.ReduceStars(3);
             _EndManager.updateStarUI();
             buttonFeedback(true, _centerBlock.transform.GetChild(0).transform);
         }
@@ -167,7 +167,7 @@ public class upgradeManager : MonoBehaviour
         {
             upgradedSomehthing = true;
             _player.incrementBaseSpeed(.4f);
-            _EndManager.reduceStars(4);
+            _EndManager.ReduceStars(4);
             _EndManager.updateStarUI();
             buttonFeedback(true, _centerBlock.transform.GetChild(1).transform);
         }
@@ -183,7 +183,7 @@ public class upgradeManager : MonoBehaviour
         {
             upgradedSomehthing = true;
             _player.SetShieldFactor(_player.GetShieldFactor() + 1);
-            _EndManager.reduceStars(3);
+            _EndManager.ReduceStars(3);
             _EndManager.updateStarUI();
             buttonFeedback(true, _centerBlock.transform.GetChild(2).transform);
         }
@@ -202,7 +202,7 @@ public class upgradeManager : MonoBehaviour
         {
             upgradedSomehthing = true;
             _player.SetCurrentHP(_player.GetCurrentHP() + (int)lifeBack);
-            _EndManager.reduceStars(3);
+            _EndManager.ReduceStars(3);
             _EndManager.updateStarUI();
             buttonFeedback(true, _leftBlock.transform.GetChild(0).transform);
         }
@@ -218,7 +218,7 @@ public class upgradeManager : MonoBehaviour
             upgradedSomehthing = true;
             CombatManager.updateShieldBar();
             _player.setMaxShield(_player.GetMaxShield() + 1);
-            _EndManager.reduceStars(2);
+            _EndManager.ReduceStars(2);
             _EndManager.updateStarUI();
             buttonFeedback(true, _leftBlock.transform.GetChild(1).transform);
         }
@@ -235,7 +235,7 @@ public class upgradeManager : MonoBehaviour
             upgradedSomehthing = true;
             CombatManager.updateShieldBar();
             CounterManager.SetRotationSpeed(CounterManager.GetRotationSpeed() + 1);
-            _EndManager.reduceStars(2);
+            _EndManager.ReduceStars(2);
             _EndManager.updateStarUI();
             buttonFeedback(true, _leftBlock.transform.GetChild(2).transform);
         }
@@ -251,7 +251,7 @@ public class upgradeManager : MonoBehaviour
         if (_EndManager.GetStars() >= 1 && !upgradedSomehthing)
         {
             _audioManager.Play("Randomize");
-            _EndManager.reduceStars(1);
+            _EndManager.ReduceStars(1);
             _EndManager.updateStarUI();
             setRandomUpgrade();
         } else

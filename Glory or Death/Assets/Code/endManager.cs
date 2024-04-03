@@ -322,7 +322,7 @@ public class EndManager : MonoBehaviour
         MoveVictoryUI(false);
         ShowFinalDays(false);
         PlayVictoryVisuals(false);
-        // All cooldown refresh
+        // All cooldown refres
         // All stats go normal
     }
 }

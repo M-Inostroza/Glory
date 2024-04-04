@@ -11,11 +11,11 @@ public class TimeManager : MonoBehaviour
 {
     public Sprite[] iconSprites;
 
-    public Image playerRing;
-    public Image EnemyRing;
+    [SerializeField] Image playerRing;
+    [SerializeField] Image EnemyRing;
 
-    private BattleSystem BS;
-    private Input_Manager Input_Manager;
+    BattleSystem BattleSystem;
+    private InputManager InputManager;
     private CombatManager combarUI;
     private EndManager EndManager;
     private AudioManager audioManager;
@@ -80,8 +80,8 @@ public class TimeManager : MonoBehaviour
     {
         SetActionCost();
 
-        BS = FindObjectOfType<BattleSystem>();
-        Input_Manager = FindObjectOfType<Input_Manager>();
+        BattleSystem = FindObjectOfType<BattleSystem>();
+        InputManager = FindObjectOfType<InputManager>();
         combarUI = FindObjectOfType<CombatManager>();
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
@@ -90,7 +90,7 @@ public class TimeManager : MonoBehaviour
         _cameraManager = FindObjectOfType<cameraManager>();
         timerIsRunning = false;
 
-        selectEnemyAction();
+        SelectEnemyAction();
     }
 
     private void Update()
@@ -122,14 +122,14 @@ public class TimeManager : MonoBehaviour
         {
             stopUnitTimer();
             playerTimer.fillAmount = 1;
-            switch (Input_Manager.GetPlayerAction())
+            switch (InputManager.GetPlayerAction())
             {
                 case "ATK1":
                     if (player.GetCurrentStamina() > costATK)
                     {
                         enemyTimer.fillAmount += 0.02f;
-                        BS.PlayerAttack();
-                        Input_Manager.GetAttackCD().fillAmount = 1;
+                        BattleSystem.PlayerAttack();
+                        InputManager.GetAttackCD().fillAmount = 1;
                         player.DecrementCurrentStamina(costATK);
                         fadeOutUnitTimer();
                     } else
@@ -138,11 +138,12 @@ public class TimeManager : MonoBehaviour
                         combarUI.alarmStamina();
                     }
                     break;
+
                 case "ATK2":
                     if (player.GetCurrentStamina() > costATK2)
                     {
                         enemyTimer.fillAmount += 0.02f;
-                        BS.PlayerSuperAttack();
+                        BattleSystem.PlayerSuperAttack();
                         player.DecrementCurrentStamina(costATK2);
                         fadeOutUnitTimer();
                     }
@@ -157,8 +158,8 @@ public class TimeManager : MonoBehaviour
                     if (player.GetCurrentStamina() > costDF)
                     {
                         enemyTimer.fillAmount += 0.02f;
-                        BS.PlayerDefend();
-                        Input_Manager.GetDefendCD().fillAmount = 1;
+                        BattleSystem.PlayerDefend();
+                        InputManager.GetDefendCD().fillAmount = 1;
                         player.DecrementCurrentStamina(costDF);
                         fadeOutUnitTimer();
                     } else
@@ -172,8 +173,8 @@ public class TimeManager : MonoBehaviour
                     if (player.GetCurrentStamina() > costDG)
                     {
                         enemyTimer.fillAmount += 0.02f;
-                        BS.PlayDodge();
-                        Input_Manager.GetDodgeCD().fillAmount = 1;
+                        BattleSystem.PlayDodge();
+                        InputManager.GetDodgeCD().fillAmount = 1;
                         player.DecrementCurrentStamina(costDG);
                         fadeOutUnitTimer();
                     } else
@@ -187,8 +188,8 @@ public class TimeManager : MonoBehaviour
                     if (player.GetCurrentStamina() > costFC)
                     {
                         enemyTimer.fillAmount += 0.02f;
-                        BS.PlayFocus();
-                        Input_Manager.GetFocusCD().fillAmount = 1;
+                        BattleSystem.PlayFocus();
+                        InputManager.GetFocusCD().fillAmount = 1;
                         player.DecrementCurrentStamina(costFC);
                         fadeOutUnitTimer();
                     } else
@@ -200,7 +201,7 @@ public class TimeManager : MonoBehaviour
 
                 case "RST":
                     enemyTimer.fillAmount += 0.02f;
-                    BS.PlayRest();
+                    BattleSystem.PlayRest();
                     stopUnitTimer();
                     fadeOutUnitTimer();
                     break;
@@ -249,42 +250,42 @@ public class TimeManager : MonoBehaviour
             }
 
             // Execute action
-            switch (Input_Manager.GetEnemyAction())
+            switch (InputManager.GetEnemyAction())
             {
                 case "ATK1":
-                    BS.EnemyTurn_attack();
+                    BattleSystem.EnemyTurn_attack();
                     break;
 
                 case "ATK2":
-                    BS.EnemyTurn_SuperAttack();
+                    BattleSystem.EnemyTurn_SuperAttack();
                     break;
 
                 case "DIRT":
-                    BS.EnemyTurn_dirt();
+                    BattleSystem.EnemyTurn_dirt();
                     break;
 
                 case "RAGE":
-                    BS.EnemyTurn_rage();
+                    BattleSystem.EnemyTurn_rage();
                     break;
             }
         }
     }
 
-    public void selectEnemyAction()
+    public void SelectEnemyAction()
     {
         if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)
         {
             dirtPrevious = false;
             dirtChance += 3;
             enemy.setAngryState(true);
-            Input_Manager.SetEnemyAction("RAGE");
+            InputManager.SetEnemyAction("RAGE");
             enemyActionIcon.sprite = iconSprites[7];
         }
         else
         {
             if (enemy.GetCurrentAdrenaline() >= 20)
             {
-                Input_Manager.SetEnemyAction("ATK2");
+                InputManager.SetEnemyAction("ATK2");
                 enemyActionIcon.sprite = iconSprites[8];
             }
             else
@@ -292,14 +293,14 @@ public class TimeManager : MonoBehaviour
                 float attackRandom = UnityEngine.Random.Range(0, 99);
                 if (attackRandom > dirtChance || dirtPrevious)
                 {
-                    Input_Manager.SetEnemyAction("ATK1");
+                    InputManager.SetEnemyAction("ATK1");
                     enemyActionIcon.sprite = iconSprites[0];
                     dirtPrevious = false;
                     dirtChance += 5;
                 }
                 else
                 {
-                    Input_Manager.SetEnemyAction("DIRT");
+                    InputManager.SetEnemyAction("DIRT");
                     enemyActionIcon.sprite = iconSprites[6];
                     dirtPrevious = true;
                     dirtChance = 5;
@@ -340,7 +341,7 @@ public class TimeManager : MonoBehaviour
         int vrb = 8;
         float duration = 0.3f;
         float elastic = 1f;
-        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play().OnComplete(() => Input_Manager.SetCanClick(true));
+        Tween punch = icon.transform.DOPunchScale(scale, duration, vrb, elastic).Play().OnComplete(() => InputManager.SetCanClick(true));
     }
 
     public void selectIcon(string icon)
@@ -380,7 +381,7 @@ public class TimeManager : MonoBehaviour
 
     public void defaultAction()
     {
-        Input_Manager.SetPlayerAction("none");
+        InputManager.SetPlayerAction("none");
         playerActionIcon.sprite = iconSprites[1];
         fadeInUnitTimer();
     }
@@ -421,6 +422,14 @@ public class TimeManager : MonoBehaviour
     }
 
     // Utilities
+
+    public void StopFightTimers()
+    {
+        StartCoroutine(slowMotion(.7f, .2f));
+        stopUnitTimer();
+        fadeOutUnitTimer();
+        DeactivateFightTimer();
+    }
 
     public void RushEffect(bool activate)
     {

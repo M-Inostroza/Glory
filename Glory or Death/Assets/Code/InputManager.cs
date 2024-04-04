@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Input_Manager : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject ATK, DF, DG, FC, RST, SATK;

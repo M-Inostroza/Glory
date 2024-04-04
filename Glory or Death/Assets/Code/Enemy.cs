@@ -254,9 +254,10 @@ public class Enemy : MonoBehaviour
         audioManager.Play("Enemy_charge");
     }
 
+    // Called from animation
     public void selectNextAction()
     {
-        TimeManager.selectEnemyAction();
+        TimeManager.SelectEnemyAction();
     }
 
     // Buffs

@@ -15,14 +15,14 @@ public class LoadingScreen : MonoBehaviour
     bool isActive = false;
 
     AudioManager _audioManager;
-    Input_Manager _inputManager;
+    InputManager _inputManager;
     TimeManager TimeManager;
     cameraManager _cameraManager;
     GameManager _GameManager;
 
     void Start()
     {
-        _inputManager = FindObjectOfType<Input_Manager>();
+        _inputManager = FindObjectOfType<InputManager>();
         _audioManager = FindObjectOfType<AudioManager>();
         TimeManager = FindObjectOfType<TimeManager>();
         _cameraManager = FindObjectOfType<cameraManager>();
@@ -86,7 +86,7 @@ public class LoadingScreen : MonoBehaviour
         toggleLoadingScreen(0, 0.3f);
         _inputManager.resetCooldown();
 
-        TimeManager.selectEnemyAction();
+        TimeManager.SelectEnemyAction();
         TimeManager.ResetTimers();
 
         CombatManager.move_UI_in();

@@ -10,18 +10,16 @@ public class BattleSystem : MonoBehaviour
     TargetManager targetManager;
     DefendManager DefendManager;
     TimeManager TimeManager;
-    Input_Manager Input_Manager;
+    InputManager InputManager;
     CombatManager CombatManager;
     EndManager EndManager;
     cameraManager cameraManager;
-    AudioManager audioManager;
+    AudioManager AudioManager;
     LoadingScreen LoadingScreen;
 
     [SerializeField] GameObject _loadingScreen;
     [SerializeField] Transform playerPanel;
     [SerializeField] Transform enemyPanel;
-
-    [SerializeField] Toggle testMode;
 
     [Header("Mechanics")]
     [SerializeField] GameObject dodgeManager;
@@ -34,15 +32,15 @@ public class BattleSystem : MonoBehaviour
     public bool canBloomAttack = true;
 
     [Header("Units")]
-    public GameObject playerPrefab;
     public GameObject enemyPrefab;
     private Player playerUnit;
     private Enemy enemyUnit;
     bool deadPlayer = false;
     bool deadEnemy = false;
 
+
     // Animators
-    private Animator playerAnimator;
+    private Animator _playerAnimator;
 
     // UI
     public EnemyHUD enemyHUD;
@@ -66,14 +64,14 @@ public class BattleSystem : MonoBehaviour
         GetScripts();
 
         TimeManager.stopUnitTimer();
-        OpenGame();
+        OpenPanels();
     }
 
     private void Update()
     {
         checkBloom();
         updateUI();
-        checkEndFight();
+        CheckEndFight();
     }
 
     // ----------------- Actions -----------------
@@ -81,7 +79,7 @@ public class BattleSystem : MonoBehaviour
     public void PlayerAttack()
     {
         targetManager.attack();
-        playerAnimator.Play("ATK_jump");
+        _playerAnimator.Play("ATK_jump");
     }
     public void PlayerSuperAttack()
     {
@@ -105,7 +103,7 @@ public class BattleSystem : MonoBehaviour
     public void PlayRest()
     {
         restManager.SetActive(true);
-        Input_Manager.SetPlayerAction("none");
+        InputManager.SetPlayerAction("none");
         TimeManager.selectIcon("Default");
     }
 
@@ -184,16 +182,16 @@ public class BattleSystem : MonoBehaviour
         }
     }
     /*-----------------------------------END FIGHT---------------------------------------------------------*/
-    public void checkEndFight()
+    public void CheckEndFight()
     {
         // Defeat
         if (playerUnit.GetCurrentHP() <= 0 && deadPlayer == false)
         {
             CombatManager.move_UI_out();
             cameraManager.playChrome();
-            audioManager.Stop("Combat_Theme");
-            audioManager.Play("Defeat_Sound");
-            stopFightTimers();
+            AudioManager.Stop("Combat_Theme");
+            AudioManager.Play("Defeat_Sound");
+            TimeManager.StopFightTimers();
             enemyUnit.GetComponent<Animator>().SetBool("Victory", true);
             
             EndManager.activateEndElements(true, 1);
@@ -206,9 +204,9 @@ public class BattleSystem : MonoBehaviour
         {
             CombatManager.move_UI_out();
             cameraManager.playChrome();
-            audioManager.Stop("Combat_Theme");
-            audioManager.Play("Last_Hit");
-            stopFightTimers();
+            AudioManager.Stop("Combat_Theme");
+            AudioManager.Play("Last_Hit");
+            TimeManager.StopFightTimers();
 
             EndManager.activateEndElements(true, 2);
             EndManager.VictoryScreen();
@@ -238,7 +236,7 @@ public class BattleSystem : MonoBehaviour
         focusManager.ResetATKBuff();
         playerUnit.SetAdrenaline(0);
         playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());
-        Input_Manager.SetPlayerAction("none");
+        InputManager.SetPlayerAction("none");
         TimeManager.selectIcon("Default");
     }
     void setEnemyStats()
@@ -249,17 +247,9 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
         enemyUnit.adrenaline = 0;
     }
-
-    void stopFightTimers()
-    {
-        StartCoroutine(TimeManager.slowMotion(.7f, .2f));
-        TimeManager.stopUnitTimer();
-        TimeManager.fadeOutUnitTimer();
-        TimeManager.DeactivateFightTimer();
-    }
     
 
-    void OpenGame() // Deals with the panels showing at the begining of the fight
+    public void OpenPanels() // Deals with the panels showing at the begining of the fight
     {
         enemyPanel.DOLocalMoveX(900, 1).SetDelay(2.5f);
         playerPanel.DOLocalMoveX(-900, 1).SetDelay(2.5f).OnComplete(complete);
@@ -272,6 +262,11 @@ public class BattleSystem : MonoBehaviour
             _loadingScreen.SetActive(false);
         }
     } // Global Start
+    public void ClosePanels()
+    {
+        playerPanel.DOLocalMoveX(-308, 1);
+        enemyPanel.DOLocalMoveX(308, 1);
+    }
 
     void checkBloom()
     {
@@ -296,8 +291,8 @@ public class BattleSystem : MonoBehaviour
 
     void GetScripts()
     {
-        playerAnimator = playerPrefab.GetComponent<Animator>();
-        audioManager = FindObjectOfType<AudioManager>();
+        _playerAnimator = FindObjectOfType<Player>().GetComponent<Animator>();
+        AudioManager = FindObjectOfType<AudioManager>();
         CombatManager = FindObjectOfType<CombatManager>();
         targetManager = FindObjectOfType<TargetManager>();
         DefendManager = FindObjectOfType<DefendManager>();
@@ -310,7 +305,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit = FindObjectOfType<Player>();
         enemyUnit = FindObjectOfType<Enemy>();
 
-        Input_Manager = FindObjectOfType<Input_Manager>();
+        InputManager = FindObjectOfType<InputManager>();
     }
 }
 

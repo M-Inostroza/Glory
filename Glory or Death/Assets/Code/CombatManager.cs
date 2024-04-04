@@ -172,11 +172,11 @@ public class CombatManager : MonoBehaviour
 
         if (playerUnit.GetCurrentStamina() < 50)
         {
-            _inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(55, 0.7f);
+            _inputManager.GetComponent<InputManager>().GetRestButton().transform.DOLocalMoveX(55, 0.7f);
         }
         else
         {
-            _inputManager.GetComponent<Input_Manager>().GetRestButton().transform.DOLocalMoveX(-40, 0.7f);
+            _inputManager.GetComponent<InputManager>().GetRestButton().transform.DOLocalMoveX(-40, 0.7f);
         }
     }
     private bool hasPlayed = false;
@@ -216,11 +216,11 @@ public class CombatManager : MonoBehaviour
     {
         if (playerUnit.GetAdrenaline() == playerUnit.GetMaxAdrenaline())
         {
-            _inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(55, 0.5f);
+            _inputManager.GetComponent<InputManager>().GetSATKButton().transform.DOLocalMoveX(55, 0.5f);
         }
         else
         {
-            _inputManager.GetComponent<Input_Manager>().GetSATKButton().transform.DOLocalMoveX(-40, 0.5f);
+            _inputManager.GetComponent<InputManager>().GetSATKButton().transform.DOLocalMoveX(-40, 0.5f);
         }
     }
 

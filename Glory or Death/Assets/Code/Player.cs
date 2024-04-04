@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
             {
                 TimeManager.playerActionIcon.sprite = TimeManager.iconSprites[1];
                 TimeManager.playerTimer.fillAmount = 1;
-                FindObjectOfType<Input_Manager>().SetPlayerAction("none");
+                FindObjectOfType<InputManager>().SetPlayerAction("none");
                 TimeManager.fadeInUnitTimer();
                 TimeManager.continueUnitTimer();
                 myAnim.Play("Idle");

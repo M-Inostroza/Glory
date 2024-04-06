@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
 
     public Camera MainCamera;
 
-    Animator myAnim;
+    static Animator myAnim;
 
     // Current Enemy
     public GameObject enemy_unit;
@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
     {
         myAnim.Play("blockAttack");
     }
-    public void backToIdle()
+    public static void BackToIdle()
     {
         myAnim.Play("Idle");
     }
@@ -144,13 +144,13 @@ public class Player : MonoBehaviour
             }
             else
             {
-                backToIdle();
+                BackToIdle();
             }
         } else
         {
             TutorialManager.fadeTimer(1);
             TutorialManager.selectIcon("Default");
-            backToIdle();
+            BackToIdle();
         }
     }
     public void returnCamera()
@@ -284,7 +284,7 @@ public class Player : MonoBehaviour
     {
         if (!GameManager.isTutorial() && enemy_unit != null)
         {
-            myAnim.SetInteger("Victory", enemy_unit.GetComponent<Enemy>().currentHP);
+            myAnim.SetInteger("Victory", Enemy.GetCurrentHP());
         }
     }
     public void checkDefeatCondition()

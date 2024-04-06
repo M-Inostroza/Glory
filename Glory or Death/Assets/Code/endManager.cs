@@ -12,13 +12,15 @@ public class EndManager : MonoBehaviour
     SoundPlayer SoundPlayer;
     AudioManager AudioManager;
     TimeManager TimeManager;
-
+    LoadingScreen LoadingScreen;
+    Enemy Enemy;
+ 
     [SerializeField] Image endOverlay;
     [SerializeField] Image dialogueBubble;
     [SerializeField] ParticleImage starParticle;
 
     [SerializeField] GameObject playerAvatar;
-    [SerializeField] GameObject endConfeti;
+    [SerializeField] GameObject _endConfeti;
     [SerializeField] GameObject _upgradeManager;
 
     [SerializeField] Transform endStarSymbol;
@@ -52,6 +54,8 @@ public class EndManager : MonoBehaviour
         CombatManager = FindObjectOfType<CombatManager>();
         SoundPlayer = FindObjectOfType<SoundPlayer>();
         TimeManager = FindObjectOfType<TimeManager>();
+        Enemy = FindObjectOfType<Enemy>();
+        LoadingScreen = FindObjectOfType<LoadingScreen>();
     }
 
     // End
@@ -160,6 +164,7 @@ public class EndManager : MonoBehaviour
     {
         if (inOut)
         {
+            _TryAgainButton.gameObject.SetActive(true);
             endOverlay.DOFade(0.85f, 1f);
             victoryLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
             _TryAgainButton.DOLocalMoveY(-160, 1).SetDelay(3.5f);
@@ -167,7 +172,7 @@ public class EndManager : MonoBehaviour
         {
             endOverlay.DOFade(0, 0.5f);
             victoryLabelContainer.DOLocalMoveY(300, 0.5f);
-            _TryAgainButton.DOLocalMoveY(-325, 0.5f);
+            _TryAgainButton.DOLocalMoveY(-325, 0.5f).OnComplete(()=> _TryAgainButton.gameObject.SetActive(false));
         }
     }
     public void ShowFinalDays(bool inOut)
@@ -270,7 +275,7 @@ public class EndManager : MonoBehaviour
         playerAvatar.gameObject.SetActive(state);
         dialogueBubble.gameObject.SetActive(state);
         endOverlay.gameObject.SetActive(state);
-        endConfeti.gameObject.SetActive(state);
+        _endConfeti.gameObject.SetActive(state);
         _upgradeManager.SetActive(state);
     }
     void ActivateDefeatElements(bool state)
@@ -286,7 +291,7 @@ public class EndManager : MonoBehaviour
         victoryLabelContainer.gameObject.SetActive(state);
         playerAvatar.gameObject.SetActive(state);
         dialogueBubble.gameObject.SetActive(state);
-        endConfeti.gameObject.SetActive(state);
+        _endConfeti.gameObject.SetActive(state);
     }
     // ---------- End elements hadler ---------- //
 
@@ -318,10 +323,16 @@ public class EndManager : MonoBehaviour
     // RESET - in case of Victory, starts a new round --you keep upgrades--
     public void TryAgain()
     {
-        TimeManager.ResetTimers();
+        _endConfeti.SetActive(false);
+        TimeManager.ResetTimers(false);
         MoveVictoryUI(false);
         ShowFinalDays(false);
         PlayVictoryVisuals(false);
+        Enemy.ResetStats();
+
+        // Reset Anims
+        Player.BackToIdle();
+        Enemy.BackToIdle();
         // All cooldown refres
         // All stats go normal
     }

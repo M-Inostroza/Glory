@@ -33,7 +33,7 @@ public class LoadingScreen : MonoBehaviour
         _loadingSlider = gameObject.transform.GetChild(2).transform.GetComponent<Slider>();
     }
 
-    public void toggleLoadingScreen(int inOut, float speed)
+    public void ToggleLoadingScreen(int inOut, float speed)
     {
         // 1 = in
         if (inOut == 1)
@@ -83,11 +83,11 @@ public class LoadingScreen : MonoBehaviour
 
         StartCoroutine(_GameManager.DayShow(3));
 
-        toggleLoadingScreen(0, 0.3f);
+        ToggleLoadingScreen(0, 0.3f);
         _inputManager.resetCooldown();
 
         TimeManager.SelectEnemyAction();
-        TimeManager.ResetTimers();
+        TimeManager.ResetTimers(true);
 
         CombatManager.move_UI_in();
         showStartButton();

@@ -268,7 +268,7 @@ public class CombatManager : MonoBehaviour
     void hpTextUpdate()
     {
         hpPlayerDebug.text = playerUnit.GetCurrentHP().ToString() + " / " + playerUnit.GetMaxHP().ToString();
-        hpEnemyDebug.text = enemyUnit.currentHP + " / " + enemyUnit.maxHP;
+        hpEnemyDebug.text = Enemy.GetCurrentHP() + " / " + Enemy.GetMaxHP();
     }
 
     // Buffs

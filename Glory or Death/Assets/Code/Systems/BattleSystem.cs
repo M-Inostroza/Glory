@@ -34,7 +34,7 @@ public class BattleSystem : MonoBehaviour
     [Header("Units")]
     public GameObject enemyPrefab;
     private Player playerUnit;
-    private Enemy enemyUnit;
+    private Enemy Enemy;
     bool deadPlayer = false;
     bool deadEnemy = false;
 
@@ -111,19 +111,19 @@ public class BattleSystem : MonoBehaviour
     // ------------------------Enemy turn------------------------
     public void EnemyTurn_attack()
     {
-        enemyUnit.executeAttack();
+        Enemy.executeAttack();
     }
     public void EnemyTurn_SuperAttack()
     {
-        enemyUnit.executeSuperAttack();
+        Enemy.executeSuperAttack();
     }
     public void EnemyTurn_dirt()
     {
-        enemyUnit.GetComponent<Animator>().Play("dirt_toss");
+        Enemy.GetComponent<Animator>().Play("dirt_toss");
     }
     public void EnemyTurn_rage()
     {
-        enemyUnit.ExecuteRage(3, 2);
+        Enemy.ExecuteRage(3, 2);
     }
 
     // UI
@@ -162,7 +162,7 @@ public class BattleSystem : MonoBehaviour
     public void updateUI()
     {
         // Update health
-        enemyHUD.setHP(enemyUnit.currentHP);
+        enemyHUD.setHP(Enemy.GetCurrentHP());
         CombatManager.setPlayerHP(playerUnit.GetCurrentHP());
 
         // Update stamina
@@ -175,10 +175,10 @@ public class BattleSystem : MonoBehaviour
             playerUnit.SetAdrenaline(playerUnit.GetMaxAdrenaline());
         }
 
-        enemyHUD.adrenalineSlider.DOValue(enemyUnit.adrenaline, 0.3f);
-        if (enemyUnit.adrenaline >= 20)
+        enemyHUD.adrenalineSlider.DOValue(Enemy.adrenaline, 0.3f);
+        if (Enemy.adrenaline >= 20)
         {
-            enemyUnit.adrenaline = 20;
+            Enemy.adrenaline = 20;
         }
     }
     /*-----------------------------------END FIGHT---------------------------------------------------------*/
@@ -192,15 +192,15 @@ public class BattleSystem : MonoBehaviour
             AudioManager.Stop("Combat_Theme");
             AudioManager.Play("Defeat_Sound");
             TimeManager.StopFightTimers();
-            enemyUnit.GetComponent<Animator>().SetBool("Victory", true);
+            Enemy.GetComponent<Animator>().SetBool("Victory", true);
             
             EndManager.activateEndElements(true, 1);
             EndManager.DefeatScreen();
 
             deadPlayer = true;
         }
-        // Victory
-        else if (enemyUnit.currentHP <= 0 && deadEnemy == false)
+        // Victory Main
+        else if (Enemy.GetCurrentHP() <= 0 && deadEnemy == false)
         {
             CombatManager.move_UI_out();
             cameraManager.playChrome();
@@ -210,27 +210,26 @@ public class BattleSystem : MonoBehaviour
 
             EndManager.activateEndElements(true, 2);
             EndManager.VictoryScreen();
-            StartCoroutine(EndManager.AnimatePlayerAvatarIn("Thanks for playing!", 3, true));
 
             deadEnemy = true;
         }
     }
     /*-----------------------------------END FIGHT---------------------------------------------------------*/
 
-    public void resetBattle()
+    public void NextDay()
     {
         cameraManager.playChrome();
         EndManager.HideUpgradeScreen(true);
         EndManager.hideUpgradeButton();
-        LoadingScreen.toggleLoadingScreen(1, 0.3f);
+        LoadingScreen.ToggleLoadingScreen(1, 0.3f);
         StartCoroutine(LoadingScreen.fillLoadingSlider(1, 0.3f));
 
-        setPlayerStats();
-        setEnemyStats();
+        SetPlayerStats();
+        Enemy.SetStartingStats();
         GameManager.IncrementTurnCounter();
         EndManager.resetFight();
     }
-    void setPlayerStats()
+    void SetPlayerStats()
     {
         playerUnit.NativeDamage -= focusManager.GetTotalATKBuff();
         focusManager.ResetATKBuff();
@@ -238,14 +237,6 @@ public class BattleSystem : MonoBehaviour
         playerUnit.SetCurrentStamina(playerUnit.GetMaxStamina());
         InputManager.SetPlayerAction("none");
         TimeManager.selectIcon("Default");
-    }
-    void setEnemyStats()
-    {
-        enemyUnit.nativeDamage = 4; // Default
-        enemyUnit.baseSpeed = 13; // Default
-        enemyUnit.setAngryState(false);
-        enemyUnit.currentHP += (int)(enemyUnit.maxHP * 0.3f);
-        enemyUnit.adrenaline = 0;
     }
     
 
@@ -264,8 +255,11 @@ public class BattleSystem : MonoBehaviour
     } // Global Start
     public void ClosePanels()
     {
-        playerPanel.DOLocalMoveX(-308, 1);
-        enemyPanel.DOLocalMoveX(308, 1);
+        _loadingScreen.SetActive(true);
+        playerPanel.gameObject.SetActive(true);
+        enemyPanel.gameObject.SetActive(true);
+        playerPanel.DOLocalMoveX(-308, 0.3f);
+        enemyPanel.DOLocalMoveX(308, 0.3f);
     }
 
     void checkBloom()
@@ -303,7 +297,7 @@ public class BattleSystem : MonoBehaviour
         GameManager = FindObjectOfType<GameManager>();
 
         playerUnit = FindObjectOfType<Player>();
-        enemyUnit = FindObjectOfType<Enemy>();
+        Enemy = FindObjectOfType<Enemy>();
 
         InputManager = FindObjectOfType<InputManager>();
     }

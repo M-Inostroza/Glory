@@ -5,9 +5,9 @@ using System;
 public class Enemy : MonoBehaviour
 {
     [Header("Stats")]
-    public int nativeDamage; // Default 4 FIX access level
-    public int maxHP;
-    public int currentHP;
+    private static int _nativeDamage;
+    private static int _maxHP;
+    private static int _currentHP;
     public int adrenaline;
     [SerializeField] int superDMG;
 
@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
     Animator playerAnimator;
     private void Awake()
     {
-        currentHP = maxHP;
+        ResetStats();
     }
     private void Start()
     {
@@ -57,12 +57,12 @@ public class Enemy : MonoBehaviour
 
     private void updateHP()
     {
-        if (currentHP <= 0)
+        if (_currentHP <= 0)
         {
-            currentHP = 0;
+            _currentHP = 0;
         }
-        _enemyHud.setHP(currentHP);
-        myAnimator.SetInteger("CurrentHP", currentHP);
+        _enemyHud.setHP(_currentHP);
+        myAnimator.SetInteger("CurrentHP", _currentHP);
     }
 
     void updateSpeed()
@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int dmg)
     {
-        currentHP -= dmg;
+        _currentHP -= dmg;
     }
 
     // Getter Setters
@@ -129,14 +129,13 @@ public class Enemy : MonoBehaviour
         executeCameraZoom();
         CombatManager.move_UI_out();
         baseSpeed += speedBuff;
-        nativeDamage += dmgBuff;
+        _nativeDamage += dmgBuff;
         myAnimator.Play("Rage");
         adrenaline += 6;
     }
 
 
     // Utilities
-    #region Combat Functions
     public void playAttack()
     {
         if (Player.missed)
@@ -146,7 +145,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            Player.TakeDamage(nativeDamage);
+            Player.TakeDamage(_nativeDamage);
             if (Player.GetCurrentHP() <= 0)
             {
                 playerAnimator.SetBool("HURT", false);
@@ -155,6 +154,7 @@ public class Enemy : MonoBehaviour
             soundPlayer.blunt_hit();
         }
     }
+
     public void doBlockedDMG()
     {
         if (criticBlock)
@@ -162,7 +162,7 @@ public class Enemy : MonoBehaviour
             Player.TakeDamage(0);
         } else
         {
-            Player.TakeDamage(nativeDamage / 2);
+            Player.TakeDamage(_nativeDamage / 2);
         }
     }
     public void doSuperDMG()
@@ -179,7 +179,7 @@ public class Enemy : MonoBehaviour
             myAnimator.SetBool("attack", false);
         } else
         {
-            backToIdle();
+            BackToIdle();
         }
     }
     public void stopSuperAttack()
@@ -190,30 +190,29 @@ public class Enemy : MonoBehaviour
             TimeManager.enemyTimer.fillAmount = 1;
             TimeManager.fadeInUnitTimer();
             TimeManager.continueUnitTimer();
-            backToIdle();
+            BackToIdle();
             CombatManager.move_UI_in();
         }
         else
         {
-            backToIdle();
+            BackToIdle();
         }
     }
     public void stopHurt()
     {
-        backToIdle();
+        BackToIdle();
     }
     public void playfanfare()
     {
         audioManager.Play("Victory_Sound");
     }
-    #endregion
 
     public void stopDirt()
     {
         TimeManager.enemyTimer.fillAmount = 1;
         TimeManager.fadeInUnitTimer();
         TimeManager.continueUnitTimer();
-        backToIdle();
+        BackToIdle();
     }
     public void stopEnemyDefense()
     {
@@ -223,7 +222,7 @@ public class Enemy : MonoBehaviour
     {
         audioManager.Play("shieldHitEnemy");
     }
-    public void backToIdle()
+    public void BackToIdle()
     {
         myAnimator.SetBool("attack", false);
         myAnimator.Play("Idle");
@@ -322,10 +321,10 @@ public class Enemy : MonoBehaviour
     {
         if (!Player.missed)
         {
-            BS.showHit(nativeDamage, BS.hitText_Player.transform);
+            BS.showHit(_nativeDamage, BS.hitText_Player.transform);
         } else
         {
-            BS.showHit(nativeDamage, BS.missText_Player.transform);
+            BS.showHit(_nativeDamage, BS.missText_Player.transform);
         }
     }
     public void showDmgFeedbackPlayerReduced()
@@ -335,7 +334,7 @@ public class Enemy : MonoBehaviour
             BS.showHit(0, BS.hitText_Player.transform);
         } else
         {
-            BS.showHit(nativeDamage - 2, BS.hitText_Player.transform);
+            BS.showHit(_nativeDamage - 2, BS.hitText_Player.transform);
         }
     }
     public void showDmgFeedbackPlayerSuper(int step)
@@ -360,6 +359,15 @@ public class Enemy : MonoBehaviour
     }
 
     // G & S
+    public static int GetMaxHP()
+    {
+        return _maxHP;
+    }
+    public static int GetCurrentHP()
+    {
+        return _currentHP;
+    }
+
     public bool getAngryState()
     {
         return isAngry;
@@ -385,9 +393,9 @@ public class Enemy : MonoBehaviour
     // Caps
     void capHP()
     {
-        if(currentHP >= maxHP)
+        if(_currentHP >= _maxHP)
         {
-            currentHP = maxHP;
+            _currentHP = _maxHP;
         }
     }
 
@@ -403,6 +411,24 @@ public class Enemy : MonoBehaviour
         _cameraManager = FindObjectOfType<cameraManager>();
         playerAnimator = Player.GetComponent<Animator>();
         myAnimator = GetComponent<Animator>();
+    }
+
+    public void SetStartingStats()
+    {
+        _nativeDamage = 4; // Default
+        baseSpeed = 13; // Default
+        setAngryState(false);
+        _currentHP += (int)(_maxHP * 0.3f);
+        adrenaline = 0;
+    }
+
+    public void ResetStats()
+    {
+        adrenaline = 0;
+        baseSpeed = 13;
+        _maxHP = 40;
+        _nativeDamage = 4;
+        _currentHP = _maxHP;
     }
 
 }

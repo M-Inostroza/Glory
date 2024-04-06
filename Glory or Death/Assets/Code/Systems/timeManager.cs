@@ -273,7 +273,7 @@ public class TimeManager : MonoBehaviour
 
     public void SelectEnemyAction()
     {
-        if (enemy.currentHP < (enemy.maxHP / 2) && enemy.getAngryState() == false)
+        if (Enemy.GetCurrentHP() < (Enemy.GetMaxHP() / 2) && enemy.getAngryState() == false)
         {
             dirtPrevious = false;
             dirtChance += 3;
@@ -411,14 +411,20 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    public void ResetTimers() // Resets all timers
+    public void ResetTimers(bool runTimer) // Resets all timers
     {
         resetFightTimer((int)defaultFightTime);
-        ActivateFightTimer();
-
         resetPlayerTimer();
         resetEnemyTimer();
-        continueUnitTimer();
+
+        if (runTimer)
+        {
+            ActivateFightTimer();
+            continueUnitTimer();
+        } else
+        {
+            stopUnitTimer();
+        }
     }
 
     // Utilities

@@ -113,11 +113,12 @@ public class DefendManager : MonoBehaviour
             if (!GameManager.isTutorial())
             {
                 Player.incrementAdrenaline(Player.GetAdrenalineFactor() + 2);
+                CombatManager.showStars();
+                _starCritic.Play();
             }
             isShieldCritic = true;
             CameraManager.PlayBloom(1, 0.7f);
-            CombatManager.showStars();
-            _starCritic.Play();
+            
             playerAnim.SetBool("skillShieldSuccess", true);
             AudioManager.Play("defend_success");
             scaleUP.Rewind();

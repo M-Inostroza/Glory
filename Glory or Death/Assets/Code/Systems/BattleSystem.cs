@@ -64,13 +64,13 @@ public class BattleSystem : MonoBehaviour
         GetScripts();
 
         TimeManager.stopUnitTimer();
-        OpenPanels();
+        StartCoroutine(OpenPanels(0));
     }
 
     private void Update()
     {
         checkBloom();
-        updateUI();
+        UpdateUI();
         CheckEndFight();
     }
 
@@ -159,7 +159,7 @@ public class BattleSystem : MonoBehaviour
             jumpTween.Play();
         }
     }
-    public void updateUI()
+    public void UpdateUI()
     {
         // Update health
         enemyHUD.setHP(Enemy.GetCurrentHP());
@@ -227,7 +227,7 @@ public class BattleSystem : MonoBehaviour
         SetPlayerStats();
         Enemy.SetStartingStats();
         GameManager.IncrementTurnCounter();
-        EndManager.resetFight();
+        EndManager.ResetFight();
     }
     void SetPlayerStats()
     {
@@ -238,29 +238,38 @@ public class BattleSystem : MonoBehaviour
         InputManager.SetPlayerAction("none");
         TimeManager.selectIcon("Default");
     }
-    
 
-    public void OpenPanels() // Deals with the panels showing at the begining of the fight
+    // --------------- Face Off Panels --------------- //
+    public IEnumerator OpenPanels(float delay) // Deals with the panels showing at the begining of the fight
     {
+        yield return new WaitForSeconds(delay);
+        TimeManager.fadeInUnitTimer();
+        CombatManager.move_UI_in();
         enemyPanel.DOLocalMoveX(900, 1).SetDelay(2.5f);
         playerPanel.DOLocalMoveX(-900, 1).SetDelay(2.5f).OnComplete(complete);
         void complete()
         {
             GameManager.SetDayCounter(1);
-            StartCoroutine(GameManager.DayShow(3));
+            StartCoroutine(GameManager.DayShow(2));
             TimeManager.continueUnitTimer();
             //audioManager.Play("Combat_Theme"); REMOVE
             _loadingScreen.SetActive(false);
         }
-    } // Global Start
+    }
     public void ClosePanels()
     {
         _loadingScreen.SetActive(true);
         playerPanel.gameObject.SetActive(true);
         enemyPanel.gameObject.SetActive(true);
         playerPanel.DOLocalMoveX(-308, 0.3f);
-        enemyPanel.DOLocalMoveX(308, 0.3f);
+        enemyPanel.DOLocalMoveX(308, 0.3f).OnComplete(CloseEffects);
+        void CloseEffects()
+        {
+            AudioManager.Play("Thunder");
+            cameraManager.playChrome();
+        }
     }
+    // --------------- Face Off Panels --------------- //
 
     void checkBloom()
     {
@@ -281,6 +290,10 @@ public class BattleSystem : MonoBehaviour
     public bool GetDeadEnemy()
     {
         return deadEnemy;
+    }
+    public void SetDeadEnemy(bool newState)
+    {
+        deadEnemy = newState;
     }
 
     void GetScripts()

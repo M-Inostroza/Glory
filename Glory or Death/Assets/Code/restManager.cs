@@ -13,7 +13,7 @@ public class restManager : MonoBehaviour
     [SerializeField] Transform criticStar;
     bool hasAnimatedStar = false;
 
-    Player player;
+    Player Player;
     TimeManager TimeManager;
     AudioManager audioManager;
     TutorialManager TutorialManager;
@@ -22,7 +22,7 @@ public class restManager : MonoBehaviour
     private void Awake()
     {
         TutorialManager = FindObjectOfType<TutorialManager>();
-        player = FindObjectOfType<Player>();
+        Player = FindObjectOfType<Player>();
         TimeManager = FindObjectOfType<TimeManager>();
         audioManager = FindObjectOfType<AudioManager>();
     }
@@ -47,7 +47,7 @@ public class restManager : MonoBehaviour
         restSlider.value = 0;
         cameraZoom();
         audioManager.Play("Rest_On");
-        player.GetComponent<Animator>().Play("restSkill");
+        Player.GetComponent<Animator>().Play("restSkill");
         canRest = true;
         StartCoroutine(setMinigameOff(4.5f));
     }
@@ -84,7 +84,7 @@ public class restManager : MonoBehaviour
         }
         criticStar.GetComponent<Image>().DOFade(0.25f, 0);
         canRest = false;
-        player.SetCurrentStamina(player.GetCurrentStamina() + restSlider.value);
+        Player.SetCurrentStamina(Player.GetCurrentStamina() + restSlider.value);
         Player.BackToIdle();
     }
 
@@ -100,7 +100,7 @@ public class restManager : MonoBehaviour
     {
         if (restSlider.value > 85 && !GameManager.isTutorial())
         {
-            player.incrementAdrenaline(player.GetAdrenalineFactor());
+            Player.incrementAdrenaline(Player.GetAdrenalineFactor());
             stars.Play();
             FindObjectOfType<CombatManager>().showStars();
         }

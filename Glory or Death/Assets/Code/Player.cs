@@ -16,13 +16,11 @@ public class Player : MonoBehaviour
     
     [Header("Stats")]
     [SerializeField] private float maxSpeed, baseSpeed;
-    [SerializeField] private float maxStamina, currentStamina; 
-    [SerializeField] private int maxHP, currentHP;
-    [SerializeField] private int adrenaline;
+    private static float _maxStamina, currentStamina; 
+    [SerializeField] private static int _maxHP, _currentHP;
+    [SerializeField] private static int _adrenaline;
     [SerializeField] private int maxAdrenaline;
     [SerializeField] private int _nativeDamage;
-
-    // Bla
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem attackBlood;
@@ -30,7 +28,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] Animator _dummyAnimator;
 
-    [SerializeField] private int maxShield, currentShield;
+    [SerializeField] private static int _maxShield, _currentShield;
     [SerializeField] private int critHits;
 
     [SerializeField] private DodgeManager dodgeManager;
@@ -58,27 +56,32 @@ public class Player : MonoBehaviour
         _cameraManager = FindObjectOfType<cameraManager>();
         _goalManager = FindObjectOfType<GoalManager>();
 
-        setStats();
+        ResetStats();
     }
 
     private void Update()
     {
         capHP();
         capStamina();
-        checkVictoryCondition();
+        CheckVictoryCondition();
     }
 
-    void setStats()
+    public static void ResetStats()
     {
-        currentStamina = maxStamina;
-        currentShield = 0;
-        currentHP = maxHP;
+        _maxStamina = 100;
+        _adrenaline = 0;
+        _maxHP = 30;
+        _maxShield = 4;
+
+        currentStamina = _maxStamina;
+        _currentHP = _maxHP;
+
         if (GameManager.isTutorial())
         {
-            currentShield = 0;
+            _currentShield = 0;
         } else
         {
-            currentShield = maxShield / 2;
+            _currentShield = _maxShield / 2;
         }
     }
 
@@ -87,7 +90,7 @@ public class Player : MonoBehaviour
         if (!missed)
         {
             missed = false;
-            currentHP -= dmg;
+            _currentHP -= dmg;
         }
         else
         {
@@ -101,7 +104,7 @@ public class Player : MonoBehaviour
     {
         myAnim.Play("blockAttack");
     }
-    public static void BackToIdle()
+    public void BackToIdle()
     {
         myAnim.Play("Idle");
     }
@@ -280,7 +283,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void checkVictoryCondition()
+    public void CheckVictoryCondition()
     {
         if (!GameManager.isTutorial() && enemy_unit != null)
         {
@@ -311,29 +314,29 @@ public class Player : MonoBehaviour
     // HP
     public int GetMaxHP()
     {
-        return maxHP;
+        return _maxHP;
     }
     public void SetMaxHP(int MaxHP)
     {
-        maxHP = MaxHP;
+        _maxHP = MaxHP;
     }
     public int GetCurrentHP()
     {
-        return currentHP;
+        return _currentHP;
     }
     public void SetCurrentHP(int CurrentHP)
     {
-        currentHP = CurrentHP;
-        if (currentHP >= maxHP)
+        _currentHP = CurrentHP;
+        if (_currentHP >= _maxHP)
         {
-            currentHP = maxHP;
+            _currentHP = _maxHP;
         }
     }
 
     // Stamina
     public float GetMaxStamina()
     {
-        return maxStamina;
+        return _maxStamina;
     }
     public float GetCurrentStamina()
     {
@@ -411,35 +414,35 @@ public class Player : MonoBehaviour
     }
     public int GetMaxShield()
     {
-        return maxShield;
+        return _maxShield;
     }
     public void setMaxShield(int newShield)
     {
-        maxShield = newShield;
+        _maxShield = newShield;
     }
     public int getCurrentShield()
     {
-        return currentShield;
+        return _currentShield;
     }
     public void setCurrentShield(int newShield)
     {
-        currentShield = newShield;
+        _currentShield = newShield;
     }
     public void increaseCurrentShield()
     {
         if (DefendManager.GetShieldCritic())
         {
-            currentShield += shieldFactor + 1;
+            _currentShield += shieldFactor + 1;
             DefendManager.SetShieldCritic(false);
         } else
         {
-            currentShield += shieldFactor;
+            _currentShield += shieldFactor;
         }
         capShield();
     }
     public void decreaseCurrentShield()
     {
-        currentShield--;
+        _currentShield--;
         capShield();
     }
 
@@ -469,11 +472,11 @@ public class Player : MonoBehaviour
     }
     public int GetAdrenaline()
     {
-        return adrenaline;
+        return _adrenaline;
     }
     public void SetAdrenaline(int newAdrenaline)
     {
-        adrenaline = newAdrenaline;
+        _adrenaline = newAdrenaline;
     }
 
     public int GetMaxAdrenaline()
@@ -482,11 +485,11 @@ public class Player : MonoBehaviour
     }
     public void incrementAdrenaline(int newAdrenaline)
     {
-       adrenaline  += newAdrenaline;
+       _adrenaline  += newAdrenaline;
     }
     public void reduceAdrenaline(int newAdrenaline)
     {
-        adrenaline -= newAdrenaline;
+        _adrenaline -= newAdrenaline;
     }
 
     // Critic Hits
@@ -510,31 +513,31 @@ public class Player : MonoBehaviour
     // Caps
     void capShield()
     {
-        if (currentShield <= 0)
+        if (_currentShield <= 0)
         {
-            currentShield = 0;
+            _currentShield = 0;
         }
-        else if (currentShield >= maxShield)
+        else if (_currentShield >= _maxShield)
         {
-            currentShield = maxShield;
+            _currentShield = _maxShield;
         }
     }
     void capHP()
     {
-        if (currentHP <= 0)
+        if (_currentHP <= 0)
         {
-            currentHP = 0;
+            _currentHP = 0;
         }
-        myAnim.SetInteger("Defeat", currentHP);
+        myAnim.SetInteger("Defeat", _currentHP);
     }
     void capStamina()
     {
         if (currentStamina <= 0)
         {
             currentStamina = 0;
-        } else if (currentStamina >= maxStamina)
+        } else if (currentStamina >= _maxStamina)
         {
-            currentStamina = maxStamina;
+            currentStamina = _maxStamina;
         }
     }
     // Buffs

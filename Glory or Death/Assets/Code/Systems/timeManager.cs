@@ -97,7 +97,7 @@ public class TimeManager : MonoBehaviour
     {
         playerAction();
         enemyAction();
-        runTimer();
+        RunTimer();
     }
 
 
@@ -386,7 +386,7 @@ public class TimeManager : MonoBehaviour
         fadeInUnitTimer();
     }
 
-    private void runTimer()
+    private void RunTimer()
     {
         if (timerIsRunning)
         {

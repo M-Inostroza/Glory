@@ -81,7 +81,7 @@ public class LoadingScreen : MonoBehaviour
         _cameraManager.playChrome();
         resetLoadingBar();
 
-        StartCoroutine(_GameManager.DayShow(3));
+        StartCoroutine(_GameManager.DayShow(2));
 
         ToggleLoadingScreen(0, 0.3f);
         _inputManager.resetCooldown();

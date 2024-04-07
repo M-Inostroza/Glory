@@ -9,11 +9,13 @@ using TMPro;
 public class EndManager : MonoBehaviour
 {
     CombatManager CombatManager;
+    BattleSystem BattleSystem;
     SoundPlayer SoundPlayer;
     AudioManager AudioManager;
     TimeManager TimeManager;
     LoadingScreen LoadingScreen;
     Enemy Enemy;
+    Player Player;
  
     [SerializeField] Image endOverlay;
     [SerializeField] Image dialogueBubble;
@@ -56,6 +58,8 @@ public class EndManager : MonoBehaviour
         TimeManager = FindObjectOfType<TimeManager>();
         Enemy = FindObjectOfType<Enemy>();
         LoadingScreen = FindObjectOfType<LoadingScreen>();
+        BattleSystem = FindObjectOfType<BattleSystem>();
+        Player = FindObjectOfType<Player>();
     }
 
     // End
@@ -109,7 +113,7 @@ public class EndManager : MonoBehaviour
         endStarSymbol.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 0.1f).OnComplete(() => endStarSymbol.DOScale(1, 0));
     }
 
-    public void resetFight()
+    public void ResetFight()
     {
         summeryWindow.transform.DOLocalMoveY(455, 0.4f).OnComplete(()=> activateEndElements(false, 0));
         //endOverlay.DOFade(0, 0.3f);
@@ -185,10 +189,10 @@ public class EndManager : MonoBehaviour
                 _finalDaysUI.GetChild(5).gameObject.SetActive(true);
             }
             _finalDaysUI.GetChild(4).GetComponent<TMP_Text>().text = GameManager.GetDayCounter().ToString() + " Days!";
-            _finalDaysUI.DOLocalMoveY(67, 0.8f).SetDelay(2);
+            _finalDaysUI.DOLocalMoveY(67, 0.4f).SetDelay(2);
         } else
         {
-            _finalDaysUI.DOLocalMoveY(-440, 0.8f).OnComplete(()=> _finalDaysUI.GetChild(5).gameObject.SetActive(false));
+            _finalDaysUI.DOLocalMoveY(-440, 0.4f).OnComplete(()=> _finalDaysUI.GetChild(5).gameObject.SetActive(false));
         }
         
     }
@@ -323,17 +327,24 @@ public class EndManager : MonoBehaviour
     // RESET - in case of Victory, starts a new round --you keep upgrades--
     public void TryAgain()
     {
-        _endConfeti.SetActive(false);
+        BattleSystem.SetDeadEnemy(false);
+
+        endOverlay.gameObject.SetActive(false);
         TimeManager.ResetTimers(false);
         MoveVictoryUI(false);
         ShowFinalDays(false);
+
         PlayVictoryVisuals(false);
+        _endConfeti.SetActive(false);
+
         Enemy.ResetStats();
+        Player.ResetStats();
 
         // Reset Anims
         Player.BackToIdle();
         Enemy.BackToIdle();
         // All cooldown refres
-        // All stats go normal
+
+        StartCoroutine(BattleSystem.OpenPanels(.5f));
     }
 }

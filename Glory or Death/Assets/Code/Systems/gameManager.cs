@@ -74,9 +74,9 @@ public class GameManager : MonoBehaviour
     public IEnumerator DayShow(float time)
     {
         dayContainer.GetChild(0).GetComponent<TMP_Text>().text = "Day " + _dayCounter.ToString();
-        dayContainer.DOLocalMoveY(-175, 1);
+        dayContainer.DOLocalMoveY(-175, 0.5f);
         yield return new WaitForSeconds(time);
-        dayContainer.DOLocalMoveY(-320, 1);
+        dayContainer.DOLocalMoveY(-320, 0.5f);
     }
 
     void updateTimeScaleText()

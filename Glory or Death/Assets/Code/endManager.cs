@@ -14,6 +14,7 @@ public class EndManager : MonoBehaviour
     AudioManager AudioManager;
     TimeManager TimeManager;
     LoadingScreen LoadingScreen;
+    InputManager InputManager;
     Enemy Enemy;
     Player Player;
  
@@ -60,6 +61,7 @@ public class EndManager : MonoBehaviour
         LoadingScreen = FindObjectOfType<LoadingScreen>();
         BattleSystem = FindObjectOfType<BattleSystem>();
         Player = FindObjectOfType<Player>();
+        InputManager = FindObjectOfType<InputManager>();
     }
 
     // End
@@ -67,7 +69,7 @@ public class EndManager : MonoBehaviour
     public IEnumerator showEndScreen(float delay)
     {
         updateStarUI();
-        activateEndElements(true, 0);
+        ActivateEndElements(true, 0);
         AudioManager.Play("End_Horn");
         AudioManager.Play("End_Drums");
         endOverlay.DOFade(0.85f, 1f);
@@ -75,7 +77,7 @@ public class EndManager : MonoBehaviour
 
         ShowSummaryWindow();
     }
-    public void activateEndElements(bool state, int condition)
+    public void ActivateEndElements(bool state, int condition)
     {
         switch (condition)
         {
@@ -113,28 +115,62 @@ public class EndManager : MonoBehaviour
         endStarSymbol.DOPunchScale(new Vector3(0.05f, 0.05f, 0.05f), 0.1f).OnComplete(() => endStarSymbol.DOScale(1, 0));
     }
 
-    public void ResetFight()
+    public void MoveOutElements()
     {
-        summeryWindow.transform.DOLocalMoveY(455, 0.4f).OnComplete(()=> activateEndElements(false, 0));
-        //endOverlay.DOFade(0, 0.3f);
+        summeryWindow.transform.DOLocalMoveY(455, 0.4f).OnComplete(()=> ActivateEndElements(false, 0));
         animatePlayerAvatarOut();
         _upgradeManager.SetActive(false);
         hideUpgradeButton();
     }
 
+    // ---------- Defeat handler ---------- //
     public void DefeatScreen()
     {
-        endOverlay.DOFade(0.85f, 1f);
-        enemyContainer.DOLocalMoveX(0, 0.3f).SetDelay(2.5f);
-        defeatLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
-        _TryAgainButton.DOLocalMoveY(-160, 1).SetDelay(3.5f);
-        foreach (var effect in defeatEffects)
-        {
-            effect.gameObject.SetActive(true);
-        }
-        defeatEffects[2].transform.DOLocalMoveY(-320, 1);
-        defeatEffects[1].transform.DOLocalMoveY(-1200, 1);
+        MoveDefeatUI(true);
+        PlayDefeatVisuals(true);
     }
+    void PlayDefeatVisuals(bool onOff)
+    {
+        if (onOff)
+        {
+            foreach (var effect in defeatEffects)
+            {
+                effect.gameObject.SetActive(true);
+            }
+            defeatEffects[2].transform.DOLocalMoveY(-320, 1);
+            defeatEffects[1].transform.DOLocalMoveY(-1200, 1);
+        }
+        else
+        {
+            foreach (var effect in defeatEffects)
+            {
+                effect.gameObject.SetActive(false);
+            }
+            defeatEffects[2].transform.DOLocalMoveY(-600, 0.5f);
+            defeatEffects[1].transform.DOLocalMoveY(-2000, 0.5f);
+        }
+    }
+    void MoveDefeatUI(bool inOut)
+    {
+        if (inOut)
+        {
+            endOverlay.DOFade(0.85f, 1f);
+            _TryAgainButton.gameObject.SetActive(true);
+            defeatLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
+            _TryAgainButton.DOLocalMoveY(-160, 1).SetDelay(2.5f);
+            defeatLabelContainer.DOLocalMoveY(0, 1).SetDelay(1);
+            enemyContainer.DOLocalMoveX(0, 0.3f).SetDelay(2.5f);
+        } else
+        {
+            enemyContainer.DOLocalMoveX(500, 0.3f);
+            defeatLabelContainer.DOLocalMoveY(300, 0.3f);
+            defeatLabelContainer.DOLocalMoveY(300, 0.3f);
+            _TryAgainButton.DOLocalMoveY(-325, 0.3f).OnComplete(() => _TryAgainButton.gameObject.SetActive(false));
+        }
+        
+    }
+    // ---------- Defeat handler ---------- //
+
 
 
     // ---------- Victory handler ---------- //
@@ -199,6 +235,7 @@ public class EndManager : MonoBehaviour
     // ---------- Victory handler ---------- //
 
 
+
     // ---------- Avatar Show ---------- //
     public IEnumerator AnimatePlayerAvatarIn(string BubbleText, float delay, bool isEnd = false)
     {
@@ -220,6 +257,7 @@ public class EndManager : MonoBehaviour
     // ---------- Avatar Show ---------- //
 
 
+
     // ---------- Summary window ---------- //
     void ShowSummaryWindow()
     {
@@ -237,6 +275,7 @@ public class EndManager : MonoBehaviour
         }).OnComplete(PlayStarAnimation);
     }
     // ---------- Summary window ---------- //
+
 
 
     // ---------- Upgrade ---------- //
@@ -272,6 +311,7 @@ public class EndManager : MonoBehaviour
     // ---------- Upgrade ---------- //
 
 
+
     // ---------- End elements hadler ---------- //
     void ActivateTimeOutElements(bool state)
     {
@@ -300,6 +340,7 @@ public class EndManager : MonoBehaviour
     // ---------- End elements hadler ---------- //
 
 
+
     // ---------- Stars ---------- //
     public int GetStars()
     {
@@ -324,27 +365,36 @@ public class EndManager : MonoBehaviour
     // ---------- Stars ---------- //
 
 
-    // RESET - in case of Victory, starts a new round --you keep upgrades--
+
+    // ---------- Hard Reset ---------- //
     public void TryAgain()
     {
         BattleSystem.SetDeadEnemy(false);
+        
 
         endOverlay.gameObject.SetActive(false);
         TimeManager.ResetTimers(false);
+
         MoveVictoryUI(false);
+        MoveDefeatUI(false);
         ShowFinalDays(false);
 
         PlayVictoryVisuals(false);
+        PlayDefeatVisuals(false);
+
         _endConfeti.SetActive(false);
 
         Enemy.ResetStats();
         Player.ResetStats();
 
         // Reset Anims
-        Player.BackToIdle();
+        Enemy.GetComponent<Animator>().SetBool("Victory", false);
         Enemy.BackToIdle();
-        // All cooldown refres
+        Player.BackToIdle();
+
+        InputManager.ResetCooldown();
 
         StartCoroutine(BattleSystem.OpenPanels(.5f));
     }
+    // ---------- Hard Reset ---------- //
 }

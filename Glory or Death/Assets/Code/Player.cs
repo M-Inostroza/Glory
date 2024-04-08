@@ -558,14 +558,11 @@ public class Player : MonoBehaviour
     public IEnumerator boostSpeed()
     {
         baseSpeed += 3f;
-        //TimeManager.RushEffect(true);
-        yield return new WaitForSeconds(3.5f); // TODO
-        //TimeManager.RushEffect(false);
+        yield return new WaitForSeconds(3.5f);
         baseSpeed -= 3f;
     }
 
-    // Effects
-
+    // --------------------- Anim Effects --------------------- //
     public void PlayBloodMid()
     {
         if (!GameManager.isTutorial())
@@ -598,4 +595,5 @@ public class Player : MonoBehaviour
     {
         CombatManager.move_UI_in();
     }
+    // --------------------- Anim Effects --------------------- //
 }

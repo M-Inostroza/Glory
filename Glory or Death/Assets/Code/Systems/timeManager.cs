@@ -98,6 +98,8 @@ public class TimeManager : MonoBehaviour
         playerAction();
         enemyAction();
         RunTimer();
+
+        Debug.Log(timerIsRunning);
     }
 
 
@@ -128,7 +130,7 @@ public class TimeManager : MonoBehaviour
                     if (player.GetCurrentStamina() > costATK)
                     {
                         enemyTimer.fillAmount += 0.02f;
-                        BattleSystem.PlayerAttack();
+                        BattleSystem.PlayAttack();
                         InputManager.GetAttackCD().fillAmount = 1;
                         player.DecrementCurrentStamina(costATK);
                         fadeOutUnitTimer();
@@ -143,7 +145,7 @@ public class TimeManager : MonoBehaviour
                     if (player.GetCurrentStamina() > costATK2)
                     {
                         enemyTimer.fillAmount += 0.02f;
-                        BattleSystem.PlayerSuperAttack();
+                        BattleSystem.PlaySuperAttack();
                         player.DecrementCurrentStamina(costATK2);
                         fadeOutUnitTimer();
                     }
@@ -158,7 +160,7 @@ public class TimeManager : MonoBehaviour
                     if (player.GetCurrentStamina() > costDF)
                     {
                         enemyTimer.fillAmount += 0.02f;
-                        BattleSystem.PlayerDefend();
+                        BattleSystem.PlayDefend();
                         InputManager.GetDefendCD().fillAmount = 1;
                         player.DecrementCurrentStamina(costDF);
                         fadeOutUnitTimer();
@@ -399,9 +401,9 @@ public class TimeManager : MonoBehaviour
             // Time out
             if (battleTimer <= 0 && !BattleSystem.OnSkill)
             {
+                timerIsRunning = false;
                 audioManager.Stop("Combat_Theme");
                 CombatManager.move_UI_out();
-                timerIsRunning = false;
                 stopUnitTimer();
                 battleTimer = 0;
                 _cameraManager.playChrome();
@@ -472,6 +474,15 @@ public class TimeManager : MonoBehaviour
             afterWait.Invoke();
         }
     }
+
+    // ------------------- Time Control ------------------- //
+    public void StopTime() // Fight and Units
+    {
+        DeactivateFightTimer();
+        stopUnitTimer();
+        Debug.Log(timerIsRunning);
+    }
+    // ------------------- Time Control ------------------- //
 
     // G & S
     public void ActivateFightTimer()

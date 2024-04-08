@@ -50,12 +50,12 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        updateHP();
+        UpdateHP();
         updateSpeed();
         capHP();
     }
 
-    private void updateHP()
+    private void UpdateHP()
     {
         if (_currentHP <= 0)
         {
@@ -126,7 +126,7 @@ public class Enemy : MonoBehaviour
     public void ExecuteRage(int speedBuff, int dmgBuff)
     {
         TimeManager.stopUnitTimer();
-        executeCameraZoom();
+        CameraZoom(true);
         CombatManager.move_UI_out();
         baseSpeed += speedBuff;
         _nativeDamage += dmgBuff;
@@ -227,22 +227,27 @@ public class Enemy : MonoBehaviour
         myAnimator.SetBool("attack", false);
         myAnimator.Play("Idle");
     }
-    public void returnFromRage()
+    
+    public void CameraZoom(bool inOut)
     {
-        returnCameraZoom();
-        CombatManager.move_UI_in();
-        TimeManager.continueUnitTimer();
-        TimeManager.fadeInUnitTimer();
+        if (inOut)
+        {
+            mainCamera.DOFieldOfView(40, 0.3f);
+            mainCamera.transform.DOLocalMove(new Vector3(3, -0.3f, -10), 0.3f);
+        } else
+        {
+            mainCamera.DOFieldOfView(50, 0.5f);
+            mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.4f);
+        }
     }
-    public void executeCameraZoom()
+
+
+
+
+    // ------------------- Anim Callbacks ------------------- //
+    public void selectNextAction()
     {
-        mainCamera.DOFieldOfView(40, 0.6f);
-        mainCamera.transform.DOLocalMove(new Vector3(3, -0.3f, -10), 0.6f);
-    }
-    public void returnCameraZoom()
-    {
-        mainCamera.DOFieldOfView(50, 1f);
-        mainCamera.transform.DOLocalMove(new Vector3(0, 0, -10), 0.7f);
+        TimeManager.SelectEnemyAction();
     }
     public void playAudience()
     {
@@ -252,12 +257,17 @@ public class Enemy : MonoBehaviour
     {
         audioManager.Play("Enemy_charge");
     }
-
-    // Called from animation
-    public void selectNextAction()
+    public void returnFromRage()
     {
-        TimeManager.SelectEnemyAction();
+        CameraZoom(false);
+        CombatManager.move_UI_in();
+        TimeManager.continueUnitTimer();
+        TimeManager.fadeInUnitTimer();
     }
+    // ------------------- Anim Callbacks ------------------- //
+
+
+
 
     // Buffs
     public void doDamageBuff()

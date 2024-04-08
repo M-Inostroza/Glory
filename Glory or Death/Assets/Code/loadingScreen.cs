@@ -84,7 +84,7 @@ public class LoadingScreen : MonoBehaviour
         StartCoroutine(_GameManager.DayShow(2));
 
         ToggleLoadingScreen(0, 0.3f);
-        _inputManager.resetCooldown();
+        _inputManager.ResetCooldown();
 
         TimeManager.SelectEnemyAction();
         TimeManager.ResetTimers(true);

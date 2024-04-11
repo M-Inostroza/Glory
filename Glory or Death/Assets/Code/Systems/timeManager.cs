@@ -98,8 +98,6 @@ public class TimeManager : MonoBehaviour
         playerAction();
         enemyAction();
         RunTimer();
-
-        Debug.Log(timerIsRunning);
     }
 
 
@@ -480,7 +478,6 @@ public class TimeManager : MonoBehaviour
     {
         DeactivateFightTimer();
         stopUnitTimer();
-        Debug.Log(timerIsRunning);
     }
     // ------------------- Time Control ------------------- //
 

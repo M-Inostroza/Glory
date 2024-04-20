@@ -90,6 +90,7 @@ public class HistoryControl : MonoBehaviour
         if (isEnd)
         {
             _overlayImage.DOFade(0f, (0.3f - 0.1f)).OnComplete(() => _dialogueOverlay.gameObject.SetActive(false));
+            TimeManager.continueUnitTimer();
         }
     }
 

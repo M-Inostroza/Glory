@@ -92,6 +92,9 @@ public class TutorialManager : MonoBehaviour
     {
         StartCoroutine(OpenTutorial(2));
         showUI();
+
+        // Tutorial theme
+        _audioManager.Play("Tutorial_Theme");
     }
     private void Update()
     {

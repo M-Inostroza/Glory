@@ -3363,6 +3363,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 6850710541124081265, guid: 3b7ed8223a9316b4a85a5f0edc1089bb, type: 3}
+      propertyPath: sounds.Array.size
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6850710541124081265, guid: 3b7ed8223a9316b4a85a5f0edc1089bb, type: 3}
+      propertyPath: sounds.Array.data[89].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: f804c9ad0477bc442bb754521c5dece2, type: 3}
+    - target: {fileID: 6850710541124081265, guid: 3b7ed8223a9316b4a85a5f0edc1089bb, type: 3}
+      propertyPath: sounds.Array.data[89].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6850710541124081265, guid: 3b7ed8223a9316b4a85a5f0edc1089bb, type: 3}
+      propertyPath: sounds.Array.data[89].name
+      value: Tutorial_Theme
+      objectReference: {fileID: 0}
+    - target: {fileID: 6850710541124081265, guid: 3b7ed8223a9316b4a85a5f0edc1089bb, type: 3}
+      propertyPath: sounds.Array.data[89].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6850710541124081265, guid: 3b7ed8223a9316b4a85a5f0edc1089bb, type: 3}
+      propertyPath: sounds.Array.data[89].volume
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b7ed8223a9316b4a85a5f0edc1089bb, type: 3}
 --- !u!1 &437036375
@@ -10276,7 +10300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7deeb375091644cad0566be7121186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnCounter: 0
   overlay: {fileID: 0}
   dayContainer: {fileID: 0}
   tsText: {fileID: 870429885}
@@ -50134,11 +50157,11 @@ MonoBehaviour:
   dialogueBubble: {fileID: 2666047671275806240}
   starParticle: {fileID: 8065470300750569}
   playerAvatar: {fileID: 108788935993174141}
-  endConfeti: {fileID: 4773393519276410441}
+  _endConfeti: {fileID: 0}
   _upgradeManager: {fileID: 0}
   endStarSymbol: {fileID: 9128096902525197862}
   summeryWindow: {fileID: 4775526671670675219}
-  quitButton: {fileID: 610596448364879428}
+  _TryAgainButton: {fileID: 0}
   resetButton: {fileID: 0}
   upgradeButton: {fileID: 0}
   endStarCount: {fileID: 1669647801355791034}
@@ -50156,6 +50179,7 @@ MonoBehaviour:
   defeatScreenContainer: {fileID: 6143046437708293183}
   victoryLabelContainer: {fileID: 3807998778016478548}
   victoryScreenContainer: {fileID: 6458854551191205357}
+  _finalDaysUI: {fileID: 0}
 --- !u!114 &3897141687580738262
 MonoBehaviour:
   m_ObjectHideFlags: 0

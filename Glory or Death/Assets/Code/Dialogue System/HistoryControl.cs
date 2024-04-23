@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class HistoryControl : MonoBehaviour
 {
     TimeManager TimeManager;
+    AudioManager AudioManager;
+    GameManager GameManager;
 
     [SerializeField] Transform _panelPlayer;
     [SerializeField] Transform _panelEnemy;
@@ -34,7 +36,10 @@ public class HistoryControl : MonoBehaviour
 
     void Start()
     {
+        AudioManager = FindObjectOfType<AudioManager>();
         TimeManager = FindObjectOfType<TimeManager>();
+        GameManager = FindObjectOfType<GameManager>();
+
         _framePlayer = _panelPlayer.GetChild(0).GetComponent<Image>();
         _textPlayer = _panelPlayer.GetChild(0).transform.GetChild(0).GetComponent<TMP_Text>();
 
@@ -51,6 +56,7 @@ public class HistoryControl : MonoBehaviour
     /* -----Overture----- */
     public void Overture()
     {
+        AudioManager.Play("Main_Theme");
         _dialogueOverlay.gameObject.SetActive(true);
         _overlayImage.DOFade(0.8f, (0.3f - 0.1f));
 
@@ -91,6 +97,9 @@ public class HistoryControl : MonoBehaviour
         {
             _overlayImage.DOFade(0f, (0.3f - 0.1f)).OnComplete(() => _dialogueOverlay.gameObject.SetActive(false));
             TimeManager.continueUnitTimer();
+            AudioManager.Stop("Main_Theme");
+            AudioManager.Play("Combat_Theme");
+            StartCoroutine(GameManager.DayShow(4));
         }
     }
 
@@ -108,7 +117,7 @@ public class HistoryControl : MonoBehaviour
         {
             _framePlayer.DOFade(0, fadeSpeed);
             _textPlayer.DOFade(0, fadeSpeed);
-            _panelPlayer.transform.DOLocalMoveX(-260, moveSpeed).OnComplete(() => _panelEnemy.gameObject.SetActive(true));
+            _panelPlayer.transform.DOLocalMoveX(-260, moveSpeed).OnComplete(() => _panelPlayer.gameObject.SetActive(false));
         }
     }
 
@@ -126,7 +135,7 @@ public class HistoryControl : MonoBehaviour
         {
             _frameEnemy.DOFade(0, fadeSpeed);
             _textEnemy.DOFade(0, fadeSpeed);
-            _panelEnemy.transform.DOLocalMoveX(560, moveSpeed).OnComplete(()=> _panelEnemy.gameObject.SetActive(true));
+            _panelEnemy.transform.DOLocalMoveX(560, moveSpeed).OnComplete(()=> _panelEnemy.gameObject.SetActive(false));
         }
     }
 }

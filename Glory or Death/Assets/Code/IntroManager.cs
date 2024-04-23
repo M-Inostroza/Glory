@@ -17,6 +17,7 @@ public class IntroManager : MonoBehaviour
     [SerializeField] GameObject _loadingScreen;
     [SerializeField] Transform _playerPanel;
     [SerializeField] Transform _dollPanel;
+    [SerializeField] Transform _credits;
 
     
     [SerializeField] private GameObject _glory, _death, _or, _thunder, _BG, _playButton, _overlay;
@@ -65,6 +66,8 @@ public class IntroManager : MonoBehaviour
 
     IEnumerator introLogo(float delay)
     {
+        AudioManager.Play("Main_Theme");
+
         float shakeIntensity = 2;
         float shakeDuration = 0.2f;
 
@@ -90,6 +93,7 @@ public class IntroManager : MonoBehaviour
 
     public void StartGame()
     {
+        _credits.gameObject.SetActive(false);
         _logoContainer.DOLocalMoveY(265, 0.5f).SetEase(Ease.InBack).SetDelay(0.5f).OnComplete(prepareVideo);
         _playButton.transform.DOLocalMoveY(-224, 0.5f).SetEase(Ease.InBack).SetDelay(0.05f);
 
@@ -98,6 +102,7 @@ public class IntroManager : MonoBehaviour
             _overlay.SetActive(true);
             _overlay.GetComponent<Image>().DOFade(1, 0.5f).OnComplete(()=>_BG.SetActive(false));
             PlayVideo(2);
+            AudioManager.Stop("Main_Theme");
         }
     }
     void PlayVideo(float delay)

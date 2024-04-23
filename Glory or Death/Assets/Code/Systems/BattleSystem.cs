@@ -257,9 +257,8 @@ public class BattleSystem : MonoBehaviour
         void complete()
         {
             GameManager.SetDayCounter(1);
-            StartCoroutine(GameManager.DayShow(2));
             //TimeManager.continueUnitTimer();
-            //AudioManager.Play("Combat_Theme");
+            
             _loadingScreen.SetActive(false);
         }
     }

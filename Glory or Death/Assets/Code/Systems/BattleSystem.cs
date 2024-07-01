@@ -110,7 +110,7 @@ public class BattleSystem : MonoBehaviour
     // --------------- Enemy Turn --------------- //
     public void EnemyTurn_attack()
     {
-        Enemy.executeAttack();
+        Enemy.ExecuteAttack();
     }
     public void EnemyTurn_SuperAttack()
     {

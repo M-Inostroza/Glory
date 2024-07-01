@@ -32,7 +32,7 @@ public class SuperATKManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        startMinigame();
+        StartMinigame();
         StartCoroutine(generateTarget(0.3f));
     }
 
@@ -48,7 +48,7 @@ public class SuperATKManager : MonoBehaviour
         }
     }
 
-    void startMinigame()
+    void StartMinigame()
     {
         spawnCounter = 0;
         hits = 0;

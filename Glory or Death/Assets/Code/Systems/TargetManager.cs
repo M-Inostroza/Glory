@@ -117,7 +117,7 @@ public class TargetManager : MonoBehaviour
         {
             CombatManager.showStars();
             ATKstars.Play();
-            _player.incrementAdrenaline(_player.GetAdrenalineFactor());
+            _player.incrementAdrenaline(_player.GetAdrenalineFactor() + 1);
         }
     }
     void activateFeedback()

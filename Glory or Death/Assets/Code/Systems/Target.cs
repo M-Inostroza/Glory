@@ -34,7 +34,7 @@ public class Target : MonoBehaviour
             if (!GameManager.isTutorial())
             {
                 _TimeManager.enemyTimer.fillAmount += 0.03f;
-                Player.incrementAdrenaline(2);
+                Player.incrementAdrenaline(3);
                 BS.targetHit++;
             } else
             {

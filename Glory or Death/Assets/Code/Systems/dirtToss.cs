@@ -15,6 +15,7 @@ public class dirtToss : MonoBehaviour
     private Enemy Enemy;
     private SpriteRenderer dirtTexture;
     private TutorialManager TutorialManager;
+    private TimeManager TimeManager;
 
     // Dirt texture opacity
     private float maxOpacity = 0.8f;
@@ -37,6 +38,7 @@ public class dirtToss : MonoBehaviour
         Player = FindObjectOfType<Player>();
         Enemy = FindObjectOfType<Enemy>();
         TutorialManager = FindObjectOfType<TutorialManager>();
+        TimeManager = FindObjectOfType<TimeManager>();
     }
 
     private void OnEnable()
@@ -55,7 +57,7 @@ public class dirtToss : MonoBehaviour
 
     private void Update()
     {
-        makeItDirt();
+        MakeItDirt();
         UpdateFeedback();
     }
     private void OnDisable()
@@ -72,7 +74,7 @@ public class dirtToss : MonoBehaviour
         Player.incrementBaseSpeed(1000);
         speedReduced = false;
     }
-    private void makeItDirt()
+    private void MakeItDirt()
     {
         dirtTexture.color = new Color(1f, 1f, 1f, opacity);
         transform.DOMoveY(transform.position.y - 0.005f, 0.2f);
@@ -112,10 +114,10 @@ public class dirtToss : MonoBehaviour
                 {
                     TutorialManager.dirtDetailTutorial(2);
                 }
+                CombatManager.move_Inputs_in();
                 IsDirty = false;
                 FadeFeedback(false);
                 gameObject.SetActive(false);
-                CombatManager.move_Inputs_in();
             }
         }
     }
@@ -134,7 +136,7 @@ public class dirtToss : MonoBehaviour
             _sliderFill.DOFade(1, 0.3f);
         } else
         {
-            _sliderFill.DOFade(0, 0.3f);
+            _sliderFill.DOFade(0, 0.1f);
             _sliderContainer.DOFade(0, 0.2f).OnComplete(()=> _dirtFeedback.gameObject.SetActive(false));
         }
     }
@@ -142,7 +144,8 @@ public class dirtToss : MonoBehaviour
     IEnumerator deactivateTimer(int time)
     {
         yield return new WaitForSeconds(time);
-        DOTween.To(() => opacity, x => opacity = x, 0, 0.5f);
+        FadeFeedback(false);
+        DOTween.To(() => opacity, x => opacity = x, 0, 0.3f);
         IsDirty = false;
         if (GameManager.isTutorial())
         {

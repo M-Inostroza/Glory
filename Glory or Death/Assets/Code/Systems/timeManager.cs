@@ -276,7 +276,7 @@ public class TimeManager : MonoBehaviour
         if (Enemy.GetCurrentHP() < (Enemy.GetMaxHP() / 2) && enemy.getAngryState() == false)
         {
             dirtPrevious = false;
-            dirtChance += 3;
+            dirtChance += 4;
             enemy.setAngryState(true);
             InputManager.SetEnemyAction("RAGE");
             enemyActionIcon.sprite = iconSprites[7];

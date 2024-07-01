@@ -595,5 +595,10 @@ public class Player : MonoBehaviour
     {
         CombatManager.move_UI_in();
     }
+
+    public void PlayChrome()
+    {
+        _cameraManager.playChrome();
+    }
     // --------------------- Anim Effects --------------------- //
 }

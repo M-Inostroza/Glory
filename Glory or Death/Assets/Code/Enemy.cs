@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     public float baseSpeed; // Default 13
 
     [Header("Systems")]
-    [SerializeField] dirtToss dirtManager;
+    [SerializeField] dirtToss DirtManager;
     [SerializeField] CounterManager counterManager;
     [SerializeField] SuperCounterManager SuperCounterManager;
 
@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         UpdateHP();
-        updateSpeed();
+        UpdateSpeed();
         capHP();
     }
 
@@ -65,11 +65,11 @@ public class Enemy : MonoBehaviour
         myAnimator.SetInteger("CurrentHP", _currentHP);
     }
 
-    void updateSpeed()
+    void UpdateSpeed()
     {
-        if (dirtManager.IsDirty)
+        if (DirtManager.IsDirty)
         {
-            baseSpeed = 17;
+            baseSpeed = 16;
         }
         else
         {
@@ -88,11 +88,11 @@ public class Enemy : MonoBehaviour
         return adrenaline;
     }
 
-    public void executeAttack()
+    public void ExecuteAttack()
     {
         if (!Player.missed)
         {
-            if (Player.getCurrentShield() > 0 && !dirtManager.IsDirty)
+            if (Player.getCurrentShield() > 0 && !DirtManager.IsDirty)
             {
                 adrenaline += 4;
                 audioManager.Play("Counter_On");
@@ -113,14 +113,14 @@ public class Enemy : MonoBehaviour
     }
     public void executeSuperAttack()
     {
-        if (!dirtManager.IsDirty)
+        if (!DirtManager.IsDirty)
         {
             SuperCounterManager.gameObject.SetActive(true);
         }
     }
     public void executeDirt()
     {
-        dirtManager.gameObject.SetActive(true);
+        DirtManager.gameObject.SetActive(true);
         adrenaline += 4;
     }
     public void ExecuteRage(int speedBuff, int dmgBuff)
@@ -316,11 +316,11 @@ public class Enemy : MonoBehaviour
     public void doUIIn()
     {
         // Calling from end animation super attack
-        if (!BS.GetDeadPlayer() && !dirtManager.IsDirty)
+        if (!BS.GetDeadPlayer() && !DirtManager.IsDirty)
         {
             CombatManager.move_UI_in();
         }
-        else if (dirtManager.IsDirty)
+        else if (DirtManager.IsDirty)
         {
             CombatManager.move_UI_in(false);
         }

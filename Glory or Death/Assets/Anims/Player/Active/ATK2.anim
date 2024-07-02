@@ -12594,6 +12594,13 @@ AnimationClip:
     floatParameter: 0.2
     intParameter: 0
     messageOptions: 0
+  - time: 0.5
+    functionName: PlayChrome
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.0833334
     functionName: jumpSounds
     data: 
@@ -12610,6 +12617,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.8333334
     functionName: jumpSounds
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.9166666
+    functionName: PlayBloom
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -12644,14 +12658,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 2.8166666
-    functionName: doSuperDMG
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 2.8166666
-    functionName: showEnemySuperDamage
+    functionName: PlayChrome
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -12672,7 +12679,21 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 2.8166666
-    functionName: PlayChrome
+    functionName: doSuperDMG
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.8166666
+    functionName: showEnemySuperDamage
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.8166666
+    functionName: PlayBloom
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -14,7 +14,7 @@ public class cameraManager : MonoBehaviour
     {
         myAnim = GetComponent<Animator>();
     }
-    public void playChrome()
+    public void playChrome(int intensity = 1, float duration = 1f)
     {
         if (_volume == null)
         {
@@ -25,11 +25,11 @@ public class cameraManager : MonoBehaviour
         // Try to get the ChromaticAberration override from the global volume
         if (_volume.profile.TryGet(out chromaticAberration))
         {
-            chromaticAberration.intensity.Override(1);
+            chromaticAberration.intensity.Override(intensity);
             chromaticAberration.active = true;
             DOTween.To(() => chromaticAberration.intensity.value,
                        x => chromaticAberration.intensity.Override(x),
-                       0, 1.0f)
+                       0, duration)
                 .SetEase(Ease.OutQuad);
         }
         else

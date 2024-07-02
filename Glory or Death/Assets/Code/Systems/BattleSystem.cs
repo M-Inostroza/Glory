@@ -247,7 +247,7 @@ public class BattleSystem : MonoBehaviour
 
 
     // --------------- Face Off Panels --------------- //
-    public IEnumerator OpenPanels(float delay) // Deals with the panels showing at the begining of the fight
+    public IEnumerator OpenPanels(float delay, bool playCombatTheme = false) // Deals with the panels showing at the begining of the fight
     {
         yield return new WaitForSeconds(delay);
         TimeManager.fadeInUnitTimer();
@@ -257,9 +257,13 @@ public class BattleSystem : MonoBehaviour
         void complete()
         {
             GameManager.SetDayCounter(1);
-            //TimeManager.continueUnitTimer();
-            
             _loadingScreen.SetActive(false);
+
+            if (playCombatTheme)
+            {
+                AudioManager.Play("Combat_Theme");
+                TimeManager.ResetTimers(true);
+            }
         }
     }
     public void ClosePanels()
@@ -298,6 +302,10 @@ public class BattleSystem : MonoBehaviour
     public bool GetDeadPlayer()
     {
         return deadPlayer;
+    }
+    public void SetDeadPlayer(bool newState)
+    {
+        deadPlayer = newState;
     }
     public bool GetDeadEnemy()
     {

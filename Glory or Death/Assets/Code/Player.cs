@@ -579,7 +579,6 @@ public class Player : MonoBehaviour
     }
     public void ATK_SlowmoHit(float slowMo)
     {
-        _cameraManager.playChrome();
         StartCoroutine(TimeManager.slowMotion(slowMo, .2f));
     }
     public void blockHit()
@@ -598,7 +597,12 @@ public class Player : MonoBehaviour
 
     public void PlayChrome()
     {
-        _cameraManager.playChrome();
+        _cameraManager.playChrome(3, 0.3f);
+    }
+
+    public void PlayBloom()
+    {
+        _cameraManager.PlayBloom(2, 0.5f);
     }
     // --------------------- Anim Effects --------------------- //
 }

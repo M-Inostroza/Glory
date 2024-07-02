@@ -369,11 +369,15 @@ public class EndManager : MonoBehaviour
     // ---------- Hard Reset ---------- //
     public void TryAgain()
     {
+        AudioManager.Stop("Defeat_Sound");
+        
+
         BattleSystem.SetDeadEnemy(false);
+        BattleSystem.SetDeadPlayer(false);
         
 
         endOverlay.gameObject.SetActive(false);
-        TimeManager.ResetTimers(false);
+        
 
         MoveVictoryUI(false);
         MoveDefeatUI(false);
@@ -394,7 +398,7 @@ public class EndManager : MonoBehaviour
 
         InputManager.ResetCooldown();
 
-        StartCoroutine(BattleSystem.OpenPanels(.5f));
+        StartCoroutine(BattleSystem.OpenPanels(.3f, true));
     }
     // ---------- Hard Reset ---------- //
 }

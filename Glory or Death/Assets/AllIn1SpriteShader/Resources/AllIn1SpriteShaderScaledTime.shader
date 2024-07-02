@@ -221,6 +221,17 @@
 		_OverlayColor("Overlay Color", Color) = (1, 1, 1, 1) //161
 		_OverlayGlow("Overlay Glow", Range(0,25)) = 1 // 162
 		_OverlayBlend("Overlay Blend", Range(0, 1)) = 1 // 163
+    	
+    	_RadialStartAngle("Radial Start Angle", Range(0, 360)) = 90 //164
+		_RadialClip("Radial Clip", Range(0, 360)) = 45 //165
+		_RadialClip2("Radial Clip 2", Range(0, 360)) = 0 //166
+    	
+    	_WarpStrength("Warp Strength", Range(0, 0.1)) = 0.025 //167
+		_WarpSpeed("Warp Speed", Range(0, 25)) = 8 //168
+		_WarpScale("Warp Scale", Range(0.05, 3)) = 0.5 //169
+    	
+    	_OverlayTextureScrollXSpeed("Speed X Axis", Range(-5, 5)) = 0.25 //170
+		_OverlayTextureScrollYSpeed("Speed Y Axis", Range(-5, 5)) = 0.25 //171
 
         _ZTestMode ("Z Test Mode", Float) = 4
     	_CullingOption ("Culling Option", float) = 0
@@ -248,69 +259,71 @@
             #pragma fragment frag
             #pragma multi_compile_instancing
 
-			#pragma shader_feature GLOW_ON
-			#pragma shader_feature FADE_ON
-			#pragma shader_feature OUTBASE_ON
-			#pragma shader_feature ONLYOUTLINE_ON
-			#pragma shader_feature GRADIENT_ON
-			#pragma shader_feature GRADIENT2COL_ON
-			#pragma shader_feature RADIALGRADIENT_ON
-			#pragma shader_feature COLORSWAP_ON
-			#pragma shader_feature HSV_ON
-			#pragma shader_feature CHANGECOLOR_ON
-			#pragma shader_feature CHANGECOLOR2_ON
-			#pragma shader_feature CHANGECOLOR3_ON
-			#pragma shader_feature COLORRAMP_ON
-			#pragma shader_feature GRADIENTCOLORRAMP_ON
-			#pragma shader_feature HITEFFECT_ON
-			#pragma shader_feature NEGATIVE_ON
-			#pragma shader_feature PIXELATE_ON
-			#pragma shader_feature GREYSCALE_ON
-			#pragma shader_feature POSTERIZE_ON
-			#pragma shader_feature BLUR_ON
-			#pragma shader_feature MOTIONBLUR_ON
-			#pragma shader_feature GHOST_ON
-			#pragma shader_feature ALPHAOUTLINE_ON
-			#pragma shader_feature INNEROUTLINE_ON
-			#pragma shader_feature ONLYINNEROUTLINE_ON
-			#pragma shader_feature HOLOGRAM_ON
-			#pragma shader_feature CHROMABERR_ON
-			#pragma shader_feature GLITCH_ON
-			#pragma shader_feature FLICKER_ON
-			#pragma shader_feature SHADOW_ON
-			#pragma shader_feature SHINE_ON
-			#pragma shader_feature CONTRAST_ON
-			#pragma shader_feature OVERLAY_ON
-			#pragma shader_feature OVERLAYMULT_ON
-			#pragma shader_feature ALPHACUTOFF_ON
-			#pragma shader_feature ALPHAROUND_ON
-			#pragma shader_feature DOODLE_ON
-			#pragma shader_feature WIND_ON
-			#pragma shader_feature WAVEUV_ON
-			#pragma shader_feature ROUNDWAVEUV_ON
-			#pragma shader_feature RECTSIZE_ON
-			#pragma shader_feature OFFSETUV_ON
-			#pragma shader_feature CLIPPING_ON
-			#pragma shader_feature TEXTURESCROLL_ON
-			#pragma shader_feature ZOOMUV_ON
-			#pragma shader_feature DISTORT_ON
-			#pragma shader_feature TWISTUV_ON
-			#pragma shader_feature ROTATEUV_ON
-			#pragma shader_feature POLARUV_ON
-			#pragma shader_feature FISHEYE_ON
-			#pragma shader_feature PINCH_ON
-			#pragma shader_feature SHAKEUV_ON
+			#pragma shader_feature_local GLOW_ON
+			#pragma shader_feature_local FADE_ON
+			#pragma shader_feature_local OUTBASE_ON
+			#pragma shader_feature_local ONLYOUTLINE_ON
+			#pragma shader_feature_local GRADIENT_ON
+			#pragma shader_feature_local GRADIENT2COL_ON
+			#pragma shader_feature_local RADIALGRADIENT_ON
+			#pragma shader_feature_local COLORSWAP_ON
+			#pragma shader_feature_local HSV_ON
+			#pragma shader_feature_local CHANGECOLOR_ON
+			#pragma shader_feature_local CHANGECOLOR2_ON
+			#pragma shader_feature_local CHANGECOLOR3_ON
+			#pragma shader_feature_local COLORRAMP_ON
+			#pragma shader_feature_local GRADIENTCOLORRAMP_ON
+			#pragma shader_feature_local HITEFFECT_ON
+			#pragma shader_feature_local NEGATIVE_ON
+			#pragma shader_feature_local PIXELATE_ON
+			#pragma shader_feature_local GREYSCALE_ON
+			#pragma shader_feature_local POSTERIZE_ON
+			#pragma shader_feature_local BLUR_ON
+			#pragma shader_feature_local MOTIONBLUR_ON
+			#pragma shader_feature_local GHOST_ON
+			#pragma shader_feature_local ALPHAOUTLINE_ON
+			#pragma shader_feature_local INNEROUTLINE_ON
+			#pragma shader_feature_local ONLYINNEROUTLINE_ON
+			#pragma shader_feature_local HOLOGRAM_ON
+			#pragma shader_feature_local CHROMABERR_ON
+			#pragma shader_feature_local GLITCH_ON
+			#pragma shader_feature_local FLICKER_ON
+			#pragma shader_feature_local SHADOW_ON
+			#pragma shader_feature_local SHINE_ON
+			#pragma shader_feature_local CONTRAST_ON
+			#pragma shader_feature_local OVERLAY_ON
+			#pragma shader_feature_local OVERLAYMULT_ON
+			#pragma shader_feature_local ALPHACUTOFF_ON
+			#pragma shader_feature_local ALPHAROUND_ON
+			#pragma shader_feature_local DOODLE_ON
+			#pragma shader_feature_local WIND_ON
+			#pragma shader_feature_local WAVEUV_ON
+			#pragma shader_feature_local ROUNDWAVEUV_ON
+			#pragma shader_feature_local RECTSIZE_ON
+			#pragma shader_feature_local OFFSETUV_ON
+			#pragma shader_feature_local CLIPPING_ON
+            #pragma shader_feature_local RADIALCLIPPING_ON
+			#pragma shader_feature_local TEXTURESCROLL_ON
+			#pragma shader_feature_local ZOOMUV_ON
+			#pragma shader_feature_local DISTORT_ON
+            #pragma shader_feature_local WARP_ON
+			#pragma shader_feature_local TWISTUV_ON
+			#pragma shader_feature_local ROTATEUV_ON
+			#pragma shader_feature_local POLARUV_ON
+			#pragma shader_feature_local FISHEYE_ON
+			#pragma shader_feature_local PINCH_ON
+			#pragma shader_feature_local SHAKEUV_ON
 
-			#pragma shader_feature GLOWTEX_ON
-			#pragma shader_feature OUTTEX_ON
-			#pragma shader_feature OUTDIST_ON
-			#pragma shader_feature OUTBASE8DIR_ON
-			#pragma shader_feature OUTBASEPIXELPERF_ON
-			#pragma shader_feature COLORRAMPOUTLINE_ON
-			#pragma shader_feature GREYSCALEOUTLINE_ON
-			#pragma shader_feature POSTERIZEOUTLINE_ON
-			#pragma shader_feature BLURISHD_ON
-			#pragma shader_feature MANUALWIND_ON
+			#pragma shader_feature_local GLOWTEX_ON
+			#pragma shader_feature_local OUTTEX_ON
+			#pragma shader_feature_local OUTDIST_ON
+			#pragma shader_feature_local OUTBASE8DIR_ON
+			#pragma shader_feature_local OUTBASEPIXELPERF_ON
+			#pragma shader_feature_local COLORRAMPOUTLINE_ON
+			#pragma shader_feature_local GREYSCALEOUTLINE_ON
+			#pragma shader_feature_local POSTERIZEOUTLINE_ON
+			#pragma shader_feature_local BLURISHD_ON
+			#pragma shader_feature_local MANUALWIND_ON
 			#pragma shader_feature ATLAS_ON
 			#pragma shader_feature PREMULTIPLYALPHA_ON
 
@@ -374,6 +387,10 @@
 
 			#if CLIPPING_ON
 			half _ClipUvLeft, _ClipUvRight, _ClipUvUp, _ClipUvDown;
+			#endif
+
+            #if RADIALCLIPPING_ON
+			half _RadialStartAngle, _RadialClip, _RadialClip2;
 			#endif
 
 			#if TWISTUV_ON
@@ -450,6 +467,10 @@
 			sampler2D _DistortTex;
 			half4 _DistortTex_ST;
 			half _DistortTexXSpeed, _DistortTexYSpeed, _DistortAmount;
+			#endif
+
+            #if WARP_ON
+			half _WarpStrength, _WarpSpeed, _WarpScale;
 			#endif
 
 			#if WIND_ON
@@ -576,7 +597,7 @@
 			#if OVERLAY_ON
 			sampler2D _OverlayTex;
 			half4 _OverlayTex_ST, _OverlayColor;
-			half _OverlayGlow, _OverlayBlend;
+			half _OverlayGlow, _OverlayBlend, _OverlayTextureScrollXSpeed, _OverlayTextureScrollYSpeed;
 			#endif
 
             UNITY_INSTANCING_BUFFER_START(Props)
@@ -676,6 +697,23 @@
 				clip(tiledUv.x - _ClipUvLeft);
 				#endif
 
+            	#if RADIALCLIPPING_ON
+				half2 tiledUv2 = half2(i.uv.x / _MainTex_ST.x, i.uv.y / _MainTex_ST.y);
+				#if ATLAS_ON
+				tiledUv2 = half2((tiledUv2.x - _MinXUV) / (_MaxXUV - _MinXUV), (tiledUv2.y - _MinYUV) / (_MaxYUV - _MinYUV));
+				#endif
+				half startAngle = _RadialStartAngle - _RadialClip;
+                half endAngle = _RadialStartAngle + _RadialClip2;
+                half offset0 = clamp(0, 360, startAngle + 360);
+                half offset360 = clamp(0, 360, endAngle - 360);
+                half2 atan2Coord = half2(lerp(-1, 1, tiledUv2.x), lerp(-1, 1, tiledUv2.y));
+                half atanAngle = atan2(atan2Coord.y, atan2Coord.x) * 57.3; // angle in degrees
+                if(atanAngle < 0) atanAngle = 360 + atanAngle;
+                if(atanAngle >= startAngle && atanAngle <= endAngle) discard;
+                if(atanAngle <= offset360) discard;
+                if(atanAngle >= offset0) discard;
+				#endif
+
 				#if TEXTURESCROLL_ON && ATLAS_ON
 				i.uv = half2(_MinXUV + ((_MaxXUV - _MinXUV) * (abs((((globalUnscaledTime * 20) + randomSeed) * _TextureScrollXSpeed) + uvRect.x) % 1)),
 				_MinYUV + ((_MaxYUV - _MinYUV) * (abs((((globalUnscaledTime * 20) + randomSeed) * _TextureScrollYSpeed) + uvRect.y) % 1)));
@@ -741,8 +779,8 @@
 				#endif
 
 				#if SHAKEUV_ON
-				half xShake = sin((_Time + randomSeed) * _ShakeUvSpeed * 50) * _ShakeUvX;
-				half yShake = cos((_Time + randomSeed) * _ShakeUvSpeed * 50) * _ShakeUvY;
+				half xShake = sin((globalUnscaledTime + randomSeed) * _ShakeUvSpeed * 50) * _ShakeUvX;
+				half yShake = cos((globalUnscaledTime + randomSeed) * _ShakeUvSpeed * 50) * _ShakeUvY;
 				i.uv += half2(xShake * 0.012, yShake * 0.01);
 				#endif
 
@@ -762,6 +800,18 @@
 				i.uv.y += distortAmnt;
 				#endif
 
+            	#if WARP_ON
+            	half2 warpUv = half2(i.uv.x / _MainTex_ST.x, i.uv.y / _MainTex_ST.y);
+				#if ATLAS_ON
+				warpUv = half2((warpUv.x - _MinXUV) / (_MaxXUV - _MinXUV), (warpUv.y - _MinYUV) / (_MaxYUV - _MinYUV));
+				#endif
+				const float tau = 6.283185307179586;
+            	float xWarp = (_Time.y + randomSeed) * _WarpSpeed + warpUv.x * tau / _WarpScale;
+            	float yWarp = (_Time.y + randomSeed) * _WarpSpeed + warpUv.y * tau / _WarpScale;
+            	float2 warp = float2(sin(xWarp), sin(yWarp)) * _WarpStrength;
+            	i.uv += warp;
+				#endif
+
 				#if WAVEUV_ON
 				float2 uvWave = half2(_WaveX *  _MainTex_ST.x, _WaveY *  _MainTex_ST.y) - i.uv;
             	uvWave %= 1;
@@ -769,7 +819,7 @@
 				uvWave = half2(_WaveX, _WaveY) - uvRect;
 				#endif
 				uvWave.x *= _ScreenParams.x / _ScreenParams.y;
-            	float waveTime = _Time.y + randomSeed;
+            	float waveTime = (globalUnscaledTime * 20) + randomSeed;
 				float angWave = (sqrt(dot(uvWave, uvWave)) * _WaveAmount) - ((waveTime *  _WaveSpeed));
 				i.uv = i.uv + uvWave * sin(angWave) * (_WaveStrength / 1000.0);
 				#endif
@@ -806,7 +856,9 @@
 				#endif
 
 				#if PIXELATE_ON
-				i.uv = floor(i.uv * _PixelateSize) / _PixelateSize;
+				half aspectRatio = _MainTex_TexelSize.x / _MainTex_TexelSize.y;
+				half2 pixelSize = float2(_PixelateSize, _PixelateSize * aspectRatio);
+				i.uv = floor(i.uv * pixelSize) / pixelSize;
 				#endif
 
 				half4 col = tex2D(_MainTex, i.uv);
@@ -857,7 +909,6 @@
                 col.rgb += tex2D(_MainTex, i.uv + rot(half2(-_MotionBlurDist * 2, -_MotionBlurDist * 2)));
                 col.rgb += tex2D(_MainTex, i.uv + rot(half2(-_MotionBlurDist * 3, -_MotionBlurDist * 3)));
                 col.rgb += tex2D(_MainTex, i.uv + rot(half2(-_MotionBlurDist * 4, -_MotionBlurDist * 4)));
-                col.rgb += tex2D(_MainTex, i.uv);
                 col.rgb += tex2D(_MainTex, i.uv + rot(half2(_MotionBlurDist, _MotionBlurDist)));
                 col.rgb += tex2D(_MainTex, i.uv + rot(half2(_MotionBlurDist * 2, _MotionBlurDist * 2)));
                 col.rgb += tex2D(_MainTex, i.uv + rot(half2(_MotionBlurDist * 3, _MotionBlurDist * 3)));
@@ -990,11 +1041,14 @@
 				#endif
 
 				#if OVERLAY_ON
-				half4 overlayCol = tex2D(_OverlayTex, TRANSFORM_TEX(i.uv, _OverlayTex));
+            	half2 overlayUvs = i.uv;
+            	overlayUvs.x += ((_Time.y + randomSeed) * _OverlayTextureScrollXSpeed) % 1;
+				overlayUvs.y += ((_Time.y + randomSeed) * _OverlayTextureScrollYSpeed) % 1;
+				half4 overlayCol = tex2D(_OverlayTex, TRANSFORM_TEX(overlayUvs, _OverlayTex));
 				overlayCol.rgb *= _OverlayColor.rgb * _OverlayGlow;
 				#if !OVERLAYMULT_ON
 				overlayCol.rgb *= overlayCol.a * _OverlayColor.rgb * _OverlayColor.a * _OverlayBlend;
-				col.rgb += overlayCol;
+				col.rgb += overlayCol.rgb;
 				#else
 				overlayCol.a *= _OverlayColor.a;
 				col = lerp(col, col * overlayCol, _OverlayBlend);
@@ -1068,7 +1122,7 @@
 				tiledUvFade2 = half2((tiledUvFade2.x - _MinXUV) / (_MaxXUV - _MinXUV), (tiledUvFade2.y - _MinYUV) / (_MaxYUV - _MinYUV));
 				#endif
 				half fadeTemp = tex2D(_FadeTex, tiledUvFade1).r;
-				half fade = smoothstep(_FadeAmount + 0.01, _FadeAmount + _FadeBurnTransition, fadeTemp);
+				half fade = smoothstep(_FadeAmount, _FadeAmount + _FadeBurnTransition, fadeTemp);
 				half fadeBurn = saturate(smoothstep(_FadeAmount - _FadeBurnWidth, _FadeAmount - _FadeBurnWidth + 0.1, fadeTemp) * _FadeAmount);
 				col.a *= fade;
 				_FadeBurnColor.rgb *= _FadeBurnGlow;

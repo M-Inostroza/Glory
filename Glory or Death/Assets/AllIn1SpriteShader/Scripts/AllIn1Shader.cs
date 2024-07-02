@@ -68,12 +68,15 @@ namespace AllIn1SpriteShader
 
         private void MakeNewMaterial(bool getShaderTypeFromPrefs, string shaderName = "AllIn1SpriteShader")
         {
-            SetMaterial(AfterSetAction.Clear, getShaderTypeFromPrefs, shaderName);
+            bool operationSuccessful = SetMaterial(AfterSetAction.Clear, getShaderTypeFromPrefs, shaderName);
+            #if UNITY_EDITOR
+            if(operationSuccessful) AllIn1ShaderWindow.ShowSceneViewNotification("AllIn1SpriteShader: Material Created and Assigned");
+            #endif
         }
 
-        public void MakeCopy()
+        public bool MakeCopy()
         {
-            SetMaterial(AfterSetAction.CopyMaterial, false, GetStringFromShaderType());
+            return SetMaterial(AfterSetAction.CopyMaterial, false, GetStringFromShaderType());
         }
 
         private void ResetAllProperties(bool getShaderTypeFromPrefs, string shaderName)
@@ -90,7 +93,7 @@ namespace AllIn1SpriteShader
             else return "AllIn1SpriteShader";
         }
 
-        private void SetMaterial(AfterSetAction action, bool getShaderTypeFromPrefs, string shaderName)
+        private bool SetMaterial(AfterSetAction action, bool getShaderTypeFromPrefs, string shaderName)
         {
             Shader allIn1Shader = Resources.Load(shaderName, typeof(Shader)) as Shader;
             if (getShaderTypeFromPrefs)
@@ -138,17 +141,24 @@ namespace AllIn1SpriteShader
                 if (!rendererExists)
                 {
                     MissingRenderer();
-                    return;
+                    return false;
                 }
                 else
                 {
                     SetSceneDirty();
+                    return true;
                 }
             }
             else if (allIn1Shader == null)
             {
-                Debug.LogError("Make sure the AllIn1SpriteShader shader variants are inside the Resource folder!");
+                #if UNITY_EDITOR
+                string logErrorMessage = "Make sure the AllIn1SpriteShader shader variants are inside the Resource folder!";
+                Debug.LogError(logErrorMessage);
+                AllIn1ShaderWindow.ShowSceneViewNotification(logErrorMessage);
+                #endif
+                return false;
             }
+            return false;
         }
 
         private void DoAfterSetAction(AfterSetAction action)
@@ -164,7 +174,7 @@ namespace AllIn1SpriteShader
             }
         }
 
-        public void TryCreateNew()
+        public bool TryCreateNew()
         {
             bool rendererExists = false;
             Renderer sr = GetComponent<Renderer>();
@@ -201,6 +211,7 @@ namespace AllIn1SpriteShader
                 MissingRenderer();
             }
             SetSceneDirty();
+            return rendererExists;
         }
 
         public void ClearAllKeywords()
@@ -318,7 +329,7 @@ namespace AllIn1SpriteShader
             SetSceneDirty();
         }
 
-        public void SaveMaterial()
+        public bool SaveMaterial()
         {
 #if UNITY_EDITOR
             string sameMaterialPath = AllIn1ShaderWindow.materialsSavesPath;
@@ -329,7 +340,7 @@ namespace AllIn1SpriteShader
             {
                 EditorUtility.DisplayDialog("The desired Material Save Path doesn't exist",
                     "Go to Window -> AllIn1ShaderWindow and set a valid folder", "Ok");
-                return;
+                return false;
             }
             sameMaterialPath += gameObject.name;
             string fullPath = sameMaterialPath + ".mat";
@@ -339,6 +350,9 @@ namespace AllIn1SpriteShader
             }
             else DoSaving(fullPath);
             SetSceneDirty();
+            return true;
+#else
+            return false;
 #endif
         }
         private void SaveMaterialWithOtherName(string path, int i = 1)
@@ -408,9 +422,14 @@ namespace AllIn1SpriteShader
 #if UNITY_EDITOR
             if (!Application.isPlaying) EditorSceneManager.MarkAllScenesDirty();
 
-            //If you get an error here please delete the 2 lines below
+            //If you get an error here please delete the code block below
+            #if UNITY_2021_2_OR_NEWER
             var prefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+            #else
+            var prefabStage = UnityEditor.Experimental.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+            #endif
             if (prefabStage != null) EditorSceneManager.MarkSceneDirty(prefabStage.scene);
+            //Until here
 #endif
         }
 
@@ -424,14 +443,15 @@ namespace AllIn1SpriteShader
 #endif
         }
 
-        public void ToggleSetAtlasUvs(bool activate)
+        public bool ToggleSetAtlasUvs(bool activate)
         {
+            bool success = false;
             SetAtlasUvs atlasUvs = GetComponent<SetAtlasUvs>();
             if (activate)
             {
                 if (atlasUvs == null) atlasUvs = gameObject.AddComponent<SetAtlasUvs>();
-                atlasUvs.GetAndSetUVs();
-                SetKeyword("ATLAS_ON", true);
+                if (atlasUvs != null) success = atlasUvs.GetAndSetUVs();
+                if(success) SetKeyword("ATLAS_ON", true);
             }
             else
             {
@@ -439,13 +459,22 @@ namespace AllIn1SpriteShader
                 {
                     atlasUvs.ResetAtlasUvs();
                     DestroyImmediate(atlasUvs);
+                    success = true;
+                }
+                else
+                {
+                    #if UNITY_EDITOR
+                    EditorUtility.DisplayDialog("Missing Atlas Uv Setup", "This GameObject (" + gameObject.name + ") has no Atlas Uv Setup.", "Ok");
+                    #endif
+                    return false;
                 }
                 SetKeyword("ATLAS_ON", false);
             }
             SetSceneDirty();
+            return success;
         }
 
-        public void ApplyMaterialToHierarchy()
+        public bool ApplyMaterialToHierarchy()
         {
             Renderer sr = GetComponent<Renderer>();
             Graphic image = GetComponent<Graphic>();
@@ -458,11 +487,12 @@ namespace AllIn1SpriteShader
             else
             {
                 MissingRenderer();
-                return;
+                return false;
             }
 
             List<Transform> children = new List<Transform>();
             GetAllChildren(transform, ref children);
+            bool hasPerformedOperation = false;
             foreach (Transform t in children)
             {
                 sr = t.gameObject.GetComponent<Renderer>();
@@ -472,7 +502,10 @@ namespace AllIn1SpriteShader
                     image = t.gameObject.GetComponent<Graphic>();
                     if (image != null) image.material = matToApply;
                 }
+                hasPerformedOperation = true;
             }
+
+            return hasPerformedOperation;
         }
 
         public void CheckIfValidTarget()
@@ -491,7 +524,7 @@ namespace AllIn1SpriteShader
             }
         }
 
-        public void RenderToImage()
+        public bool RenderToImage()
         {
 #if UNITY_EDITOR
             if (currMaterial == null)
@@ -500,7 +533,7 @@ namespace AllIn1SpriteShader
                 if (currMaterial == null)
                 {
                     MissingRenderer();
-                    return;
+                    return false;
                 }
             }
             Texture tex = currMaterial.GetTexture("_MainTex");
@@ -509,18 +542,24 @@ namespace AllIn1SpriteShader
             {
                 SpriteRenderer sr = GetComponent<SpriteRenderer>();
                 Graphic i = GetComponent<Graphic>();
-                if (sr != null) tex = sr.sprite.texture;
-                else if (i != null) tex = i.mainTexture;
+                if (sr != null && sr.sprite != null && sr.sprite.texture != null) tex = sr.sprite.texture;
+                else if (i != null && i.mainTexture != null) tex = i.mainTexture;
 
                 if (tex != null) RenderAndSaveTexture(currMaterial, tex);
-                else EditorUtility.DisplayDialog("No valid target texture found", "All In 1 Shader component couldn't find a valid Main Texture in this GameObject (" +
+                else{
+                    EditorUtility.DisplayDialog("No valid target texture found", "All In 1 Shader component couldn't find a valid Main Texture in this GameObject (" +
                                                                                   gameObject.name + "). This means that the material you are using has no Main Texture or that the texture couldn't be reached through the Renderer component you are using." +
-                                                                                  " Please make sure to have a valid Main Texture in the Material", "Ok");
+                                                                                  " Please make sure to have a valid Main Texture in the Material or Renderer/Graphic component", "Ok");
+                    return false;
+                }
             }
+            return true;
+#else
+            return false;
 #endif
         }
 
-        public void RenderAndSaveTexture(Material targetMaterial, Texture targetTexture)
+        private void RenderAndSaveTexture(Material targetMaterial, Texture targetTexture)
         {
 #if UNITY_EDITOR
             float scaleSlider = 1;

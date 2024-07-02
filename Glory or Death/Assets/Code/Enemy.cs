@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour
         {
             if (Player.getCurrentShield() > 0 && !DirtManager.IsDirty)
             {
-                adrenaline += 4;
+                adrenaline += 5;
                 audioManager.Play("Counter_On");
                 counterManager.gameObject.SetActive(true);
             }
@@ -108,7 +108,7 @@ public class Enemy : MonoBehaviour
         else
         {
             myAnimator.SetBool("attack", true);
-            adrenaline+=4;
+            adrenaline+=5;
         }
     }
     public void executeSuperAttack()
@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
     public void executeDirt()
     {
         DirtManager.gameObject.SetActive(true);
-        adrenaline += 4;
+        adrenaline += 5;
     }
     public void ExecuteRage(int speedBuff, int dmgBuff)
     {
